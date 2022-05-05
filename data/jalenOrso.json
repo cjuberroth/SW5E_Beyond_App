@@ -1,0 +1,188 @@
+{
+    "name": "Jalen Orso",
+    "id": "b4fefc0f-645c-4a03-83e9-633aafb475c5",
+    "userId": "31a54266-22bc-4ce8-9fd1-597aa79899dd",
+    "builderVersion": "0.7.2",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmo1hoUG7vwjG_04Yl1qHrKXUDDpUGddyzXw&usqp=CAU",
+    "user": "",
+    "experiencePoints": 2600,
+    "species": {
+        "name": "Human",
+        "abilityScoreImprovementSelectedOption": 0,
+        "abilityScoreImprovement": {
+            "Dexterity": 2,
+            "Charisma": 1,
+            "Intelligence": 1
+        }
+    },
+    "classes": [
+        {
+            "name": "Operative",
+            "levels": 1,
+            "hitPoints": [],
+            "abilityScoreImprovements": []
+        },
+        {
+            "name": "Consular",
+            "levels": 1,
+            "hitPoints": [
+                4
+            ],
+            "abilityScoreImprovements": [],
+            "forcePowers": [
+                "Affect Mind",
+                "Battle Insight",
+                "Break",
+                "Burst",
+                "Defensive Technique",
+                "Denounce",
+                "Enfeeble",
+                "Feedback",
+                "Force Disarm"
+            ]
+        },
+        {
+            "name": "Engineer",
+            "levels": 1,
+            "hitPoints": [
+                5
+            ],
+            "abilityScoreImprovements": [],
+            "techPowers": [
+                "Acid Splash",
+                "Acidic Strike",
+                "Assess the Situation",
+                "Combustive Shot",
+                "Cryogenic Burst",
+                "Detonator"
+            ]
+        }
+    ],
+    "baseAbilityScores": {
+        "Strength": 8,
+        "Dexterity": 15,
+        "Constitution": 12,
+        "Intelligence": 13,
+        "Wisdom": 10,
+        "Charisma": 14
+    },
+    "background": {
+        "name": "Soldier",
+        "feat": {
+            "name": "Threatening",
+            "type": "Feat"
+        },
+        "feature": ""
+    },
+    "characteristics": {
+        "alignment": "Chaotic Dark",
+        "Personality Traits": "Test personality traits",
+        "Ideal": "Test Ideals",
+        "Bond": "Test Bond",
+        "Flaw": "Test Flaw",
+        "Gender": "Male",
+        "Place of Birth": "Coruscant",
+        "Age": "47",
+        "Height": "6' 2''",
+        "Weight": "200 lbs.",
+        "Hair": "Brown",
+        "Eyes": "Blue",
+        "Skin": "White",
+        "Appearance": "Stern",
+        "Backstory": "Test Backstory"
+    },
+    "credits": 100,
+    "equipment": [
+        {
+            "name": "Assault armor",
+            "quantity": 1,
+            "category": "Equipment",
+            "equipped": true
+        },
+        {
+            "name": "Combat suit",
+            "quantity": 1,
+            "category": "Equipment",
+            "equipped": false
+        },
+        {
+            "name": "Bright-saber",
+            "quantity": 1,
+            "category": "Equipment",
+            "equipped": true
+        },
+        {
+            "name": "AB-75 Bo-Rifle",
+            "quantity": 1,
+            "category": "EnhancedItem"
+        },
+        {
+            "name": "Corrosive cartridge",
+            "quantity": 1,
+            "category": "Equipment"
+        },
+        {
+            "name": "Spicebrew",
+            "quantity": 1,
+            "category": "Equipment"
+        },
+        {
+            "name": "Automated Adrenal Package",
+            "quantity": 1,
+            "category": "EnhancedItem"
+        }
+    ],
+    "currentStats": {
+        "hitPointsLost": 2,
+        "temporaryHitPoints": 1,
+        "techPointsUsed": 0,
+        "forcePointsUsed": 0,
+        "superiorityDiceUsed": 0,
+        "hitDiceUsed": {},
+        "deathSaves": {
+            "successes": 0,
+            "failures": 0
+        },
+        "hasInspiration": false,
+        "featuresTimesUsed": {},
+        "conditions": [
+            "Blinded",
+            "Deafened"
+        ],
+        "exhaustion": 0,
+        "highLevelCasting": {
+            "level6": false,
+            "level7": false,
+            "level8": false,
+            "level9": false
+        },
+        "unspentLevels": 0,
+        "exhausion": 0
+    },
+    "tweaks": {},
+    "customProficiencies": [],
+    "customLanguages": [],
+    "customFeatures": [],
+    "customFeats": [],
+    "customTechPowers": [],
+    "customForcePowers": [],
+    "customEquipment": [
+        {
+            "name": "Test Custom Item",
+            "quantity": 1,
+            "equipmentCategory": "Gear",
+            "cost": "100",
+            "description": "Test Custom Item Description",
+            "weight": 1
+        }
+    ],
+    "settings": {
+        "isEnforcingForcePrerequisites": true,
+        "isFixedHitPoints": false,
+        "abilityScoreMethod": "Standard Array"
+    },
+    "notes": "Test notes taken upon the SW5E website character sheet viewer.",
+    "createdAt": 1651717612791,
+    "changedAt": 1651718378765,
+    "localId": "temp-m4n530xe8"
+}
