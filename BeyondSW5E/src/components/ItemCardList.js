@@ -4,7 +4,7 @@ import ItemCard from '../components/ItemCard'
 
 const ItemCardList = ({ equipment }) => {
     return (
-        <View>
+        <View style = {{flex:1}}>
             <FlatList
                 data = { equipment }
                 keyExtractor = {(equip) => equip.name}

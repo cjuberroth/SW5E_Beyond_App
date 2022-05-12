@@ -43,40 +43,6 @@ const styles = StyleSheet.create({
         fontSize: 24,
         fontWeight: 'bold',
         alignSelf: 'center'
-    },
-    cardHeaders: {
-        fontWeight: 'bold',
-        fontSize: 18
-    },
-    buttonStyle: {
-        width: 200,
-        alignSelf: 'center'
-    },
-    tableBorders: {
-        borderColor: 'black',
-        borderWidth: 2
-    },
-    itemCard: {
-        height: 200,
-        width: 300,
-        alignSelf: 'center'
-    },
-    itemCardRow: {
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        padding: 10
-    },
-    itemCardBlock: {
-        flex: 5,
-        padding: 10
-    },
-    itemCardDescriptionHeader: {
-        flex: 1,
-        fontWeight: 'bold'
-    },
-    itemCardDescriptionContent: {
-        flex: 5
     }
 })
 
