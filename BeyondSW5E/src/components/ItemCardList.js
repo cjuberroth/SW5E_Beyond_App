@@ -3,7 +3,6 @@ import { View, FlatList, StyleSheet } from 'react-native'
 import ItemCard from '../components/ItemCard'
 
 const ItemCardList = ({ equipment }) => {
-    console.log(equipment)
     return (
         <View>
             <FlatList

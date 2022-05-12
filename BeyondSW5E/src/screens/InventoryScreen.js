@@ -16,8 +16,8 @@ const InventoryScreen = () => {
     }
 
     useEffect(() => {
-        searchApi(20), []
-    })
+        searchApi(20)},
+        [])
 
     return (
         <View style = { styles.screenContainer }>
