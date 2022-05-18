@@ -6,20 +6,12 @@ import ItemCardList from '../components/ItemCardList'
 const ManageInventoryScreen = () => {
     const [equipment, setEquipment] = useState([])
 
-    const searchApi = async ( limit ) => {
+    const searchApi = async () => {
         const response = await swapi.get('/equipment');
-        const limitArray = []
-        for (let i = 0; i < limit; i++) {
-            limitArray[i] = response.data[i]
-        }
-        //Currently the for loop is not being used and therefore the call is bringing in all data.
-        //This is by design at this time.
         setEquipment(response.data)
     }
 
-    useEffect(() => {
-        searchApi(20)},
-        [])
+    useEffect(() => { searchApi()}, [])
 
     return (
         <View style = { styles.screenContainer }>

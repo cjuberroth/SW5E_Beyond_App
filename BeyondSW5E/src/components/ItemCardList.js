@@ -7,11 +7,13 @@ const ItemCardList = ({ equipment }) => {
         <View style = {{flex:1}}>
             <FlatList
                 data = { equipment }
-                keyExtractor = {(equip) => equip.name}
+                keyExtractor = {(equip) => equip.rowKey}
                 renderItem={({ item }) => {
                     return <ItemCard
                                 name = { item.name }
                                 cost = { item.cost }
+                                category = { item.equipmentCategory }
+                                source = { item.contentSource }
                                 description = { item.description }
                             />
                 }}

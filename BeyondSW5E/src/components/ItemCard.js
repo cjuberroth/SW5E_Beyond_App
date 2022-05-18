@@ -1,25 +1,57 @@
-import React from 'react'
-import { Text, View, StyleSheet } from 'react-native'
+import React, { useState } from 'react'
+import { Text, View, StyleSheet, TouchableOpacity } from 'react-native'
+import Dialog, { DialogTitle, DialogContent, DialogFooter, DialogButton, SlideAnimation, ScaleAnimation} from 'react-native-popup-dialog'
 
-const ItemCard = ({ name, cost, description }) => {
+const ItemCard = ({ name, cost, category, source, description }) => {
+    const [slideAnimationDialog, setSlideAnimationDialog] = useState(false)
     return (
-        <View style = { styles.itemCard }>
-            <View style = {[styles.tableBorders, styles.itemCardRow]}>
-                <View>
-                    <Text style = { styles.cardHeaders }>{ name }</Text>
+        <View>
+            <TouchableOpacity
+                style = { styles.itemCard }
+                onPress = { () => setSlideAnimationDialog(true) }
+            >
+                <View style = {[styles.tableBorders, styles.itemCardRow, styles.itemTopRow]}>
+                    <View>
+                        <Text style = { styles.cardHeaders }>{ name }</Text>
+                    </View>
+                    <View>
+                        <Text style = { styles.cardHeaders }>Cost: { cost }</Text>
+                    </View>
                 </View>
-                <View>
-                    <Text style = { styles.cardHeaders }>Cost: { cost }</Text>
+                <View style = {[ styles.tableBorders, styles.itemCardRow, , styles.itemBottomRow ]}>
+                    <View>
+                        <Text style = { styles.cardHeaders }>Type: { category }</Text>
+                    </View>
+                    <View>
+                        <Text style = { styles.cardHeaders }>Source: { source }</Text>
+                    </View>
                 </View>
-            </View>
-            <View style = {[ styles.tableBorders, styles.itemCardBlock ]}>
-                <View style = { styles.itemCardDescriptionHeader }>
-                    <Text style = { [styles.cardHeaders, {fontSize: 16}] }>Description</Text>
-                </View>
-                <View style = { styles.itemCardDescriptionContent }>
-                    <Text adjustsFontSizeToFit={true}>{ description }</Text>
-                </View>
-            </View>
+            </TouchableOpacity>
+            <Dialog
+              onDismiss={() => {
+                setSlideAnimationDialog(false);
+              }}
+              onTouchOutside={() => {
+                setSlideAnimationDialog(false);
+              }}
+              visible={slideAnimationDialog}
+              dialogTitle={
+                <DialogTitle
+                  title = { name }
+                />
+              }
+              dialogAnimation={
+                new SlideAnimation({slideFrom: 'right'})
+              }>
+              <DialogContent>
+                <Text>
+                  Cost: { cost } {"\n"}
+                  Type: { category } {"\n"}
+                  Source: { source } {"\n"}
+                  Description: { description }
+                </Text>
+              </DialogContent>
+            </Dialog>
         </View>
     )
 }
@@ -35,10 +67,11 @@ const styles = StyleSheet.create({
     },
     tableBorders: {
         borderColor: 'black',
-        borderWidth: 2
+        borderLeftWidth: 2,
+        borderRightWidth: 2
     },
     itemCard: {
-        height: 200,
+        height: 100,
         width: 300,
         alignSelf: 'center',
         margin: 5
@@ -49,16 +82,13 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         padding: 10
     },
-    itemCardBlock: {
-        flex: 5,
-        padding: 5
+    itemTopRow: {
+        borderTopWidth: 2,
+        borderColor: 'black'
     },
-    itemCardDescriptionHeader: {
-        flex: 1,
-        fontWeight: 'bold'
-    },
-    itemCardDescriptionContent: {
-        flex: 5
+    itemBottomRow: {
+        borderBottomWidth: 2,
+        borderColor: 'black'
     }
 })
 
