@@ -12,6 +12,9 @@ import NotesScreen from './src/screens/NotesScreen'
 import ProficienciesScreen from './src/screens/ProficienciesScreen'
 import SkillsScreen from './src/screens/SkillsScreen'
 import SpellsScreen from './src/screens/SpellsScreen'
+import {CharacterProvider} from './src/context/CharacterContext'
+import {AbilitiesProvider} from './src/context/AbilitiesContext'
+import {SkillsProvider} from './src/context/SkillsContext'
 
 const navigator = createStackNavigator({
   Home: HomeScreen,
@@ -33,4 +36,14 @@ const navigator = createStackNavigator({
     }
   })
 
-export default createAppContainer(navigator)
+const App =  createAppContainer(navigator)
+
+export default () => {
+  return <CharacterProvider>
+    <AbilitiesProvider>
+      <SkillsProvider>
+        <App />
+      </SkillsProvider>
+    </AbilitiesProvider>
+  </CharacterProvider>
+}
