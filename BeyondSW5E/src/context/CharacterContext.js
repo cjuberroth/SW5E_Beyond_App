@@ -1,12 +1,12 @@
 import React from 'react'
-import charAbilities from '../../data/jalenOrso'
+import charData from '../../data/jalenOrso2'
 
 const CharacterContext = React.createContext()
 
 export const CharacterProvider = ({children}) => {
-	const characterAbilities = charAbilities
+	const characterData = charData
 
-	return <CharacterContext.Provider value={characterAbilities}>
+	return <CharacterContext.Provider value={characterData}>
 		{children}
 	</CharacterContext.Provider>
 }
