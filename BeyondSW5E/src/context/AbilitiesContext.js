@@ -24,6 +24,7 @@ export const AbilitiesProvider = ({children}) => {
 
 	for (let i = 0; i < charAbilities.classes.length; i++) {
 		for (let y = 0; y < charAbilities.classes[i].abilityScoreImprovements.length; y++) {
+			// if check to see that the object's type value is Ability Score Improvement and continue if not
 			for (let j = 0; j < charAbilities.classes[i].abilityScoreImprovements[y].abilitiesIncreased.length; j++) {
 				switch (charAbilities.classes[i].abilityScoreImprovements[y].abilitiesIncreased[j].name) {
 					case 'Strength':
