@@ -1,98 +1,170 @@
-import React, { useState, useContext } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import CharacterContext from './CharacterContext'
+import swapi from '../api/swapi'
 
 const AbilitiesContext = React.createContext()
 
 export const AbilitiesProvider = ({children}) => {
 
+	const charSpecies = useContext(CharacterContext)
 	const charAbilities = useContext(CharacterContext)
 	const charProficiency = useContext(CharacterContext)
 
-	const [strength, setStrength] = useState(charAbilities.baseAbilityScores.Strength + (charAbilities.species.abilityScoreImprovement.Strength ?? 0))
-	const [dexterity, setDexterity] = useState(charAbilities.baseAbilityScores.Dexterity + (charAbilities.species.abilityScoreImprovement.Dexterity ?? 0))
-	const [constitution, setConstitution] = useState(charAbilities.baseAbilityScores.Constitution + (charAbilities.species.abilityScoreImprovement.Constitution ?? 0))
-	const [intelligence, setIntelligence] = useState(charAbilities.baseAbilityScores.Intelligence + (charAbilities.species.abilityScoreImprovement.Intelligence ?? 0))
-	const [wisdom, setWisdom] = useState(charAbilities.baseAbilityScores.Wisdom + (charAbilities.species.abilityScoreImprovement.Wisdom ?? 0))
-	const [charisma, setCharisma] = useState(charAbilities.baseAbilityScores.Charisma + (charAbilities.species.abilityScoreImprovement.Charisma ?? 0))
+	function isEmpty(obj) {
+		return Object.keys(obj).length === 0
+	}
 
-	/*const [strengthIncrease, setStrengthIncrease] = useState(0)
-	const [dexterityIncrease, setDexterityIncrease] = useState(0)
-	const [constitutionIncrease, setConstitutionIncrease] = useState(0)
-	const [intelligenceIncrease, setIntelligenceIncrease] = useState(0)
-	const [wisdomIncrease, setWisdomIncrease] = useState(0)
-	const [charismaIncrease, setCharismaIncrease] = useState(0)*/
+	if(isEmpty(charSpecies.species.abilityScoreImprovement)) {
+
+		var species = charSpecies.species.name
+		var speciesIncrease = []
+		const [characterSpecies, setCharacterSpecies] = useState([])
+
+		const searchApi = async () => {
+	        var response = await swapi.get('/species')
+	        setCharacterSpecies(response.data)
+	    }
+
+	    useEffect(() => { searchApi()}, [])
+
+	    for(let i = 0; i < characterSpecies.length; i++) {
+	    	if (characterSpecies[i].name === species) {
+		    	for(let j = 0; j < characterSpecies[i].abilitiesIncreased.length; j++) {
+		    		for(let k = 0; k < characterSpecies[i].abilitiesIncreased[j].length; k++) {
+		    			for(let l = 0; l < characterSpecies[i].abilitiesIncreased[j][k].abilities.length; l++) {
+		    				speciesIncrease.push({stat: characterSpecies[i].abilitiesIncreased[j][k].abilities[l], up: characterSpecies[i].abilitiesIncreased[j][k].amount})
+		    			}
+		    		}
+		    	}
+		    }
+	    }
+
+	    var strength = charAbilities.baseAbilityScores.Strength
+		var dexterity = charAbilities.baseAbilityScores.Dexterity
+		var constitution = charAbilities.baseAbilityScores.Constitution
+		var intelligence = charAbilities.baseAbilityScores.Intelligence
+		var wisdom = charAbilities.baseAbilityScores.Wisdom
+		var charisma = charAbilities.baseAbilityScores.Charisma
+
+		for(let i = 0; i < speciesIncrease.length; i++) {
+			switch (speciesIncrease[i].stat) {
+				case 'Strength':
+					strength = strength + speciesIncrease[i].up
+					break
+				case 'Dexterity':
+					dexterity = dexterity + speciesIncrease[i].up
+					break
+				case 'Constitution':
+					constitution = constitution + speciesIncrease[i].up
+					break
+				case 'Intelligence':
+					intelligence = intelligence + speciesIncrease[i].up
+					break
+				case 'Wisdom':
+					wisdom = wisdom + speciesIncrease[i].up
+					break
+				case 'Charisma':
+					charisma = charisma + speciesIncrease[i].up
+					break
+			}
+		}
+	} else {
+		var strength = charAbilities.baseAbilityScores.Strength + (charAbilities.species.abilityScoreImprovement.Strength ?? 0)
+		var dexterity = charAbilities.baseAbilityScores.Dexterity + (charAbilities.species.abilityScoreImprovement.Dexterity ?? 0)
+		var constitution = charAbilities.baseAbilityScores.Constitution + (charAbilities.species.abilityScoreImprovement.Constitution ?? 0)
+		var intelligence = charAbilities.baseAbilityScores.Intelligence + (charAbilities.species.abilityScoreImprovement.Intelligence ?? 0)
+		var wisdom = charAbilities.baseAbilityScores.Wisdom + (charAbilities.species.abilityScoreImprovement.Wisdom ?? 0)
+		var charisma = charAbilities.baseAbilityScores.Charisma + (charAbilities.species.abilityScoreImprovement.Charisma ?? 0)
+	}
+
+	var strengthIncrease = 0
+	var dexterityIncrease = 0
+	var constitutionIncrease = 0
+	var intelligenceIncrease = 0
+	var wisdomIncrease = 0
+	var charismaIncrease = 0
 
 	for (let i = 0; i < charAbilities.classes.length; i++) {
 		for (let y = 0; y < charAbilities.classes[i].abilityScoreImprovements.length; y++) {
-			// if check to see that the object's type value is Ability Score Improvement and continue if not
-			for (let j = 0; j < charAbilities.classes[i].abilityScoreImprovements[y].abilitiesIncreased.length; j++) {
-				switch (charAbilities.classes[i].abilityScoreImprovements[y].abilitiesIncreased[j].name) {
-					case 'Strength':
-						//setStrengthIncrease(charAbilities.classes[i].abilityScoreImprovements[y].abilitiesIncreased[j].value)
-						var strengthIncrease = charAbilities.classes[i].abilityScoreImprovements[y].abilitiesIncreased[j].value
-						break
-					case 'Dexterity':
-						//setDexterityIncrease(charAbilities.classes[i].abilityScoreImprovements[y].abilitiesIncreased[j].value)
-						var dexterityIncrease = charAbilities.classes[i].abilityScoreImprovements[y].abilitiesIncreased[j].value
-						break
-					case 'Constitution':
-						//setConstitutionIncrease(charAbilities.classes[i].abilityScoreImprovements[y].abilitiesIncreased[j].value)
-						var constitutionIncrease = charAbilities.classes[i].abilityScoreImprovements[y].abilitiesIncreased[j].value
-						break
-					case 'Intelligence':
-						//setIntelligenceIncrease(charAbilities.classes[i].abilityScoreImprovements[y].abilitiesIncreased[j].value)
-						var intelligenceIncrease = charAbilities.classes[i].abilityScoreImprovements[y].abilitiesIncreased[j].value
-						break
-					case 'Wisdom':
-						//setWisdomIncrease(charAbilities.classes[i].abilityScoreImprovements[y].abilitiesIncreased[j].value)
-						var wisdomIncrease = charAbilities.classes[i].abilityScoreImprovements[y].abilitiesIncreased[j].value
-						break
-					case 'Charisma':
-						//setCharismaIncrease(charAbilities.classes[i].abilityScoreImprovements[y].abilitiesIncreased[j].value)
-						var charismaIncrease = charAbilities.classes[i].abilityScoreImprovements[y].abilitiesIncreased[j].value
-						break
+			if(charAbilities.classes[i].abilityScoreImprovements[y].type === "Ability Score Improvement") {
+				for (let j = 0; j < charAbilities.classes[i].abilityScoreImprovements[y].abilitiesIncreased.length; j++) {
+					switch (charAbilities.classes[i].abilityScoreImprovements[y].abilitiesIncreased[j].name) {
+						case 'Strength':
+							strengthIncrease = strengthIncrease + charAbilities.classes[i].abilityScoreImprovements[y].abilitiesIncreased[j].value
+							break
+						case 'Dexterity':
+							dexterityIncrease = dexterityIncrease + charAbilities.classes[i].abilityScoreImprovements[y].abilitiesIncreased[j].value
+							break
+						case 'Constitution':
+							constitutionIncrease = constitutionIncrease + charAbilities.classes[i].abilityScoreImprovements[y].abilitiesIncreased[j].value
+							break
+						case 'Intelligence':
+							intelligenceIncrease = intelligenceIncrease + charAbilities.classes[i].abilityScoreImprovements[y].abilitiesIncreased[j].value
+							break
+						case 'Wisdom':
+							wisdomIncrease = wisdomIncrease + charAbilities.classes[i].abilityScoreImprovements[y].abilitiesIncreased[j].value
+							break
+						case 'Charisma':
+							charismaIncrease = charismaIncrease + charAbilities.classes[i].abilityScoreImprovements[y].abilitiesIncreased[j].value
+							break
+					}
 				}
 			}
 		}
 	}
 
-	var classLevel = []
+	//calculate ability score
+	strength = strength + (strengthIncrease ?? 0)
+	dexterity = dexterity + (dexterityIncrease ?? 0)
+	constitution = constitution + (constitutionIncrease ?? 0)
+	intelligence = intelligence + (intelligenceIncrease ?? 0)
+	wisdom = wisdom + (wisdomIncrease ?? 0)
+	charisma = charisma + (charismaIncrease ?? 0)
+
+	//find the character level by adding together all class levels
+	var charLevel = []
 	var charProf = 0
 
 	for (let i = 0; i < charProficiency.classes.length; i++) {
-		classLevel.push(charProficiency.classes[i].levels)
+		charLevel.push(charProficiency.classes[i].levels)
 	}
 
-	//console.log(Math.max(...classLevel))
-	classLevel = Math.max(...classLevel)
+	charLevel = charLevel.reduce((a, b) => a + b, 0)
 
+	//calculate proficiency based on character level
 	switch (true) {
-		case (classLevel < 5):
+		case (charLevel < 5):
 			charProf = 2
 			break
-		case (classLevel < 9):
+		case (charLevel < 9):
 			charProf = 3
 			break
-		case (classLevel < 13):
+		case (charLevel < 13):
 			charProf = 4
 			break
-		case (classLevel < 17):
+		case (charLevel < 17):
 			charProf = 5
 			break
-		case (classLevel < 21):
+		case (charLevel < 21):
 			charProf = 6
 			break
 	}
 
-	//console.log("Proficiency: " + charProf)
+	//check for overrides
+	if (charAbilities.tweaks?.abilityScores?.Strength?.score?.override) {strength = charAbilities.tweaks?.abilityScores?.Strength?.score?.override}
+	if (charAbilities.tweaks?.abilityScores?.Dexterity?.score?.override) {dexterity = charAbilities.tweaks?.abilityScores?.Dexterity?.score?.override}
+	if (charAbilities.tweaks?.abilityScores?.Constitution?.score?.override) {constitution = charAbilities.tweaks?.abilityScores?.Constitution?.score?.override}
+	if (charAbilities.tweaks?.abilityScores?.Intelligence?.score?.override) {intelligence = charAbilities.tweaks?.abilityScores?.Intelligence?.score?.override}
+	if (charAbilities.tweaks?.abilityScores?.Wisdom?.score?.override) {wisdom = charAbilities.tweaks?.abilityScores?.Wisdom?.score?.override}
+	if (charAbilities.tweaks?.abilityScores?.Charisma?.score?.override) {charisma = charAbilities.tweaks?.abilityScores?.Charisma?.score?.override}
 
 	const characterAbilities = {
-		abilitiesStrength: strength + (strengthIncrease ?? 0),
-		abilitiesDexterity: dexterity + (dexterityIncrease ?? 0),
-		abilitiesConstitution: constitution + (constitutionIncrease ?? 0),
-		abilitiesIntelligence: intelligence + (intelligenceIncrease ?? 0),
-		abilitiesWisdom: wisdom + (wisdomIncrease ?? 0),
-		abilitiesCharisma: charisma + (charismaIncrease ?? 0),
+		abilitiesStrength: strength,
+		abilitiesDexterity: dexterity,
+		abilitiesConstitution: constitution,
+		abilitiesIntelligence: intelligence,
+		abilitiesWisdom: wisdom,
+		abilitiesCharisma: charisma,
 		prof: charProf
 	}
 	

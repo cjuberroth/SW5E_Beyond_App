@@ -46,18 +46,19 @@ const AbilitiesScreen = () => {
                     <Text style={styles.textStyle}>Mod</Text>
                     <Text style={styles.textStyle}>{characterMods.cha_mod}</Text>
                 </View>
-                <ImageBackground style={styles.imgBackground} resizeMode='cover' source={require('../../assets/rebel.png')}>
+            </View>
+        </View>
+    )
+}
+
+                /*<ImageBackground style={styles.imgBackground} resizeMode='cover' source={require('../../assets/rebel.png')}>
                     <View style={styles.boxStyle}>
                         <Text style={styles.textStyle}>Charisma</Text>
                         <Text style={styles.textStyle}>{characterAbilities.abilitiesCharisma}</Text>
                         <Text style={styles.textStyle}>Mod</Text>
                         <Text style={styles.textStyle}>{characterMods.cha_mod}</Text>
                     </View>
-                </ImageBackground>
-            </View>
-        </View>
-    )
-}
+                </ImageBackground>*/
 
 const styles = StyleSheet.create({
     parentStyle: {

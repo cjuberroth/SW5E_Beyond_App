@@ -1,5 +1,5 @@
 import React from 'react'
-import charData from '../../data/jalenOrso2'
+import charData from '../../data/miltox'
 
 const CharacterContext = React.createContext()
 
