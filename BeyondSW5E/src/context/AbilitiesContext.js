@@ -165,8 +165,11 @@ export const AbilitiesProvider = ({children}) => {
 		abilitiesIntelligence: intelligence,
 		abilitiesWisdom: wisdom,
 		abilitiesCharisma: charisma,
-		prof: charProf
+		prof: charProf,
+		name: charAbilities.name
 	}
+
+	const dummyState = useState([])
 	
 	return <AbilitiesContext.Provider value={characterAbilities}>
 		{children}

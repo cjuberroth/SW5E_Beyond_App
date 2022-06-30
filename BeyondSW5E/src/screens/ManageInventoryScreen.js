@@ -31,7 +31,8 @@ const ManageInventoryScreen = () => {
 const styles = StyleSheet.create({
     screenContainer: {
         alignItems: 'center',
-        flex: 1
+        flex: 1,
+        marginTop: 50
     },
     headerStyle: {
         fontSize: 24,
