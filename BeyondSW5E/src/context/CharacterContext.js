@@ -7,14 +7,15 @@ import miltox from '../../data/miltox'
 import theebisRoh from '../../data/theebisRoh'
 import trevalla from '../../data/trevalla'
 
-const CharacterContext = React.createContext()
+const CharacterContext = React.createContext({
+	character: charAbilities,
+	setCharacter: (char) => {}
+})
 
 export const CharacterProvider = ({children}) => {
 	const [character, setCharacter] = useState(charAbilities)
-	const characterAbilities = charAbilities
-	//const characterAbilities = character
 
-	return <CharacterContext.Provider value={character}>
+	return <CharacterContext.Provider value={{character, setCharacter}}>
 		{children}
 	</CharacterContext.Provider>
 }

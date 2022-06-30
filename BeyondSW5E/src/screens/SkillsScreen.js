@@ -8,7 +8,7 @@ import {FontAwesome} from '@expo/vector-icons'
 
 const SkillsScreen = () => {
 
-    const characterSkills = useContext(CharacterContext).tweaks?.abilityScores
+    const characterSkills = useContext(CharacterContext).character.tweaks?.abilityScores
     const characterMods = useContext(SkillsContext)
     const characterProf = useContext(AbilitiesContext)
 

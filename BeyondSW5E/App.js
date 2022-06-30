@@ -57,13 +57,13 @@ const App = createAppContainer(SwitchNavigator)
 export default () => {
   return (
     <CharacterProvider>
-    <AbilitiesProvider>
-      <SkillsProvider>
-        <NavigationContainer>
-          <App />
-        </NavigationContainer>
-      </SkillsProvider>
-    </AbilitiesProvider>
-  </CharacterProvider>
+      <AbilitiesProvider>
+        <SkillsProvider>
+          <NavigationContainer>
+            <App />
+          </NavigationContainer>
+        </SkillsProvider>
+      </AbilitiesProvider>
+    </CharacterProvider>
   )
 }

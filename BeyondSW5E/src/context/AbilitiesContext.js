@@ -6,26 +6,26 @@ const AbilitiesContext = React.createContext()
 
 export const AbilitiesProvider = ({children}) => {
 
-	const charSpecies = useContext(CharacterContext)
-	const charAbilities = useContext(CharacterContext)
-	const charProficiency = useContext(CharacterContext)
+	const charSpecies = useContext(CharacterContext).character
+	const charAbilities = charSpecies
+	const charProficiency = charSpecies
 
 	function isEmpty(obj) {
 		return Object.keys(obj).length === 0
 	}
+	const [characterSpecies, setCharacterSpecies] = useState([])
+
+	const searchApi = async () => {
+        var response = await swapi.get('/species')
+        setCharacterSpecies(response.data)
+    }
+
+    useEffect(() => { searchApi()}, [])
 
 	if(isEmpty(charSpecies.species.abilityScoreImprovement)) {
 
 		var species = charSpecies.species.name
 		var speciesIncrease = []
-		const [characterSpecies, setCharacterSpecies] = useState([])
-
-		const searchApi = async () => {
-	        var response = await swapi.get('/species')
-	        setCharacterSpecies(response.data)
-	    }
-
-	    useEffect(() => { searchApi()}, [])
 
 	    for(let i = 0; i < characterSpecies.length; i++) {
 	    	if (characterSpecies[i].name === species) {
@@ -168,8 +168,6 @@ export const AbilitiesProvider = ({children}) => {
 		prof: charProf,
 		name: charAbilities.name
 	}
-
-	const dummyState = useState([])
 	
 	return <AbilitiesContext.Provider value={characterAbilities}>
 		{children}

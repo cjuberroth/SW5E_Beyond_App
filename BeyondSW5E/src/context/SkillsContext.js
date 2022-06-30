@@ -6,7 +6,6 @@ const SkillsContext = React.createContext()
 export const SkillsProvider = ({children}) => {
 	
 	const characterAbilities = useContext(AbilitiesContext)
-
 	const [strengthMod, setStrengthMod] = useState(characterAbilities.abilitiesStrength)
 	const [dexterityMod, setDexterityMod] = useState(characterAbilities.abilitiesDexterity)
 	const [constitutionMod, setConstitutionMod] = useState(characterAbilities.abilitiesConstitution)
