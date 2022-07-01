@@ -21,7 +21,7 @@ const SkillsScreen = () => {
     }
     
     return (
-        <SafeAreaView>
+        <View>
             <View style={styles.parentView}>
                 <Text style={styles.headerStyle}>Skills</Text>
                 <View style={styles.rowStyle}>
@@ -229,7 +229,7 @@ const SkillsScreen = () => {
                     }
                 </View>
             </View>
-        </SafeAreaView>
+        </View>
     )
 }
 

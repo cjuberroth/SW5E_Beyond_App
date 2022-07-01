@@ -41,18 +41,12 @@ function MyTabs() {
     )
 }
 
-const SwitchNavigator = createSwitchNavigator({
-    startupFlow: createStackNavigator({
-      CharacterSelection: CharacterSelectorScreen
-    },{
-      defaultNavigationOptions:{
-        title: 'SW5E Beyond'
-      }
-    }),
-    mainFlow: MyTabs
+const StackNavigator = createStackNavigator({
+    Character: CharacterSelectorScreen,
+    SW5EBeyond: MyTabs
 })
 
-const App = createAppContainer(SwitchNavigator)
+const App = createAppContainer(StackNavigator)
 
 export default () => {
   return (

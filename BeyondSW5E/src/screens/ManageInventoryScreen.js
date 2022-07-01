@@ -15,7 +15,7 @@ const ManageInventoryScreen = () => {
 
     return (
         <View style = { styles.screenContainer }>
-            <Text style = { styles.headerStyle }>Inventory Screen</Text>
+            <Text style = { styles.headerStyle }>Manage Inventory</Text>
             <Text>Displaying {equipment.length} items.</Text>
             {
                 equipment.length === 0
@@ -31,8 +31,7 @@ const ManageInventoryScreen = () => {
 const styles = StyleSheet.create({
     screenContainer: {
         alignItems: 'center',
-        flex: 1,
-        marginTop: 50
+        flex: 1
     },
     headerStyle: {
         fontSize: 24,
