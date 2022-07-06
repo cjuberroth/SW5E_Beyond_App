@@ -30,8 +30,17 @@ function MyTabs() {
     <Tab.Navigator 
       tabBarPosition="bottom"
       screenOptions={{
-        tabBarActiveTintColor: 'black',
-        tabBarLabelStyle: { fontSize: 12 }
+        tabBarActiveTintColor: 'white',
+        tabBarInactiveTintColor: 'black',
+        tabBarLabelStyle: { fontSize: 12 },
+        tabBarScrollEnabled: true,
+        tabBarBounces: true,
+        tabBarStyle: {
+          backgroundColor: 'gray'
+        },
+        tabBarItemStyle: {
+          width: 100
+        }
       }}
     >
       <Tab.Screen name="Abilities" component={ AbilitiesScreen } />
@@ -43,8 +52,16 @@ function MyTabs() {
 
 const StackNavigator = createStackNavigator({
     Character: CharacterSelectorScreen,
-    SW5EBeyond: MyTabs
-})
+    SW5EBeyond: MyTabs},{
+      defaultNavigationOptions: {
+        headerStyle: {
+          backgroundColor: 'gray'
+        },
+        headerTintColor: 'white'
+      }
+    }
+
+)
 
 const App = createAppContainer(StackNavigator)
 
