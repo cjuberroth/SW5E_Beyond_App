@@ -15,13 +15,16 @@ export const AbilitiesProvider = ({children}) => {
 		return Object.keys(obj).length === 0
 	}
 	const [characterSpecies, setCharacterSpecies] = useState([])
+	const [characterClass, setCharacterClass] = useState([])
 
 	const searchApi = async () => {
         var response = await swapi.get('/species')
         setCharacterSpecies(response.data)
+        var response2 = await swapi.get('/class')
+        setCharacterClass(response2.data)
     }
 
-    useEffect(() => { searchApi()}, [])
+    useEffect(() => { searchApi() }, [])
 
 	if(isEmpty(charSpecies.species.abilityScoreImprovement)) {
 
@@ -122,7 +125,7 @@ export const AbilitiesProvider = ({children}) => {
 	wisdom = wisdom + (wisdomIncrease ?? 0)
 	charisma = charisma + (charismaIncrease ?? 0)
 
-/*
+/*	//Refactored 7/6 to utilize a the single useEffect hook called above. Currently functional but console logs below need to be converted to new use code
 	//get first class's saving throw proficiency(ies)
 	const [characterClass, setCharacterClass] = useState([])
 
@@ -131,11 +134,12 @@ export const AbilitiesProvider = ({children}) => {
         setCharacterClass(response2.data)
     }
 
-    useEffect(() => { searchApi_class()}, [])
-
-    console.log(charClass.classes[0].name)
-    console.log(characterClass[7].name)
+    useEffect(() => { searchApi_class() }, [])
 */
+    console.log(charClass.classes[0].name + '- from json data -')
+    if(!isEmpty(characterClass)){
+    	console.log(characterClass[6].name + '- from class api -')
+    }
 
 	//find the character level by adding together all class levels
 	var charLevel = []
