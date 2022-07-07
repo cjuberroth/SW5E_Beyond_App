@@ -11,7 +11,7 @@ const ManageInventoryScreen = () => {
         setEquipment(response.data)
     }
 
-    useEffect(() => { searchApi()}, [])
+    useEffect(() => { searchApi() }, [])
 
     return (
         <View style = { styles.screenContainer }>

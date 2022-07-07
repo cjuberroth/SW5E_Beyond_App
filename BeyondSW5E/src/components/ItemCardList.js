@@ -2,6 +2,11 @@ import React from 'react'
 import { View, FlatList, StyleSheet } from 'react-native'
 import ItemCard from '../components/ItemCard'
 
+/*  This component assumes that the data being loaded into the flatlist has
+    the rowKey parameter in the object coming from the inventory of the character
+    JSON data. This could create an issue. 2022_07_06
+*/
+
 const ItemCardList = ({ equipment }) => {
     return (
         <View style = {{flex:1}}>
