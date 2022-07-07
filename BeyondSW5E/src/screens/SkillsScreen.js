@@ -1,5 +1,6 @@
 import React, {useContext} from 'react'
 import { Text, View, StyleSheet } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 import CharacterContext from '../context/CharacterContext'
 import AbilitiesContext from '../context/AbilitiesContext'
 import SkillsContext from '../context/SkillsContext'
@@ -7,7 +8,7 @@ import {FontAwesome} from '@expo/vector-icons'
 
 const SkillsScreen = () => {
 
-    const characterSkills = useContext(CharacterContext).tweaks?.abilityScores
+    const characterSkills = useContext(CharacterContext).character.tweaks?.abilityScores
     const characterMods = useContext(SkillsContext)
     const characterProf = useContext(AbilitiesContext)
 
@@ -21,7 +22,7 @@ const SkillsScreen = () => {
     
     return (
         <View style={styles.parentView}>
-            <Text style={styles.headerStyle}>Skills</Text>
+            <Text style={styles.headerStyle}>{characterProf.name}</Text>
             <View style={styles.rowStyle}>
                 <Text style={styles.profCol}>PROF</Text>
                 <Text style={styles.modCol}>MOD</Text>
@@ -232,10 +233,13 @@ const SkillsScreen = () => {
 
 const styles = StyleSheet.create({
     parentView: {
-        
+        backgroundColor: 'gray',
+        flex: 1
     },
     headerStyle: {
-        fontSize: 30
+        fontSize: 30,
+        color: 'white',
+        textAlign: 'center'
     },
     rowStyle: {
         //flex: 1,
@@ -248,24 +252,29 @@ const styles = StyleSheet.create({
     profCol: {
         flex:2,
         paddingLeft: 2,
-        fontSize: 15
+        fontSize: 15,
+        color: 'white'
     },
     modCol: {
         flex:1,
-        fontSize: 15
+        fontSize: 15,
+        color: 'white'
     },
     skillCol: {
         flex:5,
-        fontSize: 15
+        fontSize: 15,
+        color: 'white'
     },
     bonusCol: {
         flex: 2,
-        fontSize: 15
+        fontSize: 15,
+        color: 'white'
     },
     icon: {
         fontSize: 20,
         flex:2,
-        paddingLeft:2
+        paddingLeft:2,
+        color: 'white'
     }
 })
 

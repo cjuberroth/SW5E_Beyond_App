@@ -1,5 +1,11 @@
-import { createAppContainer } from 'react-navigation'
+import React from 'react'
+import { createAppContainer, createSwitchNavigator } from 'react-navigation'
 import { createStackNavigator } from 'react-navigation-stack'
+import { createBottomTabNavigator } from 'react-navigation-tabs'
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
+import { NavigationContainer } from '@react-navigation/native'
+import { Ionicons } from "@expo/vector-icons"
 import HomeScreen from './src/screens/HomeScreen'
 import AbilitiesScreen from './src/screens/AbilitiesScreen'
 import ActionsScreen from './src/screens/ActionsScreen'
@@ -12,38 +18,63 @@ import NotesScreen from './src/screens/NotesScreen'
 import ProficienciesScreen from './src/screens/ProficienciesScreen'
 import SkillsScreen from './src/screens/SkillsScreen'
 import SpellsScreen from './src/screens/SpellsScreen'
+import CharacterSelectorScreen from './src/screens/CharacterSelectorScreen'
 import {CharacterProvider} from './src/context/CharacterContext'
 import {AbilitiesProvider} from './src/context/AbilitiesContext'
 import {SkillsProvider} from './src/context/SkillsContext'
 
-const navigator = createStackNavigator({
-  Home: HomeScreen,
-  Abilities: AbilitiesScreen,
-  Actions: ActionsScreen,
-  Description: DescriptionScreen,
-  Features: FeaturesScreen,
-  Inventory: InventoryScreen,
-  ManageInventory: ManageInventoryScreen,
-  ManageSpells: ManageSpellsScreen,
-  Notes: NotesScreen,
-  Proficiencies: ProficienciesScreen,
-  Skills: SkillsScreen,
-  Spells: SpellsScreen
-  }, {
-    initialRouteName: 'Home',
-    defaultNavigationOptions: {
-      title: 'Project Unknown'
-    }
-  })
+const Tab = createMaterialTopTabNavigator()
 
-const App =  createAppContainer(navigator)
+function MyTabs() {
+  return (
+    <Tab.Navigator 
+      tabBarPosition="bottom"
+      screenOptions={{
+        tabBarActiveTintColor: 'white',
+        tabBarInactiveTintColor: 'black',
+        tabBarLabelStyle: { fontSize: 12 },
+        tabBarScrollEnabled: true,
+        tabBarBounces: true,
+        tabBarStyle: {
+          backgroundColor: 'gray'
+        },
+        tabBarItemStyle: {
+          width: 100
+        }
+      }}
+    >
+      <Tab.Screen name="Abilities" component={ AbilitiesScreen } />
+      <Tab.Screen name="Skills" component={ SkillsScreen } />
+      <Tab.Screen name="Manage Inventory" component={ ManageInventoryScreen } />
+    </Tab.Navigator>
+    )
+}
+
+const StackNavigator = createStackNavigator({
+    Character: CharacterSelectorScreen,
+    SW5EBeyond: MyTabs},{
+      defaultNavigationOptions: {
+        headerStyle: {
+          backgroundColor: 'gray'
+        },
+        headerTintColor: 'white'
+      }
+    }
+
+)
+
+const App = createAppContainer(StackNavigator)
 
 export default () => {
-  return <CharacterProvider>
-    <AbilitiesProvider>
-      <SkillsProvider>
-        <App />
-      </SkillsProvider>
-    </AbilitiesProvider>
-  </CharacterProvider>
+  return (
+    <CharacterProvider>
+      <AbilitiesProvider>
+        <SkillsProvider>
+          <NavigationContainer>
+            <App />
+          </NavigationContainer>
+        </SkillsProvider>
+      </AbilitiesProvider>
+    </CharacterProvider>
+  )
 }

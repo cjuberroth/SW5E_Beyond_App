@@ -6,26 +6,27 @@ const AbilitiesContext = React.createContext()
 
 export const AbilitiesProvider = ({children}) => {
 
-	const charSpecies = useContext(CharacterContext)
-	const charAbilities = useContext(CharacterContext)
-	const charProficiency = useContext(CharacterContext)
+	const charSpecies = useContext(CharacterContext).character
+	const charAbilities = charSpecies
+	const charProficiency = charSpecies
+	const charClass = charSpecies
 
 	function isEmpty(obj) {
 		return Object.keys(obj).length === 0
 	}
+	const [characterSpecies, setCharacterSpecies] = useState([])
+
+	const searchApi = async () => {
+        var response = await swapi.get('/species')
+        setCharacterSpecies(response.data)
+    }
+
+    useEffect(() => { searchApi()}, [])
 
 	if(isEmpty(charSpecies.species.abilityScoreImprovement)) {
 
 		var species = charSpecies.species.name
 		var speciesIncrease = []
-		const [characterSpecies, setCharacterSpecies] = useState([])
-
-		const searchApi = async () => {
-	        var response = await swapi.get('/species')
-	        setCharacterSpecies(response.data)
-	    }
-
-	    useEffect(() => { searchApi()}, [])
 
 	    for(let i = 0; i < characterSpecies.length; i++) {
 	    	if (characterSpecies[i].name === species) {
@@ -121,6 +122,21 @@ export const AbilitiesProvider = ({children}) => {
 	wisdom = wisdom + (wisdomIncrease ?? 0)
 	charisma = charisma + (charismaIncrease ?? 0)
 
+/*
+	//get first class's saving throw proficiency(ies)
+	const [characterClass, setCharacterClass] = useState([])
+
+	const searchApi_class = async () => {
+        var response2 = await swapi.get('/class')
+        setCharacterClass(response2.data)
+    }
+
+    useEffect(() => { searchApi_class()}, [])
+
+    console.log(charClass.classes[0].name)
+    console.log(characterClass[7].name)
+*/
+
 	//find the character level by adding together all class levels
 	var charLevel = []
 	var charProf = 0
@@ -165,7 +181,8 @@ export const AbilitiesProvider = ({children}) => {
 		abilitiesIntelligence: intelligence,
 		abilitiesWisdom: wisdom,
 		abilitiesCharisma: charisma,
-		prof: charProf
+		prof: charProf,
+		name: charAbilities.name
 	}
 	
 	return <AbilitiesContext.Provider value={characterAbilities}>

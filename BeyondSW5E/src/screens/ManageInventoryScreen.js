@@ -15,7 +15,7 @@ const ManageInventoryScreen = () => {
 
     return (
         <View style = { styles.screenContainer }>
-            <Text style = { styles.headerStyle }>Inventory Screen</Text>
+            <Text style = { styles.headerStyle }>Manage Inventory</Text>
             <Text>Displaying {equipment.length} items.</Text>
             {
                 equipment.length === 0
