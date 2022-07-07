@@ -6,3 +6,6 @@ Within project directory, npm install axios
 
 ## Installing Pop Up Dialog Project
 npm install react-native-popup-dialog
+
+## Branch Rules Demo for GitHub
+Making this trivial change which will get removed as a method of demonstrating branch rules.
