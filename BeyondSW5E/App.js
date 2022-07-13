@@ -68,13 +68,13 @@ const App = createAppContainer(StackNavigator)
 export default () => {
   return (
     <CharacterProvider>
-      <AbilitiesProvider>
-        <SkillsProvider>
+      
+        
           <NavigationContainer>
             <App />
           </NavigationContainer>
-        </SkillsProvider>
-      </AbilitiesProvider>
+        
+      
     </CharacterProvider>
   )
 }
