@@ -12,7 +12,7 @@ import AbilitiesContext from '../context/AbilitiesContext'
 const SpellsScreen = () => {
     // Import contexts for char data and abilities
     const charData = useContext(CharacterContext).character
-    const abilityData = useContext(AbilitiesContext)
+    const abilityData = useContext(CharacterContext).characterAbilities
 
     // This block will be redundant as we clean up the contexts and clean up data storage
     // We'll likely want to save off the abilities and mods together in the context as separate vars
