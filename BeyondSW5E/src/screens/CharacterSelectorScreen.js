@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Button, TextInput } from 'react-native'
 import CharacterContext from '../context/CharacterContext'
 import jalenOrso from '../../data/jalenOrso2'
 import miltox from '../../data/miltox'
+import archifamel from '../../data/archifamel'
 
 const CharacterSelectorScreen = ({navigation}) => {
 
@@ -19,6 +20,7 @@ const CharacterSelectorScreen = ({navigation}) => {
 			<Text style={styles.headerStyle}>Choose Character</Text>
 			<Button title="Jalen Orso" onPress={ () => setChar(jalenOrso) }/>
 			<Button title="Miltox" onPress={ () => setChar(miltox) }/>
+			<Button title="Archifamel" onPress={ () => setChar(archifamel) }/>
 			<TextInput 
 				style={styles.input} 
 				placeholder="Enter character JSON here" 

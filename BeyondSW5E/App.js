@@ -46,6 +46,8 @@ function MyTabs() {
       <Tab.Screen name="Abilities" component={ AbilitiesScreen } />
       <Tab.Screen name="Skills" component={ SkillsScreen } />
       <Tab.Screen name="Inventory" component={ InventoryScreen } />
+      <Tab.Screen name="Force" component={ SpellsScreen } />
+      <Tab.Screen name="Features" component={ FeaturesScreen } />
     </Tab.Navigator>
     )
 }
