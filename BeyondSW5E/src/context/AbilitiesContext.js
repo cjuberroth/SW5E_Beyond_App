@@ -1,3 +1,4 @@
+/*
 import React, { useContext, useState, useEffect } from 'react'
 import CharacterContext from './CharacterContext'
 import swapi from '../api/swapi'
@@ -136,6 +137,7 @@ export const AbilitiesProvider = ({children}) => {
 
     useEffect(() => { searchApi_class() }, [])
 */
+/*
     console.log(charClass.classes[0].name + '- from json data -')
     if(!isEmpty(characterClass)){
     	console.log(characterClass[6].name + '- from class api -')
@@ -195,3 +197,4 @@ export const AbilitiesProvider = ({children}) => {
 }
 
 export default AbilitiesContext
+*/

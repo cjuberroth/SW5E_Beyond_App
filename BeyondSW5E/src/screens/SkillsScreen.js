@@ -9,8 +9,10 @@ import {FontAwesome} from '@expo/vector-icons'
 const SkillsScreen = () => {
 
     const characterSkills = useContext(CharacterContext).character.tweaks?.abilityScores
-    const characterMods = useContext(SkillsContext)
-    const characterProf = useContext(AbilitiesContext)
+    //const characterMods = useContext(SkillsContext)
+    //const characterProf = useContext(AbilitiesContext)
+    const characterMods = useContext(CharacterContext).characterSkills
+    const characterProf = useContext(CharacterContext).characterAbilities
 
     const numberPresent = function(score) {
         if(score >= 0) {

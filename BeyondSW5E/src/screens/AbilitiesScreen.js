@@ -6,8 +6,11 @@ import AbilitiesContext from '../context/AbilitiesContext'
 import SkillsContext from '../context/SkillsContext'
 
 const AbilitiesScreen = () => {
-    const characterAbilities = useContext(AbilitiesContext)
-    const characterMods = useContext(SkillsContext)
+    //const characterAbilities = useContext(AbilitiesContext)
+    //const characterMods = useContext(SkillsContext)
+    const characterAbilities = useContext(CharacterContext).characterAbilities
+    const characterMods = useContext(CharacterContext).characterSkills
+    const characterSaves = useContext(CharacterContext).characterSaves
 
     const numberPresent = function(score) {
         if(score >= 0) {
@@ -76,50 +79,61 @@ return (
             
             <Text style={styles.headerStyle}>{characterAbilities.name}</Text>
             <ImageBackground style={styles.imgBackground} source={require('../../assets/rebel-alliance2.png')}>
-            <View style={styles.parentStyle}>
-                <View style={styles.boxStyle}>
-                        <Text style={styles.textStyle}>Strength</Text>
-                        <Text style={styles.modStyle}>{numberPresent(characterMods.str_mod)}{characterMods.str_mod}</Text>
-                        <Text style={styles.textStyle}>{characterAbilities.abilitiesStrength}</Text>
-                    
+                <View style={styles.parentStyle}>
+                    <View style={styles.boxStyle}>
+                            <Text style={styles.textStyle}>Strength</Text>
+                            <Text style={styles.modStyle}>{numberPresent(characterMods.str_mod)}{characterMods.str_mod}</Text>
+                            <Text style={styles.textStyle}>{characterAbilities.abilitiesStrength}</Text>
+                        
+                    </View>
+                    <View style={styles.boxStyle}>
+                        
+                            <Text style={styles.textStyle}>Dexterity</Text>
+                            <Text style={styles.modStyle}>{numberPresent(characterMods.dex_mod)}{characterMods.dex_mod}</Text>
+                            <Text style={styles.textStyle}>{characterAbilities.abilitiesDexterity}</Text>
+                        
+                    </View>
+                    <View style={styles.boxStyle}>
+                        
+                            <Text style={styles.textStyle}>Constitution</Text>
+                            <Text style={styles.modStyle}>{numberPresent(characterMods.con_mod)}{characterMods.con_mod}</Text>
+                            <Text style={styles.textStyle}>{characterAbilities.abilitiesConstitution}</Text>
+                        
+                    </View>
+                    <View style={styles.boxStyle}>
+                        
+                            <Text style={styles.textStyle}>Intelligence</Text>
+                            <Text style={styles.modStyle}>{numberPresent(characterMods.int_mod)}{characterMods.int_mod}</Text>
+                            <Text style={styles.textStyle}>{characterAbilities.abilitiesIntelligence}</Text>
+                        
+                    </View>
+                    <View style={styles.boxStyle}>
+                        
+                            <Text style={styles.textStyle}>Wisdom</Text>
+                            <Text style={styles.modStyle}>{numberPresent(characterMods.wis_mod)}{characterMods.wis_mod}</Text>
+                            <Text style={styles.textStyle}>{characterAbilities.abilitiesWisdom}</Text>
+                        
+                    </View>
+                    <View style={styles.boxStyle}>
+                        
+                            <Text style={styles.textStyle}>Charisma</Text>
+                            <Text style={styles.modStyle}>{numberPresent(characterMods.cha_mod)}{characterMods.cha_mod}</Text>
+                            <Text style={styles.textStyle}>{characterAbilities.abilitiesCharisma}</Text>
+                        
+                    </View>
                 </View>
-                <View style={styles.boxStyle}>
-                    
-                        <Text style={styles.textStyle}>Dexterity</Text>
-                        <Text style={styles.modStyle}>{numberPresent(characterMods.dex_mod)}{characterMods.dex_mod}</Text>
-                        <Text style={styles.textStyle}>{characterAbilities.abilitiesDexterity}</Text>
-                    
-                </View>
-                <View style={styles.boxStyle}>
-                    
-                        <Text style={styles.textStyle}>Constitution</Text>
-                        <Text style={styles.modStyle}>{numberPresent(characterMods.con_mod)}{characterMods.con_mod}</Text>
-                        <Text style={styles.textStyle}>{characterAbilities.abilitiesConstitution}</Text>
-                    
-                </View>
-                <View style={styles.boxStyle}>
-                    
-                        <Text style={styles.textStyle}>Intelligence</Text>
-                        <Text style={styles.modStyle}>{numberPresent(characterMods.int_mod)}{characterMods.int_mod}</Text>
-                        <Text style={styles.textStyle}>{characterAbilities.abilitiesIntelligence}</Text>
-                    
-                </View>
-                <View style={styles.boxStyle}>
-                    
-                        <Text style={styles.textStyle}>Wisdom</Text>
-                        <Text style={styles.modStyle}>{numberPresent(characterMods.wis_mod)}{characterMods.wis_mod}</Text>
-                        <Text style={styles.textStyle}>{characterAbilities.abilitiesWisdom}</Text>
-                    
-                </View>
-                <View style={styles.boxStyle}>
-                    
-                        <Text style={styles.textStyle}>Charisma</Text>
-                        <Text style={styles.modStyle}>{numberPresent(characterMods.cha_mod)}{characterMods.cha_mod}</Text>
-                        <Text style={styles.textStyle}>{characterAbilities.abilitiesCharisma}</Text>
-                    
-                </View>
-            </View>
             </ImageBackground>
+            <View style={styles.parentStyle}>
+                <Text style={styles.headerStyle}>Saving Throws</Text>
+            </View>
+            <View style={styles.saveView}>
+                <Text style={styles.saveText}>Strength: {characterSaves.str_save}</Text>
+                <Text style={styles.saveText}>Dexterity: {characterSaves.dex_save}</Text>
+                <Text style={styles.saveText}>Constitution: {characterSaves.con_save}</Text>
+                <Text style={styles.saveText}>Intelligence: {characterSaves.int_save}</Text>
+                <Text style={styles.saveText}>Wisdom: {characterSaves.wis_save}</Text>
+                <Text style={styles.saveText}>Charisma: {characterSaves.cha_save}</Text>
+            </View>
         </View>
     
     )
@@ -166,6 +180,17 @@ const styles = StyleSheet.create({
     imgBackground: {
         width: '100%',
         //height: '100%' //this would need to be added back if going back to the individual symbols
+    },
+    saveView: {
+        alignItems: 'flex-start',
+        flexWrap: 'wrap',
+        justifyContent: 'space-evenly',
+        marginLeft: 15
+    },
+    saveText: {
+        color: 'white',
+        textAlign: 'left',
+        fontSize: 20
     }
 })
 

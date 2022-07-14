@@ -1,11 +1,14 @@
+/*
 import React, { useState, useContext } from 'react'
 import AbilitiesContext from './AbilitiesContext'
+import CharacterContext from './CharacterContext'
 
 const SkillsContext = React.createContext()
 
 export const SkillsProvider = ({children}) => {
 	
-	const characterAbilities = useContext(AbilitiesContext)
+	//const characterAbilities = useContext(AbilitiesContext)
+	const characterAbilities = useContext(CharacterContext)
 
 	const modifier = function(ability) {
         return Math.floor((ability-10)/2)
@@ -26,3 +29,4 @@ export const SkillsProvider = ({children}) => {
 }
 
 export default SkillsContext
+*/
