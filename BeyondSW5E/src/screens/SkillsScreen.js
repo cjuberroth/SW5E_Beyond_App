@@ -9,9 +9,8 @@ import {FontAwesome} from '@expo/vector-icons'
 const SkillsScreen = () => {
 
     const characterSkills = useContext(CharacterContext).character.tweaks?.abilityScores
-    //const characterMods = useContext(SkillsContext)
-    //const characterProf = useContext(AbilitiesContext)
-    const characterMods = useContext(CharacterContext).characterSkills
+    const characterInfo = useContext(CharacterContext).characterInformation
+    const characterMods = useContext(CharacterContext).characterMods
     const characterProf = useContext(CharacterContext).characterAbilities
 
     const numberPresent = function(score) {
@@ -24,7 +23,7 @@ const SkillsScreen = () => {
     
     return (
         <View style={styles.parentView}>
-            <Text style={styles.headerStyle}>{characterProf.name}</Text>
+            <Text style={styles.headerStyle}>{characterInfo.name}</Text>
             <View style={styles.rowStyle}>
                 <Text style={styles.profCol}>PROF</Text>
                 <Text style={styles.modCol}>MOD</Text>
@@ -37,8 +36,8 @@ const SkillsScreen = () => {
                     : <FontAwesome style={styles.icon} name="circle-o" />}
                 <Text style={styles.modCol}>DEX</Text>
                 <Text style={styles.skillCol}>Acrobatics</Text>
-                {characterSkills?.Dexterity?.skills?.Acrobatics?.proficiency === "Proficient"? <Text style={styles.bonusCol}>{numberPresent(characterMods.dex_mod + characterProf.prof)}{characterMods.dex_mod + characterProf.prof}</Text>
-                    : characterSkills?.Dexterity?.skills?.Acrobatics?.proficiency === "Expertise"? <Text style={styles.bonusCol}>{numberPresent(characterMods.dex_mod + (characterProf.prof * 2))}{characterMods.dex_mod + (characterProf.prof * 2)}</Text>
+                {characterSkills?.Dexterity?.skills?.Acrobatics?.proficiency === "Proficient"? <Text style={styles.bonusCol}>{numberPresent(characterMods.dex_mod + characterInfo.proficiency)}{characterMods.dex_mod + characterInfo.proficiency}</Text>
+                    : characterSkills?.Dexterity?.skills?.Acrobatics?.proficiency === "Expertise"? <Text style={styles.bonusCol}>{numberPresent(characterMods.dex_mod + (characterInfo.proficiency * 2))}{characterMods.dex_mod + (characterInfo.proficiency * 2)}</Text>
                     : <Text style={styles.bonusCol}>{numberPresent(characterMods.dex_mod)}{characterMods.dex_mod}</Text>
                 }
             </View>
@@ -48,8 +47,8 @@ const SkillsScreen = () => {
                     : <FontAwesome style={styles.icon} name="circle-o" />}
                 <Text style={styles.modCol}>WIS</Text>
                 <Text style={styles.skillCol}>Animal Handling</Text>
-                {characterSkills?.Wisdom?.skills?.animalHandling?.proficiency === "Proficient"? <Text style={styles.bonusCol}>{numberPresent(characterMods.wis_mod + characterProf.prof)}{characterMods.wis_mod + characterProf.prof}</Text>
-                    : characterSkills?.Wisdom?.skills?.animalHandling?.proficiency === "Expertise"? <Text style={styles.bonusCol}>{numberPresent(characterMods.wis_mod + (characterProf.prof * 2))}{characterMods.wis_mod + (characterProf.prof * 2)}</Text>
+                {characterSkills?.Wisdom?.skills?.animalHandling?.proficiency === "Proficient"? <Text style={styles.bonusCol}>{numberPresent(characterMods.wis_mod + characterInfo.proficiency)}{characterMods.wis_mod + characterInfo.proficiency}</Text>
+                    : characterSkills?.Wisdom?.skills?.animalHandling?.proficiency === "Expertise"? <Text style={styles.bonusCol}>{numberPresent(characterMods.wis_mod + (characterInfo.proficiency * 2))}{characterMods.wis_mod + (characterInfo.proficiency * 2)}</Text>
                     : <Text style={styles.bonusCol}>{numberPresent(characterMods.wis_mod)}{characterMods.wis_mod}</Text>
                 }
             </View>
@@ -59,8 +58,8 @@ const SkillsScreen = () => {
                     : <FontAwesome style={styles.icon} name="circle-o" />}
                 <Text style={styles.modCol}>STR</Text>
                 <Text style={styles.skillCol}>Athletics</Text>
-                {characterSkills?.Strength?.skills?.Athletics?.proficiency === "Proficient"? <Text style={styles.bonusCol}>{numberPresent(characterMods.str_mod + characterProf.prof)}{characterMods.str_mod + characterProf.prof}</Text>
-                    : characterSkills?.Strength?.skills?.Athletics?.proficiency === "Expertise"? <Text style={styles.bonusCol}>{numberPresent(characterMods.str_mod + (characterProf.prof * 2))}{characterMods.str_mod + (characterProf.prof * 2)}</Text>
+                {characterSkills?.Strength?.skills?.Athletics?.proficiency === "Proficient"? <Text style={styles.bonusCol}>{numberPresent(characterMods.str_mod + characterInfo.proficiency)}{characterMods.str_mod + characterInfo.proficiency}</Text>
+                    : characterSkills?.Strength?.skills?.Athletics?.proficiency === "Expertise"? <Text style={styles.bonusCol}>{numberPresent(characterMods.str_mod + (characterInfo.proficiency * 2))}{characterMods.str_mod + (characterInfo.proficiency * 2)}</Text>
                     : <Text style={styles.bonusCol}>{numberPresent(characterMods.str_mod)}{characterMods.str_mod}</Text>
                 }
             </View>
@@ -70,8 +69,8 @@ const SkillsScreen = () => {
                     : <FontAwesome style={styles.icon} name="circle-o" />                }
                 <Text style={styles.modCol}>CHA</Text>
                 <Text style={styles.skillCol}>Deception</Text>
-                {characterSkills?.Charisma?.skills?.Deception?.proficiency === "Proficient"? <Text style={styles.bonusCol}>{numberPresent(characterMods.cha_mod + characterProf.prof)}{characterMods.cha_mod + characterProf.prof}</Text>
-                    : characterSkills?.Charisma?.skills?.Deception?.proficiency === "Expertise"? <Text style={styles.bonusCol}>{numberPresent(characterMods.cha_mod + (characterProf.prof * 2))}{characterMods.cha_mod + (characterProf.prof * 2)}</Text>
+                {characterSkills?.Charisma?.skills?.Deception?.proficiency === "Proficient"? <Text style={styles.bonusCol}>{numberPresent(characterMods.cha_mod + characterInfo.proficiency)}{characterMods.cha_mod + characterInfo.proficiency}</Text>
+                    : characterSkills?.Charisma?.skills?.Deception?.proficiency === "Expertise"? <Text style={styles.bonusCol}>{numberPresent(characterMods.cha_mod + (characterInfo.proficiency * 2))}{characterMods.cha_mod + (characterInfo.proficiency * 2)}</Text>
                     : <Text style={styles.bonusCol}>{numberPresent(characterMods.cha_mod)}{characterMods.cha_mod}</Text>
                 }
             </View>
@@ -81,8 +80,8 @@ const SkillsScreen = () => {
                     : <FontAwesome style={styles.icon} name="circle-o" />}
                 <Text style={styles.modCol}>WIS</Text>
                 <Text style={styles.skillCol}>Insight</Text>
-                {characterSkills?.Wisdom?.skills?.Insight?.proficiency === "Proficient"? <Text style={styles.bonusCol}>{numberPresent(characterMods.wis_mod + characterProf.prof)}{characterMods.wis_mod + characterProf.prof}</Text>
-                    : characterSkills?.Wisdom?.skills?.Insight?.proficiency === "Expertise"? <Text style={styles.bonusCol}>{numberPresent(characterMods.wis_mod + (characterProf.prof * 2))}{characterMods.wis_mod + (characterProf.prof * 2)}</Text>
+                {characterSkills?.Wisdom?.skills?.Insight?.proficiency === "Proficient"? <Text style={styles.bonusCol}>{numberPresent(characterMods.wis_mod + characterInfo.proficiency)}{characterMods.wis_mod + characterInfo.proficiency}</Text>
+                    : characterSkills?.Wisdom?.skills?.Insight?.proficiency === "Expertise"? <Text style={styles.bonusCol}>{numberPresent(characterMods.wis_mod + (characterInfo.proficiency * 2))}{characterMods.wis_mod + (characterInfo.proficiency * 2)}</Text>
                     : <Text style={styles.bonusCol}>{numberPresent(characterMods.wis_mod)}{characterMods.wis_mod}</Text>
                 }
             </View>
@@ -92,8 +91,8 @@ const SkillsScreen = () => {
                     : <FontAwesome style={styles.icon} name="circle-o" />}
                 <Text style={styles.modCol}>CHA</Text>
                 <Text style={styles.skillCol}>Intimidation</Text>
-                {characterSkills?.Charisma?.skills?.Intimidation?.proficiency === "Proficient"? <Text style={styles.bonusCol}>{numberPresent(characterMods.cha_mod + characterProf.prof)}{characterMods.cha_mod + characterProf.prof}</Text>
-                    : characterSkills?.Charisma?.skills?.Intimidation?.proficiency === "Expertise"? <Text style={styles.bonusCol}>{numberPresent(characterMods.cha_mod + (characterProf.prof * 2))}{characterMods.cha_mod + (characterProf.prof * 2)}</Text>
+                {characterSkills?.Charisma?.skills?.Intimidation?.proficiency === "Proficient"? <Text style={styles.bonusCol}>{numberPresent(characterMods.cha_mod + characterInfo.proficiency)}{characterMods.cha_mod + characterInfo.proficiency}</Text>
+                    : characterSkills?.Charisma?.skills?.Intimidation?.proficiency === "Expertise"? <Text style={styles.bonusCol}>{numberPresent(characterMods.cha_mod + (characterInfo.proficiency * 2))}{characterMods.cha_mod + (characterInfo.proficiency * 2)}</Text>
                     : <Text style={styles.bonusCol}>{numberPresent(characterMods.cha_mod)}{characterMods.cha_mod}</Text>
                 }
             </View>
@@ -103,8 +102,8 @@ const SkillsScreen = () => {
                     : <FontAwesome style={styles.icon} name="circle-o" />}
                 <Text style={styles.modCol}>INT</Text>
                 <Text style={styles.skillCol}>Investigation</Text>
-                {characterSkills?.Intelligence?.skills?.Investigation?.proficiency === "Proficient"? <Text style={styles.bonusCol}>{numberPresent(characterMods.int_mod + characterProf.prof)}{characterMods.int_mod + characterProf.prof}</Text>
-                    : characterSkills?.Intelligence?.skills?.Investigation?.proficiency === "Expertise"? <Text style={styles.bonusCol}>{numberPresent(characterMods.int_mod + (characterProf.prof * 2))}{characterMods.int_mod + (characterProf.prof * 2)}</Text>
+                {characterSkills?.Intelligence?.skills?.Investigation?.proficiency === "Proficient"? <Text style={styles.bonusCol}>{numberPresent(characterMods.int_mod + characterInfo.proficiency)}{characterMods.int_mod + characterInfo.proficiency}</Text>
+                    : characterSkills?.Intelligence?.skills?.Investigation?.proficiency === "Expertise"? <Text style={styles.bonusCol}>{numberPresent(characterMods.int_mod + (characterInfo.proficiency * 2))}{characterMods.int_mod + (characterInfo.proficiency * 2)}</Text>
                     : <Text style={styles.bonusCol}>{numberPresent(characterMods.int_mod)}{characterMods.int_mod}</Text>
                 }
             </View>
@@ -114,8 +113,8 @@ const SkillsScreen = () => {
                     : <FontAwesome style={styles.icon} name="circle-o" />}
                 <Text style={styles.modCol}>INT</Text>
                 <Text style={styles.skillCol}>Lore</Text>
-                {characterSkills?.Intelligence?.skills?.Lore?.proficiency === "Proficient"? <Text style={styles.bonusCol}>{numberPresent(characterMods.int_mod + characterProf.prof)}{characterMods.int_mod + characterProf.prof}</Text>
-                    : characterSkills?.Intelligence?.skills?.Lore?.proficiency === "Expertise"? <Text style={styles.bonusCol}>{numberPresent(characterMods.int_mod + (characterProf.prof * 2))}{characterMods.int_mod + (characterProf.prof * 2)}</Text>
+                {characterSkills?.Intelligence?.skills?.Lore?.proficiency === "Proficient"? <Text style={styles.bonusCol}>{numberPresent(characterMods.int_mod + characterInfo.proficiency)}{characterMods.int_mod + characterInfo.proficiency}</Text>
+                    : characterSkills?.Intelligence?.skills?.Lore?.proficiency === "Expertise"? <Text style={styles.bonusCol}>{numberPresent(characterMods.int_mod + (characterInfo.proficiency * 2))}{characterMods.int_mod + (characterInfo.proficiency * 2)}</Text>
                     : <Text style={styles.bonusCol}>{numberPresent(characterMods.int_mod)}{characterMods.int_mod}</Text>
                 }
             </View>
@@ -125,8 +124,8 @@ const SkillsScreen = () => {
                     : <FontAwesome style={styles.icon} name="circle-o" />}
                 <Text style={styles.modCol}>WIS</Text>
                 <Text style={styles.skillCol}>Medicine</Text>
-                {characterSkills?.Wisdom?.skills?.Medicine?.proficiency === "Proficient"? <Text style={styles.bonusCol}>{numberPresent(characterMods.wis_mod + characterProf.prof)}{characterMods.wis_mod + characterProf.prof}</Text>
-                    : characterSkills?.Wisdom?.skills?.Medicine?.proficiency === "Expertise"? <Text style={styles.bonusCol}>{numberPresent(characterMods.wis_mod + (characterProf.prof * 2))}{characterMods.wis_mod + (characterProf.prof * 2)}</Text>
+                {characterSkills?.Wisdom?.skills?.Medicine?.proficiency === "Proficient"? <Text style={styles.bonusCol}>{numberPresent(characterMods.wis_mod + characterInfo.proficiency)}{characterMods.wis_mod + characterInfo.proficiency}</Text>
+                    : characterSkills?.Wisdom?.skills?.Medicine?.proficiency === "Expertise"? <Text style={styles.bonusCol}>{numberPresent(characterMods.wis_mod + (characterInfo.proficiency * 2))}{characterMods.wis_mod + (characterInfo.proficiency * 2)}</Text>
                     : <Text style={styles.bonusCol}>{numberPresent(characterMods.wis_mod)}{characterMods.wis_mod}</Text>
                 }
             </View>
@@ -136,8 +135,8 @@ const SkillsScreen = () => {
                     : <FontAwesome style={styles.icon} name="circle-o" />}
                 <Text style={styles.modCol}>WIS</Text>
                 <Text style={styles.skillCol}>Nature</Text>
-                {characterSkills?.Intelligence?.skills?.Nature?.proficiency === "Proficient"? <Text style={styles.bonusCol}>{numberPresent(characterMods.int_mod + characterProf.prof)}{characterMods.int_mod + characterProf.prof}</Text>
-                    : characterSkills?.Intelligence?.skills?.Nature?.proficiency === "Expertise"? <Text style={styles.bonusCol}>{numberPresent(characterMods.int_mod + (characterProf.prof * 2))}{characterMods.int_mod + (characterProf.prof * 2)}</Text>
+                {characterSkills?.Intelligence?.skills?.Nature?.proficiency === "Proficient"? <Text style={styles.bonusCol}>{numberPresent(characterMods.int_mod + characterInfo.proficiency)}{characterMods.int_mod + characterInfo.proficiency}</Text>
+                    : characterSkills?.Intelligence?.skills?.Nature?.proficiency === "Expertise"? <Text style={styles.bonusCol}>{numberPresent(characterMods.int_mod + (characterInfo.proficiency * 2))}{characterMods.int_mod + (characterInfo.proficiency * 2)}</Text>
                     : <Text style={styles.bonusCol}>{numberPresent(characterMods.int_mod)}{characterMods.int_mod}</Text>
                 }
             </View>
@@ -147,8 +146,8 @@ const SkillsScreen = () => {
                     : <FontAwesome style={styles.icon} name="circle-o" />}
                 <Text style={styles.modCol}>WIS</Text>
                 <Text style={styles.skillCol}>Perception</Text>
-                {characterSkills?.Wisdom?.skills?.Perception?.proficiency === "Proficient"? <Text style={styles.bonusCol}>{numberPresent(characterMods.wis_mod + characterProf.prof)}{characterMods.wis_mod + characterProf.prof}</Text>
-                    : characterSkills?.Wisdom?.skills?.Perception?.proficiency === "Expertise"? <Text style={styles.bonusCol}>{numberPresent(characterMods.wis_mod + (characterProf.prof * 2))}{characterMods.wis_mod + (characterProf.prof * 2)}</Text>
+                {characterSkills?.Wisdom?.skills?.Perception?.proficiency === "Proficient"? <Text style={styles.bonusCol}>{numberPresent(characterMods.wis_mod + characterInfo.proficiency)}{characterMods.wis_mod + characterInfo.proficiency}</Text>
+                    : characterSkills?.Wisdom?.skills?.Perception?.proficiency === "Expertise"? <Text style={styles.bonusCol}>{numberPresent(characterMods.wis_mod + (characterInfo.proficiency * 2))}{characterMods.wis_mod + (characterInfo.proficiency * 2)}</Text>
                     : <Text style={styles.bonusCol}>{numberPresent(characterMods.wis_mod)}{characterMods.wis_mod}</Text>
                 }
             </View>
@@ -158,8 +157,8 @@ const SkillsScreen = () => {
                     : <FontAwesome style={styles.icon} name="circle-o" />}
                 <Text style={styles.modCol}>CHA</Text>
                 <Text style={styles.skillCol}>Performance</Text>
-                {characterSkills?.Charisma?.skills?.Performance?.proficiency === "Proficient"? <Text style={styles.bonusCol}>{numberPresent(characterMods.cha_mod + characterProf.prof)}{characterMods.cha_mod + characterProf.prof}</Text>
-                    : characterSkills?.Charisma?.skills?.Performance?.proficiency === "Expertise"? <Text style={styles.bonusCol}>{numberPresent(characterMods.cha_mod + (characterProf.prof * 2))}{characterMods.cha_mod + (characterProf.prof * 2)}</Text>
+                {characterSkills?.Charisma?.skills?.Performance?.proficiency === "Proficient"? <Text style={styles.bonusCol}>{numberPresent(characterMods.cha_mod + characterInfo.proficiency)}{characterMods.cha_mod + characterInfo.proficiency}</Text>
+                    : characterSkills?.Charisma?.skills?.Performance?.proficiency === "Expertise"? <Text style={styles.bonusCol}>{numberPresent(characterMods.cha_mod + (characterInfo.proficiency * 2))}{characterMods.cha_mod + (characterInfo.proficiency * 2)}</Text>
                     : <Text style={styles.bonusCol}>{numberPresent(characterMods.cha_mod)}{characterMods.cha_mod}</Text>
                 }
             </View>
@@ -169,8 +168,8 @@ const SkillsScreen = () => {
                     : <FontAwesome style={styles.icon} name="circle-o" />}
                 <Text style={styles.modCol}>CHA</Text>
                 <Text style={styles.skillCol}>Persuasion</Text>
-                {characterSkills?.Charisma?.skills?.Persuasion?.proficiency === "Proficient"? <Text style={styles.bonusCol}>{numberPresent(characterMods.cha_mod + characterProf.prof)}{characterMods.cha_mod + characterProf.prof}</Text>
-                    : characterSkills?.Charisma?.skills?.Persuasion?.proficiency === "Expertise"? <Text style={styles.bonusCol}>{numberPresent(characterMods.cha_mod + (characterProf.prof * 2))}{characterMods.cha_mod + (characterProf.prof * 2)}</Text>
+                {characterSkills?.Charisma?.skills?.Persuasion?.proficiency === "Proficient"? <Text style={styles.bonusCol}>{numberPresent(characterMods.cha_mod + characterInfo.proficiency)}{characterMods.cha_mod + characterInfo.proficiency}</Text>
+                    : characterSkills?.Charisma?.skills?.Persuasion?.proficiency === "Expertise"? <Text style={styles.bonusCol}>{numberPresent(characterMods.cha_mod + (characterInfo.proficiency * 2))}{characterMods.cha_mod + (characterInfo.proficiency * 2)}</Text>
                     : <Text style={styles.bonusCol}>{numberPresent(characterMods.cha_mod)}{characterMods.cha_mod}</Text>
                 }
             </View>
@@ -180,8 +179,8 @@ const SkillsScreen = () => {
                     : <FontAwesome style={styles.icon} name="circle-o" />}
                 <Text style={styles.modCol}>INT</Text>
                 <Text style={styles.skillCol}>Piloting</Text>
-                {characterSkills?.Intelligence?.skills?.Piloting?.proficiency === "Proficient"? <Text style={styles.bonusCol}>{numberPresent(characterMods.int_mod + characterProf.prof)}{characterMods.int_mod + characterProf.prof}</Text>
-                    : characterSkills?.Intelligence?.skills?.Piloting?.proficiency === "Expertise"? <Text style={styles.bonusCol}>{numberPresent(characterMods.int_mod + (characterProf.prof * 2))}{characterMods.int_mod + (characterProf.prof * 2)}</Text>
+                {characterSkills?.Intelligence?.skills?.Piloting?.proficiency === "Proficient"? <Text style={styles.bonusCol}>{numberPresent(characterMods.int_mod + characterInfo.proficiency)}{characterMods.int_mod + characterInfo.proficiency}</Text>
+                    : characterSkills?.Intelligence?.skills?.Piloting?.proficiency === "Expertise"? <Text style={styles.bonusCol}>{numberPresent(characterMods.int_mod + (characterInfo.proficiency * 2))}{characterMods.int_mod + (characterInfo.proficiency * 2)}</Text>
                     : <Text style={styles.bonusCol}>{numberPresent(characterMods.int_mod)}{characterMods.int_mod}</Text>
                 }
             </View>
@@ -191,8 +190,8 @@ const SkillsScreen = () => {
                     : <FontAwesome style={styles.icon} name="circle-o" />}
                 <Text style={styles.modCol}>DEX</Text>
                 <Text style={styles.skillCol}>Sleight of Hand</Text>
-                {characterSkills?.Dexterity?.skills?.["Sleight of Hand"]?.proficiency === "Proficient"? <Text style={styles.bonusCol}>{numberPresent(characterMods.dex_mod + characterProf.prof)}{characterMods.dex_mod + characterProf.prof}</Text>
-                    : characterSkills?.Dexterity?.skills?.["Sleight of Hand"]?.proficiency === "Expertise"? <Text style={styles.bonusCol}>{numberPresent(characterMods.dex_mod + (characterProf.prof * 2))}{characterMods.dex_mod + (characterProf.prof * 2)}</Text>
+                {characterSkills?.Dexterity?.skills?.["Sleight of Hand"]?.proficiency === "Proficient"? <Text style={styles.bonusCol}>{numberPresent(characterMods.dex_mod + characterInfo.proficiency)}{characterMods.dex_mod + characterInfo.proficiency}</Text>
+                    : characterSkills?.Dexterity?.skills?.["Sleight of Hand"]?.proficiency === "Expertise"? <Text style={styles.bonusCol}>{numberPresent(characterMods.dex_mod + (characterInfo.proficiency * 2))}{characterMods.dex_mod + (characterInfo.proficiency * 2)}</Text>
                     : <Text style={styles.bonusCol}>{numberPresent(characterMods.dex_mod)}{characterMods.dex_mod}</Text>
                 }
             </View>
@@ -202,8 +201,8 @@ const SkillsScreen = () => {
                     : <FontAwesome style={styles.icon} name="circle-o" />}
                 <Text style={styles.modCol}>DEX</Text>
                 <Text style={styles.skillCol}>Stealth</Text>
-                {characterSkills?.Dexterity?.skills?.Stealth?.proficiency === "Proficient"? <Text style={styles.bonusCol}>{numberPresent(characterMods.dex_mod + characterProf.prof)}{characterMods.dex_mod + characterProf.prof}</Text>
-                    : characterSkills?.Dexterity?.skills?.Stealth?.proficiency === "Expertise"? <Text style={styles.bonusCol}>{numberPresent(characterMods.dex_mod + (characterProf.prof * 2))}{characterMods.dex_mod + (characterProf.prof * 2)}</Text>
+                {characterSkills?.Dexterity?.skills?.Stealth?.proficiency === "Proficient"? <Text style={styles.bonusCol}>{numberPresent(characterMods.dex_mod + characterInfo.proficiency)}{characterMods.dex_mod + characterInfo.proficiency}</Text>
+                    : characterSkills?.Dexterity?.skills?.Stealth?.proficiency === "Expertise"? <Text style={styles.bonusCol}>{numberPresent(characterMods.dex_mod + (characterInfo.proficiency * 2))}{characterMods.dex_mod + (characterInfo.proficiency * 2)}</Text>
                     : <Text style={styles.bonusCol}>{numberPresent(characterMods.dex_mod)}{characterMods.dex_mod}</Text>
                 }
             </View>
@@ -213,8 +212,8 @@ const SkillsScreen = () => {
                     : <FontAwesome style={styles.icon} name="circle-o" />}
                 <Text style={styles.modCol}>WIS</Text>
                 <Text style={styles.skillCol}>Survival</Text>
-                {characterSkills?.Wisdom?.skills?.Survival?.proficiency === "Proficient"? <Text style={styles.bonusCol}>{numberPresent(characterMods.wis_mod + characterProf.prof)}{characterMods.wis_mod + characterProf.prof}</Text>
-                    : characterSkills?.Wisdom?.skills?.Survival?.proficiency === "Expertise"? <Text style={styles.bonusCol}>{numberPresent(characterMods.wis_mod + (characterProf.prof * 2))}{characterMods.wis_mod + (characterProf.prof * 2)}</Text>
+                {characterSkills?.Wisdom?.skills?.Survival?.proficiency === "Proficient"? <Text style={styles.bonusCol}>{numberPresent(characterMods.wis_mod + characterInfo.proficiency)}{characterMods.wis_mod + characterInfo.proficiency}</Text>
+                    : characterSkills?.Wisdom?.skills?.Survival?.proficiency === "Expertise"? <Text style={styles.bonusCol}>{numberPresent(characterMods.wis_mod + (characterInfo.proficiency * 2))}{characterMods.wis_mod + (characterInfo.proficiency * 2)}</Text>
                     : <Text style={styles.bonusCol}>{numberPresent(characterMods.wis_mod)}{characterMods.wis_mod}</Text>
                 }
             </View>
@@ -224,8 +223,8 @@ const SkillsScreen = () => {
                     : <FontAwesome style={styles.icon} name="circle-o" />}
                 <Text style={styles.modCol}>INT</Text>
                 <Text style={styles.skillCol}>Technology</Text>
-                {characterSkills?.Intelligence?.skills?.Technology?.proficiency === "Proficient"? <Text style={styles.bonusCol}>{numberPresent(characterMods.int_mod + characterProf.prof)}{characterMods.int_mod + characterProf.prof}</Text>
-                    : characterSkills?.Intelligence?.skills?.Technology?.proficiency === "Expertise"? <Text style={styles.bonusCol}>{numberPresent(characterMods.int_mod + (characterProf.prof * 2))}{characterMods.int_mod + (characterProf.prof * 2)}</Text>
+                {characterSkills?.Intelligence?.skills?.Technology?.proficiency === "Proficient"? <Text style={styles.bonusCol}>{numberPresent(characterMods.int_mod + characterInfo.proficiency)}{characterMods.int_mod + characterInfo.proficiency}</Text>
+                    : characterSkills?.Intelligence?.skills?.Technology?.proficiency === "Expertise"? <Text style={styles.bonusCol}>{numberPresent(characterMods.int_mod + (characterInfo.proficiency * 2))}{characterMods.int_mod + (characterInfo.proficiency * 2)}</Text>
                     : <Text style={styles.bonusCol}>{numberPresent(characterMods.int_mod)}{characterMods.int_mod}</Text>
                 }
             </View>

@@ -8,8 +8,9 @@ import SkillsContext from '../context/SkillsContext'
 const AbilitiesScreen = () => {
     //const characterAbilities = useContext(AbilitiesContext)
     //const characterMods = useContext(SkillsContext)
+    const characterInfo = useContext(CharacterContext).characterInformation
     const characterAbilities = useContext(CharacterContext).characterAbilities
-    const characterMods = useContext(CharacterContext).characterSkills
+    const characterMods = useContext(CharacterContext).characterMods
     const characterSaves = useContext(CharacterContext).characterSaves
 
     const numberPresent = function(score) {
@@ -77,8 +78,8 @@ return (
     
         <View style={styles.containerStyle}>    
             
-            <Text style={styles.headerStyle}>{characterAbilities.name}</Text>
-            <ImageBackground style={styles.imgBackground} source={require('../../assets/rebel-alliance2.png')}>
+            <Text style={styles.headerStyle}>{characterInfo.name}</Text>
+            <ImageBackground style={styles.imgBackground} source={require('../../assets/rebel-alliance.png')}>
                 <View style={styles.parentStyle}>
                     <View style={styles.boxStyle}>
                             <Text style={styles.textStyle}>Strength</Text>
@@ -142,7 +143,7 @@ return (
 const styles = StyleSheet.create({
     containerStyle: {
         flex: 1,
-        backgroundColor: 'gray'
+        backgroundColor: '#263238'
     },
     parentStyle: {
         alignItems: 'flex-start',
@@ -172,7 +173,7 @@ const styles = StyleSheet.create({
     },
     headerStyle: {
         fontSize: 30,
-        backgroundColor: 'gray',
+        backgroundColor: '#263238',
         color: 'white',
         textAlign: 'center',
         marginBottom: 15

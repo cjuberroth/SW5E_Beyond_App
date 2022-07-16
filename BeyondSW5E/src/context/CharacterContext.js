@@ -15,51 +15,91 @@ const CharacterContext = React.createContext({
 
 export const CharacterProvider = ({children}) => {
 	const [character, setCharacter] = useState(charAbilitiesImport)
-	const charSpecies = character
-	const charAbilities = character
-	const charProficiency = character
-	const charClass = character
+	const charData = character
 
+	//helper function to check if an object key has an empty value
 	const isEmpty = (obj) => {
 		return Object.keys(obj).length === 0
 	}
 
-	const [characterSpecies, setCharacterSpecies] = useState([])
-	const [characterClass, setCharacterClass] = useState([])
+	//helper function to calculate mods
+	const modifier = function(ability) {
+        return Math.floor((ability-10)/2)
+    }
+
+	//flagging functions
+	const isForceClass = (charClass) => {
+		for(i = 0; i < api_Class.length; i++) {
+			if(api_Class[i].name === charClass) {
+				if(api_Class[i].levelChanges[1]["Force Powers Known"] != undefined) {
+					return true
+				} else {
+					return false
+				}
+			}
+		}
+	}
+
+	const isTechClass = (charClass) => {
+		for(i = 0; i < api_Class.length; i++) {
+			if(api_Class[i].name === charClass) {
+				if(api_Class[i].levelChanges[1]["Tech Powers Known"] != undefined) {
+					return true
+				} else {
+					return false
+				}
+			}
+		}
+	}
+
+	const [api_Species, set_api_Species] = useState([])
+	const [api_Class, set_api_Class] = useState([])
+	const [api_Feat, set_api_Feat] = useState([])
+	const [api_Power, set_api_Power] = useState([])
 
 	const searchApi = async () => {
         var response = await swapi.get('/species')
-        setCharacterSpecies(response.data)
+        set_api_Species(response.data)
         var response2 = await swapi.get('/class')
-        setCharacterClass(response2.data)
+        set_api_Class(response2.data)
+		var response3 = await swapi.get('/feat')
+		set_api_Feat(response3.data)
+		var response4 = await swapi.get('/power')
+		set_api_Power(response4.data)
     }
 
     useEffect(() => { searchApi() }, [])
 
-	if(isEmpty(charSpecies.species.abilityScoreImprovement)) {
-
-		var species = charSpecies.species.name
+	//calculate ability scores
+	if(isEmpty(charData.species.abilityScoreImprovement)) {
+		//several species present a choice of ability score improvements
+		//if not presented with a choice, get the increases from the species api
+		
+		var species = character.species.name
 		var speciesIncrease = []
 
-	    for(let i = 0; i < characterSpecies.length; i++) {
-	    	if (characterSpecies[i].name === species) {
-		    	for(let j = 0; j < characterSpecies[i].abilitiesIncreased.length; j++) {
-		    		for(let k = 0; k < characterSpecies[i].abilitiesIncreased[j].length; k++) {
-		    			for(let l = 0; l < characterSpecies[i].abilitiesIncreased[j][k].abilities.length; l++) {
-		    				speciesIncrease.push({stat: characterSpecies[i].abilitiesIncreased[j][k].abilities[l], up: characterSpecies[i].abilitiesIncreased[j][k].amount})
+		//this loop creates an array of objects that give the stat and increase from the api
+	    for(let i = 0; i < api_Species.length; i++) {
+	    	if (api_Species[i].name === species) {
+		    	for(let j = 0; j < api_Species[i].abilitiesIncreased.length; j++) {
+		    		for(let k = 0; k < api_Species[i].abilitiesIncreased[j].length; k++) {
+		    			for(let l = 0; l < api_Species[i].abilitiesIncreased[j][k].abilities.length; l++) {
+		    				speciesIncrease.push({stat: api_Species[i].abilitiesIncreased[j][k].abilities[l], up: api_Species[i].abilitiesIncreased[j][k].amount})
 		    			}
 		    		}
 		    	}
 		    }
 	    }
 
-	    var strength = charAbilities.baseAbilityScores.Strength
-		var dexterity = charAbilities.baseAbilityScores.Dexterity
-		var constitution = charAbilities.baseAbilityScores.Constitution
-		var intelligence = charAbilities.baseAbilityScores.Intelligence
-		var wisdom = charAbilities.baseAbilityScores.Wisdom
-		var charisma = charAbilities.baseAbilityScores.Charisma
+		//set the base ability scores from the JSON
+		var strength = charData.baseAbilityScores.Strength
+		var dexterity = charData.baseAbilityScores.Dexterity
+		var constitution = charData.baseAbilityScores.Constitution
+		var intelligence = charData.baseAbilityScores.Intelligence
+		var wisdom = charData.baseAbilityScores.Wisdom
+		var charisma = charData.baseAbilityScores.Charisma
 
+		//add the increases to the base ability scores
 		for(let i = 0; i < speciesIncrease.length; i++) {
 			switch (speciesIncrease[i].stat) {
 				case 'Strength':
@@ -83,14 +123,16 @@ export const CharacterProvider = ({children}) => {
 			}
 		}
 	} else {
-		var strength = charAbilities.baseAbilityScores.Strength + (charAbilities.species.abilityScoreImprovement.Strength ?? 0)
-		var dexterity = charAbilities.baseAbilityScores.Dexterity + (charAbilities.species.abilityScoreImprovement.Dexterity ?? 0)
-		var constitution = charAbilities.baseAbilityScores.Constitution + (charAbilities.species.abilityScoreImprovement.Constitution ?? 0)
-		var intelligence = charAbilities.baseAbilityScores.Intelligence + (charAbilities.species.abilityScoreImprovement.Intelligence ?? 0)
-		var wisdom = charAbilities.baseAbilityScores.Wisdom + (charAbilities.species.abilityScoreImprovement.Wisdom ?? 0)
-		var charisma = charAbilities.baseAbilityScores.Charisma + (charAbilities.species.abilityScoreImprovement.Charisma ?? 0)
+		//this block handles species that give a choice via data from the JSON
+		var strength = charData.baseAbilityScores.Strength + (charData.species.abilityScoreImprovement.Strength ?? 0)
+		var dexterity = charData.baseAbilityScores.Dexterity + (charData.species.abilityScoreImprovement.Dexterity ?? 0)
+		var constitution = charData.baseAbilityScores.Constitution + (charData.species.abilityScoreImprovement.Constitution ?? 0)
+		var intelligence = charData.baseAbilityScores.Intelligence + (charData.species.abilityScoreImprovement.Intelligence ?? 0)
+		var wisdom = charData.baseAbilityScores.Wisdom + (charData.species.abilityScoreImprovement.Wisdom ?? 0)
+		var charisma = charData.baseAbilityScores.Charisma + (charData.species.abilityScoreImprovement.Charisma ?? 0)
 	}
 
+	//variables to capture ability score increases from leveling
 	var strengthIncrease = 0
 	var dexterityIncrease = 0
 	var constitutionIncrease = 0
@@ -98,28 +140,29 @@ export const CharacterProvider = ({children}) => {
 	var wisdomIncrease = 0
 	var charismaIncrease = 0
 
-	for(let i = 0; i < charAbilities.classes.length; i++) {
-		for (let y = 0; y < charAbilities.classes[i].abilityScoreImprovements.length; y++) {
-			if(charAbilities.classes[i].abilityScoreImprovements[y].type === "Ability Score Improvement") {
-				for (let j = 0; j < charAbilities.classes[i].abilityScoreImprovements[y].abilitiesIncreased.length; j++) {
-					switch (charAbilities.classes[i].abilityScoreImprovements[y].abilitiesIncreased[j].name) {
+	//this loop captures all ability score increases resulting from leveling
+	for(let i = 0; i < charData.classes.length; i++) {
+		for (let y = 0; y < charData.classes[i].abilityScoreImprovements.length; y++) {
+			if(charData.classes[i].abilityScoreImprovements[y].type === "Ability Score Improvement") {
+				for (let j = 0; j < charData.classes[i].abilityScoreImprovements[y].abilitiesIncreased.length; j++) {
+					switch (charData.classes[i].abilityScoreImprovements[y].abilitiesIncreased[j].name) {
 						case 'Strength':
-							strengthIncrease = strengthIncrease + charAbilities.classes[i].abilityScoreImprovements[y].abilitiesIncreased[j].value
+							strengthIncrease = strengthIncrease + charData.classes[i].abilityScoreImprovements[y].abilitiesIncreased[j].value
 							break
 						case 'Dexterity':
-							dexterityIncrease = dexterityIncrease + charAbilities.classes[i].abilityScoreImprovements[y].abilitiesIncreased[j].value
+							dexterityIncrease = dexterityIncrease + charData.classes[i].abilityScoreImprovements[y].abilitiesIncreased[j].value
 							break
 						case 'Constitution':
-							constitutionIncrease = constitutionIncrease + charAbilities.classes[i].abilityScoreImprovements[y].abilitiesIncreased[j].value
+							constitutionIncrease = constitutionIncrease + charData.classes[i].abilityScoreImprovements[y].abilitiesIncreased[j].value
 							break
 						case 'Intelligence':
-							intelligenceIncrease = intelligenceIncrease + charAbilities.classes[i].abilityScoreImprovements[y].abilitiesIncreased[j].value
+							intelligenceIncrease = intelligenceIncrease + charData.classes[i].abilityScoreImprovements[y].abilitiesIncreased[j].value
 							break
 						case 'Wisdom':
-							wisdomIncrease = wisdomIncrease + charAbilities.classes[i].abilityScoreImprovements[y].abilitiesIncreased[j].value
+							wisdomIncrease = wisdomIncrease + charData.classes[i].abilityScoreImprovements[y].abilitiesIncreased[j].value
 							break
 						case 'Charisma':
-							charismaIncrease = charismaIncrease + charAbilities.classes[i].abilityScoreImprovements[y].abilitiesIncreased[j].value
+							charismaIncrease = charismaIncrease + charData.classes[i].abilityScoreImprovements[y].abilitiesIncreased[j].value
 							break
 					}
 				}
@@ -127,7 +170,7 @@ export const CharacterProvider = ({children}) => {
 		}
 	}
 
-	//calculate ability score
+	//calculate and set the ability scores
 	strength = strength + (strengthIncrease ?? 0)
 	dexterity = dexterity + (dexterityIncrease ?? 0)
 	constitution = constitution + (constitutionIncrease ?? 0)
@@ -139,13 +182,14 @@ export const CharacterProvider = ({children}) => {
 	var charLevel = []
 	var charProf = 0
 
-	for (let i = 0; i < charProficiency.classes.length; i++) {
-		charLevel.push(charProficiency.classes[i].levels)
+	for (let i = 0; i < charData.classes.length; i++) {
+		charLevel.push(charData.classes[i].levels)
 	}
 
 	charLevel = charLevel.reduce((a, b) => a + b, 0)
 
-	//calculate proficiency based on character level
+	//calculate proficiency based on character level 
+	//(there may be a more elegant way to do this; doesn't account for homebrew)
 	switch (true) {
 		case (charLevel < 5):
 			charProf = 2
@@ -164,30 +208,32 @@ export const CharacterProvider = ({children}) => {
 			break
 	}
 
-	//check for overrides
-	if (charAbilities.tweaks?.abilityScores?.Strength?.score?.override) {strength = charAbilities.tweaks?.abilityScores?.Strength?.score?.override}
-	if (charAbilities.tweaks?.abilityScores?.Dexterity?.score?.override) {dexterity = charAbilities.tweaks?.abilityScores?.Dexterity?.score?.override}
-	if (charAbilities.tweaks?.abilityScores?.Constitution?.score?.override) {constitution = charAbilities.tweaks?.abilityScores?.Constitution?.score?.override}
-	if (charAbilities.tweaks?.abilityScores?.Intelligence?.score?.override) {intelligence = charAbilities.tweaks?.abilityScores?.Intelligence?.score?.override}
-	if (charAbilities.tweaks?.abilityScores?.Wisdom?.score?.override) {wisdom = charAbilities.tweaks?.abilityScores?.Wisdom?.score?.override}
-	if (charAbilities.tweaks?.abilityScores?.Charisma?.score?.override) {charisma = charAbilities.tweaks?.abilityScores?.Charisma?.score?.override}
+	//check for overrides from website character creator
+	if (charData.tweaks?.abilityScores?.Strength?.score?.override) {strength = charData.tweaks?.abilityScores?.Strength?.score?.override}
+	if (charData.tweaks?.abilityScores?.Dexterity?.score?.override) {dexterity = charData.tweaks?.abilityScores?.Dexterity?.score?.override}
+	if (charData.tweaks?.abilityScores?.Constitution?.score?.override) {constitution = charData.tweaks?.abilityScores?.Constitution?.score?.override}
+	if (charData.tweaks?.abilityScores?.Intelligence?.score?.override) {intelligence = charData.tweaks?.abilityScores?.Intelligence?.score?.override}
+	if (charData.tweaks?.abilityScores?.Wisdom?.score?.override) {wisdom = charData.tweaks?.abilityScores?.Wisdom?.score?.override}
+	if (charData.tweaks?.abilityScores?.Charisma?.score?.override) {charisma = charData.tweaks?.abilityScores?.Charisma?.score?.override}
 
+	//object for exporting character information
+	const characterInformation = {
+		name: charData.name,
+		proficiency: charProf,
+	}
+	
+	//object for exporting ability scores
 	const characterAbilities = {
 		abilitiesStrength: strength,
 		abilitiesDexterity: dexterity,
 		abilitiesConstitution: constitution,
 		abilitiesIntelligence: intelligence,
 		abilitiesWisdom: wisdom,
-		abilitiesCharisma: charisma,
-		prof: charProf,
-		name: charAbilities.name
+		abilitiesCharisma: charisma
 	}
 
-	const modifier = function(ability) {
-        return Math.floor((ability-10)/2)
-    }
-
-    const characterSkills = {
+	//object for exporting ability mods
+    const characterMods = {
     	str_mod: modifier(characterAbilities.abilitiesStrength),
     	dex_mod: modifier(characterAbilities.abilitiesDexterity),
     	con_mod: modifier(characterAbilities.abilitiesConstitution),
@@ -196,11 +242,12 @@ export const CharacterProvider = ({children}) => {
     	cha_mod: modifier(characterAbilities.abilitiesCharisma)
     }
 
-    //get first class's saving throw proficiency(ies)
-	if(!isEmpty(characterClass)){
-		for(let i = 0; i < characterClass.length; i++){
-			if (characterClass[i].name === charClass.classes[0].name) {
-				var charSave = characterClass[i].savingThrows
+    
+	//get first class's saving throw proficiency(ies)
+	if(!isEmpty(api_Class)){
+		for(let i = 0; i < api_Class.length; i++){
+			if (api_Class[i].name === charData.classes[0].name) {
+				var charSave = api_Class[i].savingThrows
 			}
 		}
 	}
@@ -208,37 +255,38 @@ export const CharacterProvider = ({children}) => {
     //calculate saves
 	if(charSave) {
 		if (charSave.includes("Strength")) {
-			var strSave = characterSkills.str_mod + charProf
+			var strSave = characterMods.str_mod + charProf
 		} else {
-			var strSave = characterSkills.str_mod
+			var strSave = characterMods.str_mod
 		}
 		if (charSave.includes("Dexterity")) {
-			var dexSave = characterSkills.dex_mod + charProf
+			var dexSave = characterMods.dex_mod + charProf
 		} else {
-			var dexSave = characterSkills.dex_mod
+			var dexSave = characterMods.dex_mod
 		}
 		if (charSave.includes("Constitution")) {
-			var conSave = characterSkills.con_mod + charProf
+			var conSave = characterMods.con_mod + charProf
 		} else {
-			var conSave = characterSkills.con_mod
+			var conSave = characterMods.con_mod
 		}
 		if (charSave.includes("Intelligence")) {
-			var intSave = characterSkills.int_mod + charProf
+			var intSave = characterMods.int_mod + charProf
 		} else {
-			var intSave = characterSkills.int_mod
+			var intSave = characterMods.int_mod
 		}
 		if (charSave.includes("Wisdom")) {
-			var wisSave = characterSkills.wis_mod + charProf
+			var wisSave = characterMods.wis_mod + charProf
 		} else {
-			var wisSave = characterSkills.wis_mod
+			var wisSave = characterMods.wis_mod
 		}
 		if (charSave.includes("Charisma")) {
-			var chaSave = characterSkills.cha_mod + charProf
+			var chaSave = characterMods.cha_mod + charProf
 		} else {
-			var chaSave = characterSkills.cha_mod
+			var chaSave = characterMods.cha_mod
 		}
 	}
 	
+	//object to export saving throw scores
 	const characterSaves = {
 		str_save: strSave,
 		dex_save: dexSave,
@@ -248,7 +296,60 @@ export const CharacterProvider = ({children}) => {
 		cha_save: chaSave
 	}
 
-	return <CharacterContext.Provider value={{character, setCharacter, characterAbilities, characterSkills, characterSaves}}>
+	//capture which feats have been taken via the JSON
+	var featsFromClass = []
+	for(let i = 0; i < charData.classes.length; i++) {
+		for (let y = 0; y < charData.classes[i].abilityScoreImprovements.length; y++) {
+			if(charData.classes[i].abilityScoreImprovements[y].type === "Feat") {
+				featsFromClass.push(charData.classes[i].abilityScoreImprovements[y].name)
+			}
+		}
+	}
+
+	//capture any class archetypes taken via the JSON
+	var classArchetype = []
+	for(let i = 0; i < charData.classes.length; i++) {
+		if(charData.classes[i].archetype?.name != undefined) {
+			classArchetype.push(charData.classes[i].archetype?.name)
+		}
+	}
+
+	//capture the character background feat via the JSON
+	var backgroundFeat = [charData.background.feat.name]
+
+	//combine the background feat and class feats into a single list
+	const charFeats = featsFromClass.concat(backgroundFeat)
+
+	//object to export character feat information
+	const characterFeats = {
+		archetype: classArchetype,
+		feats: charFeats
+	}
+
+	
+	//for some reason, the loop below is causing the app to not load 07162022AY
+	var classLevel = ''
+	//calculate max force points
+	var forcePoints = []
+	for(k = 0; k < charData.classes.length; k++) {
+		if(isForceClass(charData.classes[k].name)) {
+			classLevel = charData.classes[k].levels
+			for(j = 0; j < api_Class.length; j++) {
+				if(api_Class[j].name === charData.classes[k].name) {
+					forcePoints.push(parseInt((api_Class[j]["levelChanges"][classLevel]["Force Points"]), 10))
+				}
+			}
+		}
+	}
+	let numOr0 = n => isNaN(n) ? 0 : n
+	forcePoints = forcePoints.reduce((a, b) => numOr0(a) + numOr0(b), 0)
+
+	const characterCasting = {
+		forcePoints: forcePoints
+	}
+
+
+	return <CharacterContext.Provider value={{character, setCharacter, characterInformation, characterAbilities, characterMods, characterSaves, characterFeats, characterCasting}}>
 		{children}
 	</CharacterContext.Provider>
 }

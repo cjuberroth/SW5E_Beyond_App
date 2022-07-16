@@ -1,42 +1,92 @@
 import React, { useContext } from 'react'
 import { Text, View, StyleSheet, FlatList } from 'react-native'
 import CharacterContext from '../context/CharacterContext'
+import FeatureCardList from '../components/FeatureCardList'
 
 const FeaturesScreen = () => {
-    const charData = useContext(CharacterContext).character
+    const archetype = useContext(CharacterContext).characterFeats.archetype
+    const feats = useContext(CharacterContext).characterFeats.feats
 
-    // This block of code needs to be modified to tolerate multi classed characters
-    var featsFromClass = []
-    const classASI = charData.classes[0].abilityScoreImprovements
-    for(let i = 0; i < classASI.length; i++){
-        if(classASI[i].type == "Feat"){
-            featsFromClass.push(classASI[i].name)
-        }
+    if (archetype != '') {
+        return (
+            <View style = { styles.screenContainer }>
+                <Text style = { styles.headerStyle }>Features/Traits Screen</Text>
+                <Text style = { styles.headerStyle }>Archetypes:</Text>
+                <FlatList
+                    data = { archetype }
+                    renderItem = {({ item }) => {
+                        return <Text>{ item }</Text>
+                    }}
+                />
+                <Text style = { styles.headerStyle }>Feats</Text>
+                <Text>Displaying {feats.length} items.</Text>
+                <FlatList
+                    data = { feats }
+                    renderItem = {({ item }) => {
+                        return <Text>{ item }</Text>
+                    }}
+                />
+                {
+                    feats.length === 0 
+                    ? <Text>No feats</Text> 
+                    : <FeatureCardList 
+                        feats = { feats }
+                    />
+                }
+            </View>
+        )
+    } else {
+        return (
+            <View style = { styles.screenContainer }>
+                <Text style = { styles.headerStyle }>Features/Traits Screen</Text>
+                <Text style = { styles.headerStyle }>Archetypes</Text>
+                <Text>None</Text>
+                <Text style = { styles.headerStyle }>Feats</Text>
+                <Text>Displaying {feats.length} items.</Text>
+                <FlatList
+                    data = { feats }
+                    renderItem = {({ item }) => {
+                        return <Text>{ item }</Text>
+                    }}
+                />
+                {
+                    feats.length === 0 
+                    ? <Text>No feats</Text> 
+                    : <FeatureCardList 
+                        feats = { feats }
+                    />
+                }
+            </View>
+        )
     }
-    const classArchetype = charData.classes[0].archetype?.name
-
-    // Need to run some tests to identify the options that exist to take the background feat
-    // out of allowed formatting with this line of code
-    const backgroundFeat = [charData.background.feat.name]
-
-    // Additionally, this is not the cleanest way of writing the code that we could use.
-    const feats = featsFromClass.concat(backgroundFeat)
-
-    return (
-        <View>
-            <Text>Features/Traits Screen</Text>
-            <Text>Archetype: { classArchetype }</Text>
-            <Text>Feats</Text>
-            <FlatList
-                data = { feats }
-                renderItem = {({ item }) => {
-                    return <Text>{ item }</Text>
-                }}
-            />
-        </View>
-    )
 }
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    screenContainer: {
+        alignItems: 'center',
+        flex: 1
+    },
+    headerStyle: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        alignSelf: 'center'
+    }
+})
 
 export default FeaturesScreen
+/*
+<FlatList
+                    data = { feats }
+                    renderItem = {({ item }) => {
+                        return <Text>{ item }</Text>
+                    }}
+                />
+
+<Text>Feats</Text>
+                <FlatList
+                    data = { feats }
+                    renderItem = {({ item }) => {
+                        return <Text>{ item }</Text>
+                    }}
+                />
+*/

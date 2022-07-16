@@ -12,16 +12,15 @@ import AbilitiesContext from '../context/AbilitiesContext'
 const SpellsScreen = () => {
     // Import contexts for char data and abilities
     const charData = useContext(CharacterContext).character
-    const abilityData = useContext(CharacterContext).characterAbilities
-
-    // This block will be redundant as we clean up the contexts and clean up data storage
-    // We'll likely want to save off the abilities and mods together in the context as separate vars
-    const wisdomForceMod = Math.floor((abilityData.abilitiesWisdom - 10) / 2) + abilityData.prof
-    const charismaForceMod = Math.floor((abilityData.abilitiesCharisma - 10) / 2) + abilityData.prof
+    const charInfo = useContext(CharacterContext).characterInformation
+    const wisdomForceMod = useContext(CharacterContext).characterMods.wis_mod
+    const charismaForceMod = useContext(CharacterContext).characterMods.cha_mod
+    const charCasting = useContext(CharacterContext).characterCasting
 
     // This block is not yet dynamic for different force classes at this time. There will need to be an API call somewhere which
     // allows us to access the class specific data for force points
-    const maxForcePoints = charData.classes[0].levels * 3 + Math.max(wisdomForceMod, charismaForceMod) - abilityData.prof
+    //const maxForcePoints = charData.classes[0].levels * 3 + Math.max(wisdomForceMod, charismaForceMod) - charInfo.proficiency
+    const maxForcePoints = charCasting.forcePoints
     const currentForcePoints = maxForcePoints - charData.currentStats.forcePointsUsed
 
     const wisdomForceSave = 8 + wisdomForceMod

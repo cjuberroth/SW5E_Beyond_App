@@ -4,6 +4,7 @@ import CharacterContext from '../context/CharacterContext'
 import jalenOrso from '../../data/jalenOrso2'
 import miltox from '../../data/miltox'
 import archifamel from '../../data/archifamel'
+import theebisRoh from '../../data/theebisRoh'
 
 const CharacterSelectorScreen = ({navigation}) => {
 
@@ -21,6 +22,7 @@ const CharacterSelectorScreen = ({navigation}) => {
 			<Button title="Jalen Orso" onPress={ () => setChar(jalenOrso) }/>
 			<Button title="Miltox" onPress={ () => setChar(miltox) }/>
 			<Button title="Archifamel" onPress={ () => setChar(archifamel) }/>
+			<Button title="Theebis Roh" onPress={ () => setChar(theebisRoh) }/>
 			<TextInput 
 				style={styles.input} 
 				placeholder="Enter character JSON here" 

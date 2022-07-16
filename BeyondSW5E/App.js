@@ -30,13 +30,13 @@ function MyTabs() {
     <Tab.Navigator 
       tabBarPosition="bottom"
       screenOptions={{
-        tabBarActiveTintColor: 'white',
-        tabBarInactiveTintColor: 'black',
+        tabBarActiveTintColor: '#ffffff',
+        tabBarInactiveTintColor: '#455a64',
         tabBarLabelStyle: { fontSize: 12 },
         tabBarScrollEnabled: true,
         tabBarBounces: true,
         tabBarStyle: {
-          backgroundColor: 'gray'
+          backgroundColor: '#263238'
         },
         tabBarItemStyle: {
           width: 100
@@ -57,7 +57,7 @@ const StackNavigator = createStackNavigator({
     SW5EBeyond: MyTabs},{
       defaultNavigationOptions: {
         headerStyle: {
-          backgroundColor: 'gray'
+          backgroundColor: '#263238'
         },
         headerTintColor: 'white'
       }
