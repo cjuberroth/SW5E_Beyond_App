@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native'
 import Dialog, { DialogTitle, DialogContent, DialogFooter, DialogButton, SlideAnimation, ScaleAnimation} from 'react-native-popup-dialog'
+import CharacterContext from '../context/CharacterContext'
 
 const ItemCard = ({ name, cost, category, source, description }) => {
     const [slideAnimationDialog, setSlideAnimationDialog] = useState(false)

@@ -56,19 +56,83 @@ export const CharacterProvider = ({children}) => {
 	const [api_Class, set_api_Class] = useState([])
 	const [api_Feat, set_api_Feat] = useState([])
 	const [api_Power, set_api_Power] = useState([])
+	const [api_Archetype, set_api_Archetype] = useState([])
+	const [api_ArmorProperty, set_api_ArmorProperty] = useState([])
+	const [api_Background, set_api_Background] = useState([])
+	const [api_Conditions, set_api_Conditions] = useState([])
+	//EnhancedItem API is not working currently 07172022
+	//const [api_EnhancedItem, set_api_EnhancedItem] = useState([])
+	const [api_Equipment, set_api_Equipment] = useState([])
+	const [api_Feature, set_api_Feature] = useState([])
+	const [api_FightingMastery, set_api_FightingMastery] = useState([])
+	const [api_FightingStyle, set_api_FightingStyle] = useState([])
+	const [api_LightsaberForm, set_api_LightsaberForm] = useState([])
+	const [api_Maneuvers, set_api_Maneuvers] = useState([])
+	const [api_WeaponFocus, set_api_WeaponFocus] = useState([])
+	const [api_WeaponProperty, set_api_WeaponProperty] = useState([])
+	const [api_WeaponSupremacy, set_api_WeaponSupremacy] = useState([])
 
 	const searchApi = async () => {
         var response = await swapi.get('/species')
         set_api_Species(response.data)
-        var response2 = await swapi.get('/class')
-        set_api_Class(response2.data)
-		var response3 = await swapi.get('/feat')
-		set_api_Feat(response3.data)
-		var response4 = await swapi.get('/power')
-		set_api_Power(response4.data)
+		//console.log("Species call run")
+        response = await swapi.get('/class')
+        set_api_Class(response.data)
+		//console.log("Class call run")
+		response = await swapi.get('/Feat')
+		set_api_Feat(response.data)
+		//console.log("Feat call run")
+		response = await swapi.get('/power')
+		set_api_Power(response.data)
+		//console.log("Power call run")
+		response = await swapi.get('/archetype')
+		set_api_Archetype(response.data)
+		//console.log("Archetype call run")
+		response = await swapi.get('/ArmorProperty')
+		set_api_ArmorProperty(response.data)
+		//console.log("ArmorProperty call run")
+		response = await swapi.get('/background')
+		set_api_Background(response.data)
+		//console.log("Background call run")
+		response = await swapi.get('/conditions')
+		set_api_Conditions(response.data)
+		//console.log("Conditions call run")
+		/*
+		response = await swapi.get('/enhancedItem')
+		set_api_EnhancedItem(response.data)
+		//console.log("EnhancedItem call run")
+		*/
+		response = await swapi.get('/equipment')
+		set_api_Equipment(response.data)
+		//console.log("Equipment call run")
+		response = await swapi.get('/Feature')
+		set_api_Feature(response.data)
+		//console.log("Feature call run")
+		response = await swapi.get('/FightingMastery')
+		set_api_FightingMastery(response.data)
+		//console.log("FightingMastery call run")
+		response = await swapi.get('/FightingStyle')
+		set_api_FightingStyle(response.data)
+		//console.log("FightingStyle call run")
+		response = await swapi.get('/LightsaberForm')
+		set_api_LightsaberForm(response.data)
+		//console.log("LightsaberForm call run")
+		response = await swapi.get('/Maneuvers')
+		set_api_Maneuvers(response.data)
+		//console.log("Maneuvers call run")
+		response = await swapi.get('/WeaponFocus')
+		set_api_WeaponFocus(response.data)
+		//console.log("WeaponFocus call run")
+		response = await swapi.get('/WeaponProperty')
+		set_api_WeaponProperty(response.data)
+		//console.log("WeaponProperty call run")
+		response = await swapi.get('/WeaponSupremacy')
+		set_api_WeaponSupremacy(response.data)
+		//console.log("WeaponSupremacy call run")
     }
 
     useEffect(() => { searchApi() }, [])
+	
 
 	//calculate ability scores
 	if(isEmpty(charData.species.abilityScoreImprovement)) {
@@ -343,9 +407,24 @@ export const CharacterProvider = ({children}) => {
 	}
 	let numOr0 = n => isNaN(n) ? 0 : n
 	forcePoints = forcePoints.reduce((a, b) => numOr0(a) + numOr0(b), 0)
+	//need to add wisdom or charisma modifier to forcePoints
+	//not sure how to make that decision yet; 5e website doesn't have a place where
+	//the decision is made, so it may just be taking the highest mod of the two
 
+	//object to export character force casting information
 	const characterCasting = {
 		forcePoints: forcePoints
+	}
+
+	var equipmentList = charData.equipment.concat(charData.customEquipment)
+	for(i = 0; i < equipmentList.length; i++) {
+		for(j = 0; j < equipmentList.length; j++) {
+			if(i != j) {
+				if(equipmentList[i].name === equipmentList[j].name) {
+					console.log(equipmentList[i].name)
+				}
+			}
+		}
 	}
 
 
