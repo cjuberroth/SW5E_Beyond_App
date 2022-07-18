@@ -16,6 +16,7 @@ const CharacterContext = React.createContext({
 export const CharacterProvider = ({children}) => {
 	const [character, setCharacter] = useState(charAbilitiesImport)
 	const charData = character
+	const [isLoaded, setIsLoaded] = useState(false)
 
 	//helper function to check if an object key has an empty value
 	const isEmpty = (obj) => {
@@ -51,88 +52,113 @@ export const CharacterProvider = ({children}) => {
 			}
 		}
 	}
-
-	const [api_Species, set_api_Species] = useState([])
-	const [api_Class, set_api_Class] = useState([])
-	const [api_Feat, set_api_Feat] = useState([])
-	const [api_Power, set_api_Power] = useState([])
-	const [api_Archetype, set_api_Archetype] = useState([])
-	const [api_ArmorProperty, set_api_ArmorProperty] = useState([])
-	const [api_Background, set_api_Background] = useState([])
-	const [api_Conditions, set_api_Conditions] = useState([])
+	
+	var api_Species = []
+	var api_Class = []
+	var api_Feat = []
+	var api_Power = []
+	var api_Archetype = []
+	var api_ArmorProperty = []
+	var api_Background = []
+	var api_Conditions = []
 	//EnhancedItem API is not working currently 07172022
-	//const [api_EnhancedItem, set_api_EnhancedItem] = useState([])
-	const [api_Equipment, set_api_Equipment] = useState([])
-	const [api_Feature, set_api_Feature] = useState([])
-	const [api_FightingMastery, set_api_FightingMastery] = useState([])
-	const [api_FightingStyle, set_api_FightingStyle] = useState([])
-	const [api_LightsaberForm, set_api_LightsaberForm] = useState([])
-	const [api_Maneuvers, set_api_Maneuvers] = useState([])
-	const [api_WeaponFocus, set_api_WeaponFocus] = useState([])
-	const [api_WeaponProperty, set_api_WeaponProperty] = useState([])
-	const [api_WeaponSupremacy, set_api_WeaponSupremacy] = useState([])
-
+	//var [api_EnhancedItem, set_api_EnhancedItem] = []
+	var api_Equipment = []
+	var api_Feature = []
+	var api_FightingMastery = []
+	var api_FightingStyle = []
+	var api_LightsaberForm = []
+	var api_Maneuvers = []
+	var api_WeaponFocus = []
+	var api_WeaponProperty = []
+	var api_WeaponSupremacy = []
+	
+	//this method is not working to capture the api data for some reason
 	const searchApi = async () => {
         var response = await swapi.get('/species')
-        set_api_Species(response.data)
-		//console.log("Species call run")
-        response = await swapi.get('/class')
-        set_api_Class(response.data)
-		//console.log("Class call run")
+		//console.log(response)
+        api_Species = response.data
+		console.log("Species loaded")
+        response = await swapi.get ('/class')
+        api_Class = response.data
+		console.log("Class loaded")
 		response = await swapi.get('/Feat')
-		set_api_Feat(response.data)
-		//console.log("Feat call run")
+		api_Feat = response.data
+		console.log("Feat loaded")
 		response = await swapi.get('/power')
-		set_api_Power(response.data)
-		//console.log("Power call run")
+		api_Power = response.data
+		console.log("Power loaded")
 		response = await swapi.get('/archetype')
-		set_api_Archetype(response.data)
-		//console.log("Archetype call run")
+		api_Archetype = response.data
+		console.log("Archetype loaded")
 		response = await swapi.get('/ArmorProperty')
-		set_api_ArmorProperty(response.data)
-		//console.log("ArmorProperty call run")
+		api_ArmorProperty = response.data
+		console.log("ArmorProperty loaded")
 		response = await swapi.get('/background')
-		set_api_Background(response.data)
-		//console.log("Background call run")
+		api_Background = response.data
+		console.log("Background loaded")
 		response = await swapi.get('/conditions')
-		set_api_Conditions(response.data)
-		//console.log("Conditions call run")
+		api_Conditions = response.data
+		console.log("Conditions loaded")
 		/*
 		response = await swapi.get('/enhancedItem')
-		set_api_EnhancedItem(response.data)
-		//console.log("EnhancedItem call run")
+		api_EnhancedItem = response.data
 		*/
 		response = await swapi.get('/equipment')
-		set_api_Equipment(response.data)
-		//console.log("Equipment call run")
+		api_Equipment = response.data
+		console.log("Equipment loaded")
 		response = await swapi.get('/Feature')
-		set_api_Feature(response.data)
-		//console.log("Feature call run")
+		api_Feature = response.data
+		console.log("Feature loaded")
 		response = await swapi.get('/FightingMastery')
-		set_api_FightingMastery(response.data)
-		//console.log("FightingMastery call run")
+		api_FightingMastery = response.data
+		console.log("FightingMastery loaded")
 		response = await swapi.get('/FightingStyle')
-		set_api_FightingStyle(response.data)
-		//console.log("FightingStyle call run")
+		api_FightingStyle = response.data
+		console.log("FightingStyle loaded")
 		response = await swapi.get('/LightsaberForm')
-		set_api_LightsaberForm(response.data)
-		//console.log("LightsaberForm call run")
+		api_LightsaberForm = response.data
+		console.log("LightsaberForm loaded")
 		response = await swapi.get('/Maneuvers')
-		set_api_Maneuvers(response.data)
-		//console.log("Maneuvers call run")
+		api_Maneuvers = response.data
+		console.log("Maneuvers loaded")
 		response = await swapi.get('/WeaponFocus')
-		set_api_WeaponFocus(response.data)
-		//console.log("WeaponFocus call run")
+		api_WeaponFocus = response.data
+		console.log("WeaponFocus loaded")
 		response = await swapi.get('/WeaponProperty')
-		set_api_WeaponProperty(response.data)
-		//console.log("WeaponProperty call run")
+		api_WeaponProperty = response.data
+		console.log("WeaponProperty loaded")
 		response = await swapi.get('/WeaponSupremacy')
-		set_api_WeaponSupremacy(response.data)
-		//console.log("WeaponSupremacy call run")
+		api_WeaponSupremacy = response.data
+		console.log("WeaponSupremacy loaded")
+		console.log("APIs finished")
+		setIsLoaded(true)
     }
 
     useEffect(() => { searchApi() }, [])
+
+	console.log(api_Class)
 	
+	//object to export raw api data
+	const apiData = {
+		archetype: api_Archetype,
+		armorProperty: api_ArmorProperty,
+		background: api_Background,
+		class: api_Class,
+		conditions: api_Conditions,
+		equipment: api_Equipment,
+		feat: api_Feat,
+		feature: api_Feature,
+		fightingMastery: api_FightingMastery,
+		fightingStyle: api_FightingStyle,
+		lightsaberForm: api_LightsaberForm,
+		maneuvers: api_Maneuvers,
+		power: api_Power,
+		species: api_Species,
+		weaponFocus: api_WeaponFocus,
+		weaponProperty: api_WeaponProperty,
+		weaponSupremacy: api_WeaponSupremacy
+	}
 
 	//calculate ability scores
 	if(isEmpty(charData.species.abilityScoreImprovement)) {
@@ -315,7 +341,7 @@ export const CharacterProvider = ({children}) => {
 			}
 		}
 	}
-
+	
     //calculate saves
 	if(charSave) {
 		if (charSave.includes("Strength")) {
@@ -361,6 +387,8 @@ export const CharacterProvider = ({children}) => {
 	}
 
 	//capture which feats have been taken via the JSON
+	//this is currently creating an array, which is not what the feature card is looking for
+	//need to get the whole object, not just the name
 	var featsFromClass = []
 	for(let i = 0; i < charData.classes.length; i++) {
 		for (let y = 0; y < charData.classes[i].abilityScoreImprovements.length; y++) {
@@ -379,7 +407,7 @@ export const CharacterProvider = ({children}) => {
 	}
 
 	//capture the character background feat via the JSON
-	var backgroundFeat = [charData.background.feat.name]
+	var backgroundFeat = charData.background.feat.name
 
 	//combine the background feat and class feats into a single list
 	const charFeats = featsFromClass.concat(backgroundFeat)
@@ -427,8 +455,7 @@ export const CharacterProvider = ({children}) => {
 		}
 	}
 
-
-	return <CharacterContext.Provider value={{character, setCharacter, characterInformation, characterAbilities, characterMods, characterSaves, characterFeats, characterCasting}}>
+	return <CharacterContext.Provider value={{character, setCharacter, characterInformation, characterAbilities, characterMods, characterSaves, characterFeats, characterCasting, apiData}}>
 		{children}
 	</CharacterContext.Provider>
 }

@@ -6,6 +6,7 @@ import FeatureCardList from '../components/FeatureCardList'
 const FeaturesScreen = () => {
     const archetype = useContext(CharacterContext).characterFeats.archetype
     const feats = useContext(CharacterContext).characterFeats.feats
+    const apiFeats = useContext(CharacterContext).apiData.feat
 
     if (archetype != '') {
         return (
