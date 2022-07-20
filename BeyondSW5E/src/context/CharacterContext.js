@@ -53,91 +53,68 @@ export const CharacterProvider = ({children}) => {
 		}
 	}
 	
-	var api_Species = []
-	var api_Class = []
-	var api_Feat = []
-	var api_Power = []
-	var api_Archetype = []
-	var api_ArmorProperty = []
-	var api_Background = []
-	var api_Conditions = []
+	const [api_Species, set_api_Species] = useState([])
+	const [api_Class, set_api_Class] = useState([])
+	const [api_Feat, set_api_Feat] = useState([])
+	const [api_Power, set_api_Power] = useState([])
+	const [api_Archetype, set_api_Archetype] = useState([])
+	const [api_ArmorProperty, set_api_ArmorProperty] = useState([])
+	const [api_Background, set_api_Background] = useState([])
+	const [api_Conditions, set_api_Conditions] = useState([])
 	//EnhancedItem API is not working currently 07172022
-	//var [api_EnhancedItem, set_api_EnhancedItem] = []
-	var api_Equipment = []
-	var api_Feature = []
-	var api_FightingMastery = []
-	var api_FightingStyle = []
-	var api_LightsaberForm = []
-	var api_Maneuvers = []
-	var api_WeaponFocus = []
-	var api_WeaponProperty = []
-	var api_WeaponSupremacy = []
-	
-	//this method is not working to capture the api data for some reason
+	//const [api_EnhancedItem, set_api_EnhancedItem] = useState([])
+	const [api_Equipment, set_api_Equipment] = useState([])
+	const [api_Feature, set_api_Feature] = useState([])
+	const [api_FightingMastery, set_api_FightingMastery] = useState([])
+	const [api_FightingStyle, set_api_FightingStyle] = useState([])
+	const [api_LightsaberForm, set_api_LightsaberForm] = useState([])
+	const [api_Maneuvers, set_api_Maneuvers] = useState([])
+	const [api_WeaponFocus, set_api_WeaponFocus] = useState([])
+	const [api_WeaponProperty, set_api_WeaponProperty] = useState([])
+	const [api_WeaponSupremacy, set_api_WeaponSupremacy] = useState([])
+
 	const searchApi = async () => {
         var response = await swapi.get('/species')
-		//console.log(response)
-        api_Species = response.data
-		console.log("Species loaded")
-        response = await swapi.get ('/class')
-        api_Class = response.data
-		console.log("Class loaded")
+        set_api_Species(response.data)
+        response = await swapi.get('/class')
+        set_api_Class(response.data)
 		response = await swapi.get('/Feat')
-		api_Feat = response.data
-		console.log("Feat loaded")
+		set_api_Feat(response.data)
 		response = await swapi.get('/power')
-		api_Power = response.data
-		console.log("Power loaded")
+		set_api_Power(response.data)
 		response = await swapi.get('/archetype')
-		api_Archetype = response.data
-		console.log("Archetype loaded")
+		set_api_Archetype(response.data)
 		response = await swapi.get('/ArmorProperty')
-		api_ArmorProperty = response.data
-		console.log("ArmorProperty loaded")
+		set_api_ArmorProperty(response.data)
 		response = await swapi.get('/background')
-		api_Background = response.data
-		console.log("Background loaded")
+		set_api_Background(response.data)
 		response = await swapi.get('/conditions')
-		api_Conditions = response.data
-		console.log("Conditions loaded")
+		set_api_Conditions(response.data)
 		/*
 		response = await swapi.get('/enhancedItem')
-		api_EnhancedItem = response.data
+		set_api_EnhancedItem(response.data)
 		*/
 		response = await swapi.get('/equipment')
-		api_Equipment = response.data
-		console.log("Equipment loaded")
+		set_api_Equipment(response.data)
 		response = await swapi.get('/Feature')
-		api_Feature = response.data
-		console.log("Feature loaded")
+		set_api_Feature(response.data)
 		response = await swapi.get('/FightingMastery')
-		api_FightingMastery = response.data
-		console.log("FightingMastery loaded")
+		set_api_FightingMastery(response.data)
 		response = await swapi.get('/FightingStyle')
-		api_FightingStyle = response.data
-		console.log("FightingStyle loaded")
+		set_api_FightingStyle(response.data)
 		response = await swapi.get('/LightsaberForm')
-		api_LightsaberForm = response.data
-		console.log("LightsaberForm loaded")
+		set_api_LightsaberForm(response.data)
 		response = await swapi.get('/Maneuvers')
-		api_Maneuvers = response.data
-		console.log("Maneuvers loaded")
+		set_api_Maneuvers(response.data)
 		response = await swapi.get('/WeaponFocus')
-		api_WeaponFocus = response.data
-		console.log("WeaponFocus loaded")
+		set_api_WeaponFocus(response.data)
 		response = await swapi.get('/WeaponProperty')
-		api_WeaponProperty = response.data
-		console.log("WeaponProperty loaded")
+		set_api_WeaponProperty(response.data)
 		response = await swapi.get('/WeaponSupremacy')
-		api_WeaponSupremacy = response.data
-		console.log("WeaponSupremacy loaded")
-		console.log("APIs finished")
-		setIsLoaded(true)
+		set_api_WeaponSupremacy(response.data)
     }
 
-    useEffect(() => { searchApi() }, [])
-
-	console.log(api_Class)
+	useEffect(() => { searchApi() }, [])
 	
 	//object to export raw api data
 	const apiData = {
@@ -387,41 +364,50 @@ export const CharacterProvider = ({children}) => {
 	}
 
 	//capture which feats have been taken via the JSON
-	//this is currently creating an array, which is not what the feature card is looking for
-	//need to get the whole object, not just the name
-	var featsFromClass = []
+	var charFeats = []
 	for(let i = 0; i < charData.classes.length; i++) {
 		for (let y = 0; y < charData.classes[i].abilityScoreImprovements.length; y++) {
 			if(charData.classes[i].abilityScoreImprovements[y].type === "Feat") {
-				featsFromClass.push(charData.classes[i].abilityScoreImprovements[y].name)
+				if (api_Feat != '') {
+					for (let j = 0; j < api_Feat.length; j++) {
+							if (api_Feat[j].name === charData.classes[i].abilityScoreImprovements[y].name) {
+								charFeats.push(api_Feat[j])
+							}
+					}	
+				}
 			}
-		}
-	}
-
-	//capture any class archetypes taken via the JSON
-	var classArchetype = []
-	for(let i = 0; i < charData.classes.length; i++) {
-		if(charData.classes[i].archetype?.name != undefined) {
-			classArchetype.push(charData.classes[i].archetype?.name)
 		}
 	}
 
 	//capture the character background feat via the JSON
 	var backgroundFeat = charData.background.feat.name
+	for (i = 0; i < api_Feat.length; i++) {
+		if (api_Feat[i].name === backgroundFeat) {
+			charFeats.push(api_Feat[i])
+		}
+	}
 
-	//combine the background feat and class feats into a single list
-	const charFeats = featsFromClass.concat(backgroundFeat)
+	//capture any class archetypes taken via the JSON
+	var charArchetype = []
+	for(let i = 0; i < charData.classes.length; i++) {
+		if(charData.classes[i].archetype?.name != undefined) {
+			//charArchetype.push(charData.classes[i].archetype?.name)
+			for (j = 0; j < api_Archetype.length; j++) {
+				if (api_Archetype[j].name === charData.classes[i].archetype?.name) {
+					charArchetype.push(api_Archetype[j])
+				}
+			}
+		}
+	}
 
-	//object to export character feat information
+	//object to export character feat/archetype information
 	const characterFeats = {
-		archetype: classArchetype,
+		archetype: charArchetype,
 		feats: charFeats
 	}
 
-	
-	//for some reason, the loop below is causing the app to not load 07162022AY
-	var classLevel = ''
 	//calculate max force points
+	var classLevel = ''
 	var forcePoints = []
 	for(k = 0; k < charData.classes.length; k++) {
 		if(isForceClass(charData.classes[k].name)) {
@@ -435,27 +421,58 @@ export const CharacterProvider = ({children}) => {
 	}
 	let numOr0 = n => isNaN(n) ? 0 : n
 	forcePoints = forcePoints.reduce((a, b) => numOr0(a) + numOr0(b), 0)
-	//need to add wisdom or charisma modifier to forcePoints
-	//not sure how to make that decision yet; 5e website doesn't have a place where
-	//the decision is made, so it may just be taking the highest mod of the two
+	forcePoints = forcePoints + Math.max(characterMods.wis_mod, characterMods.cha_mod)
 
-	//object to export character force casting information
-	const characterCasting = {
-		forcePoints: forcePoints
-	}
-
-	var equipmentList = charData.equipment.concat(charData.customEquipment)
-	for(i = 0; i < equipmentList.length; i++) {
-		for(j = 0; j < equipmentList.length; j++) {
-			if(i != j) {
-				if(equipmentList[i].name === equipmentList[j].name) {
-					console.log(equipmentList[i].name)
-				}
+	//get force powers known
+	var forcePowers = []
+	for (m = 0; m < charData.classes.length; m++) {
+		if (isForceClass(charData.classes[m].name)) {
+			for (j = 0; j < charData.classes[m].forcePowers.length; j++) {
+				forcePowers.push(charData.classes[m].forcePowers[j])
 			}
 		}
 	}
 
-	return <CharacterContext.Provider value={{character, setCharacter, characterInformation, characterAbilities, characterMods, characterSaves, characterFeats, characterCasting, apiData}}>
+	var powerNames = []
+	for (i = 0; i < api_Power.length; i++) {
+		powerNames[i] = api_Power[i]["name"]
+	}
+
+	var forcePowersData = []
+	for (i = 0; i < forcePowers.length; i++) {
+		if (powerNames.includes(forcePowers[i])) {
+			forcePowersData.push(api_Power.filter(api_Power => {
+				return api_Power.name === forcePowers[i]
+			}))
+		}
+	}
+
+	//object to export character force casting information
+	const characterCasting = {
+		forcePoints: forcePoints,
+		forcePowers: forcePowers,
+		forcePowersData: forcePowersData
+	}
+
+	//capture character inventory via the JSON
+	var equipmentList = charData.equipment.concat(charData.customEquipment)
+	var equipmentData = []
+	for(let i = 0; i < equipmentList.length; i++) {
+		if (api_Equipment != '') {
+			for (let j = 0; j < api_Equipment.length; j++) {
+					if (api_Equipment[j].name === equipmentList[i].name) {
+						equipmentData.push(api_Equipment[j])
+					}
+			}	
+		}
+	}
+
+	//object to export equipment data
+	const characterEquipment = {
+		equipment: equipmentData
+	}
+
+	return <CharacterContext.Provider value={{character, setCharacter, characterInformation, characterAbilities, characterMods, characterSaves, characterFeats, characterCasting, apiData, characterEquipment}}>
 		{children}
 	</CharacterContext.Provider>
 }

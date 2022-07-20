@@ -234,7 +234,7 @@ const SkillsScreen = () => {
 
 const styles = StyleSheet.create({
     parentView: {
-        backgroundColor: 'gray',
+        backgroundColor: '#263238',
         flex: 1
     },
     headerStyle: {

@@ -6,27 +6,21 @@ import FeatureCardList from '../components/FeatureCardList'
 const FeaturesScreen = () => {
     const archetype = useContext(CharacterContext).characterFeats.archetype
     const feats = useContext(CharacterContext).characterFeats.feats
-    const apiFeats = useContext(CharacterContext).apiData.feat
-
+    
     if (archetype != '') {
         return (
             <View style = { styles.screenContainer }>
                 <Text style = { styles.headerStyle }>Features/Traits Screen</Text>
                 <Text style = { styles.headerStyle }>Archetypes:</Text>
-                <FlatList
-                    data = { archetype }
-                    renderItem = {({ item }) => {
-                        return <Text>{ item }</Text>
-                    }}
-                />
+                {
+                    archetype.length === 0 
+                    ? <Text>No archetype</Text> 
+                    : <FeatureCardList 
+                        feats = { archetype }
+                    />
+                }
                 <Text style = { styles.headerStyle }>Feats</Text>
                 <Text>Displaying {feats.length} items.</Text>
-                <FlatList
-                    data = { feats }
-                    renderItem = {({ item }) => {
-                        return <Text>{ item }</Text>
-                    }}
-                />
                 {
                     feats.length === 0 
                     ? <Text>No feats</Text> 
@@ -44,12 +38,6 @@ const FeaturesScreen = () => {
                 <Text>None</Text>
                 <Text style = { styles.headerStyle }>Feats</Text>
                 <Text>Displaying {feats.length} items.</Text>
-                <FlatList
-                    data = { feats }
-                    renderItem = {({ item }) => {
-                        return <Text>{ item }</Text>
-                    }}
-                />
                 {
                     feats.length === 0 
                     ? <Text>No feats</Text> 

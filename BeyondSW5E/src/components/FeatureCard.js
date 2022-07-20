@@ -26,6 +26,7 @@ const FeatureCard = ({ name, description, source }) => {
                 setSlideAnimationDialog(false);
               }}
               visible={slideAnimationDialog}
+              width={.85}
               dialogTitle={
                 <DialogTitle
                   title = { name }
@@ -49,7 +50,8 @@ const FeatureCard = ({ name, description, source }) => {
 const styles = StyleSheet.create({
     cardHeaders: {
         fontWeight: 'bold',
-        fontSize: 18
+        fontSize: 18,
+        textAlign: 'center'
     },
     buttonStyle: {
         width: 200,

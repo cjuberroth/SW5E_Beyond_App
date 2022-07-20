@@ -5,7 +5,8 @@ import ItemCardList from '../components/ItemCardList'
 
 const InventoryScreen = () => {
     const charData = useContext(CharacterContext).character
-    const equipment = charData.equipment.concat(charData.customEquipment)
+    //const equipment = charData.equipment.concat(charData.customEquipment)
+    const equipment = useContext(CharacterContext).characterEquipment.equipment
 
     return (
         <View style = { styles.screenContainer }>

@@ -11,7 +11,7 @@ const FeatureCardList = ({ feats }) => {
                 renderItem={({ item }) => {
                     return <FeatureCard
                                 name = { item.name }
-                                description = { item.description }
+                                description = { item.text }
                                 source = { item.contentSource }
                             />
                 }}
@@ -21,7 +21,7 @@ const FeatureCardList = ({ feats }) => {
 }
 
 const styles = StyleSheet.create({
-
+    
 })
 
 export default FeatureCardList
