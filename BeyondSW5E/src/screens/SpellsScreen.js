@@ -12,20 +12,18 @@ import CharacterContext from '../context/CharacterContext'
 const SpellsScreen = () => {
     // Import contexts for char data
     const charData = useContext(CharacterContext).character
-    const charInfo = useContext(CharacterContext).characterInformation
-    const charCasting = useContext(CharacterContext).characterCasting
+    const forcePoints = useContext(CharacterContext).characterCasting.forcePoints
     const powers = useContext(CharacterContext).characterCasting.forcePowersData
     const charMods = useContext(CharacterContext).characterMods
 
-    const maxForcePoints = charCasting.forcePoints
-    const currentForcePoints = maxForcePoints - charData.currentStats.forcePointsUsed
-
+    const currentForcePoints = forcePoints - charData.currentStats.forcePointsUsed
     const wisdomForceSave = 8 + charMods.wis_mod
     const charismaForceSave = 8 + charMods.cha_mod
+    
     return (
         <View style = { styles.screenContainer }>
             <View>
-                <Text>Force Points: { currentForcePoints } / { maxForcePoints }</Text>
+                <Text>Force Points: { currentForcePoints } / { forcePoints }</Text>
                 <Text>Force Modifier: WIS +{ charMods.wis_mod } / CHA +{ charMods.cha_mod }</Text>
                 <Text>Force Save: WIS { wisdomForceSave } / CHA { charismaForceSave }</Text>
             </View>

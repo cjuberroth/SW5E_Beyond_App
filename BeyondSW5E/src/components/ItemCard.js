@@ -36,6 +36,7 @@ const ItemCard = ({ name, cost, category, source, description }) => {
                 setSlideAnimationDialog(false);
               }}
               visible={slideAnimationDialog}
+              width={.85}
               dialogTitle={
                 <DialogTitle
                   title = { name }

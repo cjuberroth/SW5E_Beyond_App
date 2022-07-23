@@ -3,6 +3,7 @@ import { View, FlatList, StyleSheet } from 'react-native'
 import PowerCard from '../components/PowerCard'
 
 const PowerCardList = ({ powers }) => {
+    //console.log(powers.name)
     return (
         <View style = {{flex:1}}>
             <FlatList

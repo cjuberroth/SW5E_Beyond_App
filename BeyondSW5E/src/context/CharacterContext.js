@@ -16,7 +16,6 @@ const CharacterContext = React.createContext({
 export const CharacterProvider = ({children}) => {
 	const [character, setCharacter] = useState(charAbilitiesImport)
 	const charData = character
-	const [isLoaded, setIsLoaded] = useState(false)
 
 	//helper function to check if an object key has an empty value
 	const isEmpty = (obj) => {
@@ -257,6 +256,7 @@ export const CharacterProvider = ({children}) => {
 
 	//calculate proficiency based on character level 
 	//(there may be a more elegant way to do this; doesn't account for homebrew)
+	//could use the CharacterAdvancementLU api, but it would add another api call
 	switch (true) {
 		case (charLevel < 5):
 			charProf = 2
@@ -433,19 +433,17 @@ export const CharacterProvider = ({children}) => {
 		}
 	}
 
-	var powerNames = []
-	for (i = 0; i < api_Power.length; i++) {
-		powerNames[i] = api_Power[i]["name"]
-	}
-
 	var forcePowersData = []
 	for (i = 0; i < forcePowers.length; i++) {
-		if (powerNames.includes(forcePowers[i])) {
+		if (api_Power != '') {	
 			forcePowersData.push(api_Power.filter(api_Power => {
 				return api_Power.name === forcePowers[i]
+			
 			}))
 		}
 	}
+	
+	forcePowersData = forcePowersData.flat()
 
 	//object to export character force casting information
 	const characterCasting = {
@@ -459,18 +457,25 @@ export const CharacterProvider = ({children}) => {
 	var equipmentData = []
 	for(let i = 0; i < equipmentList.length; i++) {
 		if (api_Equipment != '') {
-			for (let j = 0; j < api_Equipment.length; j++) {
+			equipmentData.push(api_Equipment.filter(api_Equipment => {
+				return api_Equipment.name === equipmentList[i].name
+			}))
+			/*for (let j = 0; j < api_Equipment.length; j++) {
 					if (api_Equipment[j].name === equipmentList[i].name) {
 						equipmentData.push(api_Equipment[j])
 					}
-			}	
+			}*/	
 		}
 	}
+
+	equipmentData = equipmentData.flat()
 
 	//object to export equipment data
 	const characterEquipment = {
 		equipment: equipmentData
 	}
+
+	console.log("Hi")
 
 	return <CharacterContext.Provider value={{character, setCharacter, characterInformation, characterAbilities, characterMods, characterSaves, characterFeats, characterCasting, apiData, characterEquipment}}>
 		{children}

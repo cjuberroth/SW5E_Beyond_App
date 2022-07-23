@@ -4,6 +4,7 @@ import Dialog, { DialogTitle, DialogContent, DialogFooter, DialogButton, SlideAn
 
 const PowerCard = ({ name, type, level, period, periodText, description, source }) => {
     const [slideAnimationDialog, setSlideAnimationDialog] = useState(false)
+    //console.log(name)
     return (
         <View>
             <TouchableOpacity
@@ -35,6 +36,7 @@ const PowerCard = ({ name, type, level, period, periodText, description, source 
                 setSlideAnimationDialog(false);
               }}
               visible={slideAnimationDialog}
+              width={.85}
               dialogTitle={
                 <DialogTitle
                   title = { name }
