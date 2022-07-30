@@ -20,8 +20,6 @@ import SkillsScreen from './src/screens/SkillsScreen'
 import SpellsScreen from './src/screens/SpellsScreen'
 import CharacterSelectorScreen from './src/screens/CharacterSelectorScreen'
 import {CharacterProvider} from './src/context/CharacterContext'
-import {AbilitiesProvider} from './src/context/AbilitiesContext'
-import {SkillsProvider} from './src/context/SkillsContext'
 
 const Tab = createMaterialTopTabNavigator()
 
@@ -69,15 +67,11 @@ const StackNavigator = createStackNavigator({
 const App = createAppContainer(StackNavigator)
 
 export default () => {
-  return (
-    <CharacterProvider>
-      
-        
-          <NavigationContainer>
-            <App />
-          </NavigationContainer>
-        
-      
-    </CharacterProvider>
-  )
+    return (
+        <CharacterProvider>
+            <NavigationContainer>
+                <App />
+            </NavigationContainer>
+        </CharacterProvider>
+    )
 }

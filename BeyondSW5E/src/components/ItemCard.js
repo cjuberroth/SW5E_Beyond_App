@@ -21,10 +21,10 @@ const ItemCard = ({ name, cost, category, source, description }) => {
                 </View>
                 <View style = {[ styles.tableBorders, styles.itemCardRow, , styles.itemBottomRow ]}>
                     <View>
-                        <Text style = { styles.cardHeaders }>Type: { category }</Text>
+                        <Text style = { styles.cardText }>Type: { category }</Text>
                     </View>
                     <View>
-                        <Text style = { styles.cardHeaders }>Source: { source }</Text>
+                        <Text style = { styles.cardText }>Source: { source }</Text>
                     </View>
                 </View>
             </TouchableOpacity>
@@ -61,14 +61,20 @@ const ItemCard = ({ name, cost, category, source, description }) => {
 const styles = StyleSheet.create({
     cardHeaders: {
         fontWeight: 'bold',
-        fontSize: 18
+        fontSize: 18,
+        color: 'white'
+    },
+    cardText: {
+        fontWeight: 'bold',
+        fontSize: 12,
+        color: 'white'
     },
     buttonStyle: {
         width: 200,
         alignSelf: 'center'
     },
     tableBorders: {
-        borderColor: 'black',
+        borderColor: 'white',
         borderLeftWidth: 2,
         borderRightWidth: 2
     },
@@ -86,11 +92,11 @@ const styles = StyleSheet.create({
     },
     itemTopRow: {
         borderTopWidth: 2,
-        borderColor: 'black'
+        borderColor: 'white'
     },
     itemBottomRow: {
         borderBottomWidth: 2,
-        borderColor: 'black'
+        borderColor: 'white'
     }
 })
 
