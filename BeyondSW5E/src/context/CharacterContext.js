@@ -71,6 +71,7 @@ export const CharacterProvider = ({children}) => {
 	const [api_WeaponFocus, set_api_WeaponFocus] = useState([])
 	const [api_WeaponProperty, set_api_WeaponProperty] = useState([])
 	const [api_WeaponSupremacy, set_api_WeaponSupremacy] = useState([])
+	const [api_SkillsLU, set_api_SkillsLU] = useState([])
 
 	const searchApi = async () => {
         var response = await swapi.get('/species')
@@ -111,6 +112,8 @@ export const CharacterProvider = ({children}) => {
 		set_api_WeaponProperty(response.data)
 		response = await swapi.get('/WeaponSupremacy')
 		set_api_WeaponSupremacy(response.data)
+		response = await swapi.get('/skills')
+		set_api_SkillsLU(response.data)
     }
 
 	useEffect(() => { searchApi() }, [])
@@ -130,6 +133,7 @@ export const CharacterProvider = ({children}) => {
 		lightsaberForm: api_LightsaberForm,
 		maneuvers: api_Maneuvers,
 		power: api_Power,
+		skillsLU: api_SkillsLU,
 		species: api_Species,
 		weaponFocus: api_WeaponFocus,
 		weaponProperty: api_WeaponProperty,
