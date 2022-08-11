@@ -291,6 +291,7 @@ export const CharacterProvider = ({children}) => {
 	const characterInformation = {
 		name: charData.name,
 		proficiency: charProf,
+		image: charData.image
 	}
 	
 	//object for exporting ability scores
