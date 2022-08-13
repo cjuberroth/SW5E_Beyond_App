@@ -11,14 +11,13 @@ const CharacterSelectorScreen = ({navigation}) => {
 	const { setCharacter } = useContext(CharacterContext)
     const setChar = (char) => {
         setCharacter(char)
-        navigation.navigate('SW5EBeyond')
+        navigation.navigate('Tabs')
     }
 
     const [characterJSON, changeCharacterJSON] = useState({})
 
 	return (
-		<View>
-			<Text style={styles.headerStyle}>Choose Character</Text>
+		<View style={styles.containerStyle}>
 			<Button title="Jalen Orso" onPress={ () => setChar(jalenOrso) }/>
 			<Button title="Miltox" onPress={ () => setChar(miltox) }/>
 			<Button title="Archifamel" onPress={ () => setChar(archifamel) }/>
@@ -34,6 +33,10 @@ const CharacterSelectorScreen = ({navigation}) => {
 }
 
 const styles = StyleSheet.create({
+	containerStyle: {
+		flex: 1,
+		backgroundColor: '#263238'
+	},
 	headerStyle: {
 		fontSize: 30
 	},
@@ -41,7 +44,8 @@ const styles = StyleSheet.create({
 		height: 100,
 		margin: 5,
 		borderWidth: 1,
-		padding: 10
+		padding: 10,
+		backgroundColor: '#ffffff'
 	}
 })
 

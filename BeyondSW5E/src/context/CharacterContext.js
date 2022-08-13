@@ -116,7 +116,14 @@ export const CharacterProvider = ({children}) => {
 		set_api_SkillsLU(response.data)
     }
 
-	useEffect(() => { searchApi() }, [])
+	useEffect(() => { 
+		let cancel = false
+		searchApi().then(() => {
+			if (cancel) return
+			return () => {
+				cancel = true
+			}
+		}) }, [])
 	
 	//object to export raw api data
 	const apiData = {
