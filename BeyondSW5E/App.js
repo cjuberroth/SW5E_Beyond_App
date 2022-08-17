@@ -55,7 +55,7 @@ function MyTabs() {
                 tabBarItemStyle: {
                     width: 100
                 },
-                lazy: true
+                //lazy: true
             }}
         >
             <Tab.Screen name="Abilities" component={ AbilitiesScreen } options={{ tabBarLabel: 'Abilities' }} />
