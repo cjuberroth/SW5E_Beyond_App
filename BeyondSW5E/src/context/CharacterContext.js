@@ -116,7 +116,14 @@ export const CharacterProvider = ({children}) => {
 		set_api_SkillsLU(response.data)
     }
 
-	useEffect(() => { searchApi() }, [])
+	useEffect(() => { 
+		let cancel = false
+		searchApi().then(() => {
+			if (cancel) return
+			return () => {
+				cancel = true
+			}
+		}) }, [])
 	
 	//object to export raw api data
 	const apiData = {
@@ -291,6 +298,7 @@ export const CharacterProvider = ({children}) => {
 	const characterInformation = {
 		name: charData.name,
 		proficiency: charProf,
+		image: charData.image
 	}
 	
 	//object for exporting ability scores
