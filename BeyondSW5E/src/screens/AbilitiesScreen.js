@@ -1,6 +1,7 @@
 import React, {useContext, useRef} from 'react'
 import { Text, View, StyleSheet, ImageBackground, Animated, ScrollView, Image } from 'react-native'
 import CharacterContext from '../context/CharacterContext'
+import stylesGlobal from '../styles/stylesGlobal';
 
 const H_MAX_HEIGHT = 150;
 const H_MIN_HEIGHT = 65;
@@ -29,61 +30,9 @@ const AbilitiesScreen = () => {
         }
     }
 
-/*    return (
-        <View style={styles.containerStyle}>    
-            <Text style={styles.headerStyle}>{characterAbilities.name}</Text>
-            
-            <View style={styles.parentStyle}>
-                <View style={styles.boxStyle}>
-                    <ImageBackground style={styles.imgBackground} source={require('../../assets/rebel-alliance2.png')}>
-                        <Text style={styles.textStyle}>Strength</Text>
-                        <Text style={styles.modStyle}>{numberPresent(characterMods.str_mod)}{characterMods.str_mod}</Text>
-                        <Text style={styles.textStyle}>{characterAbilities.abilitiesStrength}</Text>
-                    </ImageBackground>
-                </View>
-                <View style={styles.boxStyle}>
-                    <ImageBackground style={styles.imgBackground} source={require('../../assets/rebel-alliance2.png')}>
-                        <Text style={styles.textStyle}>Dexterity</Text>
-                        <Text style={styles.modStyle}>{numberPresent(characterMods.dex_mod)}{characterMods.dex_mod}</Text>
-                        <Text style={styles.textStyle}>{characterAbilities.abilitiesDexterity}</Text>
-                    </ImageBackground>
-                </View>
-                <View style={styles.boxStyle}>
-                    <ImageBackground style={styles.imgBackground} source={require('../../assets/rebel-alliance2.png')}>
-                        <Text style={styles.textStyle}>Constitution</Text>
-                        <Text style={styles.modStyle}>{numberPresent(characterMods.con_mod)}{characterMods.con_mod}</Text>
-                        <Text style={styles.textStyle}>{characterAbilities.abilitiesConstitution}</Text>
-                    </ImageBackground>
-                </View>
-                <View style={styles.boxStyle}>
-                    <ImageBackground style={styles.imgBackground} source={require('../../assets/rebel-alliance2.png')}>
-                        <Text style={styles.textStyle}>Intelligence</Text>
-                        <Text style={styles.modStyle}>{numberPresent(characterMods.int_mod)}{characterMods.int_mod}</Text>
-                        <Text style={styles.textStyle}>{characterAbilities.abilitiesIntelligence}</Text>
-                    </ImageBackground>
-                </View>
-                <View style={styles.boxStyle}>
-                    <ImageBackground style={styles.imgBackground} source={require('../../assets/rebel-alliance2.png')}>
-                        <Text style={styles.textStyle}>Wisdom</Text>
-                        <Text style={styles.modStyle}>{numberPresent(characterMods.wis_mod)}{characterMods.wis_mod}</Text>
-                        <Text style={styles.textStyle}>{characterAbilities.abilitiesWisdom}</Text>
-                    </ImageBackground>
-                </View>
-                <View style={styles.boxStyle}>
-                    <ImageBackground style={styles.imgBackground} source={require('../../assets/rebel-alliance2.png')}>
-                        <Text style={styles.textStyle}>Charisma</Text>
-                        <Text style={styles.modStyle}>{numberPresent(characterMods.cha_mod)}{characterMods.cha_mod}</Text>
-                        <Text style={styles.textStyle}>{characterAbilities.abilitiesCharisma}</Text>
-                    </ImageBackground>
-                </View>
-            </View>
-        </View>
-    )
-}
-*/
-
     return (
-        <View style={styles.containerStyle}>
+        // This style import is a POC for the ability to extract common styles into a separate file
+        <View style={stylesGlobal.parentContainerView}>
             <ScrollView
                 onScroll={Animated.event([
                     { nativeEvent: { contentOffset: { y: scrollOffsetY } } }
@@ -181,10 +130,10 @@ const AbilitiesScreen = () => {
 }
 
 const styles = StyleSheet.create({
-    containerStyle: {
-        flex: 1,
-        backgroundColor: '#263238'
-    },
+    // containerStyle: {
+    //     flex: 1,
+    //     backgroundColor: '#263238'
+    // },
     parentStyle: {
         alignItems: 'flex-start',
         flexWrap: 'wrap',
