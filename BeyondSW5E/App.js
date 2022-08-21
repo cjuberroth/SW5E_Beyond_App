@@ -18,7 +18,7 @@ import SkillsScreen from './src/screens/SkillsScreen'
 import SpellsScreen from './src/screens/SpellsScreen'
 import CharacterSelectorScreen from './src/screens/CharacterSelectorScreen'
 import { CharacterProvider } from './src/context/CharacterContext'
-//import { Button } from 'react-native-paper'
+import { HeaderProvider } from './src/context/HeaderContext'
 
 function getHeaderTitle(route) {
     const routeName = getFocusedRouteNameFromRoute(route) ?? 'Abilities'
@@ -72,38 +72,40 @@ const Stack = createNativeStackNavigator()
 function App() {
     return (
         <CharacterProvider>
-            <NavigationContainer>
-                <Stack.Navigator>
-                    <Stack.Screen 
-                        name="Character" 
-                        component={CharacterSelectorScreen}
-                        options={{ title: 'Choose Character',
-                                    headerStyle: {
-                                        backgroundColor: '#263238',
-                                    },
-                                    headerTintColor: '#ffffff'
-                        }} 
-                    />
-                    <Stack.Screen 
-                        name="Tabs" 
-                        component={MyTabs}
-                        options={({ route }) => ({
-                            headerTitle: getHeaderTitle(route),
-                            headerStyle: {
-                                backgroundColor: '#263238',
-                            },
-                            headerTintColor: '#ffffff',
-                            headerRight: () => (
-                                <Button 
-                                    onPress={() => alert('Maybe a modal to manage HP')}
-                                    title="HP"
-                                    color="#ffffff">
-                                </Button>
-                            ),
-                        })}
-                    />
-                </Stack.Navigator>
-            </NavigationContainer>
+            <HeaderProvider>
+                <NavigationContainer>
+                    <Stack.Navigator>
+                        <Stack.Screen 
+                            name="Character" 
+                            component={CharacterSelectorScreen}
+                            options={{ title: 'Choose Character',
+                                        headerStyle: {
+                                            backgroundColor: '#263238',
+                                        },
+                                        headerTintColor: '#ffffff'
+                            }} 
+                        />
+                        <Stack.Screen 
+                            name="Tabs" 
+                            component={MyTabs}
+                            options={({ route }) => ({
+                                headerTitle: getHeaderTitle(route),
+                                headerStyle: {
+                                    backgroundColor: '#263238',
+                                },
+                                headerTintColor: '#ffffff',
+                                headerRight: () => (
+                                    <Button 
+                                        onPress={() => alert('Maybe a modal to manage HP')}
+                                        title="HP"
+                                        color="#ffffff">
+                                    </Button>
+                                ),
+                            })}
+                        />
+                    </Stack.Navigator>
+                </NavigationContainer>
+            </HeaderProvider>
         </CharacterProvider>
     )
 }

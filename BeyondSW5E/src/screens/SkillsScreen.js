@@ -1,10 +1,15 @@
-import React, {useContext} from 'react'
-import { Text, View, FlatList, StyleSheet } from 'react-native'
+import React, {useContext, useRef} from 'react'
+import { Text, View, FlatList, StyleSheet, Animated } from 'react-native'
 import CharacterContext from '../context/CharacterContext'
 import SkillTableRow from '../components/SkillTableRow'
+import Header from '../components/Header'
+import HeaderContext from '../context/HeaderContext'
 
 const SkillsScreen = () => {
 
+    const headerHeight = useContext(HeaderContext).headerUtils.headerHeight
+    const translateY = useContext(HeaderContext).headerUtils.translateY
+    
     const characterSkills = useContext(CharacterContext).character.tweaks?.abilityScores
     const characterInfo = useContext(CharacterContext).characterInformation
     const characterMods = useContext(CharacterContext).characterMods
@@ -12,14 +17,20 @@ const SkillsScreen = () => {
 
     return (
         <View style={styles.parentView}>
+            <Animated.View style={[styles.header, {transform: [{translateY}]}]}>
+                <Header {...{headerHeight}} />
+            </Animated.View>
             <Text style={styles.headerStyle}>{characterInfo.name}</Text>
             <View style={styles.rowStyle}>
-                <Text style={styles.profCol}>PROF</Text>
                 <Text style={styles.modCol}>MOD</Text>
                 <Text style={styles.skillCol}>SKILL</Text>
                 <Text style={styles.bonusCol}>BONUS</Text>
             </View>
-            <FlatList 
+            <Animated.FlatList 
+                scrollEventThrottle={16}
+                onScroll={Header.handleScroll}
+                ref={Header.ref}
+                onMomentumScrollEnd={Header.handleSnap}
                 data = { skillsLU }
                 keyExtractor = {(skill) => skill.rowKey}
                 renderItem = { ({ item }) => {
@@ -71,6 +82,14 @@ const styles = StyleSheet.create({
         flex: 2,
         fontSize: 15,
         color: 'white'
+    },
+    header: {
+        position: 'absolute',
+        backgroundColor: '#263238',
+        left: 0,
+        right: 0,
+        width: '100%',
+        zIndex: 1,
     }
 })
 
