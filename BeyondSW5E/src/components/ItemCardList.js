@@ -1,7 +1,8 @@
-import React from 'react'
-import { View, FlatList, StyleSheet } from 'react-native'
+import React, { useContext } from 'react'
+import { View, FlatList, StyleSheet, Animated } from 'react-native'
 import ItemCard from '../components/ItemCard'
 import CharacterContext from '../context/CharacterContext'
+import HeaderContext from '../context/HeaderContext'
 
 /*  This component assumes that the data being loaded into the flatlist has
     the rowKey parameter in the object coming from the inventory of the character
@@ -10,10 +11,16 @@ import CharacterContext from '../context/CharacterContext'
     The only difference is the weaponClassification for both
 */
 
+const headerUtils = useContext(HeaderContext).headerUtils
+
 const ItemCardList = ({ equipment }) => {
     return (
         <View style = {{flex:1}}>
-            <FlatList
+            <Animated.FlatList
+                scrollEventThrottle={16}
+                onScroll={headerUtils.handleScroll}
+                ref={headerUtils.ref}
+                onMomentumScrollEnd={headerUtils.handleSnap}
                 data = { equipment }
                 keyExtractor = {(equip) => equip.name}
                 renderItem={({ item }) => {

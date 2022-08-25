@@ -1,4 +1,4 @@
-import React, {useContext, useRef} from 'react'
+import React, { useContext } from 'react'
 import { Text, View, FlatList, StyleSheet, Animated } from 'react-native'
 import CharacterContext from '../context/CharacterContext'
 import SkillTableRow from '../components/SkillTableRow'
@@ -9,6 +9,7 @@ const SkillsScreen = () => {
 
     const headerHeight = useContext(HeaderContext).headerUtils.headerHeight
     const translateY = useContext(HeaderContext).headerUtils.translateY
+    const headerUtils = useContext(HeaderContext).headerUtils
     
     const characterSkills = useContext(CharacterContext).character.tweaks?.abilityScores
     const characterInfo = useContext(CharacterContext).characterInformation
@@ -28,9 +29,9 @@ const SkillsScreen = () => {
             </View>
             <Animated.FlatList 
                 scrollEventThrottle={16}
-                onScroll={Header.handleScroll}
-                ref={Header.ref}
-                onMomentumScrollEnd={Header.handleSnap}
+                onScroll={headerUtils.handleScroll}
+                ref={headerUtils.ref}
+                onMomentumScrollEnd={headerUtils.handleSnap}
                 data = { skillsLU }
                 keyExtractor = {(skill) => skill.rowKey}
                 renderItem = { ({ item }) => {
