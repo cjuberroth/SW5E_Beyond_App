@@ -1,31 +1,20 @@
 import React, { useState } from 'react'
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native'
-import Dialog, { DialogTitle, DialogContent, DialogFooter, DialogButton, SlideAnimation, ScaleAnimation} from 'react-native-popup-dialog'
-import CharacterContext from '../context/CharacterContext'
+import Dialog, { DialogTitle, DialogContent, SlideAnimation } from 'react-native-popup-dialog'
+import AppStyles from '../styles/AppStyles'
 
-const ItemCard = ({ name, cost, category, source, description }) => {
+const ItemCard = ({ item }) => {
     const [slideAnimationDialog, setSlideAnimationDialog] = useState(false)
     return (
         <View>
             <TouchableOpacity
-                style = { styles.itemCard }
                 onPress = { () => setSlideAnimationDialog(true) }
             >
-                <View style = {[styles.tableBorders, styles.itemCardRow, styles.itemTopRow]}>
-                    <View>
-                        <Text style = { styles.cardHeaders }>{ name }</Text>
-                    </View>
-                    <View>
-                        <Text style = { styles.cardHeaders }>Cost: { cost }</Text>
-                    </View>
-                </View>
-                <View style = {[ styles.tableBorders, styles.itemCardRow, , styles.itemBottomRow ]}>
-                    <View>
-                        <Text style = { styles.cardHeaders }>Type: { category }</Text>
-                    </View>
-                    <View>
-                        <Text style = { styles.cardHeaders }>Source: { source }</Text>
-                    </View>
+                <View style = { AppStyles.tableStyles.tableRow }>
+                    <Text style = {[ AppStyles.tableStyles.column, styles.colEquip ]}>{ item.equipmentCategory }</Text>
+                    <Text style = {[ AppStyles.tableStyles.column, styles.colItem ]}>{ item.name }</Text>
+                    <Text style = {[ AppStyles.tableStyles.column, styles.colCost ]}>{ item.cost }</Text>
+                    <Text style = {[ AppStyles.tableStyles.column, styles.colQty ]}>{ item.weight }</Text>
                 </View>
             </TouchableOpacity>
             <Dialog
@@ -39,7 +28,7 @@ const ItemCard = ({ name, cost, category, source, description }) => {
               width={.85}
               dialogTitle={
                 <DialogTitle
-                  title = { name }
+                  title = { item.name }
                 />
               }
               dialogAnimation={
@@ -47,10 +36,10 @@ const ItemCard = ({ name, cost, category, source, description }) => {
               }>
               <DialogContent>
                 <Text>
-                  Cost: { cost } {"\n"}
-                  Type: { category } {"\n"}
-                  Source: { source } {"\n"}
-                  Description: { description }
+                  Cost: { item.cost } {"\n"}
+                  Type: { item.equipmentCategory } {"\n"}
+                  Source: { item.contentSource } {"\n"}
+                  Description: { item.description }
                 </Text>
               </DialogContent>
             </Dialog>
@@ -59,39 +48,10 @@ const ItemCard = ({ name, cost, category, source, description }) => {
 }
 
 const styles = StyleSheet.create({
-    cardHeaders: {
-        fontWeight: 'bold',
-        fontSize: 18
-    },
-    buttonStyle: {
-        width: 200,
-        alignSelf: 'center'
-    },
-    tableBorders: {
-        borderColor: 'black',
-        borderLeftWidth: 2,
-        borderRightWidth: 2
-    },
-    itemCard: {
-        height: 100,
-        width: 300,
-        alignSelf: 'center',
-        margin: 5
-    },
-    itemCardRow: {
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        padding: 10
-    },
-    itemTopRow: {
-        borderTopWidth: 2,
-        borderColor: 'black'
-    },
-    itemBottomRow: {
-        borderBottomWidth: 2,
-        borderColor: 'black'
-    }
+    colEquip: { flex: 4 },
+    colItem: { flex: 12 },
+    colQty: { flex: 3 },
+    colCost: { flex: 5 }
 })
 
 export default ItemCard

@@ -1,37 +1,63 @@
 import React, { useContext } from 'react'
-import { Text, View, StyleSheet } from 'react-native'
+import { Text, View, StyleSheet, FlatList } from 'react-native'
 import CharacterContext from '../context/CharacterContext'
-import ItemCardList from '../components/ItemCardList'
+import ItemCard from '../components/ItemCard'
 
 const InventoryScreen = () => {
-    const charData = useContext(CharacterContext).character
-    //const equipment = charData.equipment.concat(charData.customEquipment)
     const equipment = useContext(CharacterContext).characterEquipment.equipment
 
     return (
         <View style = { styles.screenContainer }>
-            <Text style = { styles.headerStyle }>Inventory</Text>
-            <Text>Displaying {equipment.length} items.</Text>
-            {
-                equipment.length === 0
-                ? <Text>Equipment is Empty</Text>
-                : <ItemCardList
-                      equipment = { equipment }
-                  />
-            }
+            <View style = { styles.tableHeader }>
+                <Text style = {[ styles.column, styles.colEquip, styles.colHeader ]}>Equip</Text>
+                <Text style = {[ styles.column, styles.colItem, styles.colHeader ]}>Item</Text>
+                <Text style = {[ styles.column, styles.colQty, styles.colHeader ]}>Qty</Text>
+                <Text style = {[ styles.column, styles.colCost, styles.colHeader ]}>Cost</Text>
+            </View>
+            <View>
+                <FlatList
+                    data = { equipment }
+                    keyExtractor = {(equip) => equip.name}
+                    renderItem={({ item }) => {
+                        return <ItemCard
+                                    item = { item }
+                                />
+                    }}
+                />
+            </View>
         </View>
     )
 }
 
 const styles = StyleSheet.create({
-    screenContainer: {
-        alignItems: 'center',
-        flex: 1
+    tableHeader: {
+        flexDirection: 'row',
+        margin: 5
     },
-    headerStyle: {
-        fontSize: 24,
+    screenContainer: {
+        flex: 1,
+        backgroundColor: '#263238'
+    },
+    column: {
+        fontSize: 15,
+        color: 'white',
+        paddingHorizontal: 10
+    },
+    colHeader: {
         fontWeight: 'bold',
-        alignSelf: 'center'
+        fontSize: 18
+    },
+    colEquip: {
+        flex: 4
+    },
+    colItem: {
+        flex: 12
+    },
+    colQty: {
+        flex: 3
+    },
+    colCost: {
+        flex: 5
     }
 })
 

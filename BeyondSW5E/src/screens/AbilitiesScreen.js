@@ -1,7 +1,7 @@
 import React, {useContext, useRef} from 'react'
 import { Text, View, StyleSheet, ImageBackground, Animated, ScrollView, Image } from 'react-native'
 import CharacterContext from '../context/CharacterContext'
-import stylesGlobal from '../styles/stylesGlobal';
+import AppStyles from '../styles/AppStyles';
 
 const H_MAX_HEIGHT = 150;
 const H_MIN_HEIGHT = 65;
@@ -32,7 +32,7 @@ const AbilitiesScreen = () => {
 
     return (
         // This style import is a POC for the ability to extract common styles into a separate file
-        <View style={stylesGlobal.parentContainerView}>
+        <View style={AppStyles.globalStyles.parentContainerView}>
             <ScrollView
                 onScroll={Animated.event([
                     { nativeEvent: { contentOffset: { y: scrollOffsetY } } }
