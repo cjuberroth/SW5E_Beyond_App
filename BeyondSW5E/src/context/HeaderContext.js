@@ -62,7 +62,8 @@ export const HeaderProvider = ({children}) => {
         translateY: translateY,
         handleScroll: handleScroll,
         ref: ref,
-        handleSnap: handleSnap
+        handleSnap: handleSnap,
+        translateYNumber: translateYNumber
     }
 
     return <HeaderContext.Provider value={{headerUtils}}>
