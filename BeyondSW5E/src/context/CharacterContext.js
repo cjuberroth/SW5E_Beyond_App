@@ -464,6 +464,7 @@ export const CharacterProvider = ({children}) => {
 		forcePowersData: forcePowersData
 	}
 
+	//TODO: need to modify this api call. The quantity data from the character sheet is being lost on load.
 	//capture character inventory via the JSON
 	var equipmentList = charData.equipment.concat(charData.customEquipment)
 	var equipmentData = []
@@ -481,7 +482,6 @@ export const CharacterProvider = ({children}) => {
 	}
 
 	equipmentData = equipmentData.flat()
-
 	//object to export equipment data
 	const characterEquipment = {
 		equipment: equipmentData
