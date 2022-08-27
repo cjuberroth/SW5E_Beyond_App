@@ -3,75 +3,39 @@ import { Text, View, StyleSheet, Image, Animated } from 'react-native'
 import HeaderContext from '../context/HeaderContext'
 import CharacterContext from '../context/CharacterContext'
 
-const Header = (props) => {
+const Header = () => {
     const headerHeight = useContext(HeaderContext).headerUtils.headerHeight
-    // const headerHeight = props
     const characterInfo = useContext(CharacterContext).characterInformation
-
-    // const ref = useRef(null)
-    // const scrollY = useRef(new Animated.Value(0))
-    // const scrollYClamped = Animated.diffClamp(scrollY.current, 0, headerHeight)
-
-    // const handleScroll = Animated.event(
-    //     [
-    //         {
-    //             nativeEvent: {
-    //                 contentOffset: {y: scrollY.current},
-    //             },
-    //         },
-    //     ],
-    //     {
-    //         useNativeDriver: true,
-    //     },
-    // )
-
-    // const translateY = scrollYClamped.interpolate({
-    //     inputRange: [0, headerHeight],
-    //     outputRange: [0, -(headerHeight / 2)],
-    // })
-
-    // const translateYNumber = useRef()
-
-    // translateY.addListener(({value}) => {
-    //     translateYNumber.current = value
-    // })
-
-    // const handleSnap = ({nativeEvent}) => {
-    //     const offsetY = nativeEvent.contentOffset.y
-    //     if (
-    //         !(
-    //             translateYNumber.current === 0 ||
-    //             translateYNumber.current === -headerHeight / 2
-    //         )
-    //     ) {
-    //         if (ref.current) {
-    //             ref.current.scrollToOffset({
-    //                 offset:
-    //                     getCloser(translateYNumber.current, -headerHeight / 2, 0) === -headerHeight / 2
-    //                         ? offsetY + headerHeight / 2
-    //                         : offsetY - headerHeight / 2
-    //             })
-    //         }
-    //     }
-    // }
-
-    // const getCloser = (value, checkOne, checkTwo) => {
-    //     Math.abs(value - checkOne) < Math.abs(value - checkTwo) ? checkOne : checkTwo
-    // }
+    const characterMods = useContext(CharacterContext).characterMods
+    const numberPresent = useContext(CharacterContext).functions.numberPresent
 
     return (
         <>
-            <View style={[styles.headerContainer,
-                {
-                    height: headerHeight / 2,
-                },
-            ]}>
-                <Text style={styles.headingStyle}>{characterInfo.name}</Text>
+            <View style={[styles.headerContainer, {height: headerHeight / 2}]}>
+
                 <Image
                     source={{uri: characterInfo.image}}
-                    style={{ flex: 1, width: '100%', height: '100%' }}
+                    style={{ flex: 1, width: '100%', height: '100%', marginBottom: 5 }}
                     resizeMode={"contain"}
                 />
+                <View style={styles.headerStats}>
+                    <View style={styles.statBox}>
+                        <Text style={styles.statText}>Prof</Text>
+                        <Text style={styles.statTextBig}>{numberPresent(characterInfo.proficiency) + characterInfo.proficiency}</Text>
+                    </View>
+                    <View style={styles.statBox}>
+                        <Text style={styles.statText}>Speed</Text>
+                        <Text style={styles.statTextBig}>{characterInfo.speed + 'ft'}</Text>
+                    </View>
+                    <View style={styles.statBox}>
+                        <Text style={styles.statText}>Initiative</Text>
+                        <Text style={styles.statTextBig}>{numberPresent(characterMods.dex_mod) + characterMods.dex_mod}</Text>
+                    </View>
+                    <View style={styles.statBox}>
+                        <Text style={styles.statText}>AC</Text>
+                        <Text style={styles.statTextBig}>AC</Text>
+                    </View>
+                </View>
             </View>
         </>
     )
@@ -80,7 +44,21 @@ const Header = (props) => {
 const styles = StyleSheet.create({
     headerContainer: {
         flex: 1,
-        flexDirection: 'row-reverse'
+        //flexDirection: 'row'
+    },
+    headerStats: {
+        flexDirection: 'row',
+        justifyContent: 'space-evenly'
+    },
+    statBox: {
+        alignItems: 'center'
+    },
+    statText: {
+        color: 'white'
+    },
+    statTextBig: {
+        fontSize: 20,
+        color: 'white'
     },
     headingStyle: {
         fontSize: 30,

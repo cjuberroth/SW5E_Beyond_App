@@ -51,6 +51,20 @@ export const CharacterProvider = ({children}) => {
 			}
 		}
 	}
+
+	//helper function to present a number with a + sign if positive
+	const numberPresent = function(score) {
+		if(score >= 0) {
+			return "+"
+		} else {
+			return
+		}
+	  }
+
+	  //object to export functions
+	  const functions = {
+		numberPresent: numberPresent
+	  }
 	
 	const [api_Species, set_api_Species] = useState([])
 	const [api_Class, set_api_Class] = useState([])
@@ -294,11 +308,54 @@ export const CharacterProvider = ({children}) => {
 	if (charData.tweaks?.abilityScores?.Wisdom?.score?.override) {wisdom = charData.tweaks?.abilityScores?.Wisdom?.score?.override}
 	if (charData.tweaks?.abilityScores?.Charisma?.score?.override) {charisma = charData.tweaks?.abilityScores?.Charisma?.score?.override}
 
+	//determine character hit points
+	var charHP = 0
+	var charHParray = []
+	if (charData.tweaks?.hitPoints?.maximum?.override != null) {
+		charHP = charData.tweaks?.hitPoints?.maximum?.override
+	} else {
+		if (!isEmpty(api_Class)) {
+			for (let i = 0; i < api_Class.length; i++) {
+				if (api_Class[i].name === charData.classes[0].name) {
+					//first class's hit die
+					charHP = charHP + api_Class[i].hitDiceDieType
+				}
+			}
+		}
+		//capture all classes hit point increases
+		for (let i = 0; i < charData.classes.length; i++) {
+			charHParray.push(charData.classes[i].hitPoints)
+		}
+		//flatten to a single array
+		charHParray = charHParray.flat()
+		//sum all array elements with the first class's hit die
+		charHP = charHP + charHParray.reduce((a,b) => a + b, 0)
+		//add the con mod multiplied by the number of total levels
+		charHP = charHP + (modifier(constitution) * charLevel)
+	}
+
+	//base walking speed by species
+	var charSpeed = 0
+	if (!isEmpty(api_Species)) {
+		for (let i = 0; i < api_Species.length; i++) {
+			if (api_Species[i].name === charData.species.name) {
+				for (let j = 0; j < api_Species[i].traits.length; j++) {
+					if (api_Species[i].traits[j].name === 'Speed') {
+						charSpeed = api_Species[i].traits[j].description.match(/\d+/)[0]
+					}
+				}
+			}
+		}
+	}
+	
 	//object for exporting character information
 	const characterInformation = {
 		name: charData.name,
 		proficiency: charProf,
-		image: charData.image
+		image: charData.image,
+		hitPoints: charHP,
+		hitPointsLost: charData.currentStats.hitPointsLost,
+		speed: charSpeed
 	}
 	
 	//object for exporting ability scores
@@ -489,7 +546,7 @@ export const CharacterProvider = ({children}) => {
 
 	console.log("Hi")
 
-	return <CharacterContext.Provider value={{character, setCharacter, characterInformation, characterAbilities, characterMods, characterSaves, characterFeats, characterCasting, apiData, characterEquipment}}>
+	return <CharacterContext.Provider value={{character, setCharacter, characterInformation, characterAbilities, characterMods, characterSaves, characterFeats, characterCasting, apiData, characterEquipment, functions}}>
 		{children}
 	</CharacterContext.Provider>
 }

@@ -21,29 +21,33 @@ const SkillsScreen = () => {
             <Animated.View style={[styles.header, {transform: [{translateY}]}]}>
                 <Header {...{headerHeight}} />
             </Animated.View>
-            <Text style={styles.headerStyle}>{characterInfo.name}</Text>
-            <View style={styles.rowStyle}>
-                <Text style={styles.modCol}>MOD</Text>
-                <Text style={styles.skillCol}>SKILL</Text>
-                <Text style={styles.bonusCol}>BONUS</Text>
-            </View>
-            <Animated.FlatList 
-                scrollEventThrottle={16}
-                onScroll={headerUtils.handleScroll}
-                ref={headerUtils.ref}
-                onMomentumScrollEnd={headerUtils.handleSnap}
-                data = { skillsLU }
-                keyExtractor = {(skill) => skill.rowKey}
-                renderItem = { ({ item }) => {
-                    return <SkillTableRow
-                                skillName = { item.name }
-                                skillProficiency={ characterSkills?.[item.baseAttribute]?.skills?.[item.name]?.proficiency }
-                                baseAttribute = { item.baseAttribute }
-                                charAttributeMod = { characterMods[item.baseAttribute.toLowerCase().substring(0,3) + '_mod'] }
-                                charProficiencyMod = { characterInfo.proficiency }
-                            />
-                }}
-            />
+            <Animated.View style={[{paddingTop: headerHeight/2}, {transform: [{translateY}]}]}>
+                {/* <Text style={styles.headerStyle}>{characterInfo.name}</Text> */}
+                <View style={styles.rowStyle}>
+                    <Text style={styles.modCol}>MOD</Text>
+                    <Text style={styles.skillCol}>SKILL</Text>
+                    <Text style={styles.bonusCol}>BONUS</Text>
+                </View>
+                <Animated.FlatList 
+                    //bounces={false}
+                    scrollEventThrottle={16}
+                    //contentContainerStyle={{paddingTop: headerHeight}}
+                    onScroll={headerUtils.handleScroll}
+                    ref={headerUtils.ref}
+                    onMomentumScrollEnd={headerUtils.handleSnap}
+                    data = { skillsLU }
+                    keyExtractor = {(skill) => skill.rowKey}
+                    renderItem = { ({ item }) => {
+                        return <SkillTableRow
+                                    skillName = { item.name }
+                                    skillProficiency={ characterSkills?.[item.baseAttribute]?.skills?.[item.name]?.proficiency }
+                                    baseAttribute = { item.baseAttribute }
+                                    charAttributeMod = { characterMods[item.baseAttribute.toLowerCase().substring(0,3) + '_mod'] }
+                                    charProficiencyMod = { characterInfo.proficiency }
+                                />
+                    }}
+                />
+            </Animated.View>
         </View>
     )
 }
@@ -90,7 +94,7 @@ const styles = StyleSheet.create({
         left: 0,
         right: 0,
         width: '100%',
-        zIndex: 1,
+        zIndex: 1
     }
 })
 

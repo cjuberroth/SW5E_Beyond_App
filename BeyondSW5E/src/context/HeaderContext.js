@@ -4,7 +4,7 @@ import { Animated } from 'react-native'
 const HeaderContext = React.createContext()
     
 export const HeaderProvider = ({children}) => {
-    const headerHeight = 150 * 2
+    const headerHeight = 125 * 2
 
     const ref = useRef(null)
     const scrollY = useRef(new Animated.Value(0))
@@ -25,7 +25,7 @@ export const HeaderProvider = ({children}) => {
 
     const translateY = scrollYClamped.interpolate({
         inputRange: [0, headerHeight],
-        outputRange: [0, -(headerHeight / 2)],
+        outputRange: [0, -(headerHeight)],
     })
 
     const translateYNumber = useRef()
@@ -39,15 +39,15 @@ export const HeaderProvider = ({children}) => {
         if (
             !(
                 translateYNumber.current === 0 ||
-                translateYNumber.current === -headerHeight / 2
+                translateYNumber.current === -headerHeight
             )
         ) {
             if (ref.current) {
                 ref.current.scrollToOffset({
                     offset:
-                        getCloser(translateYNumber.current, -headerHeight / 2, 0) === -headerHeight / 2
-                            ? offsetY + headerHeight / 2
-                            : offsetY - headerHeight / 2
+                        getCloser(translateYNumber.current, -headerHeight/2, 0) === -headerHeight
+                            ? offsetY + headerHeight
+                            : offsetY - headerHeight
                 })
             }
         }
