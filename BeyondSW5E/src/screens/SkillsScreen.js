@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { Text, View, FlatList, StyleSheet, Animated } from 'react-native'
+import { Text, View, FlatList, StyleSheet, Animated, SafeAreaView } from 'react-native'
 import CharacterContext from '../context/CharacterContext'
 import SkillTableRow from '../components/SkillTableRow'
 import Header from '../components/Header'
@@ -17,11 +17,11 @@ const SkillsScreen = () => {
     const skillsLU = useContext(CharacterContext).apiData.skillsLU
 
     return (
-        <View style={styles.parentView}>
+        <SafeAreaView style={styles.parentView}>
             <Animated.View style={[styles.header, {transform: [{translateY}]}]}>
                 <Header {...{headerHeight}} />
             </Animated.View>
-            <Animated.View style={[{paddingTop: headerHeight/2}, {transform: [{translateY}]}]}>
+            <Animated.View style={[{paddingTop: headerHeight}, {transform: [{translateY}]}]}>
                 {/* <Text style={styles.headerStyle}>{characterInfo.name}</Text> */}
                 <View style={styles.rowStyle}>
                     <Text style={styles.modCol}>MOD</Text>
@@ -29,9 +29,9 @@ const SkillsScreen = () => {
                     <Text style={styles.bonusCol}>BONUS</Text>
                 </View>
                 <Animated.FlatList 
-                    //bounces={false}
+                    bounces={false}
                     scrollEventThrottle={16}
-                    //contentContainerStyle={{paddingTop: headerHeight}}
+                    //contentContainerStyle={{paddingTop: headerHeight/2}}
                     onScroll={headerUtils.handleScroll}
                     ref={headerUtils.ref}
                     onMomentumScrollEnd={headerUtils.handleSnap}
@@ -48,7 +48,7 @@ const SkillsScreen = () => {
                     }}
                 />
             </Animated.View>
-        </View>
+        </SafeAreaView>
     )
 }
 

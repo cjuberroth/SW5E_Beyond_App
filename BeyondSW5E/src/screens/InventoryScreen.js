@@ -21,16 +21,16 @@ const InventoryScreen = () => {
                     <Header {...{headerHeight}} />
                 </Animated.View>
                 <Animated.View style={[{paddingTop: headerHeight/2}, {transform: [{translateY}]}]}>
-                    <View style={styles.tableHeader}>
+                    <Animated.View style={styles.tableHeader}>
                         <Text style = {[ styles.column, styles.colEquip, styles.colHeader ]}>Equip</Text>
                         <Text style = {[ styles.column, styles.colItem, styles.colHeader ]}>Item</Text>
                         <Text style = {[ styles.column, styles.colQty, styles.colHeader ]}>Qty</Text>
                         <Text style = {[ styles.column, styles.colCost, styles.colHeader ]}>Cost</Text>
-                    </View>
+                    </Animated.View>
                     <Animated.FlatList
                         scrollEventThrottle={16}
                         //contentContainerStyle={{paddingTop: 75}}
-                        bounces = {false}
+                        //bounces = {false}
                         onScroll={headerUtils.handleScroll}
                         ref={headerUtils.ref}
                         onMomentumScrollEnd={headerUtils.handleSnap}

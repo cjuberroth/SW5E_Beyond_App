@@ -4,7 +4,7 @@ import { Animated } from 'react-native'
 const HeaderContext = React.createContext()
     
 export const HeaderProvider = ({children}) => {
-    const headerHeight = 125 * 2
+    const headerHeight = 175
 
     const ref = useRef(null)
     const scrollY = useRef(new Animated.Value(0))
@@ -39,13 +39,13 @@ export const HeaderProvider = ({children}) => {
         if (
             !(
                 translateYNumber.current === 0 ||
-                translateYNumber.current === -headerHeight
+                translateYNumber.current >= -headerHeight
             )
         ) {
             if (ref.current) {
                 ref.current.scrollToOffset({
                     offset:
-                        getCloser(translateYNumber.current, -headerHeight/2, 0) === -headerHeight
+                        getCloser(translateYNumber.current, -headerHeight, 0) === -headerHeight
                             ? offsetY + headerHeight
                             : offsetY - headerHeight
                 })
