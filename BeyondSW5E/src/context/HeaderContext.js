@@ -1,10 +1,12 @@
 import React, { useState, useRef } from 'react'
-import { Animated } from 'react-native'
+import { Animated, useWindowDimensions } from 'react-native'
 
 const HeaderContext = React.createContext()
     
 export const HeaderProvider = ({children}) => {
-    const headerHeight = 175
+    const { height, width } = useWindowDimensions()
+    //const headerHeight = 175
+    const headerHeight = 0.25*height
 
     const ref = useRef(null)
     const scrollY = useRef(new Animated.Value(0))

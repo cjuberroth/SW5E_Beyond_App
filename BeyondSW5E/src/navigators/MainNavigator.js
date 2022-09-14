@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { Text, Button } from 'react-native'
+import { Text, Button, Platform, StyleSheet } from 'react-native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
@@ -96,10 +96,10 @@ const MainNavigator = props => {
                                 headerTintColor: '#ffffff',
                                 headerBackTitle: charData.name,
                                 headerRight: () => (
-                                    <Button 
+                                    <Button style={styles.headerButton}
                                         onPress={() => alert('Maybe a modal to manage HP')}
                                         title={(charData.hitPoints-charData.hitPointsLost) + "/" + charData.hitPoints}
-                                        color="#ffffff">
+                                        color={Platform.OS === 'ios' ? '#ffffff' : '#263238'}>
                                     </Button>
                                 ),
                             })}
@@ -107,5 +107,7 @@ const MainNavigator = props => {
                     </Stack.Navigator>
     )
 }
+
+const styles = StyleSheet.create({})
 
 export default MainNavigator
