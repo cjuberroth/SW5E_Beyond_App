@@ -40,17 +40,14 @@
         "Sever Force",
         "Force Suppression",
         "Force Scream",
-        "Force Repulse",
         "Choke",
         "Mind Spike",
         "Hallucination",
         "Locate Object",
         "Force Vision",
-        "Darkness",
         "Battle Meditation",
         "Wound",
         "Telemetry",
-        "Shadow Sight",
         "Sense Force",
         "Hex",
         "Phasestrike",
@@ -61,7 +58,10 @@
         "Knight Speed",
         "Dark Aura",
         "Shroud of Darkness",
-        "Hysteria"
+        "Hysteria",
+        "Affect Mind",
+        "Battle Insight",
+        "Break"
       ],
       "archetype": { "name": "Path of Shadows" }
     }
@@ -142,13 +142,13 @@
       "level9": false
     }
   },
-  "tweaks": { "armorClass": { "bonus": 2, "override": null } },
+  "tweaks": {},
   "customProficiencies": [],
   "customLanguages": [],
   "customFeatures": [],
   "customFeats": [],
   "customTechPowers": [],
-  "customForcePowers": ["Affect Mind", "Battle Insight", "Break", "Burst"],
+  "customForcePowers": [],
   "customEquipment": [],
   "settings": {
     "isEnforcingForcePrerequisites": true,
@@ -157,6 +157,6 @@
   },
   "notes": "",
   "createdAt": 1629595519561,
-  "changedAt": 1663127980903,
+  "changedAt": 1663258445589,
   "localId": "temp-i51sdomvd"
 }

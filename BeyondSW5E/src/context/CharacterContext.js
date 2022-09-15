@@ -420,6 +420,8 @@ export const CharacterProvider = ({children}) => {
 
 	//calculate max force points
 	var classLevel = ''
+	//#region ForcePowerData
+	let numOr0 = n => isNaN(n) ? 0 : n
 	var forcePoints = []
 	for(k = 0; k < charData.classes.length; k++) {
 		if(isForceClass(charData.classes[k].name)) {
@@ -431,7 +433,6 @@ export const CharacterProvider = ({children}) => {
 			}
 		}
 	}
-	let numOr0 = n => isNaN(n) ? 0 : n
 	forcePoints = forcePoints.reduce((a, b) => numOr0(a) + numOr0(b), 0)
 	forcePoints = forcePoints + Math.max(characterMods.wis_mod, characterMods.cha_mod)
 
@@ -454,14 +455,52 @@ export const CharacterProvider = ({children}) => {
 			}))
 		}
 	}
-	
 	forcePowersData = forcePowersData.flat()
+	//#endregion
+	//#region TechPowerData
+	var techPoints = []
+	for(k = 0; k < charData.classes.length; k++) {
+		if(isTechClass(charData.classes[k].name)) {
+			classLevel = charData.classes[k].levels
+			for(j = 0; j < api_Class.length; j++) {
+				if(api_Class[j].name === charData.classes[k].name) {
+					techPoints.push(parseInt((api_Class[j]["levelChanges"][classLevel]["Tech Points"]), 10))
+				}
+			}
+		}
+	}
+	techPoints = techPoints.reduce((a, b) => numOr0(a) + numOr0(b), 0)
+	techPoints = techPoints + characterMods.int_mod
 
-	//object to export character force casting information
+	//get force powers known
+	var techPowers = []
+	for (m = 0; m < charData.classes.length; m++) {
+		if (isTechClass(charData.classes[m].name)) {
+			for (j = 0; j < charData.classes[m].techPowers.length; j++) {
+				techPowers.push(charData.classes[m].techPowers[j])
+			}
+		}
+	}
+
+	var techPowersData = []
+	for (i = 0; i < techPowers.length; i++) {
+		if (api_Power != '') {	
+			techPowersData.push(api_Power.filter(api_Power => {
+				return api_Power.name === techPowers[i]
+			
+			}))
+		}
+	}
+	techPowersData = techPowersData.flat()
+	//#endregion
+	//object to export character casting information
 	const characterCasting = {
 		forcePoints: forcePoints,
 		forcePowers: forcePowers,
-		forcePowersData: forcePowersData
+		forcePowersData: forcePowersData,
+		techPoints: techPoints,
+		techPowers: techPowers,
+		techPowersData: techPowersData
 	}
 
 	//TODO: need to modify this api call. The quantity data from the character sheet is being lost on load.

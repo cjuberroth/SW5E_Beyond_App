@@ -1,1 +1,179 @@
-{"name":"Trevalla","id":"442f9d3d-033e-4d57-a8a6-572541cd3800","userId":"31a54266-22bc-4ce8-9fd1-597aa79899dd","builderVersion":"0.6.1","image":"","user":"","experiencePoints":195000,"species":{"name":"Echani","abilityScoreImprovementSelectedOption":0,"abilityScoreImprovement":{}},"classes":[{"name":"Engineer","levels":8,"hitPoints":[5,5,5,5,5,5,5],"abilityScoreImprovements":[{"type":"Ability Score Improvement","abilitiesIncreased":[{"name":"Dexterity","value":1},{"name":"Intelligence","value":1}]},{"type":"Ability Score Improvement","abilitiesIncreased":[{"name":"Constitution","value":2}]}],"archetype":{"name":"Astrotech Engineering (Companion)"},"techPowers":["Targeting Shot","Rime Shot","Jet of Flame","Combustive Shot","Tranquilizer","Oil Slick","Kolto Pack","Hold Droid","Detect Invisibility","Energetic Burst","Tech Override","Tactical Advantage","Autonomous Servant","Ballistic Shield","Salvo","Fabricate"]},{"name":"Scout","levels":8,"hitPoints":[6,6,6,6,6,6,6,6],"abilityScoreImprovements":[{"type":"Ability Score Improvement","abilitiesIncreased":[{"name":"Dexterity","value":1},{"name":"Intelligence","value":1}]},{"type":"Ability Score Improvement","abilitiesIncreased":[{"name":"Dexterity","value":1},{"name":"Intelligence","value":1}]}],"archetype":{"name":"Deadeye Technique"},"techPowers":["Tri-Shot","Minor Hologram","Ion Blast","Spectrum Bolt","Poison Dart","Energy Shield","Pyrotechnics","Overheat","Magnetic Hold","Kolto Dispenser"]}],"baseAbilityScores":{"Strength":8,"Dexterity":15,"Constitution":13,"Intelligence":14,"Wisdom":10,"Charisma":12},"background":{"name":"Bounty Hunter","feat":{"name":"Specialist","type":"Feat"},"feature":""},"characteristics":{"alignment":"Chaotic Balanced","Personality Traits":"","Ideal":"","Bond":"","Flaw":"","Gender":"","Place of Birth":"","Age":"","Height":"","Weight":"","Hair":"","Eyes":"","Skin":"","Appearance":"","Backstory":""},"credits":0,"equipment":[{"name":"Xerrol Nightstinger Rifle","quantity":1,"category":"EnhancedItem"},{"name":"Shatter rifle","quantity":1,"category":"Equipment","equipped":true},{"name":"Carbine rifle","quantity":1,"category":"Equipment","equipped":true},{"name":"Plastoid composite","quantity":1,"category":"Equipment","equipped":true}],"currentStats":{"hitPointsLost":73,"temporaryHitPoints":0,"techPointsUsed":2,"forcePointsUsed":0,"superiorityDiceUsed":0,"hitDiceUsed":{},"deathSaves":{"successes":0,"failures":0},"hasInspiration":false,"featuresTimesUsed":{},"conditions":[],"exhaustion":0,"highLevelCasting":{"level6":false,"level7":false,"level8":false,"level9":false}},"tweaks":{},"customProficiencies":[],"customLanguages":[],"customFeatures":[],"customFeats":[],"customTechPowers":[],"customForcePowers":[],"customEquipment":[],"settings":{"isEnforcingForcePrerequisites":true,"isFixedHitPoints":false,"abilityScoreMethod":"Standard Array"},"notes":"","createdAt":1635004307343,"changedAt":1635030004743,"localId":"temp-f2u5n4cag"}
+{
+  "name": "Trevalla",
+  "id": "442f9d3d-033e-4d57-a8a6-572541cd3800",
+  "userId": "31a54266-22bc-4ce8-9fd1-597aa79899dd",
+  "builderVersion": "0.6.1",
+  "image": "",
+  "user": "",
+  "experiencePoints": 195000,
+  "species": {
+    "name": "Echani",
+    "abilityScoreImprovementSelectedOption": 0,
+    "abilityScoreImprovement": {}
+  },
+  "classes": [
+    {
+      "name": "Engineer",
+      "levels": 8,
+      "hitPoints": [5, 5, 5, 5, 5, 5, 5],
+      "abilityScoreImprovements": [
+        {
+          "type": "Ability Score Improvement",
+          "abilitiesIncreased": [
+            { "name": "Dexterity", "value": 1 },
+            { "name": "Intelligence", "value": 1 }
+          ]
+        },
+        {
+          "type": "Ability Score Improvement",
+          "abilitiesIncreased": [{ "name": "Constitution", "value": 2 }]
+        }
+      ],
+      "archetype": { "name": "Astrotech Engineering (Companion)" },
+      "techPowers": [
+        "Targeting Shot",
+        "Rime Shot",
+        "Jet of Flame",
+        "Combustive Shot",
+        "Tranquilizer",
+        "Oil Slick",
+        "Kolto Pack",
+        "Hold Droid",
+        "Detect Invisibility",
+        "Energetic Burst",
+        "Tech Override",
+        "Tactical Advantage",
+        "Autonomous Servant",
+        "Ballistic Shield",
+        "Salvo",
+        "Fabricate"
+      ]
+    },
+    {
+      "name": "Scout",
+      "levels": 8,
+      "hitPoints": [6, 6, 6, 6, 6, 6, 6, 6],
+      "abilityScoreImprovements": [
+        {
+          "type": "Ability Score Improvement",
+          "abilitiesIncreased": [
+            { "name": "Dexterity", "value": 1 },
+            { "name": "Intelligence", "value": 1 }
+          ]
+        },
+        {
+          "type": "Ability Score Improvement",
+          "abilitiesIncreased": [
+            { "name": "Dexterity", "value": 1 },
+            { "name": "Intelligence", "value": 1 }
+          ]
+        }
+      ],
+      "archetype": { "name": "Deadeye Technique" },
+      "techPowers": [
+        "Tri-Shot",
+        "Minor Hologram",
+        "Ion Blast",
+        "Spectrum Bolt",
+        "Poison Dart",
+        "Energy Shield",
+        "Pyrotechnics",
+        "Overheat",
+        "Magnetic Hold",
+        "Kolto Dispenser"
+      ]
+    }
+  ],
+  "baseAbilityScores": {
+    "Strength": 8,
+    "Dexterity": 15,
+    "Constitution": 13,
+    "Intelligence": 14,
+    "Wisdom": 10,
+    "Charisma": 12
+  },
+  "background": {
+    "name": "Bounty Hunter",
+    "feat": { "name": "Specialist", "type": "Feat" },
+    "feature": ""
+  },
+  "characteristics": {
+    "alignment": "Chaotic Balanced",
+    "Personality Traits": "",
+    "Ideal": "",
+    "Bond": "",
+    "Flaw": "",
+    "Gender": "",
+    "Place of Birth": "",
+    "Age": "",
+    "Height": "",
+    "Weight": "",
+    "Hair": "",
+    "Eyes": "",
+    "Skin": "",
+    "Appearance": "",
+    "Backstory": ""
+  },
+  "credits": 0,
+  "equipment": [
+    {
+      "name": "Xerrol Nightstinger Rifle",
+      "quantity": 1,
+      "category": "EnhancedItem"
+    },
+    {
+      "name": "Shatter rifle",
+      "quantity": 1,
+      "category": "Equipment",
+      "equipped": true
+    },
+    {
+      "name": "Carbine rifle",
+      "quantity": 1,
+      "category": "Equipment",
+      "equipped": true
+    },
+    {
+      "name": "Plastoid composite",
+      "quantity": 1,
+      "category": "Equipment",
+      "equipped": true
+    }
+  ],
+  "currentStats": {
+    "hitPointsLost": 73,
+    "temporaryHitPoints": 0,
+    "techPointsUsed": 2,
+    "forcePointsUsed": 0,
+    "superiorityDiceUsed": 0,
+    "hitDiceUsed": {},
+    "deathSaves": { "successes": 0, "failures": 0 },
+    "hasInspiration": false,
+    "featuresTimesUsed": {},
+    "conditions": [],
+    "exhaustion": 0,
+    "highLevelCasting": {
+      "level6": false,
+      "level7": false,
+      "level8": false,
+      "level9": false
+    }
+  },
+  "tweaks": {},
+  "customProficiencies": [],
+  "customLanguages": [],
+  "customFeatures": [],
+  "customFeats": [],
+  "customTechPowers": [],
+  "customForcePowers": [],
+  "customEquipment": [],
+  "settings": {
+    "isEnforcingForcePrerequisites": true,
+    "isFixedHitPoints": false,
+    "abilityScoreMethod": "Standard Array"
+  },
+  "notes": "",
+  "createdAt": 1635004307343,
+  "changedAt": 1635030004743,
+  "localId": "temp-f2u5n4cag"
+}

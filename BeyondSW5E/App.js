@@ -30,7 +30,7 @@ function getHeaderTitle(route) {
             return 'Skills'
         case 'Inventory':
             return 'Inventory'
-        case 'Force':
+        case 'Casting':
             return 'Powers'
         case 'Features':
             return 'Feats'
@@ -61,7 +61,7 @@ function MyTabs() {
             <Tab.Screen name="Abilities" component={ AbilitiesScreen } options={{ tabBarLabel: 'Abilities' }} />
             <Tab.Screen name="Skills" component={ SkillsScreen } />
             <Tab.Screen name="Inventory" component={ InventoryScreen } />
-            <Tab.Screen name="Force" component={ SpellsScreen } />
+            <Tab.Screen name="Casting" component={ SpellsScreen } />
             <Tab.Screen name="Features" component={ FeaturesScreen } />
         </Tab.Navigator>
     )
