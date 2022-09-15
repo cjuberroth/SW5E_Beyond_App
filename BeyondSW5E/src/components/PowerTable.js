@@ -25,22 +25,37 @@ const PowerTable = ({ powerLevel, powerToggle }) => {
         powersByLevel == 0
         ?   null
         :   <View>
-                <Text style={styles.tableTitle}>{tableTitle}</Text>
                 <DataTable style={styles.dataTable}>
-                    <DataTable.Header>
-                        <DataTable.Title></DataTable.Title>
-                        <DataTable.Title>Period</DataTable.Title>
-                        <DataTable.Title>Range</DataTable.Title>
-                        <DataTable.Title>Duration</DataTable.Title>
+                    <DataTable.Header style={[styles.tableHeaderRow, styles.tableRow]}>
+                        <DataTable.Title>
+                            <Text style={styles.tableTitle}>{tableTitle}</Text>
+                        </DataTable.Title>
+                        <DataTable.Title>
+                            <Text style={[styles.tableDataText,styles.tableHeaderText]}>Period</Text>
+                        </DataTable.Title>
+                        <DataTable.Title>
+                            <Text style={[styles.tableDataText,styles.tableHeaderText]}>Range</Text>
+                        </DataTable.Title>
+                        <DataTable.Title>
+                            <Text style={[styles.tableDataText,styles.tableHeaderText]}>Duration</Text>
+                        </DataTable.Title>
                     </DataTable.Header>
                     {
                         powersByLevel.map(power => {
                             return (
-                                <DataTable.Row>
-                                    <DataTable.Cell>{power.name}</DataTable.Cell>
-                                    <DataTable.Cell>{power.castingPeriodText}</DataTable.Cell>
-                                    <DataTable.Cell>{power.range}</DataTable.Cell>
-                                    <DataTable.Cell>{power.duration}</DataTable.Cell>
+                                <DataTable.Row style={styles.tableRow}>
+                                    <DataTable.Cell>
+                                        <Text style={styles.tableDataText}>{power.name}</Text>
+                                    </DataTable.Cell>
+                                    <DataTable.Cell>
+                                        <Text style={styles.tableDataText}>{power.castingPeriodText}</Text>
+                                    </DataTable.Cell>
+                                    <DataTable.Cell>
+                                        <Text style={styles.tableDataText}>{power.range}</Text>
+                                    </DataTable.Cell>
+                                    <DataTable.Cell>
+                                        <Text style={styles.tableDataText}>{power.duration}</Text>
+                                    </DataTable.Cell>
                                 </DataTable.Row>
                             )
                         })
@@ -53,10 +68,23 @@ const PowerTable = ({ powerLevel, powerToggle }) => {
 const styles = StyleSheet.create({
     tableTitle: {
         fontWeight: 'bold',
-        fontSize: 16
+        fontSize: 20,
+        color: 'white'
     },
     dataTable: {
-        paddingBottom: 10
+    },
+    tableHeaderText: {
+        fontWeight: 'bold'
+    },
+    tableDataText: {
+        fontSize: 12,
+        color: 'white'
+    },
+    tableHeaderRow: {
+        backgroundColor: 'gray'
+    },
+    tableRow: {
+        borderBottomColor: 'gray'
     }
 })
 

@@ -1,15 +1,9 @@
 import React, { useContext, useState } from 'react'
-import { Text, View, StyleSheet, ScrollView, SafeAreaView } from 'react-native'
-import { DataTable } from 'react-native-paper'
+import { Text, View, StyleSheet, ScrollView } from 'react-native'
 import DuoToggleSwitch from "react-native-duo-toggle-switch"
 import CharacterContext from '../context/CharacterContext'
 import PowerTable from '../components/PowerTable'
-
-/*
-    This screen will need to be modified to accomodate the difference between force and tech powers
-    Additionally, there are several comments below which identify the need to paramaterize several
-    other values which come from character data and the api
-*/
+import Styles from '../styles/AppStyles'
 
 const SpellsScreen = () => {
     const charData = useContext(CharacterContext).character
@@ -22,10 +16,9 @@ const SpellsScreen = () => {
     const techSave = 8 + charMods.int_mod + proficiency
     const techPoints = useContext(CharacterContext).characterCasting.techPoints
     const currentTechPoints = techPoints - charData.currentStats.techPointsUsed
-
     const [powerToggle, setPowerToggle] = useState(true)
     return (
-        <View style = {{flex: 1}}>
+        <View style = {Styles.globalStyles.parentContainerView}>
             <View style={{alignItems: 'center'}}>
                 <DuoToggleSwitch 
                     primaryText="FORCE"
@@ -37,18 +30,61 @@ const SpellsScreen = () => {
             <View style={{flex:1}}>
                 {
                     powerToggle
-                    ?
-                        <View style={{alignItems: 'center'}}>
-                            <Text>Force Points: {currentForcePoints} / {forcePoints}</Text>
-                            <Text>Force Saves: {wisdomForceSave} / {charismaForceSave}</Text>
-                            <Text>Force Power Hit: +{charMods.wis_mod + proficiency} / +{charMods.cha_mod + proficiency}</Text>
+                    ?   <View style={{alignItems: 'center', flexDirection: 'row'}}>
+                            <View style={{flex: 1, alignItems: 'center'}}>
+                                <View style={{flexDirection: 'row', width: '80%'}}>
+                                    <View style={{backgroundColor: '#15f2fd', flex: 1, alignItems: 'center', borderTopLeftRadius: 10, borderBottomLeftRadius: 10, borderRightWidth: 2}}>
+                                        <Text style={{fontSize: 20}}>{wisdomForceSave}</Text>
+                                    </View>
+                                    <View style={{backgroundColor: '#EB212E', flex: 1, alignItems: 'center', borderTopRightRadius: 10, borderBottomRightRadius: 10, borderLeftWidth: 2}}>
+                                        <Text style={{fontSize: 20}}>{charismaForceSave}</Text>
+                                    </View>
+                                </View>
+                                <Text style={{color: 'white', fontSize: 16}}>Force Saves</Text>
+                            </View>
+                            <View style={{flex:1, alignItems: 'center'}}>
+                                <View style={{backgroundColor: '#ffffbf', alignItems: 'center', borderRadius: 10, width: '80%'}}>
+                                    <Text style={{fontSize: 20}}>{currentForcePoints} / {forcePoints}</Text>
+                                </View>
+                                <Text style={{color: 'white', fontSize: 16}}>Force Points</Text>
+                            </View>
+                            <View style={{flex:1, alignItems: 'center'}}>
+                                <View style={{flexDirection: 'row', width: '80%'}}>
+                                    <View style={{backgroundColor: '#15f2fd', flex: 1, alignItems: 'center', borderTopLeftRadius: 10, borderBottomLeftRadius: 10, borderRightWidth: 2}}>
+                                        <Text style={{fontSize: 20}}>+{charMods.wis_mod + proficiency}</Text>
+                                    </View>
+                                    <View style={{backgroundColor: '#EB212E', flex: 1, alignItems: 'center', borderTopRightRadius: 10, borderBottomRightRadius: 10, borderLeftWidth: 2}}>
+                                        <Text style={{fontSize: 20}}>+{charMods.cha_mod + proficiency}</Text>
+                                    </View>
+                                </View>
+                                <Text style={{color: 'white', fontSize: 16}}>Force Hit</Text>
+                            </View>
                         </View>
-                    :   //this block for the tech has not been updated to reflect actual tech power data
-                        <View style={{alignItems: 'center'}}>
-                            <Text>Tech Points: {currentTechPoints} / {techPoints}</Text>
-                            <Text>Tech Save: {techSave}</Text>
-                            <Text>Tech Power Hit: +{charMods.int_mod + proficiency}</Text>
+                    :   <View style={{alignItems: 'center', flexDirection: 'row'}}>
+                            <View style={{flex:1, alignItems: 'center'}}>
+                                <View style={{backgroundColor: '#ffffbf', alignItems: 'center', borderRadius: 10, width: '80%'}}>
+                                    <Text style={{fontSize: 20}}>{techSave}</Text>
+                                </View>
+                                <Text style={{color: 'white', fontSize: 16}}>Tech Save</Text>
+                            </View>
+                            <View style={{flex:1, alignItems: 'center'}}>
+                                <View style={{backgroundColor: '#ffffbf', alignItems: 'center', borderRadius: 10, width: '80%'}}>
+                                    <Text style={{fontSize: 20}}>{currentTechPoints} / {techPoints}</Text>
+                                </View>
+                                <Text style={{color: 'white', fontSize: 16}}>Tech Points</Text>
+                            </View>
+                            <View style={{flex:1, alignItems: 'center'}}>
+                                <View style={{backgroundColor: '#ffffbf', alignItems: 'center', borderRadius: 10, width: '80%'}}>
+                                    <Text style={{fontSize: 20}}>+{charMods.int_mod + proficiency}</Text>
+                                </View>
+                                <Text style={{color: 'white', fontSize: 16}}>Tech Hit</Text>
+                            </View>
                         </View>
+                        // <View style={{alignItems: 'center'}}>
+                        //     <Text>Tech Points: {currentTechPoints} / {techPoints}</Text>
+                        //     <Text>Tech Save: {techSave}</Text>
+                        //     <Text>Tech Power Hit: +{charMods.int_mod + proficiency}</Text>
+                        // </View>
                 }
                 <ScrollView bounces={false}>
                     <PowerTable powerLevel = { 0 } powerToggle = { powerToggle } />
