@@ -4,9 +4,10 @@ import Modal from 'react-native-modal'
 import { FontAwesome5 } from '@expo/vector-icons'
 import HeaderContext from '../context/HeaderContext'
 import CharacterContext from '../context/CharacterContext'
+import HeaderButtonSmall from './HeaderButtonSmall'
 import HeaderButton from './HeaderButton'
 
-const Header = (headerHeight) => {
+const HeaderCollapsed = (headerHeight) => {
     const characterInfo = useContext(CharacterContext).characterInformation
     const characterMods = useContext(CharacterContext).characterMods
     const apiData = useContext(CharacterContext).apiData
@@ -31,22 +32,17 @@ const Header = (headerHeight) => {
         <>
             <View style={{flex: 1}} >
                 <View style={styles.headerContainer}>
-                    <View style={styles.headerBtnCol}>
-                        <HeaderButton onPress={toggleConditions} title="Conditions" />
-                        <HeaderButton onPress={toggleRest} title="Rest" />
-                    </View>
-                    <Image
-                        source={{uri: characterInfo.image}}
-                        style={{ flex: 1, width: '100%', height: '100%' }}
-                        resizeMode={"contain"}
-                    />
-                    <View style={styles.headerBtnCol}>
-                        <HeaderButton onPress={toggleDefenses} title="Defenses" />
-                        <HeaderButton onPress={() => alert('Function for inspiration')} title="Inspiration" />
-                    </View>
+                    
+                        <HeaderButtonSmall onPress={toggleConditions} icon='allergies' />
+                        <HeaderButtonSmall onPress={toggleRest} icon='bed' />
+                    
+                    
+                        <HeaderButtonSmall onPress={toggleDefenses} icon='shield-alt' />
+                        <HeaderButtonSmall onPress={() => alert('Function for inspiration')} icon='lightbulb' />
+                    
                 </View>
                 
-                <View style={styles.headerStats}>
+                {/* <View style={styles.headerStats}>
                     <View style={styles.statBox}>
                         <Text style={styles.statText}>Prof</Text>
                         <Text style={styles.statTextBig}>{numberPresent(characterInfo.proficiency) + characterInfo.proficiency}</Text>
@@ -63,9 +59,9 @@ const Header = (headerHeight) => {
                         <Text style={styles.statText}>AC</Text>
                         <Text style={styles.statTextBig}>AC</Text>
                     </View>
-                </View>
-                <View style={{alignItems: 'center', marginTop: 5, flex: 1}}>
-                    <HeaderButton onPress={toggleHeader} title="Collapse Header" />
+                </View> */}
+                <View style={{alignItems: 'center', flex: 1}}>
+                    <HeaderButtonSmall onPress={toggleHeader} icon='angle-down' />
                 </View>
                 
             </View>
@@ -200,5 +196,5 @@ const styles = StyleSheet.create({
     }
 })
 
-export default Header
+export default HeaderCollapsed
 

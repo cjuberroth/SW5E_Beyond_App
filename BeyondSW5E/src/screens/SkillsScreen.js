@@ -1,40 +1,32 @@
 import React, { useContext } from 'react'
-import { Text, View, FlatList, StyleSheet, Animated, SafeAreaView } from 'react-native'
+import { Text, View, FlatList, StyleSheet, Animated } from 'react-native'
 import CharacterContext from '../context/CharacterContext'
 import SkillTableRow from '../components/SkillTableRow'
 import Header from '../components/Header'
+import HeaderCollapsed from '../components/HeaderCollapsed'
 import HeaderContext from '../context/HeaderContext'
 
 const SkillsScreen = () => {
 
-    const headerHeight = useContext(HeaderContext).headerUtils.headerHeight
-    const translateY = useContext(HeaderContext).headerUtils.translateY
-    const headerUtils = useContext(HeaderContext).headerUtils
-    
     const characterSkills = useContext(CharacterContext).character.tweaks?.abilityScores
     const characterInfo = useContext(CharacterContext).characterInformation
     const characterMods = useContext(CharacterContext).characterMods
     const skillsLU = useContext(CharacterContext).apiData.skillsLU
+    const flexValue = useContext(HeaderContext).headerUtils.flexValue
+    const headerCollapsed = useContext(HeaderContext).headerUtils.isCollapsed
 
     return (
-        <SafeAreaView style={styles.parentView}>
-            <Animated.View style={[styles.header, {transform: [{translateY}]}]}>
-                <Header {...{headerHeight}} />
-            </Animated.View>
-            <Animated.View style={[{paddingTop: headerHeight}, {transform: [{translateY}]}]}>
-                {/* <Text style={styles.headerStyle}>{characterInfo.name}</Text> */}
+        <View style={styles.parentView}>
+            <View style={styles.header}>
+                {!headerCollapsed ? <Header /> : <HeaderCollapsed />}
+            </View>
+            <View style={{flex: flexValue}}>
                 <View style={styles.rowStyle}>
                     <Text style={styles.modCol}>MOD</Text>
                     <Text style={styles.skillCol}>SKILL</Text>
                     <Text style={styles.bonusCol}>BONUS</Text>
                 </View>
-                <Animated.FlatList 
-                    bounces={false}
-                    scrollEventThrottle={16}
-                    //contentContainerStyle={{paddingTop: headerHeight/2}}
-                    onScroll={headerUtils.handleScroll}
-                    ref={headerUtils.ref}
-                    onMomentumScrollEnd={headerUtils.handleSnap}
+                <FlatList 
                     data = { skillsLU }
                     keyExtractor = {(skill) => skill.rowKey}
                     renderItem = { ({ item }) => {
@@ -47,8 +39,8 @@ const SkillsScreen = () => {
                                 />
                     }}
                 />
-            </Animated.View>
-        </SafeAreaView>
+            </View>
+        </View>
     )
 }
 
@@ -57,10 +49,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#263238',
         flex: 1
     },
-    headerStyle: {
-        fontSize: 30,
-        color: 'white',
-        textAlign: 'center'
+    header: {
+        flex: 1
     },
     rowStyle: {
         //flex: 1,
@@ -87,14 +77,6 @@ const styles = StyleSheet.create({
         flex: 2,
         fontSize: 15,
         color: 'white'
-    },
-    header: {
-        position: 'absolute',
-        backgroundColor: '#263238',
-        left: 0,
-        right: 0,
-        width: '100%',
-        zIndex: 1
     }
 })
 

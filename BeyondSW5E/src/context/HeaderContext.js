@@ -1,71 +1,27 @@
-import React, { useState, useRef } from 'react'
+import React, { useState } from 'react'
 import { Animated, useWindowDimensions } from 'react-native'
 
 const HeaderContext = React.createContext()
     
 export const HeaderProvider = ({children}) => {
-    const { height, width } = useWindowDimensions()
-    //const headerHeight = 175
-    const headerHeight = 0.25*height
+    
+    const [isCollapsed, setCollapsed] = useState(false)
 
-    const ref = useRef(null)
-    const scrollY = useRef(new Animated.Value(0))
-    const scrollYClamped = Animated.diffClamp(scrollY.current, 0, headerHeight)
-
-    const handleScroll = Animated.event(
-        [
-            {
-                nativeEvent: {
-                    contentOffset: {y: scrollY.current},
-                },
-            },
-        ],
-        {
-            useNativeDriver: true,
-        },
-    )
-
-    const translateY = scrollYClamped.interpolate({
-        inputRange: [0, headerHeight],
-        outputRange: [0, -(headerHeight)],
-    })
-
-    const translateYNumber = useRef()
-
-    translateY.addListener(({value}) => {
-        translateYNumber.current = value
-    })
-
-    const handleSnap = ({nativeEvent}) => {
-        const offsetY = nativeEvent.contentOffset.y
-        if (
-            !(
-                translateYNumber.current === 0 ||
-                translateYNumber.current >= -headerHeight
-            )
-        ) {
-            if (ref.current) {
-                ref.current.scrollToOffset({
-                    offset:
-                        getCloser(translateYNumber.current, -headerHeight, 0) === -headerHeight
-                            ? offsetY + headerHeight
-                            : offsetY - headerHeight
-                })
-            }
-        }
+    const toggleHeader = () => {
+        setCollapsed(!isCollapsed)
     }
 
-    const getCloser = (value, checkOne, checkTwo) => {
-        Math.abs(value - checkOne) < Math.abs(value - checkTwo) ? checkOne : checkTwo
+    var bodyFlexValue = 2
+    if(isCollapsed){
+        bodyFlexValue = 8
+    } else {
+        bodyFlexValue = 2
     }
-
+    
     const headerUtils = {
-        headerHeight: headerHeight,
-        translateY: translateY,
-        handleScroll: handleScroll,
-        ref: ref,
-        handleSnap: handleSnap,
-        translateYNumber: translateYNumber
+        isCollapsed: isCollapsed,
+        toggleHeader: toggleHeader,
+        flexValue: bodyFlexValue
     }
 
     return <HeaderContext.Provider value={{headerUtils}}>

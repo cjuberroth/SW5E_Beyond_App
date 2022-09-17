@@ -1,61 +1,54 @@
-import React, { useContext, useRef } from 'react'
-import { Text, View, StyleSheet, FlatList, Animated, SafeAreaView, StatusBar } from 'react-native'
+import React, { useContext } from 'react'
+import { Text, View, StyleSheet, FlatList, Animated } from 'react-native'
 import CharacterContext from '../context/CharacterContext'
 import ItemCard from '../components/ItemCard'
 import Header from '../components/Header'
+import HeaderCollapsed from '../components/HeaderCollapsed'
 import HeaderContext from '../context/HeaderContext'
 
 const InventoryScreen = () => {
-    
-    const headerHeight = useContext(HeaderContext).headerUtils.headerHeight
-    const translateY = useContext(HeaderContext).headerUtils.translateY
-    const headerUtils = useContext(HeaderContext).headerUtils
 
     const equipment = useContext(CharacterContext).characterEquipment.equipment
+    const flexValue = useContext(HeaderContext).headerUtils.flexValue
+    const headerCollapsed = useContext(HeaderContext).headerUtils.isCollapsed
 
     return (
-        <SafeAreaView style={ styles.container }>
-            <StatusBar backgroundColor='#1c1c1c' style='light' />
-            <View style = { styles.screenContainer }>
-                <Animated.View style={[styles.header, {transform: [{translateY}]}]}>
-                    <Header {...{headerHeight}} />
-                </Animated.View>
-                <Animated.View style={[{paddingTop: headerHeight/2}, {transform: [{translateY}]}]}>
-                    <Animated.View style={styles.tableHeader}>
-                        <Text style = {[ styles.column, styles.colEquip, styles.colHeader ]}>Equip</Text>
-                        <Text style = {[ styles.column, styles.colItem, styles.colHeader ]}>Item</Text>
-                        <Text style = {[ styles.column, styles.colQty, styles.colHeader ]}>Qty</Text>
-                        <Text style = {[ styles.column, styles.colCost, styles.colHeader ]}>Cost</Text>
-                    </Animated.View>
-                    <Animated.FlatList
-                        scrollEventThrottle={16}
-                        //contentContainerStyle={{paddingTop: 75}}
-                        //bounces = {false}
-                        onScroll={headerUtils.handleScroll}
-                        ref={headerUtils.ref}
-                        onMomentumScrollEnd={headerUtils.handleSnap}
-                        data = { equipment }
-                        keyExtractor = {(equip) => equip.name}
-                        renderItem={({ item }) => {
-                            return <ItemCard
-                                        item = { item }
-                                    />
-                        }}
-                    />
-                </Animated.View>
+        <View style={ styles.container }>
+            <View style={styles.header}>
+                {!headerCollapsed ? <Header /> : <HeaderCollapsed />}
             </View>
-        </SafeAreaView>
+            <View style={{flex: flexValue}}>
+                <View style={styles.tableHeader}>
+                    <Text style = {[ styles.column, styles.colEquip, styles.colHeader ]}>Equip</Text>
+                    <Text style = {[ styles.column, styles.colItem, styles.colHeader ]}>Item</Text>
+                    <Text style = {[ styles.column, styles.colQty, styles.colHeader ]}>Qty</Text>
+                    <Text style = {[ styles.column, styles.colCost, styles.colHeader ]}>Cost</Text>
+                </View>
+                <FlatList
+                    data = { equipment }
+                    keyExtractor = {(equip) => equip.name}
+                    renderItem={({ item }) => {
+                        return <ItemCard
+                                    item = { item }
+                                />
+                    }}
+                />
+            </View>
+        </View>
     )
 }
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#263238',
+    },
+    header: {
+        flex: 1
+    },
     tableHeader: {
         flexDirection: 'row',
         margin: 5,
-    },
-    screenContainer: {
-        flex: 1,
-        backgroundColor: '#263238'
     },
     column: {
         fontSize: 15,
@@ -78,18 +71,8 @@ const styles = StyleSheet.create({
     colCost: {
         flex: 5
     },
-    header: {
-        position: 'absolute',
-        backgroundColor: '#263238',
-        left: 0,
-        right: 0,
-        width: '100%',
-        zIndex: 1,
-    },
-    container: {
-        flex: 1,
-        backgroundColor: '#000',
-    }
+    
+    
 })
 
 export default InventoryScreen
