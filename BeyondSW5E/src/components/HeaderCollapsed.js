@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { Text, View, StyleSheet, Image, Button, Pressable, FlatList } from 'react-native'
+import { Text, View, StyleSheet, ImageBackground, Button, Pressable, FlatList } from 'react-native'
 import Modal from 'react-native-modal'
 import { FontAwesome5 } from '@expo/vector-icons'
 import HeaderContext from '../context/HeaderContext'
@@ -30,41 +30,47 @@ const HeaderCollapsed = (headerHeight) => {
 
     return (
         <>
-            <View style={{flex: 1}} >
-                <View style={styles.headerContainer}>
+            <ImageBackground style={{height: '100%', resizeMode: 'contain'}}
+                    source={require('../../assets/header-background-upsidedown.jpg')}>
+                <View style={{flex: 1}} >
+                    <View style={styles.headerContainer}>
+                        
+                            <HeaderButtonSmall onPress={toggleConditions} icon='allergies' />
+                            <HeaderButtonSmall onPress={toggleRest} icon='bed' />
+                        
+                        
+                            <HeaderButtonSmall onPress={toggleDefenses} icon='shield-alt' />
+                            <HeaderButtonSmall onPress={() => alert('Function for inspiration')} icon='lightbulb' />
+                        
+                    </View>
                     
-                        <HeaderButtonSmall onPress={toggleConditions} icon='allergies' />
-                        <HeaderButtonSmall onPress={toggleRest} icon='bed' />
-                    
-                    
-                        <HeaderButtonSmall onPress={toggleDefenses} icon='shield-alt' />
-                        <HeaderButtonSmall onPress={() => alert('Function for inspiration')} icon='lightbulb' />
+                    {/* <View style={styles.headerStats}>
+                        <View style={styles.statBox}>
+                            <Text style={styles.statText}>Prof</Text>
+                            <Text style={styles.statTextBig}>{numberPresent(characterInfo.proficiency) + characterInfo.proficiency}</Text>
+                        </View>
+                        <View style={styles.statBox}>
+                            <Text style={styles.statText}>Speed</Text>
+                            <Text style={styles.statTextBig}>{characterInfo.speed + 'ft'}</Text>
+                        </View>
+                        <View style={styles.statBox}>
+                            <Text style={styles.statText}>Initiative</Text>
+                            <Text style={styles.statTextBig}>{numberPresent(characterMods.dex_mod) + characterMods.dex_mod}</Text>
+                        </View>
+                        <View style={styles.statBox}>
+                            <Text style={styles.statText}>AC</Text>
+                            <Text style={styles.statTextBig}>AC</Text>
+                        </View>
+                    </View> */}
+                    <View style={{alignItems: 'center', flex: 1}}>
+                        <Pressable style={styles.collapseButton} onPress={toggleHeader}>
+                            <Text style={styles.collapseButtonText}>{characterInfo.name}  </Text>
+                            <FontAwesome5 style={ styles.icon } name='angle-down' />
+                        </Pressable>
+                    </View>
                     
                 </View>
-                
-                {/* <View style={styles.headerStats}>
-                    <View style={styles.statBox}>
-                        <Text style={styles.statText}>Prof</Text>
-                        <Text style={styles.statTextBig}>{numberPresent(characterInfo.proficiency) + characterInfo.proficiency}</Text>
-                    </View>
-                    <View style={styles.statBox}>
-                        <Text style={styles.statText}>Speed</Text>
-                        <Text style={styles.statTextBig}>{characterInfo.speed + 'ft'}</Text>
-                    </View>
-                    <View style={styles.statBox}>
-                        <Text style={styles.statText}>Initiative</Text>
-                        <Text style={styles.statTextBig}>{numberPresent(characterMods.dex_mod) + characterMods.dex_mod}</Text>
-                    </View>
-                    <View style={styles.statBox}>
-                        <Text style={styles.statText}>AC</Text>
-                        <Text style={styles.statTextBig}>AC</Text>
-                    </View>
-                </View> */}
-                <View style={{alignItems: 'center', flex: 1}}>
-                    <HeaderButtonSmall onPress={toggleHeader} icon='angle-down' />
-                </View>
-                
-            </View>
+            </ImageBackground>
 
             {/* Rest Modal */}
             <Modal 
@@ -123,12 +129,13 @@ const HeaderCollapsed = (headerHeight) => {
 
 const styles = StyleSheet.create({
     headerContainer: {
-        flex: 2,
+        flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-around',
-        paddingTop: 5
-        //height: '100%'
+        paddingTop: 2,
+        borderBottomColor: '#4A0C05', 
+        //borderBottomWidth: 2
     },
     headerBtnCol: {
         flex: 1,
@@ -157,6 +164,27 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         marginBottom: 15
     },
+    collapseButton: {
+        flex: 1,
+        flexDirection: 'row',
+        borderWidth: 2,
+        borderColor: '#4A0C05',
+        width: '100%',
+        justifyContent: 'center',
+        backgroundColor: '#4A0C05'
+    },
+    collapseButtonText: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: 'white',
+        paddingHorizontal: 5
+    },
+    icon: {
+        fontSize: 25, 
+        color: 'white',
+        alignSelf: 'center',
+        paddingRight: 5
+      },
     modalContainer: {
         backgroundColor: 'gray',
         padding: 5

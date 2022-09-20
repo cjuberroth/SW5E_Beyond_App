@@ -1,12 +1,14 @@
 import React from 'react'
 import { Text, View, StyleSheet, Pressable, Image } from 'react-native'
 import { FontAwesome5 } from '@expo/vector-icons'
+import CharacterContext from '../context/CharacterContext'
 
 const HeaderButtonSmall = (props) => {
-  const { onPress, icon } = props;
+  const { onPress, icon } = props
+
   return (
     <Pressable style={ styles.button } onPress={ onPress }>
-      <FontAwesome5 style={ styles.icon } name={ icon } />
+        <FontAwesome5 style={ styles.icon } name={ icon } />
     </Pressable>
   );
 }
@@ -19,13 +21,14 @@ const styles = StyleSheet.create({
     paddingVertical: 1,
     paddingHorizontal: 1,
     borderRadius: 4,
-    backgroundColor: 'black',
+    backgroundColor: '#4A0C05',
     marginHorizontal: 20,
-    //marginVertical: 5
+    width: '75%'
   },
   text: {
     color: 'white',
-    alignSelf: 'center'
+    alignSelf: 'center',
+    fontWeight: 'bold'
   },
   icon: {
     fontSize: 25, 

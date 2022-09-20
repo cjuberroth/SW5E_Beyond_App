@@ -98,7 +98,7 @@ const MainNavigator = props => {
                                     backgroundColor: '#263238',
                                 },
                                 headerTintColor: '#ffffff',
-                                headerBackTitle: charData.name,
+                                headerBackTitleVisible: false,
                                 headerRight: () => (
                                     <Button style={styles.headerButton}
                                         onPress={() => alert('Maybe a modal to manage HP')}

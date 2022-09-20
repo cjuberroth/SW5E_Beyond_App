@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
     boxStyle: {
         marginBottom: 15,
         borderWidth: 2,
-        borderColor: 'white',
+        borderColor: '#4A0C05',
         borderRadius: 5,
         flexBasis: 115
     },
@@ -135,7 +135,12 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: 'white',
         marginBottom: 9,
-        marginTop: 2
+        marginTop: 2,
+        borderWidth: 2,
+        borderColor: '#4A0C05',
+        alignSelf: 'center',
+        width: '50%',
+        borderRadius: 5
     },
     headingStyle: {
         fontSize: 30,

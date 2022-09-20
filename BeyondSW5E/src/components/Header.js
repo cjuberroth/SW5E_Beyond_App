@@ -26,10 +26,10 @@ const Header = (headerHeight) => {
     const toggleDefenses = () => {
         setDefensesVisible(!isDefensesVisible)
     }
-
+    //if we like texture throughout, perhaps add it to each screen rotated 90 degrees
     return (
         <>
-            <ImageBackground style={{height: '100%', resizeMode: 'contain'}}
+            <ImageBackground style={{height: '100%', resizeMode: 'stretch'}}
                     source={require('../../assets/header-background-upsidedown.jpg')}>
                 <View style={{flex: 1}} >
                     <View style={styles.headerContainer}>
@@ -68,9 +68,12 @@ const Header = (headerHeight) => {
                     </View>
                 
 
-                <View style={{alignItems: 'center', marginTop: 5, flex: 1}}>
-                    <HeaderButton onPress={toggleHeader} title="Collapse Header" />
-                </View>
+                    <View style={{alignItems: 'center', flex: 1}}>
+                        <Pressable style={styles.collapseButton} onPress={toggleHeader}>
+                            <Text style={styles.collapseButtonText}>{characterInfo.name}  </Text>
+                            <FontAwesome5 style={ styles.icon } name='angle-up' />
+                        </Pressable>
+                    </View>
                 
                 </View>
             </ImageBackground>
@@ -147,18 +150,41 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-evenly',
         //flex: 1,
-        paddingTop: 10
+        paddingTop: 10,
+        paddingBottom: 10,
+        borderBottomColor: '#4A0C05', 
+        borderBottomWidth: 2
     },
     statBox: {
         alignItems: 'center'
     },
     statText: {
-        color: 'black'
+        color: 'white'
     },
     statTextBig: {
         fontSize: 25,
-        color: 'black'
+        color: 'white'
     },
+    collapseButton: {
+        flexDirection: 'row',
+        borderWidth: 2,
+        borderColor: '#4A0C05',
+        width: '100%',
+        justifyContent: 'center',
+        backgroundColor: '#4A0C05'
+    },
+    collapseButtonText: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: 'white',
+        paddingHorizontal: 5
+    },
+    icon: {
+        fontSize: 25, 
+        color: 'white',
+        alignSelf: 'center',
+        paddingRight: 5
+      },
     headingStyle: {
         fontSize: 30,
         backgroundColor: '#263238',
