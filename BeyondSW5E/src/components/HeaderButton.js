@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     paddingHorizontal: 5,
     borderRadius: 4,
-    backgroundColor: 'black',
+    backgroundColor: '#4A0C05',
     marginHorizontal: 20,
     marginVertical: 5,
     minWidth: '80%'

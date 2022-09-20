@@ -24,7 +24,10 @@ const AbilitiesScreen = () => {
             <View style={styles.header}>
                 {!headerCollapsed ? <Header /> : <HeaderCollapsed />}
             </View>
+            
             <View style={{ flex: flexValue }}>
+            <ImageBackground style={{height: '100%', resizeMode: 'contain'}}
+                    source={require('../../assets/header-background.jpg')}>
                 <ScrollView>
                     <ImageBackground style={styles.imgBackground} source={require('../../assets/rebel-alliance.png')}>
                         <View style={styles.parentStyle}>
@@ -90,7 +93,9 @@ const AbilitiesScreen = () => {
                         </View>
                     </View>
                 </ScrollView>
+                </ImageBackground>
             </View>
+            
         </View>
 
     )
@@ -134,7 +139,7 @@ const styles = StyleSheet.create({
     },
     headingStyle: {
         fontSize: 30,
-        backgroundColor: '#263238',
+        //backgroundColor: '#263238',
         color: 'white',
         textAlign: 'center',
         marginBottom: 15

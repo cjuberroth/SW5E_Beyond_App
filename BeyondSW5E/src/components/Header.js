@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { Text, View, StyleSheet, Image, Button, Pressable, FlatList } from 'react-native'
+import { Text, View, StyleSheet, Image, ImageBackground, Button, Pressable, FlatList } from 'react-native'
 import Modal from 'react-native-modal'
 import { FontAwesome5 } from '@expo/vector-icons'
 import HeaderContext from '../context/HeaderContext'
@@ -29,46 +29,51 @@ const Header = (headerHeight) => {
 
     return (
         <>
-            <View style={{flex: 1}} >
-                <View style={styles.headerContainer}>
-                    <View style={styles.headerBtnCol}>
-                        <HeaderButton onPress={toggleConditions} title="Conditions" />
-                        <HeaderButton onPress={toggleRest} title="Rest" />
+            <ImageBackground style={{height: '100%', resizeMode: 'contain'}}
+                    source={require('../../assets/header-background-upsidedown.jpg')}>
+                <View style={{flex: 1}} >
+                    <View style={styles.headerContainer}>
+                        <View style={styles.headerBtnCol}>
+                            <HeaderButton onPress={toggleConditions} title="Conditions" />
+                            <HeaderButton onPress={toggleRest} title="Rest" />
+                        </View>
+                        <Image
+                            source={{uri: characterInfo.image}}
+                            style={{ flex: 1, width: '100%', height: '100%' }}
+                            resizeMode={"contain"}
+                        />
+                        <View style={styles.headerBtnCol}>
+                            <HeaderButton onPress={toggleDefenses} title="Defenses" />
+                            <HeaderButton onPress={() => alert('Function for inspiration')} title="Inspiration" />
+                        </View>
                     </View>
-                    <Image
-                        source={{uri: characterInfo.image}}
-                        style={{ flex: 1, width: '100%', height: '100%' }}
-                        resizeMode={"contain"}
-                    />
-                    <View style={styles.headerBtnCol}>
-                        <HeaderButton onPress={toggleDefenses} title="Defenses" />
-                        <HeaderButton onPress={() => alert('Function for inspiration')} title="Inspiration" />
+                    
+                    <View style={styles.headerStats}>
+                        <View style={styles.statBox}>
+                            <Text style={styles.statText}>Prof</Text>
+                            <Text style={styles.statTextBig}>{numberPresent(characterInfo.proficiency) + characterInfo.proficiency}</Text>
+                        </View>
+                        <View style={styles.statBox}>
+                            <Text style={styles.statText}>Speed</Text>
+                            <Text style={styles.statTextBig}>{characterInfo.speed + 'ft'}</Text>
+                        </View>
+                        <View style={styles.statBox}>
+                            <Text style={styles.statText}>Initiative</Text>
+                            <Text style={styles.statTextBig}>{numberPresent(characterMods.dex_mod) + characterMods.dex_mod}</Text>
+                        </View>
+                        <View style={styles.statBox}>
+                            <Text style={styles.statText}>AC</Text>
+                            <Text style={styles.statTextBig}>AC</Text>
+                        </View>
                     </View>
-                </View>
                 
-                <View style={styles.headerStats}>
-                    <View style={styles.statBox}>
-                        <Text style={styles.statText}>Prof</Text>
-                        <Text style={styles.statTextBig}>{numberPresent(characterInfo.proficiency) + characterInfo.proficiency}</Text>
-                    </View>
-                    <View style={styles.statBox}>
-                        <Text style={styles.statText}>Speed</Text>
-                        <Text style={styles.statTextBig}>{characterInfo.speed + 'ft'}</Text>
-                    </View>
-                    <View style={styles.statBox}>
-                        <Text style={styles.statText}>Initiative</Text>
-                        <Text style={styles.statTextBig}>{numberPresent(characterMods.dex_mod) + characterMods.dex_mod}</Text>
-                    </View>
-                    <View style={styles.statBox}>
-                        <Text style={styles.statText}>AC</Text>
-                        <Text style={styles.statTextBig}>AC</Text>
-                    </View>
-                </View>
+
                 <View style={{alignItems: 'center', marginTop: 5, flex: 1}}>
                     <HeaderButton onPress={toggleHeader} title="Collapse Header" />
                 </View>
                 
-            </View>
+                </View>
+            </ImageBackground>
 
             {/* Rest Modal */}
             <Modal 
@@ -148,11 +153,11 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     statText: {
-        color: 'white'
+        color: 'black'
     },
     statTextBig: {
         fontSize: 25,
-        color: 'white'
+        color: 'black'
     },
     headingStyle: {
         fontSize: 30,
