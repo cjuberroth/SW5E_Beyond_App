@@ -1,7 +1,10 @@
-import React, {useContext} from 'react'
-import { Text, View, FlatList, StyleSheet } from 'react-native'
+import React, { useContext } from 'react'
+import { Text, View, FlatList, StyleSheet, Animated } from 'react-native'
 import CharacterContext from '../context/CharacterContext'
 import SkillTableRow from '../components/SkillTableRow'
+import Header from '../components/Header'
+import HeaderCollapsed from '../components/HeaderCollapsed'
+import HeaderContext from '../context/HeaderContext'
 
 const SkillsScreen = () => {
 
@@ -9,29 +12,34 @@ const SkillsScreen = () => {
     const characterInfo = useContext(CharacterContext).characterInformation
     const characterMods = useContext(CharacterContext).characterMods
     const skillsLU = useContext(CharacterContext).apiData.skillsLU
+    const flexValue = useContext(HeaderContext).headerUtils.flexValue
+    const headerCollapsed = useContext(HeaderContext).headerUtils.isCollapsed
 
     return (
         <View style={styles.parentView}>
-            <Text style={styles.headerStyle}>{characterInfo.name}</Text>
-            <View style={styles.rowStyle}>
-                <Text style={styles.profCol}>PROF</Text>
-                <Text style={styles.modCol}>MOD</Text>
-                <Text style={styles.skillCol}>SKILL</Text>
-                <Text style={styles.bonusCol}>BONUS</Text>
+            <View style={styles.header}>
+                {!headerCollapsed ? <Header /> : <HeaderCollapsed />}
             </View>
-            <FlatList 
-                data = { skillsLU }
-                keyExtractor = {(skill) => skill.rowKey}
-                renderItem = { ({ item }) => {
-                    return <SkillTableRow
-                                skillName = { item.name }
-                                skillProficiency={ characterSkills?.[item.baseAttribute]?.skills?.[item.name]?.proficiency }
-                                baseAttribute = { item.baseAttribute }
-                                charAttributeMod = { characterMods[item.baseAttribute.toLowerCase().substring(0,3) + '_mod'] }
-                                charProficiencyMod = { characterInfo.proficiency }
-                            />
-                }}
-            />
+            <View style={{flex: flexValue}}>
+                <View style={styles.rowStyle}>
+                    <Text style={styles.modCol}>MOD</Text>
+                    <Text style={styles.skillCol}>SKILL</Text>
+                    <Text style={styles.bonusCol}>BONUS</Text>
+                </View>
+                <FlatList 
+                    data = { skillsLU }
+                    keyExtractor = {(skill) => skill.rowKey}
+                    renderItem = { ({ item }) => {
+                        return <SkillTableRow
+                                    skillName = { item.name }
+                                    skillProficiency={ characterSkills?.[item.baseAttribute]?.skills?.[item.name]?.proficiency }
+                                    baseAttribute = { item.baseAttribute }
+                                    charAttributeMod = { characterMods[item.baseAttribute.toLowerCase().substring(0,3) + '_mod'] }
+                                    charProficiencyMod = { characterInfo.proficiency }
+                                />
+                    }}
+                />
+            </View>
         </View>
     )
 }
@@ -41,10 +49,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#263238',
         flex: 1
     },
-    headerStyle: {
-        fontSize: 30,
-        color: 'white',
-        textAlign: 'center'
+    header: {
+        flex: 1
     },
     rowStyle: {
         //flex: 1,

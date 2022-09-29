@@ -16,6 +16,10 @@ const globalStyles = StyleSheet.create({
     parentContainerView: {
         backgroundColor: '#263238',
         flex: 1
+    },
+    appText: {
+        fontSize: 20,
+        color: 'white'
     }
 })
 

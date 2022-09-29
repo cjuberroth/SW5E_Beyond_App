@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Text, View, StyleSheet, Button } from 'react-native'
 import swapi from '../api/swapi'
-import PowerCardList from '../components/PowerCardList'
+// import PowerCardList from '../components/PowerCardList'
 
 const ManageSpellsScreen = () => {
     const [power, setPower] = useState([])
@@ -15,7 +15,7 @@ const ManageSpellsScreen = () => {
 
     return (
         <View style = { styles.screenContainer }>
-            <Text style = { styles.headerStyle }>Powers Screen</Text>
+            {/* <Text style = { styles.headerStyle }>Powers Screen</Text>
             <Text>Displaying {power.length} powers.</Text>
             {
                 power.length === 0
@@ -23,7 +23,7 @@ const ManageSpellsScreen = () => {
                 : <PowerCardList
                       powers = { power }
                   />
-            }
+            } */}
         </View>
     )
 }

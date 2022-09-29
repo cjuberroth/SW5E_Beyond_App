@@ -51,6 +51,20 @@ export const CharacterProvider = ({children}) => {
 			}
 		}
 	}
+
+	//helper function to present a number with a + sign if positive
+	const numberPresent = function(score) {
+		if(score >= 0) {
+			return "+"
+		} else {
+			return
+		}
+	  }
+
+	  //object to export functions
+	  const functions = {
+		numberPresent: numberPresent
+	  }
 	
 	const [api_Species, set_api_Species] = useState([])
 	const [api_Class, set_api_Class] = useState([])
@@ -294,11 +308,54 @@ export const CharacterProvider = ({children}) => {
 	if (charData.tweaks?.abilityScores?.Wisdom?.score?.override) {wisdom = charData.tweaks?.abilityScores?.Wisdom?.score?.override}
 	if (charData.tweaks?.abilityScores?.Charisma?.score?.override) {charisma = charData.tweaks?.abilityScores?.Charisma?.score?.override}
 
+	//determine character hit points
+	var charHP = 0
+	var charHParray = []
+	if (charData.tweaks?.hitPoints?.maximum?.override != null) {
+		charHP = charData.tweaks?.hitPoints?.maximum?.override
+	} else {
+		if (!isEmpty(api_Class)) {
+			for (let i = 0; i < api_Class.length; i++) {
+				if (api_Class[i].name === charData.classes[0].name) {
+					//first class's hit die
+					charHP = charHP + api_Class[i].hitDiceDieType
+				}
+			}
+		}
+		//capture all classes hit point increases
+		for (let i = 0; i < charData.classes.length; i++) {
+			charHParray.push(charData.classes[i].hitPoints)
+		}
+		//flatten to a single array
+		charHParray = charHParray.flat()
+		//sum all array elements with the first class's hit die
+		charHP = charHP + charHParray.reduce((a,b) => a + b, 0)
+		//add the con mod multiplied by the number of total levels
+		charHP = charHP + (modifier(constitution) * charLevel)
+	}
+
+	//base walking speed by species
+	var charSpeed = 0
+	if (!isEmpty(api_Species)) {
+		for (let i = 0; i < api_Species.length; i++) {
+			if (api_Species[i].name === charData.species.name) {
+				for (let j = 0; j < api_Species[i].traits.length; j++) {
+					if (api_Species[i].traits[j].name === 'Speed') {
+						charSpeed = api_Species[i].traits[j].description.match(/\d+/)[0]
+					}
+				}
+			}
+		}
+	}
+	
 	//object for exporting character information
 	const characterInformation = {
 		name: charData.name,
 		proficiency: charProf,
-		image: charData.image
+		image: charData.image,
+		hitPoints: charHP,
+		hitPointsLost: charData.currentStats.hitPointsLost,
+		speed: charSpeed
 	}
 	
 	//object for exporting ability scores
@@ -320,7 +377,6 @@ export const CharacterProvider = ({children}) => {
     	wis_mod: modifier(characterAbilities.abilitiesWisdom),
     	cha_mod: modifier(characterAbilities.abilitiesCharisma)
     }
-
     
 	//get first class's saving throw proficiency(ies)
 	if(!isEmpty(api_Class)){
@@ -420,6 +476,8 @@ export const CharacterProvider = ({children}) => {
 
 	//calculate max force points
 	var classLevel = ''
+	//#region ForcePowerData
+	let numOr0 = n => isNaN(n) ? 0 : n
 	var forcePoints = []
 	for(k = 0; k < charData.classes.length; k++) {
 		if(isForceClass(charData.classes[k].name)) {
@@ -431,7 +489,6 @@ export const CharacterProvider = ({children}) => {
 			}
 		}
 	}
-	let numOr0 = n => isNaN(n) ? 0 : n
 	forcePoints = forcePoints.reduce((a, b) => numOr0(a) + numOr0(b), 0)
 	forcePoints = forcePoints + Math.max(characterMods.wis_mod, characterMods.cha_mod)
 
@@ -454,19 +511,57 @@ export const CharacterProvider = ({children}) => {
 			}))
 		}
 	}
-	
 	forcePowersData = forcePowersData.flat()
+	//#endregion
+	//#region TechPowerData
+	var techPoints = []
+	for(k = 0; k < charData.classes.length; k++) {
+		if(isTechClass(charData.classes[k].name)) {
+			classLevel = charData.classes[k].levels
+			for(j = 0; j < api_Class.length; j++) {
+				if(api_Class[j].name === charData.classes[k].name) {
+					techPoints.push(parseInt((api_Class[j]["levelChanges"][classLevel]["Tech Points"]), 10))
+				}
+			}
+		}
+	}
+	techPoints = techPoints.reduce((a, b) => numOr0(a) + numOr0(b), 0)
+	techPoints = techPoints + characterMods.int_mod
 
-	//object to export character force casting information
+	//get force powers known
+	var techPowers = []
+	for (m = 0; m < charData.classes.length; m++) {
+		if (isTechClass(charData.classes[m].name)) {
+			for (j = 0; j < charData.classes[m].techPowers.length; j++) {
+				techPowers.push(charData.classes[m].techPowers[j])
+			}
+		}
+	}
+
+	var techPowersData = []
+	for (i = 0; i < techPowers.length; i++) {
+		if (api_Power != '') {	
+			techPowersData.push(api_Power.filter(api_Power => {
+				return api_Power.name === techPowers[i]
+			
+			}))
+		}
+	}
+	techPowersData = techPowersData.flat()
+	//#endregion
+	//object to export character casting information
 	const characterCasting = {
 		forcePoints: forcePoints,
 		forcePowers: forcePowers,
-		forcePowersData: forcePowersData
+		forcePowersData: forcePowersData,
+		techPoints: techPoints,
+		techPowers: techPowers,
+		techPowersData: techPowersData
 	}
 
-	//TODO: need to modify this api call. The quantity data from the character sheet is being lost on load.
 	//capture character inventory via the JSON
 	var equipmentList = charData.equipment.concat(charData.customEquipment)
+	
 	var equipmentData = []
 	for(let i = 0; i < equipmentList.length; i++) {
 		if (api_Equipment != '') {
@@ -482,14 +577,26 @@ export const CharacterProvider = ({children}) => {
 	}
 
 	equipmentData = equipmentData.flat()
-	//object to export equipment data
-	const characterEquipment = {
-		equipment: equipmentData
+
+	for(let i = 0; i < equipmentData.length; i++) {
+		for(let j = 0; j < equipmentList.length; j++) {
+			if (equipmentData[i].name === equipmentList[j].name) {
+				equipmentData[i]["quantity"] = equipmentList[j].quantity
+				equipmentData[i]["equipped"] = equipmentList[j].equipped
+			}
+		}
 	}
 
-	console.log("Hi")
+	console.log(equipmentData)
 
-	return <CharacterContext.Provider value={{character, setCharacter, characterInformation, characterAbilities, characterMods, characterSaves, characterFeats, characterCasting, apiData, characterEquipment}}>
+	//object to export equipment data
+	const characterEquipment = {
+		equipment: equipmentData,
+	}
+	
+	console.log("Render")
+
+	return <CharacterContext.Provider value={{character, setCharacter, characterInformation, characterAbilities, characterMods, characterSaves, characterFeats, characterCasting, apiData, characterEquipment, functions}}>
 		{children}
 	</CharacterContext.Provider>
 }

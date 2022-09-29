@@ -1,20 +1,29 @@
 import React, { useContext } from 'react'
-import { Text, View, StyleSheet, FlatList } from 'react-native'
+import { Text, View, StyleSheet, FlatList, Animated } from 'react-native'
 import CharacterContext from '../context/CharacterContext'
 import ItemCard from '../components/ItemCard'
+import Header from '../components/Header'
+import HeaderCollapsed from '../components/HeaderCollapsed'
+import HeaderContext from '../context/HeaderContext'
 
 const InventoryScreen = () => {
+
     const equipment = useContext(CharacterContext).characterEquipment.equipment
+    const flexValue = useContext(HeaderContext).headerUtils.flexValue
+    const headerCollapsed = useContext(HeaderContext).headerUtils.isCollapsed
 
     return (
-        <View style = { styles.screenContainer }>
-            <View style = { styles.tableHeader }>
-                <Text style = {[ styles.column, styles.colEquip, styles.colHeader ]}>Equip</Text>
-                <Text style = {[ styles.column, styles.colItem, styles.colHeader ]}>Item</Text>
-                <Text style = {[ styles.column, styles.colQty, styles.colHeader ]}>Qty</Text>
-                <Text style = {[ styles.column, styles.colCost, styles.colHeader ]}>Cost</Text>
+        <View style={ styles.container }>
+            <View style={styles.header}>
+                {!headerCollapsed ? <Header /> : <HeaderCollapsed />}
             </View>
-            <View>
+            <View style={{flex: flexValue}}>
+                <View style={styles.tableHeader}>
+                    <Text style = {[ styles.column, styles.colEquip, styles.colHeader ]}>Cat</Text>
+                    <Text style = {[ styles.column, styles.colItem, styles.colHeader ]}>Item</Text>
+                    <Text style = {[ styles.column, styles.colQty, styles.colHeader ]}>Cost</Text>
+                    <Text style = {[ styles.column, styles.colCost, styles.colHeader ]}>Qty</Text>
+                </View>
                 <FlatList
                     data = { equipment }
                     keyExtractor = {(equip) => equip.name}
@@ -30,13 +39,16 @@ const InventoryScreen = () => {
 }
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#263238',
+    },
+    header: {
+        flex: 1
+    },
     tableHeader: {
         flexDirection: 'row',
-        margin: 5
-    },
-    screenContainer: {
-        flex: 1,
-        backgroundColor: '#263238'
+        margin: 5,
     },
     column: {
         fontSize: 15,
@@ -58,7 +70,9 @@ const styles = StyleSheet.create({
     },
     colCost: {
         flex: 5
-    }
+    },
+    
+    
 })
 
 export default InventoryScreen

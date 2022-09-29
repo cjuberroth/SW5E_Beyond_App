@@ -51,14 +51,15 @@ const styles = StyleSheet.create({
     cardHeaders: {
         fontWeight: 'bold',
         fontSize: 18,
-        textAlign: 'center'
+        textAlign: 'center',
+        color: 'white'
     },
     buttonStyle: {
         width: 200,
         alignSelf: 'center'
     },
     tableBorders: {
-        borderColor: 'black',
+        borderColor: 'white',
         borderLeftWidth: 2,
         borderRightWidth: 2
     },
@@ -76,11 +77,11 @@ const styles = StyleSheet.create({
     },
     featureTopRow: {
         borderTopWidth: 2,
-        borderColor: 'black'
+        borderColor: 'white'
     },
     featureBottomRow: {
         borderBottomWidth: 2,
-        borderColor: 'black'
+        borderColor: 'white'
     }
 })
 
