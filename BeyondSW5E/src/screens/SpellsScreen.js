@@ -33,8 +33,8 @@ const SpellsScreen = () => {
                     <DuoToggleSwitch 
                         primaryText="FORCE"
                         secondaryText="TECH"
-                        onPrimaryPress={() => {setPowerToggle(!powerToggle)}}
-                        onSecondaryPress={() => {setPowerToggle(!powerToggle)}}
+                        onPrimaryPress={() => { powerToggle ? null : setPowerToggle(!powerToggle) }}
+                        onSecondaryPress={() => { powerToggle ? setPowerToggle(!powerToggle) : null }}
                     />
                 </View>
                 <View style={{flex:1}}>
