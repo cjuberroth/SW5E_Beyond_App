@@ -14,7 +14,7 @@ const ItemCard = ({ item }) => {
                     <Text style = {[ AppStyles.tableStyles.column, styles.colEquip ]}>{ item.equipmentCategory }</Text>
                     <Text style = {[ AppStyles.tableStyles.column, styles.colItem ]}>{ item.name }</Text>
                     <Text style = {[ AppStyles.tableStyles.column, styles.colCost ]}>{ item.cost }</Text>
-                    <Text style = {[ AppStyles.tableStyles.column, styles.colQty ]}>{ item.weight }</Text>
+                    <Text style = {[ AppStyles.tableStyles.column, styles.colQty ]}>{ item.quantity }</Text>
                 </View>
             </TouchableOpacity>
             <Dialog
@@ -39,7 +39,8 @@ const ItemCard = ({ item }) => {
                   Cost: { item.cost } {"\n"}
                   Type: { item.equipmentCategory } {"\n"}
                   Source: { item.contentSource } {"\n"}
-                  Description: { item.description }
+                  Description: { item.description } {"\n"}
+                  Equipped: { item.equipped ? 'true' : 'false' }
                 </Text>
               </DialogContent>
             </Dialog>

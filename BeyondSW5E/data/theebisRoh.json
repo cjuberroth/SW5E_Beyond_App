@@ -1,372 +1,250 @@
 {
-    "name": "Theebis Roh",
-    "id": "47976039-6aa7-4cb3-9041-54c85f9900a7",
-    "userId": "003ec484-bf35-410e-a35d-431aa238b400",
-    "builderVersion": "0.6.1",
-    "image": "https://drive.google.com/uc?id=1E8pfDAJeO9fHzYtLM7abswwLNmn_tNQl",
-    "user": "",
-    "experiencePoints": 265000,
-    "species": {
-        "name": "Human",
-        "abilityScoreImprovementSelectedOption": 0,
-        "abilityScoreImprovement": {
-            "Dexterity": 2,
-            "Charisma": 1,
-            "Intelligence": 1
+  "name": "Theebis Roh",
+  "id": "47976039-6aa7-4cb3-9041-54c85f9900a7",
+  "userId": "003ec484-bf35-410e-a35d-431aa238b400",
+  "builderVersion": "0.7.2",
+  "image": "https://drive.google.com/uc?id=1E8pfDAJeO9fHzYtLM7abswwLNmn_tNQl",
+  "user": "",
+  "experiencePoints": 265000,
+  "species": {
+    "name": "Human",
+    "abilityScoreImprovementSelectedOption": 0,
+    "abilityScoreImprovement": {
+      "Dexterity": 2,
+      "Charisma": 1,
+      "Intelligence": 1
+    }
+  },
+  "classes": [
+    {
+      "name": "Operative",
+      "levels": 15,
+      "hitPoints": [8, 7, 6, 8, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
+      "abilityScoreImprovements": [
+        { "type": "Feat", "name": "Lucky" },
+        { "type": "Feat", "name": "Weapon Expert" },
+        {
+          "type": "Ability Score Improvement",
+          "abilitiesIncreased": [{ "name": "Charisma", "value": 2 }]
+        },
+        {
+          "type": "Ability Score Improvement",
+          "abilitiesIncreased": [{ "name": "Charisma", "value": 2 }]
         }
+      ],
+      "archetype": { "name": "Lethality Practice" }
     },
-    "classes": [
-        {
-            "name": "Operative",
-            "levels": 15,
-            "hitPoints": [
-                8,
-                7,
-                6,
-                8,
-                5,
-                5,
-                5,
-                5,
-                5,
-                5,
-                5,
-                5,
-                5,
-                5
-            ],
-            "abilityScoreImprovements": [
-                {
-                    "type": "Feat",
-                    "name": "Lucky"
-                },
-                {
-                    "type": "Feat",
-                    "name": "Weapon Expert"
-                },
-                {
-                    "type": "Ability Score Improvement",
-                    "abilitiesIncreased": [
-                        {
-                            "name": "Charisma",
-                            "value": 2
-                        }
-                    ]
-                },
-                {
-                    "type": "Ability Score Improvement",
-                    "abilitiesIncreased": [
-                        {
-                            "name": "Charisma",
-                            "value": 2
-                        }
-                    ]
-                }
-            ],
-            "archetype": {
-                "name": "Lethality Practice"
-            }
-        },
-        {
-            "name": "Consular",
-            "levels": 3,
-            "hitPoints": [
-                6,
-                6,
-                1
-            ],
-            "abilityScoreImprovements": [],
-            "forcePowers": [
-                "Feedback",
-                "Force Push/Pull",
-                "Lightning Charge",
-                "Saber Reflect",
-                "Shock",
-                "Affect Mind",
-                "Enfeeble",
-                "Mind Trick",
-                "Saber Throw",
-                "Affliction",
-                "Kinetite",
-                "Hallucination",
-                "Sense Emotion"
-            ]
+    {
+      "name": "Consular",
+      "levels": 3,
+      "hitPoints": [6, 6, 1],
+      "abilityScoreImprovements": [],
+      "forcePowers": [
+        "Feedback",
+        "Force Push/Pull",
+        "Lightning Charge",
+        "Saber Reflect",
+        "Shock",
+        "Affect Mind",
+        "Enfeeble",
+        "Mind Trick",
+        "Saber Throw",
+        "Affliction",
+        "Kinetite",
+        "Hallucination",
+        "Sense Emotion"
+      ]
+    }
+  ],
+  "baseAbilityScores": {
+    "Strength": 13,
+    "Dexterity": 15,
+    "Constitution": 14,
+    "Intelligence": 12,
+    "Wisdom": 10,
+    "Charisma": 8
+  },
+  "background": {
+    "name": "Criminal",
+    "feat": { "name": "Stealthy", "type": "Feat" },
+    "feature": ""
+  },
+  "characteristics": {
+    "alignment": "Chaotic Balanced",
+    "Personality Traits": "The first thing I do in a new place is note the locations of all exits and authority figures - or where such things could be.",
+    "Ideal": "I'm loyal to my friends, not ideals.",
+    "Bond": "Someone I loved died because of a mistake I made. That will never happen again.",
+    "Flaw": "I'm overconfident in my abilities to the point that I make wreckless choices",
+    "Gender": "Female",
+    "Place of Birth": "Coruscant",
+    "Age": "25",
+    "Height": "5' 6\"",
+    "Weight": "140",
+    "Hair": "Black",
+    "Eyes": "Gray",
+    "Skin": "Pale",
+    "Appearance": "",
+    "Backstory": ""
+  },
+  "credits": 368030,
+  "equipment": [
+    {
+      "name": "Artificer's implements",
+      "quantity": 1,
+      "category": "Equipment"
+    },
+    {
+      "name": "Light pistol",
+      "quantity": 1,
+      "category": "Equipment",
+      "equipped": true,
+      "tweaks": {
+        "toHit": { "bonus": 3, "override": null },
+        "damage": { "bonus": 3, "override": null }
+      }
+    },
+    { "name": "Thermal detonator", "quantity": 18, "category": "Equipment" },
+    {
+      "name": "Shotgun",
+      "quantity": 1,
+      "category": "Equipment",
+      "equipped": true
+    },
+    {
+      "name": "Assault cannon",
+      "quantity": 1,
+      "category": "Equipment",
+      "equipped": false
+    },
+    {
+      "name": "Combat suit",
+      "quantity": 1,
+      "category": "Equipment",
+      "equipped": false
+    },
+    {
+      "name": "Fleximetal fiber armor",
+      "quantity": 1,
+      "category": "Equipment",
+      "equipped": true
+    },
+    { "name": "Disguise kit", "quantity": 1, "category": "Equipment" },
+    { "name": "Security kit", "quantity": 1, "category": "Equipment" },
+    { "name": "Slicer's kit", "quantity": 1, "category": "Equipment" },
+    { "name": "Poisoner's kit", "quantity": 1, "category": "Equipment" },
+    {
+      "name": "Vibrodagger",
+      "quantity": 1,
+      "category": "Equipment",
+      "equipped": false
+    },
+    {
+      "name": "Assault cannon",
+      "quantity": 1,
+      "category": "Equipment",
+      "equipped": true
+    },
+    { "name": "Medpac", "quantity": 1, "category": "Equipment" },
+    {
+      "name": "Baragwin Stealth Unit",
+      "quantity": 1,
+      "category": "EnhancedItem",
+      "attuned": false
+    }
+  ],
+  "currentStats": {
+    "hitPointsLost": 0,
+    "temporaryHitPoints": 0,
+    "techPointsUsed": 0,
+    "forcePointsUsed": 0,
+    "superiorityDiceUsed": 0,
+    "hitDiceUsed": { "d6": 0, "d8": 0 },
+    "deathSaves": { "successes": 0, "failures": 0 },
+    "hasInspiration": false,
+    "featuresTimesUsed": {},
+    "conditions": [],
+    "exhaustion": 0,
+    "highLevelCasting": {
+      "level6": false,
+      "level7": false,
+      "level8": false,
+      "level9": false
+    },
+    "unspentLevels": 2,
+    "exhausion": 0
+  },
+  "tweaks": {
+    "abilityScores": {
+      "Dexterity": {
+        "score": { "override": 20, "bonus": null },
+        "skills": {
+          "Acrobatics": { "proficiency": "Expertise" },
+          "Sleight of Hand": { "proficiency": "Proficient" },
+          "Stealth": { "proficiency": "Expertise" }
         }
-    ],
-    "baseAbilityScores": {
-        "Strength": 13,
-        "Dexterity": 15,
-        "Constitution": 14,
-        "Intelligence": 12,
-        "Wisdom": 10,
-        "Charisma": 8
-    },
-    "background": {
-        "name": "Criminal",
-        "feat": {
-            "name": "Stealthy",
-            "type": "Feat"
-        },
-        "feature": ""
-    },
-    "characteristics": {
-        "alignment": "Chaotic Balanced",
-        "Personality Traits": "The first thing I do in a new place is note the locations of all exits and authority figures - or where such things could be.",
-        "Ideal": "I'm loyal to my friends, not ideals.",
-        "Bond": "Someone I loved died because of a mistake I made. That will never happen again.",
-        "Flaw": "I'm overconfident in my abilities to the point that I make wreckless choices",
-        "Gender": "Female",
-        "Place of Birth": "Coruscant",
-        "Age": "25",
-        "Height": "5' 6\"",
-        "Weight": "140",
-        "Hair": "Black",
-        "Eyes": "Gray",
-        "Skin": "Pale",
-        "Appearance": "",
-        "Backstory": ""
-    },
-    "credits": 368030,
-    "equipment": [
-        {
-            "name": "Artificer's implements",
-            "quantity": 1,
-            "category": "Equipment"
-        },
-        {
-            "name": "Light pistol",
-            "quantity": 1,
-            "category": "Equipment",
-            "equipped": true,
-            "tweaks": {
-                "toHit": {
-                    "bonus": 3,
-                    "override": null
-                },
-                "damage": {
-                    "bonus": 3,
-                    "override": null
-                }
-            }
-        },
-        {
-            "name": "Thermal detonator",
-            "quantity": "9",
-            "category": "Equipment"
-        },
-        {
-            "name": "Shotgun",
-            "quantity": 1,
-            "category": "Equipment",
-            "equipped": true
-        },
-        {
-            "name": "Assault cannon",
-            "quantity": 1,
-            "category": "Equipment",
-            "equipped": false
-        },
-        {
-            "name": "Combat suit",
-            "quantity": 1,
-            "category": "Equipment",
-            "equipped": false
-        },
-        {
-            "name": "Fleximetal fiber armor",
-            "quantity": 1,
-            "category": "Equipment",
-            "equipped": true
-        },
-        {
-            "name": "Disguise kit",
-            "quantity": 1,
-            "category": "Equipment"
-        },
-        {
-            "name": "Security kit",
-            "quantity": 1,
-            "category": "Equipment"
-        },
-        {
-            "name": "Slicer's kit",
-            "quantity": 1,
-            "category": "Equipment"
-        },
-        {
-            "name": "Poisoner's kit",
-            "quantity": 1,
-            "category": "Equipment"
-        },
-        {
-            "name": "Vibrodagger",
-            "quantity": 1,
-            "category": "Equipment",
-            "equipped": false
-        },
-        {
-            "name": "Thermal detonator",
-            "quantity": "9",
-            "category": "Equipment"
-        },
-        {
-            "name": "Assault cannon",
-            "quantity": 1,
-            "category": "Equipment",
-            "equipped": true
-        },
-        {
-            "name": "Medpac",
-            "quantity": 1,
-            "category": "Equipment"
-        },
-        {
-            "name": "Baragwin Stealth Unit",
-            "quantity": 1,
-            "category": "EnhancedItem",
-            "attuned": false
+      },
+      "Intelligence": { "score": { "override": 14, "bonus": null } },
+      "Wisdom": {
+        "score": { "override": 13, "bonus": null },
+        "skills": { "Perception": { "proficiency": "Proficient" } }
+      },
+      "Charisma": {
+        "score": { "override": 20, "bonus": null },
+        "skills": {
+          "Deception": { "proficiency": "Expertise" },
+          "Intimidation": { "proficiency": "Expertise" },
+          "Persuasion": { "proficiency": "Expertise" }
         }
-    ],
-    "currentStats": {
-        "hitPointsLost": 0,
-        "temporaryHitPoints": 0,
-        "techPointsUsed": 0,
-        "forcePointsUsed": 0,
-        "superiorityDiceUsed": 0,
-        "hitDiceUsed": {
-            "d6": 0,
-            "d8": 0
-        },
-        "deathSaves": {
-            "successes": 0,
-            "failures": 0
-        },
-        "hasInspiration": false,
-        "featuresTimesUsed": {},
-        "conditions": [],
-        "exhaustion": 0,
-        "highLevelCasting": {
-            "level6": false,
-            "level7": false,
-            "level8": false,
-            "level9": false
-        },
-        "unspentLevels": 2,
-        "exhausion": 0
+      }
     },
-    "tweaks": {
-        "abilityScores": {
-            "Dexterity": {
-                "score": {
-                    "override": 20,
-                    "bonus": null
-                },
-                "skills": {
-                    "Acrobatics": {
-                        "proficiency": "Expertise"
-                    },
-                    "Sleight of Hand": {
-                        "proficiency": "Proficient"
-                    },
-                    "Stealth": {
-                        "proficiency": "Expertise"
-                    }
-                }
-            },
-            "Intelligence": {
-                "score": {
-                    "override": 14,
-                    "bonus": null
-                }
-            },
-            "Wisdom": {
-                "score": {
-                    "override": 13,
-                    "bonus": null
-                },
-                "skills": {
-                    "Perception": {
-                        "proficiency": "Proficient"
-                    }
-                }
-            },
-            "Charisma": {
-                "score": {
-                    "override": 20,
-                    "bonus": null
-                },
-                "skills": {
-                    "Deception": {
-                        "proficiency": "Expertise"
-                    },
-                    "Intimidation": {
-                        "proficiency": "Expertise"
-                    },
-                    "Persuasion": {
-                        "proficiency": "Expertise"
-                    }
-                }
-            }
-        },
-        "hitPoints": {
-            "maximum": {
-                "override": 114,
-                "bonus": null
-            }
-        }
+    "hitPoints": { "maximum": { "override": 114, "bonus": null } }
+  },
+  "customProficiencies": [],
+  "customLanguages": [],
+  "customFeatures": [
+    {
+      "name": "Fate's Exploit",
+      "content": "When you finish a short or long rest, roll a d20 and record the number rolled. Once before your next short or long rest, you can replace any attack roll, saving throw, or ability check made by you or a creature within 5 feet of you with this roll. You must choose to do so before the roll."
     },
-    "customProficiencies": [],
-    "customLanguages": [],
-    "customFeatures": [
-        {
-            "name": "Fate's Exploit",
-            "content": "When you finish a short or long rest, roll a d20 and record the number rolled. Once before your next short or long rest, you can replace any attack roll, saving throw, or ability check made by you or a creature within 5 feet of you with this roll. You must choose to do so before the roll."
-        },
-        {
-            "name": "Skills Exploit",
-            "content": "Aim (Stealth). You attempt to line up a strike against a creature you can see that you are hidden from. Make a Dexterity (Stealth) check contested by the target’s Wisdom (Perception) check. If your check succeeds, you gain a +10 bonus to the first attack roll you make against the target before the end of your next turn. If your check fails, you are no longer hidden from the target."
-        }
-    ],
-    "customFeats": [],
-    "customTechPowers": [],
-    "customForcePowers": [
-        "Wound",
-        "Sustained Lightning",
-        "Slow",
-        "Force Reflect",
-        "Improved Feedback"
-    ],
-    "customEquipment": [
-        {
-            "name": "Enhanced Hidden Blade",
-            "quantity": 1,
-            "equipmentCategory": "Weapon",
-            "cost": 0,
-            "description": "",
-            "weight": 1,
-            "damageType": "Kinetic",
-            "damageNumberOfDice": 1,
-            "tweaks": {
-                "toHit": {
-                    "override": 13
-                },
-                "damageDice": {
-                    "dieSize": 4
-                },
-                "damage": {
-                    "override": 8
-                }
-            },
-            "equipped": true
-        }
-    ],
-    "settings": {
-        "isEnforcingForcePrerequisites": true,
-        "isFixedHitPoints": false,
-        "abilityScoreMethod": "Standard Array"
-    },
-    "notes": "Sneak attack: 8d6",
-    "createdAt": 1629613989866,
-    "changedAt": 1646526614834,
-    "localId": "temp-oje1zv1eu"
+    {
+      "name": "Skills Exploit",
+      "content": "Aim (Stealth). You attempt to line up a strike against a creature you can see that you are hidden from. Make a Dexterity (Stealth) check contested by the target’s Wisdom (Perception) check. If your check succeeds, you gain a +10 bonus to the first attack roll you make against the target before the end of your next turn. If your check fails, you are no longer hidden from the target."
+    }
+  ],
+  "customFeats": [],
+  "customTechPowers": [],
+  "customForcePowers": [
+    "Wound",
+    "Sustained Lightning",
+    "Slow",
+    "Force Reflect",
+    "Improved Feedback"
+  ],
+  "customEquipment": [
+    {
+      "name": "Enhanced Hidden Blade",
+      "quantity": 1,
+      "equipmentCategory": "Weapon",
+      "cost": 0,
+      "description": "",
+      "weight": 1,
+      "damageType": "Kinetic",
+      "damageNumberOfDice": 1,
+      "tweaks": {
+        "toHit": { "override": 13 },
+        "damageDice": { "dieSize": 4 },
+        "damage": { "override": 8 }
+      },
+      "equipped": true
+    }
+  ],
+  "settings": {
+    "isEnforcingForcePrerequisites": true,
+    "isFixedHitPoints": false,
+    "abilityScoreMethod": "Manual"
+  },
+  "notes": "Sneak attack: 8d6",
+  "createdAt": 1629613989866,
+  "changedAt": 1660708291983,
+  "localId": "temp-oje1zv1eu"
 }

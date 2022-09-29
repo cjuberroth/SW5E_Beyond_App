@@ -377,7 +377,6 @@ export const CharacterProvider = ({children}) => {
     	wis_mod: modifier(characterAbilities.abilitiesWisdom),
     	cha_mod: modifier(characterAbilities.abilitiesCharisma)
     }
-
     
 	//get first class's saving throw proficiency(ies)
 	if(!isEmpty(api_Class)){
@@ -560,9 +559,9 @@ export const CharacterProvider = ({children}) => {
 		techPowersData: techPowersData
 	}
 
-	//TODO: need to modify this api call. The quantity data from the character sheet is being lost on load.
 	//capture character inventory via the JSON
 	var equipmentList = charData.equipment.concat(charData.customEquipment)
+	
 	var equipmentData = []
 	for(let i = 0; i < equipmentList.length; i++) {
 		if (api_Equipment != '') {
@@ -578,12 +577,24 @@ export const CharacterProvider = ({children}) => {
 	}
 
 	equipmentData = equipmentData.flat()
-	//object to export equipment data
-	const characterEquipment = {
-		equipment: equipmentData
+
+	for(let i = 0; i < equipmentData.length; i++) {
+		for(let j = 0; j < equipmentList.length; j++) {
+			if (equipmentData[i].name === equipmentList[j].name) {
+				equipmentData[i]["quantity"] = equipmentList[j].quantity
+				equipmentData[i]["equipped"] = equipmentList[j].equipped
+			}
+		}
 	}
 
-	console.log("Hi")
+	console.log(equipmentData)
+
+	//object to export equipment data
+	const characterEquipment = {
+		equipment: equipmentData,
+	}
+	
+	console.log("Render")
 
 	return <CharacterContext.Provider value={{character, setCharacter, characterInformation, characterAbilities, characterMods, characterSaves, characterFeats, characterCasting, apiData, characterEquipment, functions}}>
 		{children}
