@@ -623,13 +623,13 @@ export const CharacterProvider = ({children}) => {
 		if (equipmentData[i].equipmentCategory === "Armor" && equipmentData[i].equipped === true) {
 			switch (equipmentData[i].armorClassification) {
 				case 'Light':
-					charAC = parseInt(equipmentData[i]['ac'].substring(0,2)) + characterMods.dex_mod
+					charAC = parseInt(equipmentData[i].ac) + characterMods.dex_mod
 					break
 				case 'Medium':
 					if (characterMods.dex_mod >= 2) {
-						charAC = parseInt(equipmentData[i]['ac'].substring(0,2)) + 2
+						charAC = parseInt(equipmentData[i].ac) + 2
 					} else {
-						charAC = parseInt(equipmentData[i]['ac'].substring(0,2)) + characterMods.dex_mod
+						charAC = parseInt(equipmentData[i].ac) + characterMods.dex_mod
 					}
 					break
 				case 'Heavy':
