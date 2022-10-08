@@ -60,7 +60,7 @@ const Header = () => {
                                 characterInfo.image != '' ? {uri: characterInfo.image}
                                 : require('../../assets/defaultCharImage.png')
                             }
-                            style={{ flex: 1, width: '100%', height: '100%', borderRadius: 5 }}
+                            style={{ flex: 1, width: '100%', height: '100%', borderRadius: 5, borderWidth: 2, borderColor: '#4A0C05' }}
                             resizeMode={"cover"}
                         />
                         <View style={styles.headerBtnCol}>
