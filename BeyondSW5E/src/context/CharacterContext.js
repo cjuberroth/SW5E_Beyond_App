@@ -74,8 +74,7 @@ export const CharacterProvider = ({children}) => {
 	const [api_ArmorProperty, set_api_ArmorProperty] = useState([])
 	const [api_Background, set_api_Background] = useState([])
 	const [api_Conditions, set_api_Conditions] = useState([])
-	//EnhancedItem API is not working currently 07172022
-	//const [api_EnhancedItem, set_api_EnhancedItem] = useState([])
+	const [api_EnhancedItem, set_api_EnhancedItem] = useState([])
 	const [api_Equipment, set_api_Equipment] = useState([])
 	const [api_Feature, set_api_Feature] = useState([])
 	const [api_FightingMastery, set_api_FightingMastery] = useState([])
@@ -104,10 +103,8 @@ export const CharacterProvider = ({children}) => {
 		set_api_Background(response.data)
 		response = await swapi.get('/conditions')
 		set_api_Conditions(response.data)
-		/*
 		response = await swapi.get('/enhancedItem')
 		set_api_EnhancedItem(response.data)
-		*/
 		response = await swapi.get('/equipment')
 		set_api_Equipment(response.data)
 		response = await swapi.get('/Feature')
@@ -146,6 +143,7 @@ export const CharacterProvider = ({children}) => {
 		background: api_Background,
 		class: api_Class,
 		conditions: api_Conditions,
+		enhancedItems: api_EnhancedItem,
 		equipment: api_Equipment,
 		feat: api_Feat,
 		feature: api_Feature,
@@ -355,7 +353,8 @@ export const CharacterProvider = ({children}) => {
 		image: charData.image,
 		hitPoints: charHP,
 		hitPointsLost: charData.currentStats.hitPointsLost,
-		speed: charSpeed
+		speed: charSpeed,
+		conditions: charData.currentStats.conditions
 	}
 	
 	//object for exporting ability scores
@@ -558,26 +557,57 @@ export const CharacterProvider = ({children}) => {
 		techPowers: techPowers,
 		techPowersData: techPowersData
 	}
-
-	//capture character inventory via the JSON
-	var equipmentList = charData.equipment.concat(charData.customEquipment)
 	
+	//capture character inventory via the JSON
+	var equipmentList = charData.equipment
+	
+	//extract out any tweaked equipment
+	var tweakedEquipment = []
+	for(let i = 0; i < equipmentList.length; i++) {
+		if ('tweaks' in equipmentList[i]) {
+			tweakedEquipment.push(equipmentList[i])
+		}
+	}
+	
+	//match up api data with equipment list from JSON
 	var equipmentData = []
 	for(let i = 0; i < equipmentList.length; i++) {
 		if (api_Equipment != '') {
 			equipmentData.push(api_Equipment.filter(api_Equipment => {
 				return api_Equipment.name === equipmentList[i].name
 			}))
-			/*for (let j = 0; j < api_Equipment.length; j++) {
-					if (api_Equipment[j].name === equipmentList[i].name) {
-						equipmentData.push(api_Equipment[j])
-					}
-			}*/	
+		}
+	}
+	for(let i = 0; i < equipmentList.length; i++) {
+		if (api_EnhancedItem != '') {
+			equipmentData.push(api_EnhancedItem.filter(api_EnhancedItem => {
+				return api_EnhancedItem.name === equipmentList[i].name
+			}))
 		}
 	}
 
-	equipmentData = equipmentData.flat()
+	//used to get specific returns from enhanced item api
+	// for(let i = 0; i < api_EnhancedItem.length; i++) {
+	// 	if (api_EnhancedItem[i].name === 'Adapted Armor') {
+	// 		console.log (api_EnhancedItem[i])
+	// 	}
+	// }
 
+	//add custom equipment to full equipment data list
+	equipmentData = equipmentData.flat().concat(charData.customEquipment)
+
+	//inject tweaks into equipment data
+	for(let i = 0; i < equipmentData.length; i++) {
+		for(let j = 0; j < tweakedEquipment.length; j++) {
+			if (equipmentData[i].name === tweakedEquipment[j].name) {
+				// console.log(equipmentData[i].name)
+				// console.log(tweakedEquipment[j].tweaks)
+				equipmentData[i]["tweaks"] = tweakedEquipment[j].tweaks
+			}
+		}
+	}
+
+	//inject quantity and equipped status into equipment data list
 	for(let i = 0; i < equipmentData.length; i++) {
 		for(let j = 0; j < equipmentList.length; j++) {
 			if (equipmentData[i].name === equipmentList[j].name) {
@@ -587,7 +617,24 @@ export const CharacterProvider = ({children}) => {
 		}
 	}
 
-	console.log(equipmentData)
+	//determine AC
+	var equippedArmorAC = []
+	for(let i = 0; i < equipmentData.length; i++) {
+		if (equipmentData[i].equipmentCategory === "Armor" && equipmentData[i].equipped === true) {
+			equippedArmorAC.push(equipmentData[i].ac)
+		}
+	}
+
+	var charAC = 0
+	for(let i = 0; i < equippedArmorAC.length; i++) {
+		if (!isNaN(equippedArmorAC[i])) {
+			charAC += parseInt(equippedArmorAC[i])
+		}
+	}
+
+	console.log(charAC + characterMods.dex_mod)
+
+	console.log(equippedArmorAC)
 
 	//object to export equipment data
 	const characterEquipment = {

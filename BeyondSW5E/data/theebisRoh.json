@@ -111,12 +111,6 @@
       "equipped": true
     },
     {
-      "name": "Assault cannon",
-      "quantity": 1,
-      "category": "Equipment",
-      "equipped": false
-    },
-    {
       "name": "Combat suit",
       "quantity": 1,
       "category": "Equipment",
@@ -124,6 +118,12 @@
     },
     {
       "name": "Fleximetal fiber armor",
+      "quantity": 1,
+      "category": "Equipment",
+      "equipped": true
+    },
+    {
+      "name": "Light shield generator",
       "quantity": 1,
       "category": "Equipment",
       "equipped": true
@@ -140,7 +140,7 @@
     },
     {
       "name": "Assault cannon",
-      "quantity": 1,
+      "quantity": 2,
       "category": "Equipment",
       "equipped": true
     },

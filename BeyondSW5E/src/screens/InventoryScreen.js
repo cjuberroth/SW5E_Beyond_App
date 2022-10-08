@@ -19,7 +19,7 @@ const InventoryScreen = () => {
             </View>
             <View style={{flex: flexValue}}>
                 <View style={styles.tableHeader}>
-                    <Text style = {[ styles.column, styles.colEquip, styles.colHeader ]}>Cat</Text>
+                    <Text style = {[ styles.column, styles.colEquip, styles.colHeader ]}>Equip</Text>
                     <Text style = {[ styles.column, styles.colItem, styles.colHeader ]}>Item</Text>
                     <Text style = {[ styles.column, styles.colQty, styles.colHeader ]}>Cost</Text>
                     <Text style = {[ styles.column, styles.colCost, styles.colHeader ]}>Qty</Text>
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     },
     colHeader: {
         fontWeight: 'bold',
-        fontSize: 18
+        fontSize: 12
     },
     colEquip: {
         flex: 4

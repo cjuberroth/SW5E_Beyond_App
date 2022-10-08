@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react'
 import { View, Text, StyleSheet, Button, TextInput } from 'react-native'
 import CharacterContext from '../context/CharacterContext'
+import HeaderContext from '../context/HeaderContext'
 import jalenOrso from '../../data/jalenOrso2'
 import miltox from '../../data/miltox'
 import archifamel from '../../data/archifamel'
@@ -9,10 +10,16 @@ import trevalla from '../../data/trevalla'
 
 const CharacterSelectorScreen = ({navigation}) => {
 
+	const inspiration = useContext(HeaderContext).headerUtils.inspiration
+	const { setInspiration } = useContext(HeaderContext).headerUtils
+	const headerCollapsed = useContext(HeaderContext).headerUtils.isCollapsed
+	const { setCollapsed} = useContext(HeaderContext).headerUtils
 	const { setCharacter } = useContext(CharacterContext)
     const setChar = (char) => {
         setCharacter(char)
         navigation.navigate('Tabs')
+		if (inspiration) {setInspiration(false)}
+		if (headerCollapsed) {setCollapsed(false)}
     }
 
     const [characterJSON, changeCharacterJSON] = useState({})
