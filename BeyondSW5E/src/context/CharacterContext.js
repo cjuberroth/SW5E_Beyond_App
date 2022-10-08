@@ -618,28 +618,34 @@ export const CharacterProvider = ({children}) => {
 	}
 
 	//determine AC
-	var equippedArmorAC = []
+	var charAC = 0
 	for(let i = 0; i < equipmentData.length; i++) {
 		if (equipmentData[i].equipmentCategory === "Armor" && equipmentData[i].equipped === true) {
-			equippedArmorAC.push(equipmentData[i].ac)
+			switch (equipmentData[i].armorClassification) {
+				case 'Light':
+					charAC = parseInt(equipmentData[i]['ac'].substring(0,2)) + characterMods.dex_mod
+					break
+				case 'Medium':
+					if (characterMods.dex_mod >= 2) {
+						charAC = parseInt(equipmentData[i]['ac'].substring(0,2)) + 2
+					} else {
+						charAC = parseInt(equipmentData[i]['ac'].substring(0,2)) + characterMods.dex_mod
+					}
+					break
+				case 'Heavy':
+					charAC = equipmentData[i].ac
+					break
+			}
+			if (equipmentData[i].armorClassification === 'Shield') {
+				charAC = charAC + parseInt(equipmentData[i].ac)
+			}
 		}
 	}
-
-	var charAC = 0
-	for(let i = 0; i < equippedArmorAC.length; i++) {
-		if (!isNaN(equippedArmorAC[i])) {
-			charAC += parseInt(equippedArmorAC[i])
-		}
-	}
-
-	console.log(charAC + characterMods.dex_mod)
-
-	console.log(equippedArmorAC)
-
 
 	//object to export equipment data
 	const characterEquipment = {
 		equipment: equipmentData,
+		armorClass: charAC
 	}
 	
 	//console.log("Render")

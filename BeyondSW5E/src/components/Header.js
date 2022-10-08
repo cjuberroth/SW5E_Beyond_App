@@ -10,6 +10,7 @@ import Checkbox from './CheckBox'
 const Header = () => {
     const characterInfo = useContext(CharacterContext).characterInformation
     const characterMods = useContext(CharacterContext).characterMods
+    const characterEquipment = useContext(CharacterContext).characterEquipment
     const apiData = useContext(CharacterContext).apiData
     const numberPresent = useContext(CharacterContext).functions.numberPresent
     const [isConditionsVisible, setConditionsVisible] = useState(false)
@@ -84,7 +85,7 @@ const Header = () => {
                         </View>
                         <View style={styles.statBox}>
                             <Text style={styles.statText}>AC</Text>
-                            <Text style={styles.statTextBig}>AC</Text>
+                            <Text style={styles.statTextBig}>{characterEquipment.armorClass}</Text>
                         </View>
                     </View>
                 
