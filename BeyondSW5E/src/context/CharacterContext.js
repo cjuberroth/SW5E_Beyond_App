@@ -636,12 +636,13 @@ export const CharacterProvider = ({children}) => {
 
 	console.log(equippedArmorAC)
 
+
 	//object to export equipment data
 	const characterEquipment = {
 		equipment: equipmentData,
 	}
 	
-	console.log("Render")
+	//console.log("Render")
 
 	return <CharacterContext.Provider value={{character, setCharacter, characterInformation, characterAbilities, characterMods, characterSaves, characterFeats, characterCasting, apiData, characterEquipment, functions}}>
 		{children}

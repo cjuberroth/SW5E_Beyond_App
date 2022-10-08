@@ -1,10 +1,11 @@
 import React, { useContext } from 'react'
-import { Text, View, StyleSheet, FlatList, Animated } from 'react-native'
+import { Text, View, StyleSheet, FlatList, ImageBackground } from 'react-native'
 import CharacterContext from '../context/CharacterContext'
 import ItemCard from '../components/ItemCard'
 import Header from '../components/Header'
 import HeaderCollapsed from '../components/HeaderCollapsed'
 import HeaderContext from '../context/HeaderContext'
+import AppStyles from '../styles/AppStyles'
 
 const InventoryScreen = () => {
 
@@ -18,21 +19,24 @@ const InventoryScreen = () => {
                 {!headerCollapsed ? <Header /> : <HeaderCollapsed />}
             </View>
             <View style={{flex: flexValue}}>
-                <View style={styles.tableHeader}>
-                    <Text style = {[ styles.column, styles.colEquip, styles.colHeader ]}>Equip</Text>
-                    <Text style = {[ styles.column, styles.colItem, styles.colHeader ]}>Item</Text>
-                    <Text style = {[ styles.column, styles.colQty, styles.colHeader ]}>Cost</Text>
-                    <Text style = {[ styles.column, styles.colCost, styles.colHeader ]}>Qty</Text>
-                </View>
-                <FlatList
-                    data = { equipment }
-                    keyExtractor = {(equip) => equip.name}
-                    renderItem={({ item }) => {
-                        return <ItemCard
-                                    item = { item }
-                                />
-                    }}
-                />
+                <ImageBackground style={ AppStyles.globalStyles.screenBackground }
+                    source={ require('../../assets/header-background.jpg') }>
+                    <View style={styles.tableHeader}>
+                        <Text style = {[ styles.column, styles.colEquip, styles.colHeader ]}>Cat</Text>
+                        <Text style = {[ styles.column, styles.colItem, styles.colHeader ]}>Item</Text>
+                        <Text style = {[ styles.column, styles.colQty, styles.colHeader ]}>Cost</Text>
+                        <Text style = {[ styles.column, styles.colCost, styles.colHeader ]}>Qty</Text>
+                    </View>
+                    <FlatList
+                        data = { equipment }
+                        keyExtractor = {(equip) => equip.name}
+                        renderItem={({ item }) => {
+                            return <ItemCard
+                                        item = { item }
+                                    />
+                        }}
+                    />
+                </ImageBackground>
             </View>
         </View>
     )
