@@ -2,9 +2,9 @@ import React from 'react'
 import { Text, View, StyleSheet, Pressable, Image } from 'react-native'
 
 const HeaderButton = (props) => {
-  const { onPress, title } = props;
+  const { onPress, title, buttonStyle = {} } = props;
   return (
-    <Pressable style={styles.button} onPress={onPress}>
+    <Pressable style={buttonStyle} onPress={onPress}>
       <Text style={styles.text}>{title}</Text>
     </Pressable>
   );

@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     },
     colHeader: {
         fontWeight: 'bold',
-        fontSize: 18
+        fontSize: 12
     },
     colEquip: {
         flex: 4

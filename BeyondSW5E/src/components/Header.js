@@ -5,8 +5,9 @@ import { FontAwesome5 } from '@expo/vector-icons'
 import HeaderContext from '../context/HeaderContext'
 import CharacterContext from '../context/CharacterContext'
 import HeaderButton from './HeaderButton'
+import Checkbox from './CheckBox'
 
-const Header = (headerHeight) => {
+const Header = () => {
     const characterInfo = useContext(CharacterContext).characterInformation
     const characterMods = useContext(CharacterContext).characterMods
     const apiData = useContext(CharacterContext).apiData
@@ -14,8 +15,11 @@ const Header = (headerHeight) => {
     const [isConditionsVisible, setConditionsVisible] = useState(false)
     const [isRestVisible, setRestVisible] = useState(false)
     const [isDefensesVisible, setDefensesVisible] = useState(false)
+    
     const isCollapsed = useContext(HeaderContext).headerUtils.isCollapsed
     const toggleHeader = useContext(HeaderContext).headerUtils.toggleHeader
+    const toggleInspiration = useContext(HeaderContext).headerUtils.toggleInspiration
+    const toggleInspirationStyle = useContext(HeaderContext).headerUtils.toggleInspirationStyle
 
     const toggleConditions = () => {
         setConditionsVisible(!isConditionsVisible)
@@ -26,7 +30,21 @@ const Header = (headerHeight) => {
     const toggleDefenses = () => {
         setDefensesVisible(!isDefensesVisible)
     }
-    //if we like texture throughout, perhaps add it to each screen rotated 90 degrees
+
+    //conditions modal not working correctly; gets initial list from JSON but won't update
+    //may need to rewrite modal component to not use flatlist or create as a separate
+    //component and feed data into it as true/false values (similar to inventory/item card)
+    const getConditions = (charCondition) => {
+        for (i = 0; i < characterInfo.conditions.length; i++) {
+            if (characterInfo.conditions[i] === charCondition) {
+                return true
+            }
+        }
+    }
+
+    const [checked, onChange] = useState(checked)
+
+    //if we like texture throughout, perhaps add it to each screen
     return (
         <>
             <ImageBackground style={{height: '100%', resizeMode: 'stretch'}}
@@ -34,17 +52,20 @@ const Header = (headerHeight) => {
                 <View style={{flex: 1}} >
                     <View style={styles.headerContainer}>
                         <View style={styles.headerBtnCol}>
-                            <HeaderButton onPress={toggleConditions} title="Conditions" />
-                            <HeaderButton onPress={toggleRest} title="Rest" />
+                            <HeaderButton onPress={toggleConditions} title="Conditions" buttonStyle={styles.headerButton} />
+                            <HeaderButton onPress={toggleRest} title="Rest" buttonStyle={styles.headerButton} />
                         </View>
                         <Image
-                            source={{uri: characterInfo.image}}
-                            style={{ flex: 1, width: '100%', height: '100%' }}
-                            resizeMode={"contain"}
+                            source={
+                                characterInfo.image != '' ? {uri: characterInfo.image}
+                                : require('../../assets/defaultCharImage.png')
+                            }
+                            style={{ flex: 1, width: '100%', height: '100%', borderRadius: 5 }}
+                            resizeMode={"cover"}
                         />
                         <View style={styles.headerBtnCol}>
-                            <HeaderButton onPress={toggleDefenses} title="Defenses" />
-                            <HeaderButton onPress={() => alert('Function for inspiration')} title="Inspiration" />
+                            <HeaderButton onPress={toggleDefenses} title="Defenses" buttonStyle={styles.headerButton} />
+                            <HeaderButton onPress={toggleInspiration} title="Inspiration" buttonStyle={toggleInspirationStyle} />
                         </View>
                     </View>
                     
@@ -109,7 +130,14 @@ const Header = (headerHeight) => {
                         renderItem = { ({ item }) => {
                             return (
                                 <View>
-                                    <Text style={styles.modalListHead}>{item.name}</Text>
+                                    <View style={styles.modalListHeadView}>
+                                        <Checkbox
+                                            checked={getConditions(item.name)}
+                                            onChange={onChange}
+                                            buttonStyle={styles.checkboxBase}
+                                            activeButtonStyle={styles.checkboxChecked} />
+                                        <Text style={styles.modalListHead}>{item.name}</Text>
+                                    </View>
                                     <Text style={styles.modalList}>{item.description}</Text>
                                 </View>
                             )
@@ -135,13 +163,37 @@ const Header = (headerHeight) => {
 
 const styles = StyleSheet.create({
     headerContainer: {
-        flex: 2,
+        flex: 3.8,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-around',
         paddingTop: 5
         //height: '100%'
     },
+    headerButton: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingVertical: 5,
+        paddingHorizontal: 5,
+        borderRadius: 4,
+        backgroundColor: '#4A0C05',
+        marginHorizontal: 20,
+        marginVertical: 5,
+        minWidth: '80%'
+      },
+      inspirationButton: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingVertical: 5,
+        paddingHorizontal: 5,
+        borderRadius: 4,
+        backgroundColor: '#15f2fd',
+        marginHorizontal: 20,
+        marginVertical: 5,
+        minWidth: '80%'
+      },
     headerBtnCol: {
         flex: 1,
         alignItems: 'center'
@@ -167,8 +219,6 @@ const styles = StyleSheet.create({
     },
     collapseButton: {
         flexDirection: 'row',
-        borderWidth: 2,
-        borderColor: '#4A0C05',
         width: '100%',
         justifyContent: 'center',
         backgroundColor: '#4A0C05'
@@ -185,13 +235,6 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         paddingRight: 5
       },
-    headingStyle: {
-        fontSize: 30,
-        backgroundColor: '#263238',
-        color: 'white',
-        textAlign: 'center',
-        marginBottom: 15
-    },
     modalContainer: {
         backgroundColor: 'gray',
         padding: 5
@@ -220,15 +263,32 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         padding: 5
     },
+    modalListHeadView: {
+        flexDirection: 'row'
+    },
     modalListHead: {
         color: 'white',
         fontWeight: 'bold',
-        paddingBottom: 4
+        paddingBottom: 4,
+        flex: 9
     },
     modalList: {
         color: 'white',
         paddingBottom: 8
-    }
+    },
+    checkboxBase: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 4,
+        borderWidth: 2,
+        borderColor: 'white',
+        backgroundColor: 'transparent',
+      },
+    
+      checkboxChecked: {
+        backgroundColor: 'white',
+      }
 })
 
 export default Header
