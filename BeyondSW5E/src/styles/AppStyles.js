@@ -20,6 +20,10 @@ const globalStyles = StyleSheet.create({
     appText: {
         fontSize: 20,
         color: 'white'
+    },
+    screenBackground: {
+        height: '100%',
+        resizeMode: 'contain'
     }
 })
 
