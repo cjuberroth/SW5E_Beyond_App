@@ -17,6 +17,7 @@ import ProficienciesScreen from '../screens/ProficienciesScreen'
 import SkillsScreen from '../screens/SkillsScreen'
 import SpellsScreen from '../screens/SpellsScreen'
 import CharacterSelectorScreen from '../screens/CharacterSelectorScreen'
+import HPModal from '../components/HPModal'
 import CharacterContext from '../context/CharacterContext'
 
 function getHeaderTitle(route) {
@@ -72,8 +73,9 @@ function MyTabs() {
 
 const Stack = createNativeStackNavigator()
 
-const MainNavigator = props => {
+const MainNavigator = ({ navigation }) => {
     const charData = useContext(CharacterContext).characterInformation
+    const { hitPoints } = useContext(CharacterContext)
     const maxHP = useContext(CharacterContext).characterInformation.hitPoints
     const lostHP = useContext(CharacterContext).characterInformation.hitPointsLost
     
@@ -92,7 +94,7 @@ const MainNavigator = props => {
                         <Stack.Screen 
                             name="Tabs" 
                             component={MyTabs}
-                            options={({ route }) => ({
+                            options={({ route, navigation }) => ({
                                 headerTitle: getHeaderTitle(route),
                                 headerStyle: {
                                     backgroundColor: '#263238',
@@ -101,12 +103,21 @@ const MainNavigator = props => {
                                 headerBackTitleVisible: false,
                                 headerRight: () => (
                                     <Button style={styles.headerButton}
-                                        onPress={() => alert('Maybe a modal to manage HP')}
-                                        title={(charData.hitPoints-charData.hitPointsLost) + "/" + charData.hitPoints}
+                                        onPress={() => navigation.navigate('HPModal')}
+                                        title={hitPoints + "/" + charData.hitPoints}
                                         color={Platform.OS === 'ios' ? '#ffffff' : '#263238'}>
                                     </Button>
                                 ),
                             })}
+                        />
+                        <Stack.Screen
+                            name="HPModal"
+                            component={HPModal}
+                            options={{ 
+                                presentation: 'transparentModal',
+                                title: 'HP Management',
+                                headerShown: false
+                            }}
                         />
                     </Stack.Navigator>
     )
