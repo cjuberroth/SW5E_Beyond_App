@@ -1,11 +1,12 @@
 import React, { useContext } from 'react'
-import { Text, View, StyleSheet, FlatList } from 'react-native'
+import { Text, View, StyleSheet, ImageBackground } from 'react-native'
 import CharacterContext from '../context/CharacterContext'
 import FeatureCardList from '../components/FeatureCardList'
 import Header from '../components/Header'
 import HeaderCollapsed from '../components/HeaderCollapsed'
 import HeaderContext from '../context/HeaderContext'
 import Styles from '../styles/AppStyles'
+import AppStyles from '../styles/AppStyles'
 
 const FeaturesScreen = () => {
     const archetype = useContext(CharacterContext).characterFeats.archetype
@@ -20,44 +21,50 @@ const FeaturesScreen = () => {
                     {!headerCollapsed ? <Header /> : <HeaderCollapsed />}
                 </View>
                 <View style={{flex: flexValue}}>
-                    <Text style = { styles.headerStyle }>Archetypes:</Text>
-                    {
-                        archetype.length === 0 
-                        ? <Text>No archetype</Text> 
-                        : <FeatureCardList 
-                            feats = { archetype }
-                        />
-                    }
-                    <Text style = { styles.headerStyle }>Feats</Text>
-                    <Text style = {{color: 'white'}}>Displaying {feats.length} items.</Text>
-                    {
-                        feats.length === 0 
-                        ? <Text>No feats</Text> 
-                        : <FeatureCardList 
-                            feats = { feats }
-                        />
-                    }
+                    <ImageBackground style={ AppStyles.globalStyles.screenBackground }
+                        source={ require('../../assets/header-background.jpg')}>
+                        <Text style = { styles.headerStyle }>Archetypes:</Text>
+                        {
+                            archetype.length === 0 
+                            ? <Text>No archetype</Text> 
+                            : <FeatureCardList 
+                                feats = { archetype }
+                            />
+                        }
+                        <Text style = { styles.headerStyle }>Feats</Text>
+                        <Text style = {{color: 'white'}}>Displaying {feats.length} items.</Text>
+                        {
+                            feats.length === 0 
+                            ? <Text>No feats</Text> 
+                            : <FeatureCardList 
+                                feats = { feats }
+                            />
+                        }
+                    </ImageBackground>
                 </View>
             </View>
         )
     } else {
         return (
-            <View style = { styles.screenContainer }>
+            <View style = { Styles.globalStyles.parentContainerView }>
                 <View style={styles.header}>
                     {!headerCollapsed ? <Header /> : <HeaderCollapsed />}
                 </View>
                 <View style={{flex: flexValue}}>
-                    <Text style = { styles.headerStyle }>Archetypes</Text>
-                    <Text>None</Text>
-                    <Text style = { styles.headerStyle }>Feats</Text>
-                    <Text style = {{color: 'white'}}>Displaying {feats.length} items.</Text>
-                    {
-                        feats.length === 0 
-                        ? <Text>No feats</Text> 
-                        : <FeatureCardList 
-                            feats = { feats }
-                        />
-                    }
+                    <ImageBackground style={ AppStyles.globalStyles.screenBackground }
+                        source={ require('../../assets/header-background.jpg')}>
+                        <Text style = { styles.headerStyle }>Archetypes</Text>
+                        <Text>None</Text>
+                        <Text style = { styles.headerStyle }>Feats</Text>
+                        <Text style = {{color: 'white'}}>Displaying {feats.length} items.</Text>
+                        {
+                            feats.length === 0 
+                            ? <Text>No feats</Text> 
+                            : <FeatureCardList 
+                                feats = { feats }
+                            />
+                        }
+                    </ImageBackground>
                 </View>
             </View>
         )

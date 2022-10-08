@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { Text, View, StyleSheet, ImageBackground, Animated, ScrollView, Image } from 'react-native'
+import { Text, View, StyleSheet, ImageBackground, ScrollView } from 'react-native'
 import CharacterContext from '../context/CharacterContext'
 import Header from '../components/Header'
 import HeaderCollapsed from '../components/HeaderCollapsed'
@@ -12,7 +12,6 @@ const AbilitiesScreen = () => {
     const headerCollapsed = useContext(HeaderContext).headerUtils.isCollapsed
     
     //import character data from context
-    const characterInfo = useContext(CharacterContext).characterInformation
     const characterAbilities = useContext(CharacterContext).characterAbilities
     const characterMods = useContext(CharacterContext).characterMods
     const characterSaves = useContext(CharacterContext).characterSaves
@@ -26,8 +25,8 @@ const AbilitiesScreen = () => {
             </View>
             
             <View style={{ flex: flexValue }}>
-            <ImageBackground style={{height: '100%', resizeMode: 'contain'}}
-                    source={require('../../assets/header-background.jpg')}>
+            <ImageBackground style={ AppStyles.globalStyles.screenBackground }
+                    source={ require('../../assets/header-background.jpg') }>
                 <ScrollView>
                     <ImageBackground style={styles.imgBackground} source={require('../../assets/rebel-alliance.png')}>
                         <View style={styles.parentStyle}>
