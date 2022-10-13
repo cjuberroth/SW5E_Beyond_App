@@ -10,7 +10,9 @@ import trevalla from '../../data/trevalla'
 
 const CharacterContext = React.createContext({
 	character: charAbilitiesImport,
-	setCharacter: (char) => {}
+	setCharacter: (char) => {},
+	hitPoints: 0,
+	setHitPoints: (hp) => {}
 })
 
 export const CharacterProvider = ({children}) => {
@@ -332,6 +334,14 @@ export const CharacterProvider = ({children}) => {
 		charHP = charHP + (modifier(constitution) * charLevel)
 	}
 
+	const currentHP = charHP - charData.currentStats.hitPointsLost
+
+	const [hitPoints, setHitPoints] = useState(currentHP)
+
+	useEffect(() => {
+		setHitPoints(currentHP)
+	}, [currentHP])
+
 	//base walking speed by species
 	var charSpeed = 0
 	if (!isEmpty(api_Species)) {
@@ -623,13 +633,13 @@ export const CharacterProvider = ({children}) => {
 		if (equipmentData[i].equipmentCategory === "Armor" && equipmentData[i].equipped === true) {
 			switch (equipmentData[i].armorClassification) {
 				case 'Light':
-					charAC = parseInt(equipmentData[i]['ac'].substring(0,2)) + characterMods.dex_mod
+					charAC = parseInt(equipmentData[i].ac) + characterMods.dex_mod
 					break
 				case 'Medium':
 					if (characterMods.dex_mod >= 2) {
-						charAC = parseInt(equipmentData[i]['ac'].substring(0,2)) + 2
+						charAC = parseInt(equipmentData[i].ac) + 2
 					} else {
-						charAC = parseInt(equipmentData[i]['ac'].substring(0,2)) + characterMods.dex_mod
+						charAC = parseInt(equipmentData[i].ac) + characterMods.dex_mod
 					}
 					break
 				case 'Heavy':
@@ -650,7 +660,7 @@ export const CharacterProvider = ({children}) => {
 	
 	//console.log("Render")
 
-	return <CharacterContext.Provider value={{character, setCharacter, characterInformation, characterAbilities, characterMods, characterSaves, characterFeats, characterCasting, apiData, characterEquipment, functions}}>
+	return <CharacterContext.Provider value={{character, setCharacter, hitPoints, setHitPoints, characterInformation, characterAbilities, characterMods, characterSaves, characterFeats, characterCasting, apiData, characterEquipment, functions}}>
 		{children}
 	</CharacterContext.Provider>
 }

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { Text, View, StyleSheet, Image, ImageBackground, Button, Pressable, FlatList } from 'react-native'
+import { Text, View, StyleSheet, Image, ImageBackground, Pressable, FlatList } from 'react-native'
 import Modal from 'react-native-modal'
 import { FontAwesome5 } from '@expo/vector-icons'
 import HeaderContext from '../context/HeaderContext'
@@ -45,7 +45,6 @@ const Header = () => {
 
     const [checked, onChange] = useState(checked)
 
-    //if we like texture throughout, perhaps add it to each screen
     return (
         <>
             <ImageBackground style={{height: '100%', resizeMode: 'stretch'}}
