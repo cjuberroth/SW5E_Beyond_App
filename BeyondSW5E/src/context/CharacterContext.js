@@ -161,6 +161,12 @@ export const CharacterProvider = ({children}) => {
 		weaponSupremacy: api_WeaponSupremacy
 	}
 
+	//TODO: Several species present a static increase to 1 stat and a choice between 2 others
+	//      When this happens, the JSON has an abilityScoreImprovement for the second, so the loop never runs to get
+	//      the static 'Ability Score Increse' from the species
+	//      Need to account for this when calculating ability scores
+	//      Example: Droid, MkIII increases charisma by 2 and gives a choice between INT and WIS for an additional increase
+
 	//calculate ability scores
 	if(isEmpty(charData.species.abilityScoreImprovement)) {
 		//several species present a choice of ability score improvements
@@ -272,9 +278,11 @@ export const CharacterProvider = ({children}) => {
 	//find the character level by adding together all class levels
 	var charLevel = []
 	var charProf = 0
+	var charClasses = []
 
 	for (let i = 0; i < charData.classes.length; i++) {
 		charLevel.push(charData.classes[i].levels)
+		charClasses.push({class: charData.classes[i].name, level: charData.classes[i].levels})
 	}
 
 	charLevel = charLevel.reduce((a, b) => a + b, 0)
@@ -364,7 +372,8 @@ export const CharacterProvider = ({children}) => {
 		hitPoints: charHP,
 		hitPointsLost: charData.currentStats.hitPointsLost,
 		speed: charSpeed,
-		conditions: charData.currentStats.conditions
+		conditions: charData.currentStats.conditions,
+		classes: charClasses
 	}
 	
 	//object for exporting ability scores
@@ -650,6 +659,10 @@ export const CharacterProvider = ({children}) => {
 				charAC = charAC + parseInt(equipmentData[i].ac)
 			}
 		}
+	}
+
+	if (charAC === 0) {
+		charAC = 10
 	}
 
 	//object to export equipment data

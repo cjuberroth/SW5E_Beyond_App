@@ -1,15 +1,11 @@
-import React, { useState, useContext } from 'react'
+import React, { useContext } from 'react'
 import { Text, View, StyleSheet, Pressable } from 'react-native'
 import { FontAwesome5 } from '@expo/vector-icons'
-import CharacterContext from '../context/CharacterContext'
+import CharacterContext from '../../context/CharacterContext'
 
 const HPModal = ({ navigation }) => {
     const charData = useContext(CharacterContext).characterInformation
     const { hitPoints, setHitPoints } = useContext(CharacterContext)
-
-    // const changeHP = (change) => {
-    //     setHitPoints(startingHP + change)
-    // }
 
     return (
         <View style={ styles.modalContainer}>
@@ -65,12 +61,14 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        borderRadius: 5
     },
     modalInner: {
         height: '75%',
         width: '95%',
-        backgroundColor: '#ECEFF1'
+        backgroundColor: '#ECEFF1',
+        borderRadius: 5
     },
     modalHeader: {
         flexDirection: 'row',

@@ -17,7 +17,10 @@ import ProficienciesScreen from '../screens/ProficienciesScreen'
 import SkillsScreen from '../screens/SkillsScreen'
 import SpellsScreen from '../screens/SpellsScreen'
 import CharacterSelectorScreen from '../screens/CharacterSelectorScreen'
-import HPModal from '../components/HPModal'
+import HPModal from '../components/modals/HPModal'
+import RestModal from '../components/modals/RestModal'
+import ConditionsModal from '../components/modals/ConditionsModal'
+import DefensesModal from '../components/modals/DefensesModal'
 import CharacterContext from '../context/CharacterContext'
 
 function getHeaderTitle(route) {
@@ -76,8 +79,6 @@ const Stack = createNativeStackNavigator()
 const MainNavigator = ({ navigation }) => {
     const charData = useContext(CharacterContext).characterInformation
     const { hitPoints } = useContext(CharacterContext)
-    const maxHP = useContext(CharacterContext).characterInformation.hitPoints
-    const lostHP = useContext(CharacterContext).characterInformation.hitPointsLost
     
     return (
         <Stack.Navigator>
@@ -116,6 +117,30 @@ const MainNavigator = ({ navigation }) => {
                             options={{ 
                                 presentation: 'transparentModal',
                                 title: 'HP Management',
+                                headerShown: false
+                            }}
+                        />
+                        <Stack.Screen
+                            name="RestModal"
+                            component={RestModal}
+                            options={{
+                                presentation: 'transparentModal',
+                                headerShown: false
+                            }}
+                        />
+                        <Stack.Screen
+                            name="ConditionsModal"
+                            component={ConditionsModal}
+                            options={{
+                                presentation: 'transparentModal',
+                                headerShown: false
+                            }}
+                        />
+                        <Stack.Screen
+                            name="DefensesModal"
+                            component={DefensesModal}
+                            options={{
+                                presentation: 'transparentModal',
                                 headerShown: false
                             }}
                         />

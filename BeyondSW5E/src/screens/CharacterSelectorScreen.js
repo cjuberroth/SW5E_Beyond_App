@@ -7,6 +7,7 @@ import miltox from '../../data/miltox'
 import archifamel from '../../data/archifamel'
 import theebisRoh from '../../data/theebisRoh'
 import trevalla from '../../data/trevalla'
+import t3P0 from '../../data/t3P0'
 
 const CharacterSelectorScreen = ({navigation}) => {
 
@@ -31,6 +32,7 @@ const CharacterSelectorScreen = ({navigation}) => {
 			<Button title="Archifamel" onPress={ () => setChar(archifamel) }/>
 			<Button title="Theebis Roh" onPress={ () => setChar(theebisRoh) }/>
 			<Button title="Trevalla" onPress={ () => setChar(trevalla) }/>
+			<Button title="T-3P0" onPress={ () => setChar(t3P0) }/>
 			<TextInput 
 				style={styles.input} 
 				placeholder="Enter character JSON here" 
