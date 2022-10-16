@@ -413,7 +413,8 @@ export const CharacterProvider = ({children}) => {
 		hitPointsLost: charData.currentStats.hitPointsLost,
 		speed: charSpeed,
 		conditions: charData.currentStats.conditions,
-		classes: charClasses
+		classes: charClasses,
+		level: charLevel
 	}
 	
 	//object for exporting ability scores --------------------------------------------------------------

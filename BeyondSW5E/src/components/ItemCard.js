@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native'
 import Dialog, { DialogTitle, DialogContent, SlideAnimation } from 'react-native-popup-dialog'
 import AppStyles from '../styles/AppStyles'
-import Checkbox from './CheckBox'
+import Checkbox from './Checkbox'
 
 const ItemCard = ({ item }) => {
     const [slideAnimationDialog, setSlideAnimationDialog] = useState(false)

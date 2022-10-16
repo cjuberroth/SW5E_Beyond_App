@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react'
 import { Text, View, StyleSheet } from 'react-native'
 import CharacterContext from '../context/CharacterContext'
 import AppStyles from '../styles/AppStyles'
-import Checkbox from './CheckBox'
+import Checkbox from './Checkbox'
 
 const ConditionCard = ({ item }) => {
     const characterInfo = useContext(CharacterContext).characterInformation

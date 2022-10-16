@@ -1,18 +1,10 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { View, Pressable, Text, StyleSheet } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
 import { FontAwesome5 } from '@expo/vector-icons'
-import Modal from 'react-native-modal'
 
-const RestModal = ({ navigation }) => {
-    const [isShortRestVisible, setShortRestVisible] = useState(false)
-    const [isLongRestVisible, setLongRestVisible] = useState(false)
-
-    const toggleShortRest = () => {
-        setShortRestVisible(!isShortRestVisible)
-    }
-    const toggleLongRest = () => {
-        setLongRestVisible(!isLongRestVisible)
-    }
+const RestModal = () => {
+    const navigation = useNavigation()
 
     return (
         <View style={ styles.modalContainer}>
@@ -24,53 +16,14 @@ const RestModal = ({ navigation }) => {
                     </Pressable>
                     <Text style={ styles.modalHeaderText}>Rest</Text>
                 </View>
-                <Pressable style={ styles.modalButton } onPress={toggleShortRest} >
+                <Pressable style={ styles.modalButton } onPress={() => navigation.navigate('ShortRestModal')} >
                     <FontAwesome5 style={ styles.modalCloseButton } name="book-reader" />
                     <Text style={ styles.modalButtonText }>Short Rest</Text>
                 </Pressable> 
-                
-                {/* Short Rest Modal */}
-                <Modal
-                    isVisible={isShortRestVisible}
-                    onBackdropPress={toggleShortRest}>
-                    <View style={ styles.secondaryModalContainer}>
-                        <View style={ styles.modalHeader }>
-                            <Pressable style={ styles.modalCloseButton } onPress={toggleShortRest} >
-                                <FontAwesome5 style={ styles.modalCloseButton } name="window-close" />
-                            </Pressable>
-                            <Text style={ styles.modalHeaderText}>Short Rest   </Text>
-                            <FontAwesome5 style={ styles.modalCloseButton } name="book-reader" />
-                        </View>
-                        <Text>A short rest is a period of downtime, at least 1 hour long, during which a character does nothing more strenuous than eating, drinking, reading, and tending to wounds.</Text>
-                        <View style={ styles.modalHeading }>
-                            
-                        </View>
-                    </View>
-                </Modal>
-
-                <Pressable style={ styles.modalButton } onPress={toggleLongRest} >
+                <Pressable style={ styles.modalButton } onPress={() => navigation.navigate('LongRestModal')} >
                     <FontAwesome5 style={ styles.modalCloseButton } name="bed" />
                     <Text style={ styles.modalButtonText }>Long Rest</Text>
                 </Pressable>
-
-                {/* Long Rest Modal */}
-                <Modal
-                    isVisible={isLongRestVisible}
-                    onBackdropPress={toggleLongRest}>
-                    <View style={ styles.secondaryModalContainer}>
-                        <View style={ styles.modalHeader }>
-                            <Pressable style={ styles.modalCloseButton } onPress={toggleLongRest} >
-                                <FontAwesome5 style={ styles.modalCloseButton } name="window-close" />
-                            </Pressable>
-                            <Text style={ styles.modalHeaderText}>Long Rest   </Text>
-                            <FontAwesome5 style={ styles.modalCloseButton } name="bed" />
-                        </View>
-                        <Text>A long rest is a period of extended downtime, at least 8 hours long, during which a character sleeps for at least 6 hours and performs light activity, such as reading, talking, eating, or standing watch, for no more than 2 hours. If the rest is interrupted by a period of strenuous activity-fighting, casting powers, at least 1 hour of walking, or similar adventuring activity-the characters must restart the rest to benefit from it.\n\nAt the end of a long rest, a character regains all lost hit points. The character also regains spent Hit Dice, up to a number of dice equal to half of the character’s total number of them (minimum of one).</Text>
-                        <View style={ styles.modalHeading }>
-                            
-                        </View>
-                    </View>
-                </Modal>
             </View>
         </View>
     )
@@ -85,7 +38,6 @@ const styles = StyleSheet.create({
         borderRadius: 5
     },
     modalInner: {
-        //height: '75%',
         width: '95%',
         backgroundColor: '#ECEFF1',
         justifyContent: 'center',
@@ -125,14 +77,6 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         padding: 5
     },
-    modalListHeadView: {
-        flexDirection: 'row'
-    },
-    secondaryModalContainer: {
-        backgroundColor: '#ECEFF1',
-        padding: 5,
-        borderRadius: 5
-    }
 })
 
 export default RestModal
