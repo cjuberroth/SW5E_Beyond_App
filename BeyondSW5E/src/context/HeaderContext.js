@@ -24,9 +24,17 @@ export const HeaderProvider = ({children}) => {
     }
     const toggleInspirationStyle = () => {
         if (inspiration) {
-            return styles.inspirationButton
+            if (!isCollapsed) {
+                return styles.inspirationButton
+            } else {
+                return styles.inspirationButtonSmall
+            }
         } else {
-            return styles.headerButton
+            if (!isCollapsed) {
+                return styles.headerButton
+            } else {
+                return styles.headerButtonSmall
+            }
         }
     }
 
@@ -71,6 +79,28 @@ const styles = StyleSheet.create({
         marginHorizontal: 20,
         marginVertical: 5,
         minWidth: '80%'
+      },
+      headerButtonSmall: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingVertical: 1,
+        paddingHorizontal: 1,
+        borderRadius: 4,
+        backgroundColor: '#4A0C05',
+        marginHorizontal: 20,
+        width: '75%'
+      },
+      inspirationButtonSmall: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingVertical: 1,
+        paddingHorizontal: 1,
+        borderRadius: 4,
+        backgroundColor: '#15f2fd',
+        marginHorizontal: 20,
+        width: '75%'
       }
 })
 

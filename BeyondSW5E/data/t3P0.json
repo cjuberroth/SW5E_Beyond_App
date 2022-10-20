@@ -1,0 +1,179 @@
+{
+  "name": "T-3P0",
+  "id": "1d627451-5486-4013-9581-357f5a191fb4",
+  "userId": "003ec484-bf35-410e-a35d-431aa238b400",
+  "builderVersion": "0.7.2",
+  "image": "",
+  "user": "",
+  "experiencePoints": 64000,
+  "species": {
+    "name": "Droid, Class III",
+    "abilityScoreImprovementSelectedOption": 0,
+    "abilityScoreImprovement": { "Intelligence": 1 }
+  },
+  "classes": [
+    {
+      "name": "Scholar",
+      "levels": 3,
+      "hitPoints": [5, 6],
+      "abilityScoreImprovements": [],
+      "archetype": { "name": "Politician Pursuit" },
+      "maneuvers": [
+        "Automatic Startup Sequence",
+        "Encouraging Speech",
+        "Hacked Communications",
+        "Targeted Strike"
+      ]
+    },
+    {
+      "name": "Scout",
+      "levels": 3,
+      "hitPoints": [4, 10, 3],
+      "abilityScoreImprovements": [],
+      "archetype": { "name": "Mastermind Technique" },
+      "techPowers": [
+        "Assess the Situation",
+        "Encrypted Message",
+        "Haywire",
+        "Reboot",
+        "Holographic Disguise"
+      ]
+    },
+    {
+      "name": "Fighter",
+      "levels": 4,
+      "hitPoints": [6, 4, 8, 9],
+      "abilityScoreImprovements": [
+        {
+          "type": "Ability Score Improvement",
+          "abilitiesIncreased": [
+            { "name": "Strength", "value": 1 },
+            { "name": "Dexterity", "value": 1 }
+          ]
+        }
+      ],
+      "maneuvers": ["Pilot", "Program"]
+    }
+  ],
+  "baseAbilityScores": {
+    "Strength": 14,
+    "Dexterity": 13,
+    "Constitution": 10,
+    "Intelligence": 15,
+    "Wisdom": 8,
+    "Charisma": 12
+  },
+  "background": {
+    "name": "Independent Droid",
+    "feat": { "name": "Techie", "type": "Feat" },
+    "feature": ""
+  },
+  "characteristics": {
+    "alignment": "Balanced Neutral",
+    "Personality Traits": "Metal",
+    "Ideal": "Some Ideal",
+    "Bond": "Some Bond",
+    "Flaw": "Some Flaw",
+    "Gender": "Genderless",
+    "Place of Birth": "Machine Shop",
+    "Age": "2",
+    "Height": "5' 0\"",
+    "Weight": "300",
+    "Hair": "None",
+    "Eyes": "Glowing",
+    "Skin": "Metal",
+    "Appearance": "Metal",
+    "Backstory": "Built by some rogue kid who left to do some Jedi stuff"
+  },
+  "credits": 0,
+  "equipment": [
+    {
+      "name": "Radrifle",
+      "quantity": 1,
+      "category": "Equipment",
+      "equipped": true
+    },
+    {
+      "name": "Blaster rifle",
+      "quantity": "2",
+      "category": "Equipment",
+      "equipped": false
+    },
+    { "name": "Commlink, hands-free", "quantity": 1, "category": "Equipment" },
+    { "name": "Datapad", "quantity": 1, "category": "Equipment" },
+    { "name": "Jetpack", "quantity": 1, "category": "Equipment" },
+    {
+      "name": "Gadgeteer's implements",
+      "quantity": 1,
+      "category": "Equipment"
+    },
+    { "name": "Comm jammer", "quantity": 1, "category": "Equipment" },
+    { "name": "Thermal detonator", "quantity": "12", "category": "Equipment" },
+    { "name": "Gas cartridge", "quantity": 1, "category": "Equipment" },
+    { "name": "Detachable Hand", "quantity": 1, "category": "EnhancedItem" },
+    { "name": "Analysis Protocol", "quantity": 1, "category": "EnhancedItem" },
+    { "name": "Leg Reinforcements", "quantity": 1, "category": "EnhancedItem" }
+  ],
+  "currentStats": {
+    "hitPointsLost": 0,
+    "temporaryHitPoints": 0,
+    "techPointsUsed": 0,
+    "forcePointsUsed": 0,
+    "superiorityDiceUsed": 0,
+    "hitDiceUsed": {},
+    "deathSaves": { "successes": 0, "failures": 0 },
+    "hasInspiration": false,
+    "featuresTimesUsed": {},
+    "conditions": [],
+    "exhaustion": 0,
+    "highLevelCasting": {
+      "level6": false,
+      "level7": false,
+      "level8": false,
+      "level9": false
+    }
+  },
+  "tweaks": {},
+  "customProficiencies": [],
+  "customLanguages": [],
+  "customFeatures": [],
+  "customFeats": [],
+  "customTechPowers": [],
+  "customForcePowers": [],
+  "customEquipment": [
+    {
+      "name": "Droid Plating",
+      "quantity": 1,
+      "equipmentCategory": "Armor",
+      "cost": "3000",
+      "description": "+10",
+      "weight": 1,
+      "equipped": true
+    },
+    {
+      "name": "Integrated Chest Blaster",
+      "quantity": 1,
+      "equipmentCategory": "Weapon",
+      "cost": "6000",
+      "description": "The droid's main body opens to reveal a blaster. This is hidden.",
+      "weight": "3",
+      "damageType": "Kinetic",
+      "damageNumberOfDice": 3,
+      "tweaks": {
+        "toHit": { "override": 3 },
+        "damageDice": { "dieSize": 6 },
+        "damage": { "override": 5 }
+      },
+      "equipped": true
+    }
+  ],
+  "settings": {
+    "isEnforcingForcePrerequisites": true,
+    "isFixedHitPoints": false,
+    "abilityScoreMethod": "Standard Array"
+  },
+  "notes": "",
+  "createdAt": 1665634491880,
+  "changedAt": 1665637095991,
+  "localId": "temp-a2m3252eu"
+}
