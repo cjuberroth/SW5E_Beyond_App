@@ -24,14 +24,6 @@ const LongRestModal = () => {
         closeModal()
     }
 
-    const calculateHitDice = () => {
-        if (Math.floor(charData.level/2) > 0) {
-            return Math.floor(charData.level/2)
-        } else {
-            return 1
-        }
-    }
-
     return (
         <View style={ styles.modalContainer}>
             <Pressable style={[StyleSheet.absoluteFill, { backgroundColor: 'rgba(0, 0, 0, 0.5)' },]} onPress={closeModal}/>
@@ -47,7 +39,7 @@ const LongRestModal = () => {
                 <View style={ styles.modalHeading }>
                     <Text style={ styles.modalHeading }>Recover</Text>
                 </View>
-                <Text>{charData.hitPoints-hitPoints} Hit Points; up to {calculateHitDice()} Hit Dice</Text>
+                <Text>{charData.hitPoints-hitPoints} Hit Points; up to {Math.ceil(charData.level/2)} Hit Dice</Text>
                 <View style={ AppStyles.tableStyles.tableRow }>
                     <Checkbox 
                         checked={checkedReset}
