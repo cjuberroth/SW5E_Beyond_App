@@ -43,7 +43,7 @@ const PowerTable = ({ powerLevel, powerToggle }) => {
                     {
                         powersByLevel.map(power => {
                             return (
-                                <DataTable.Row style={styles.tableRow}>
+                                <DataTable.Row style={styles.tableRow} key={power.name}>
                                     <DataTable.Cell>
                                         <Text style={styles.tableDataText}>{power.name}</Text>
                                     </DataTable.Cell>

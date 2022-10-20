@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
-import { Text, View, StyleSheet, FlatList, ImageBackground } from 'react-native'
+import { Text, View, StyleSheet, ImageBackground, ScrollView } from 'react-native'
 import CharacterContext from '../context/CharacterContext'
-import ItemCard from '../components/ItemCard'
+import EquipmentBlock from '../components/EquipmentBlock'
 import Header from '../components/Header'
 import HeaderCollapsed from '../components/HeaderCollapsed'
 import HeaderContext from '../context/HeaderContext'
@@ -12,6 +12,16 @@ const InventoryScreen = () => {
     const equipment = useContext(CharacterContext).characterEquipment.equipment
     const flexValue = useContext(HeaderContext).headerUtils.flexValue
     const headerCollapsed = useContext(HeaderContext).headerUtils.isCollapsed
+    
+    // This block loads the equipment categories within the loaded equipment block
+    var itemCategories = []
+    equipment.forEach(element => {
+        //console.log(element.name + ' ' + element.equipped)
+        if(!itemCategories.includes(element.equipmentCategory)){
+            itemCategories.push(element.equipmentCategory)
+        }
+    })
+    itemCategories.sort()
 
     return (
         <View style={ styles.container }>
@@ -22,20 +32,28 @@ const InventoryScreen = () => {
                 <ImageBackground style={ AppStyles.globalStyles.screenBackground }
                     source={ require('../../assets/header-background.jpg') }>
                     <View style={styles.tableHeader}>
-                        <Text style = {[ styles.column, styles.colEquip, styles.colHeader ]}>Cat</Text>
+                        <Text style = {[ styles.column, styles.colEquip, styles.colHeader ]}>Equipped</Text>
                         <Text style = {[ styles.column, styles.colItem, styles.colHeader ]}>Item</Text>
                         <Text style = {[ styles.column, styles.colQty, styles.colHeader ]}>Cost</Text>
                         <Text style = {[ styles.column, styles.colCost, styles.colHeader ]}>Qty</Text>
                     </View>
-                    <FlatList
-                        data = { equipment }
-                        keyExtractor = {(equip) => equip.name}
-                        renderItem={({ item }) => {
-                            return <ItemCard
-                                        item = { item }
+                    <ScrollView bounces={false}>
+                        {
+                            itemCategories.map(category => {
+                                let filteredEquipment = equipment.filter((item) => {
+                                    if(item.equipmentCategory == category) {
+                                        return item
+                                    }
+                                })
+                                return (
+                                    <EquipmentBlock 
+                                        category={category} 
+                                        equipment={filteredEquipment}
                                     />
-                        }}
-                    />
+                                )
+                            })
+                        }
+                    </ScrollView>
                 </ImageBackground>
             </View>
         </View>
