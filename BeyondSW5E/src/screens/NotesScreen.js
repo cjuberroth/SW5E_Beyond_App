@@ -7,9 +7,6 @@ import HeaderContext from '../context/HeaderContext'
 import AppStyles from '../styles/AppStyles'
 
 const NotesScreen = () => {
-    const charInfo = useContext(CharacterContext).characterInformation
-    const background = charInfo.background
-    const characteristics = charInfo.characteristics
     const flexValue = useContext(HeaderContext).headerUtils.flexValue
     const headerCollapsed = useContext(HeaderContext).headerUtils.isCollapsed
     return (
