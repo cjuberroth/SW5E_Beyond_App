@@ -17,7 +17,12 @@ import ProficienciesScreen from '../screens/ProficienciesScreen'
 import SkillsScreen from '../screens/SkillsScreen'
 import SpellsScreen from '../screens/SpellsScreen'
 import CharacterSelectorScreen from '../screens/CharacterSelectorScreen'
-import HPModal from '../components/HPModal'
+import HPModal from '../components/modals/HPModal'
+import RestModal from '../components/modals/RestModal'
+import ConditionsModal from '../components/modals/ConditionsModal'
+import DefensesModal from '../components/modals/DefensesModal'
+import ShortRestModal from '../components/modals/ShortRestModal'
+import LongRestModal from '../components/modals/LongRestModal'
 import CharacterContext from '../context/CharacterContext'
 
 function getHeaderTitle(route) {
@@ -34,6 +39,10 @@ function getHeaderTitle(route) {
             return 'Casting'
         case 'Features':
             return 'Feats'
+        case 'Description':
+            return 'Description'
+        case 'Notes':
+            return 'Notes'
     }
 }
 
@@ -46,7 +55,7 @@ function MyTabs() {
             screenOptions={{
                 tabBarActiveTintColor: '#ffffff',
                 tabBarInactiveTintColor: '#455a64',
-                tabBarLabelStyle: { fontSize: 12 },
+                tabBarLabelStyle: { fontSize: 11 },
                 tabBarScrollEnabled: true,
                 tabBarBounces: true,
                 tabBarStyle: {
@@ -67,6 +76,8 @@ function MyTabs() {
             <Tab.Screen name="Inventory" component={ InventoryScreen } />
             <Tab.Screen name="Casting" component={ SpellsScreen } />
             <Tab.Screen name="Features" component={ FeaturesScreen } />
+            <Tab.Screen name="Description" component={ DescriptionScreen } />
+            <Tab.Screen name="Notes" component={ NotesScreen } />
         </Tab.Navigator>
     )
 }
@@ -76,8 +87,6 @@ const Stack = createNativeStackNavigator()
 const MainNavigator = ({ navigation }) => {
     const charData = useContext(CharacterContext).characterInformation
     const { hitPoints } = useContext(CharacterContext)
-    const maxHP = useContext(CharacterContext).characterInformation.hitPoints
-    const lostHP = useContext(CharacterContext).characterInformation.hitPointsLost
     
     return (
         <Stack.Navigator>
@@ -116,6 +125,46 @@ const MainNavigator = ({ navigation }) => {
                             options={{ 
                                 presentation: 'transparentModal',
                                 title: 'HP Management',
+                                headerShown: false
+                            }}
+                        />
+                        <Stack.Screen
+                            name="RestModal"
+                            component={RestModal}
+                            options={{
+                                presentation: 'transparentModal',
+                                headerShown: false
+                            }}
+                        />
+                        <Stack.Screen
+                            name="ConditionsModal"
+                            component={ConditionsModal}
+                            options={{
+                                presentation: 'transparentModal',
+                                headerShown: false
+                            }}
+                        />
+                        <Stack.Screen
+                            name="DefensesModal"
+                            component={DefensesModal}
+                            options={{
+                                presentation: 'transparentModal',
+                                headerShown: false
+                            }}
+                        />
+                        <Stack.Screen
+                            name="ShortRestModal"
+                            component={ShortRestModal}
+                            options={{
+                                presentation: 'transparentModal',
+                                headerShown: false
+                            }}
+                        />
+                        <Stack.Screen
+                            name="LongRestModal"
+                            component={LongRestModal}
+                            options={{
+                                presentation: 'transparentModal',
                                 headerShown: false
                             }}
                         />

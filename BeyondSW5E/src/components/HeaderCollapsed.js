@@ -1,129 +1,40 @@
-import React, { useContext, useState } from 'react'
-import { Text, View, StyleSheet, ImageBackground, Button, Pressable, FlatList } from 'react-native'
-import Modal from 'react-native-modal'
+import React, { useContext } from 'react'
+import { Text, View, StyleSheet, ImageBackground, Pressable } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
 import { FontAwesome5 } from '@expo/vector-icons'
 import HeaderContext from '../context/HeaderContext'
 import CharacterContext from '../context/CharacterContext'
 import HeaderButtonSmall from './HeaderButtonSmall'
-import HeaderButton from './HeaderButton'
 
-const HeaderCollapsed = (headerHeight) => {
+const HeaderCollapsed = () => {
     const characterInfo = useContext(CharacterContext).characterInformation
-    const characterMods = useContext(CharacterContext).characterMods
-    const apiData = useContext(CharacterContext).apiData
-    const numberPresent = useContext(CharacterContext).functions.numberPresent
-    const [isConditionsVisible, setConditionsVisible] = useState(false)
-    const [isRestVisible, setRestVisible] = useState(false)
-    const [isDefensesVisible, setDefensesVisible] = useState(false)
-    const isCollapsed = useContext(HeaderContext).headerUtils.isCollapsed
+    const navigation = useNavigation()
     const toggleHeader = useContext(HeaderContext).headerUtils.toggleHeader
+    const toggleInspiration = useContext(HeaderContext).headerUtils.toggleInspiration
+    const toggleInspirationStyle = useContext(HeaderContext).headerUtils.toggleInspirationStyle
+    
 
-    const toggleConditions = () => {
-        setConditionsVisible(!isConditionsVisible)
-    }
-    const toggleRest = () => {
-        setRestVisible(!isRestVisible)
-    }
-    const toggleDefenses = () => {
-        setDefensesVisible(!isDefensesVisible)
-    }
 
     return (
-        <>
-            <ImageBackground style={{height: '100%', resizeMode: 'contain'}}
-                    source={require('../../assets/header-background-upsidedown.jpg')}>
-                <View style={{flex: 1}} >
-                    <View style={styles.headerContainer}>
-                        
-                            <HeaderButtonSmall onPress={toggleConditions} icon='allergies' />
-                            <HeaderButtonSmall onPress={toggleRest} icon='bed' />
-                        
-                        
-                            <HeaderButtonSmall onPress={toggleDefenses} icon='shield-alt' />
-                            <HeaderButtonSmall onPress={() => alert('Function for inspiration')} icon='lightbulb' />
-                        
-                    </View>
-                    
-                    {/* <View style={styles.headerStats}>
-                        <View style={styles.statBox}>
-                            <Text style={styles.statText}>Prof</Text>
-                            <Text style={styles.statTextBig}>{numberPresent(characterInfo.proficiency) + characterInfo.proficiency}</Text>
-                        </View>
-                        <View style={styles.statBox}>
-                            <Text style={styles.statText}>Speed</Text>
-                            <Text style={styles.statTextBig}>{characterInfo.speed + 'ft'}</Text>
-                        </View>
-                        <View style={styles.statBox}>
-                            <Text style={styles.statText}>Initiative</Text>
-                            <Text style={styles.statTextBig}>{numberPresent(characterMods.dex_mod) + characterMods.dex_mod}</Text>
-                        </View>
-                        <View style={styles.statBox}>
-                            <Text style={styles.statText}>AC</Text>
-                            <Text style={styles.statTextBig}>AC</Text>
-                        </View>
-                    </View> */}
-                    <View style={{alignItems: 'center', flex: 1}}>
-                        <Pressable style={styles.collapseButton} onPress={toggleHeader}>
-                            <Text style={styles.collapseButtonText}>{characterInfo.name}  </Text>
-                            <FontAwesome5 style={ styles.icon } name='angle-down' />
-                        </Pressable>
-                    </View>
+        <ImageBackground style={{height: '100%', resizeMode: 'contain'}}
+                source={require('../../assets/header-background-upsidedown.jpg')}>
+            <View style={{flex: 1}} >
+                <View style={styles.headerContainer}>
+                    <HeaderButtonSmall onPress={() => navigation.navigate('ConditionsModal')} icon='allergies' buttonStyle={styles.headerButton} />
+                    <HeaderButtonSmall onPress={() => navigation.navigate('RestModal')} icon='bed' buttonStyle={styles.headerButton} />
+                    <HeaderButtonSmall onPress={() => navigation.navigate('DefensesModal')} icon='shield-alt' buttonStyle={styles.headerButton} />
+                    <HeaderButtonSmall onPress={toggleInspiration} icon='lightbulb' buttonStyle={toggleInspirationStyle} />
                     
                 </View>
-            </ImageBackground>
-
-            {/* Rest Modal */}
-            <Modal 
-                isVisible={isRestVisible}
-                onBackdropPress={toggleRest}>
-                <View style={ styles.modalContainer}>
-                    <Pressable style={ styles.modalCloseButton } onPress={toggleRest} >
-                        <FontAwesome5 style={ styles.modalCloseButton } name="window-close" />
-                    </Pressable>
-                    <Pressable style={ styles.modalButton } onPress={() => alert('Function for short rest')} >
-                        <Text style={ styles.modalButtonText }>Short Rest</Text>
-                    </Pressable> 
-                    <Pressable style={ styles.modalButton } onPress={() => alert('Function for long rest')} >
-                        <Text style={ styles.modalButtonText }>Long Rest</Text>
+                <View style={{alignItems: 'center', flex: 1}}>
+                    <Pressable style={styles.collapseButton} onPress={toggleHeader}>
+                        <Text style={styles.collapseButtonText}>{characterInfo.name}  </Text>
+                        <FontAwesome5 style={ styles.icon } name='angle-down' />
                     </Pressable>
                 </View>
-            </Modal>
-
-            {/* Conditions Modal */}
-            <Modal 
-                isVisible={isConditionsVisible}
-                onBackdropPress={toggleConditions}>
-                <View style={ styles.modalContainer}>
-                    <Pressable style={ styles.modalCloseButton } onPress={toggleConditions} >
-                        <FontAwesome5 style={ styles.modalCloseButton } name="window-close" />
-                    </Pressable>
-                    <FlatList
-                        data = {apiData.conditions}
-                        keyExtractor = {(condition) => condition.rowKey}
-                        renderItem = { ({ item }) => {
-                            return (
-                                <View>
-                                    <Text style={styles.modalListHead}>{item.name}</Text>
-                                    <Text style={styles.modalList}>{item.description}</Text>
-                                </View>
-                            )
-                        }}
-                    />
-                </View>
-            </Modal>
-
-            {/* Defenses Modal */}
-            <Modal 
-                isVisible={isDefensesVisible}
-                onBackdropPress={toggleDefenses}>
-                <View style={ styles.modalContainer}>
-                    <Pressable style={ styles.modalCloseButton } onPress={toggleDefenses} >
-                        <FontAwesome5 style={ styles.modalCloseButton } name="window-close" />
-                    </Pressable>
-                    <Text>This is where resistances, immunities, and vulnerabilities go</Text>
-                </View>
-            </Modal>
-        </>
+                
+            </View>
+        </ImageBackground>
     )
 }
 
@@ -136,33 +47,6 @@ const styles = StyleSheet.create({
         paddingTop: 2,
         borderBottomColor: '#4A0C05', 
         //borderBottomWidth: 2
-    },
-    headerBtnCol: {
-        flex: 1,
-        alignItems: 'center'
-    },
-    headerStats: {
-        flexDirection: 'row',
-        justifyContent: 'space-evenly',
-        //flex: 1,
-        paddingTop: 10
-    },
-    statBox: {
-        alignItems: 'center'
-    },
-    statText: {
-        color: 'white'
-    },
-    statTextBig: {
-        fontSize: 25,
-        color: 'white'
-    },
-    headingStyle: {
-        fontSize: 30,
-        backgroundColor: '#263238',
-        color: 'white',
-        textAlign: 'center',
-        marginBottom: 15
     },
     collapseButton: {
         flex: 1,
@@ -184,43 +68,17 @@ const styles = StyleSheet.create({
         color: 'white',
         alignSelf: 'center',
         paddingRight: 5
-      },
-    modalContainer: {
-        backgroundColor: 'gray',
-        padding: 5
-        
     },
-    modalCloseButton: {
-        fontSize: 25, 
-        color: 'white',
-        marginBottom: 5
-    },
-    modalButton: {
+    headerButton: {
+        flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        paddingVertical: 5,
-        paddingHorizontal: 5,
+        paddingVertical: 1,
+        paddingHorizontal: 1,
         borderRadius: 4,
-        backgroundColor: 'black',
+        backgroundColor: '#4A0C05',
         marginHorizontal: 20,
-        marginVertical: 5,
-        minWidth: '80%'
-    },
-    modalButtonText: {
-        fontSize: 16,
-        fontWeight: 'bold',
-        color: 'white',
-        alignSelf: 'center',
-        padding: 5
-    },
-    modalListHead: {
-        color: 'white',
-        fontWeight: 'bold',
-        paddingBottom: 4
-    },
-    modalList: {
-        color: 'white',
-        paddingBottom: 8
+        width: '75%'
     }
 })
 
