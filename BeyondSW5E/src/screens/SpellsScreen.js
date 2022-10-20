@@ -6,7 +6,6 @@ import PowerTable from '../components/PowerTable'
 import Header from '../components/Header'
 import HeaderCollapsed from '../components/HeaderCollapsed'
 import HeaderContext from '../context/HeaderContext'
-import Styles from '../styles/AppStyles'
 import AppStyles from '../styles/AppStyles'
 
 const SpellsScreen = () => {
@@ -25,7 +24,7 @@ const SpellsScreen = () => {
     const headerCollapsed = useContext(HeaderContext).headerUtils.isCollapsed
 
     return (
-        <View style = {Styles.globalStyles.parentContainerView}>
+        <View style = {AppStyles.globalStyles.parentContainerView}>
             <View style={styles.header}>
                 {!headerCollapsed ? <Header /> : <HeaderCollapsed />}
             </View>

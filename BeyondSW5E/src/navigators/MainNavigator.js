@@ -39,6 +39,10 @@ function getHeaderTitle(route) {
             return 'Casting'
         case 'Features':
             return 'Feats'
+        case 'Description':
+            return 'Description'
+        case 'Notes':
+            return 'Notes'
     }
 }
 
@@ -51,7 +55,7 @@ function MyTabs() {
             screenOptions={{
                 tabBarActiveTintColor: '#ffffff',
                 tabBarInactiveTintColor: '#455a64',
-                tabBarLabelStyle: { fontSize: 12 },
+                tabBarLabelStyle: { fontSize: 11 },
                 tabBarScrollEnabled: true,
                 tabBarBounces: true,
                 tabBarStyle: {
@@ -72,6 +76,8 @@ function MyTabs() {
             <Tab.Screen name="Inventory" component={ InventoryScreen } />
             <Tab.Screen name="Casting" component={ SpellsScreen } />
             <Tab.Screen name="Features" component={ FeaturesScreen } />
+            <Tab.Screen name="Description" component={ DescriptionScreen } />
+            <Tab.Screen name="Notes" component={ NotesScreen } />
         </Tab.Navigator>
     )
 }
