@@ -17,51 +17,49 @@ const Header = () => {
     const toggleInspirationStyle = useContext(HeaderContext).headerUtils.toggleInspirationStyle
 
     return (
-        <ImageBackground style={{height: '100%', resizeMode: 'stretch'}}
+        <ImageBackground style={ {flex:1} }
                 source={require('../../assets/header-background-upsidedown.jpg')}>
-            <View style={{flex: 1}} >
-                <View style={styles.headerContainer}>
-                    <View style={styles.headerBtnCol}>
-                        <HeaderButton onPress={() => navigation.navigate('ConditionsModal')} title="Conditions" buttonStyle={styles.headerButton} />
-                        <HeaderButton onPress={() => navigation.navigate('RestModal')} title="Rest" buttonStyle={styles.headerButton} />
-                    </View>
-                    <Image
-                        source={
-                            characterInfo.image != '' ? {uri: characterInfo.image}
-                            : require('../../assets/defaultCharImage.png')
-                        }
-                        style={{ flex: 1, width: '100%', height: '100%', borderRadius: 5, borderWidth: 2, borderColor: '#4A0C05' }}
-                        resizeMode={"cover"}
-                    />
-                    <View style={styles.headerBtnCol}>
-                        <HeaderButton onPress={() => navigation.navigate('DefensesModal')} title="Defenses" buttonStyle={styles.headerButton} />
-                        <HeaderButton onPress={toggleInspiration} title="Inspiration" buttonStyle={toggleInspirationStyle} />
-                    </View>
+            <View style={styles.headerContainer}>
+                <View style={styles.headerBtnCol}>
+                    <HeaderButton onPress={() => navigation.navigate('ConditionsModal')} title="Conditions" buttonStyle={styles.headerButton} />
+                    <HeaderButton onPress={() => navigation.navigate('RestModal')} title="Rest" buttonStyle={styles.headerButton} />
                 </View>
-                <View style={styles.headerStats}>
-                    <View style={styles.statBox}>
-                        <Text style={styles.statText}>Prof</Text>
-                        <Text style={styles.statTextBig}>{numberPresent(characterInfo.proficiency) + characterInfo.proficiency}</Text>
-                    </View>
-                    <View style={styles.statBox}>
-                        <Text style={styles.statText}>Speed</Text>
-                        <Text style={styles.statTextBig}>{characterInfo.speed + 'ft'}</Text>
-                    </View>
-                    <View style={styles.statBox}>
-                        <Text style={styles.statText}>Initiative</Text>
-                        <Text style={styles.statTextBig}>{numberPresent(characterMods.dex_mod) + characterMods.dex_mod}</Text>
-                    </View>
-                    <View style={styles.statBox}>
-                        <Text style={styles.statText}>AC</Text>
-                        <Text style={styles.statTextBig}>{characterEquipment.armorClass}</Text>
-                    </View>
+                <Image
+                    source={
+                        characterInfo.image != '' ? {uri: characterInfo.image}
+                        : require('../../assets/defaultCharImage.png')
+                    }
+                    style={{ flex: 1, width: '100%', height: '100%', borderRadius: 5, borderWidth: 2, borderColor: '#4A0C05' }}
+                    resizeMode={"cover"}
+                />
+                <View style={styles.headerBtnCol}>
+                    <HeaderButton onPress={() => navigation.navigate('DefensesModal')} title="Defenses" buttonStyle={styles.headerButton} />
+                    <HeaderButton onPress={toggleInspiration} title="Inspiration" buttonStyle={toggleInspirationStyle} />
                 </View>
-                <View style={{alignItems: 'center', flex: 1}}>
-                    <Pressable style={styles.collapseButton} onPress={toggleHeader}>
-                        <Text style={styles.collapseButtonText}>{characterInfo.name}  </Text>
-                        <FontAwesome5 style={ styles.icon } name='angle-up' />
-                    </Pressable>
+            </View>
+            <View style={styles.headerStats}>
+                <View style={styles.statBox}>
+                    <Text style={styles.statText}>Prof</Text>
+                    <Text style={styles.statTextBig}>{numberPresent(characterInfo.proficiency) + characterInfo.proficiency}</Text>
                 </View>
+                <View style={styles.statBox}>
+                    <Text style={styles.statText}>Speed</Text>
+                    <Text style={styles.statTextBig}>{characterInfo.speed + 'ft'}</Text>
+                </View>
+                <View style={styles.statBox}>
+                    <Text style={styles.statText}>Initiative</Text>
+                    <Text style={styles.statTextBig}>{numberPresent(characterMods.dex_mod) + characterMods.dex_mod}</Text>
+                </View>
+                <View style={styles.statBox}>
+                    <Text style={styles.statText}>AC</Text>
+                    <Text style={styles.statTextBig}>{characterEquipment.armorClass}</Text>
+                </View>
+            </View>
+            <View style={{alignItems: 'center', flex: 1}}>
+                <Pressable style={styles.collapseButton } onPress={toggleHeader}>
+                    <Text style={styles.collapseButtonText}>{characterInfo.name}  </Text>
+                    <FontAwesome5 style={ styles.icon } name='angle-up' />
+                </Pressable>
             </View>
         </ImageBackground>
     )
@@ -69,7 +67,7 @@ const Header = () => {
 
 const styles = StyleSheet.create({
     headerContainer: {
-        flex: 3.8,
+        flex: 4,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-around',
@@ -125,7 +123,9 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         width: '100%',
         justifyContent: 'center',
-        backgroundColor: '#4A0C05'
+        backgroundColor: '#4A0C05',
+        flex: 1,
+        alignItems: 'center'
     },
     collapseButtonText: {
         fontSize: 18,

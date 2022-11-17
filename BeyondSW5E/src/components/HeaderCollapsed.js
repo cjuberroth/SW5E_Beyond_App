@@ -55,7 +55,8 @@ const styles = StyleSheet.create({
         borderColor: '#4A0C05',
         width: '100%',
         justifyContent: 'center',
-        backgroundColor: '#4A0C05'
+        backgroundColor: '#4A0C05',
+        alignItems: 'center'
     },
     collapseButtonText: {
         fontSize: 18,

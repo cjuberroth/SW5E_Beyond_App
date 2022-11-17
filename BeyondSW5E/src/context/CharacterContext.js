@@ -10,9 +10,7 @@ import trevalla from '../../data/trevalla'
 
 const CharacterContext = React.createContext({
 	character: charAbilitiesImport,
-	setCharacter: (char) => {},
-	hitPoints: 0,
-	setHitPoints: (hp) => {}
+	setCharacter: (char) => {}
 })
 
 export const CharacterProvider = ({children}) => {
