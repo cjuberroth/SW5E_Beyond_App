@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Text, View, StyleSheet } from "react-native";
 import { DataTable } from "react-native-paper";
 import AppStyles from "../styles/AppStyles";
-import Checkbox from "./CheckBox";
+import Checkbox from "./Checkbox";
 
 const EquipmentBlock = ({ category, equipment }) => {
 	return (
