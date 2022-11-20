@@ -5,6 +5,7 @@ import { FontAwesome5 } from '@expo/vector-icons'
 import HeaderContext from '../context/HeaderContext'
 import CharacterContext from '../context/CharacterContext'
 import HeaderButton from './HeaderButton'
+import DiceRoll from './DiceRolls'
 
 const Header = () => {
     const characterInfo = useContext(CharacterContext).characterInformation
@@ -15,6 +16,12 @@ const Header = () => {
     const toggleHeader = useContext(HeaderContext).headerUtils.toggleHeader
     const toggleInspiration = useContext(HeaderContext).headerUtils.toggleInspiration
     const toggleInspirationStyle = useContext(HeaderContext).headerUtils.toggleInspirationStyle
+
+    const diceRoll = (numDice, numSides) => {
+        const rollResult = DiceRoll(numDice, numSides)
+        const dexMod = characterMods.dex_mod
+        navigation.navigate('DiceResultModal', {rollResult: rollResult, mod: dexMod, rollType: 'Initiative', numDice: numDice, numSides: numSides})
+    }
 
     return (
         <ImageBackground style={ {flex:1} }
@@ -48,7 +55,9 @@ const Header = () => {
                 </View>
                 <View style={styles.statBox}>
                     <Text style={styles.statText}>Initiative</Text>
-                    <Text style={styles.statTextBig}>{numberPresent(characterMods.dex_mod) + characterMods.dex_mod}</Text>
+                    <Pressable style={styles.initiative} onPress={() => diceRoll(1, 20)}>
+                        <Text style={styles.statTextBig}>{numberPresent(characterMods.dex_mod) + characterMods.dex_mod}</Text>
+                    </Pressable>
                 </View>
                 <View style={styles.statBox}>
                     <Text style={styles.statText}>AC</Text>
@@ -117,7 +126,17 @@ const styles = StyleSheet.create({
     },
     statTextBig: {
         fontSize: 25,
-        color: 'white'
+        color: 'white',
+        textAlign: 'center'
+    },
+    initiative: {
+        fontSize: 25,
+        color: 'white',
+        borderColor: '#4A0C05',
+        borderRadius: 4,
+        borderWidth: 2,
+        textAlign: 'center',
+        width: '90%'
     },
     collapseButton: {
         flexDirection: 'row',

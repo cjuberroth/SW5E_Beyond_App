@@ -23,6 +23,7 @@ import ConditionsModal from '../components/modals/ConditionsModal'
 import DefensesModal from '../components/modals/DefensesModal'
 import ShortRestModal from '../components/modals/ShortRestModal'
 import LongRestModal from '../components/modals/LongRestModal'
+import DiceResultModal from '../components/modals/DiceResultModal'
 import CharacterContext from '../context/CharacterContext'
 
 function getHeaderTitle(route) {
@@ -163,6 +164,14 @@ const MainNavigator = ({ navigation }) => {
                         <Stack.Screen
                             name="LongRestModal"
                             component={LongRestModal}
+                            options={{
+                                presentation: 'transparentModal',
+                                headerShown: false
+                            }}
+                        />
+                        <Stack.Screen
+                            name="DiceResultModal"
+                            component={DiceResultModal}
                             options={{
                                 presentation: 'transparentModal',
                                 headerShown: false
