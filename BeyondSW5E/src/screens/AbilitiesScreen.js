@@ -1,13 +1,15 @@
 import React, { useContext } from 'react'
-import { Text, View, StyleSheet, ImageBackground, ScrollView } from 'react-native'
+import { Text, View, StyleSheet, ImageBackground, ScrollView, Pressable } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
 import CharacterContext from '../context/CharacterContext'
 import Header from '../components/Header'
 import HeaderCollapsed from '../components/HeaderCollapsed'
 import HeaderContext from '../context/HeaderContext'
-import AppStyles from '../styles/AppStyles';
+import AppStyles from '../styles/AppStyles'
+import DiceRoll from '../components/DiceRolls'
 
 const AbilitiesScreen = () => {
-    
+    const navigation = useNavigation()
     const flexValue = useContext(HeaderContext).headerUtils.flexValue
     const headerCollapsed = useContext(HeaderContext).headerUtils.isCollapsed
     
@@ -16,6 +18,50 @@ const AbilitiesScreen = () => {
     const characterMods = useContext(CharacterContext).characterMods
     const characterSaves = useContext(CharacterContext).characterSaves
     const numberPresent = useContext(CharacterContext).functions.numberPresent
+
+    const diceRoll = (numDice, numSides, rollType) => {
+        const rollResult = DiceRoll(numDice, numSides)
+        var mod = ''
+        switch (rollType) {
+            case 'Strength':
+                mod = characterMods.str_mod
+                break
+            case 'Dexterity':
+                mod = characterMods.dex_mod
+                break
+            case 'Constitution':
+                mod = characterMods.con_mod
+                break
+            case 'Intelligence':
+                mod = characterMods.int_mod
+                break
+            case 'Wisdom':
+                mod = characterMods.wis_mod
+                break
+            case 'Charisma':
+                mod = characterMods.cha_mod
+                break
+            case 'Strength Save':
+                mod = characterSaves.str_save
+                break
+            case 'Dexterity Save':
+                mod = characterSaves.dex_save
+                break
+            case 'Constitution Save':
+                mod = characterSaves.con_save
+                break
+            case 'Intelligence Save':
+                mod = characterSaves.int_save
+                break
+            case 'Wisdom Save':
+                mod = characterSaves.wis_save
+                break
+            case 'Charisma Save':
+                mod = characterSaves.cha_save
+                break
+        }
+        navigation.navigate('DiceResultModal', {rollResult: rollResult, mod: mod, rollType: rollType, numDice: numDice, numSides: numSides})
+    }
 
     return (
         // This style import is a POC for the ability to extract common styles into a separate file
@@ -32,32 +78,44 @@ const AbilitiesScreen = () => {
                         <View style={styles.parentStyle}>
                             <View style={styles.boxStyle}>
                                 <Text style={styles.textStyle}>Strength</Text>
-                                <Text style={styles.modStyle}>{numberPresent(characterMods.str_mod)}{characterMods.str_mod}</Text>
+                                <Pressable onPress={() => diceRoll(1, 20, 'Strength')}>
+                                    <Text style={styles.modStyle}>{numberPresent(characterMods.str_mod)}{characterMods.str_mod}</Text>
+                                </Pressable>
                                 <Text style={styles.textStyle}>{characterAbilities.abilitiesStrength}</Text>
                             </View>
                             <View style={styles.boxStyle}>
                                 <Text style={styles.textStyle}>Dexterity</Text>
-                                <Text style={styles.modStyle}>{numberPresent(characterMods.dex_mod)}{characterMods.dex_mod}</Text>
+                                <Pressable onPress={() => diceRoll(1, 20, 'Dexterity')}>
+                                    <Text style={styles.modStyle}>{numberPresent(characterMods.dex_mod)}{characterMods.dex_mod}</Text>
+                                </Pressable>
                                 <Text style={styles.textStyle}>{characterAbilities.abilitiesDexterity}</Text>
                             </View>
                             <View style={styles.boxStyle}>
                                 <Text style={styles.textStyle}>Constitution</Text>
-                                <Text style={styles.modStyle}>{numberPresent(characterMods.con_mod)}{characterMods.con_mod}</Text>
+                                <Pressable onPress={() => diceRoll(1, 20, 'Constitution')}>
+                                    <Text style={styles.modStyle}>{numberPresent(characterMods.con_mod)}{characterMods.con_mod}</Text>
+                                </Pressable>
                                 <Text style={styles.textStyle}>{characterAbilities.abilitiesConstitution}</Text>
                             </View>
                             <View style={styles.boxStyle}>
                                 <Text style={styles.textStyle}>Intelligence</Text>
-                                <Text style={styles.modStyle}>{numberPresent(characterMods.int_mod)}{characterMods.int_mod}</Text>
+                                <Pressable onPress={() => diceRoll(1, 20, 'Intelligence')}>
+                                    <Text style={styles.modStyle}>{numberPresent(characterMods.int_mod)}{characterMods.int_mod}</Text>
+                                </Pressable>
                                 <Text style={styles.textStyle}>{characterAbilities.abilitiesIntelligence}</Text>
                             </View>
                             <View style={styles.boxStyle}>
                                 <Text style={styles.textStyle}>Wisdom</Text>
-                                <Text style={styles.modStyle}>{numberPresent(characterMods.wis_mod)}{characterMods.wis_mod}</Text>
+                                <Pressable onPress={() => diceRoll(1, 20, 'Wisdom')}>
+                                    <Text style={styles.modStyle}>{numberPresent(characterMods.wis_mod)}{characterMods.wis_mod}</Text>
+                                </Pressable>
                                 <Text style={styles.textStyle}>{characterAbilities.abilitiesWisdom}</Text>
                             </View>
                             <View style={styles.boxStyle}>
                                 <Text style={styles.textStyle}>Charisma</Text>
-                                <Text style={styles.modStyle}>{numberPresent(characterMods.cha_mod)}{characterMods.cha_mod}</Text>
+                                <Pressable onPress={() => diceRoll(1, 20, 'Charisma')}>
+                                    <Text style={styles.modStyle}>{numberPresent(characterMods.cha_mod)}{characterMods.cha_mod}</Text>
+                                </Pressable>
                                 <Text style={styles.textStyle}>{characterAbilities.abilitiesCharisma}</Text>
                             </View>
                         </View>
@@ -68,27 +126,39 @@ const AbilitiesScreen = () => {
                     <View style={styles.saveView}>
                         <View style={styles.boxStyle}>
                             <Text style={styles.textStyle}>Strength</Text>
-                            <Text style={styles.modStyle}>{numberPresent(characterSaves.str_save)}{characterSaves.str_save}</Text>
+                            <Pressable onPress={() => diceRoll(1, 20, 'Strength Save')}>
+                                <Text style={styles.modStyle}>{numberPresent(characterSaves.str_save)}{characterSaves.str_save}</Text>
+                            </Pressable>
                         </View>
                         <View style={styles.boxStyle}>
                             <Text style={styles.textStyle}>Dexterity</Text>
-                            <Text style={styles.modStyle}>{numberPresent(characterSaves.dex_save)}{characterSaves.dex_save}</Text>
+                            <Pressable onPress={() => diceRoll(1, 20, 'Dexterity Save')}>
+                                <Text style={styles.modStyle}>{numberPresent(characterSaves.dex_save)}{characterSaves.dex_save}</Text>
+                            </Pressable>
                         </View>
                         <View style={styles.boxStyle}>
                             <Text style={styles.textStyle}>Constitution</Text>
-                            <Text style={styles.modStyle}>{numberPresent(characterSaves.con_save)}{characterSaves.con_save}</Text>
+                            <Pressable onPress={() => diceRoll(1, 20, 'Constitution Save')}>
+                                <Text style={styles.modStyle}>{numberPresent(characterSaves.con_save)}{characterSaves.con_save}</Text>
+                            </Pressable>
                         </View>
                         <View style={styles.boxStyle}>
                             <Text style={styles.textStyle}>Intelligence</Text>
-                            <Text style={styles.modStyle}>{numberPresent(characterSaves.int_save)}{characterSaves.int_save}</Text>
+                            <Pressable onPress={() => diceRoll(1, 20, 'Intelligence Save')}>
+                                <Text style={styles.modStyle}>{numberPresent(characterSaves.int_save)}{characterSaves.int_save}</Text>
+                            </Pressable>
                         </View>
                         <View style={styles.boxStyle}>
                             <Text style={styles.textStyle}>Wisdom</Text>
-                            <Text style={styles.modStyle}>{numberPresent(characterSaves.wis_save)}{characterSaves.wis_save}</Text>
+                            <Pressable onPress={() => diceRoll(1, 20, 'Wisdom Save')}>
+                                <Text style={styles.modStyle}>{numberPresent(characterSaves.wis_save)}{characterSaves.wis_save}</Text>
+                            </Pressable>
                         </View>
                         <View style={styles.boxStyle}>
                             <Text style={styles.textStyle}>Charisma</Text>
+                            <Pressable onPress={() => diceRoll(1, 20, 'Charisma Save')}>
                             <Text style={styles.modStyle}>{numberPresent(characterSaves.cha_save)}{characterSaves.cha_save}</Text>
+                            </Pressable>
                         </View>
                     </View>
                 </ScrollView>
