@@ -7,6 +7,7 @@ import CharacterContext from '../context/CharacterContext'
 
 const EquipmentBlock = ({ category, equipment }) => {
 	const {equippable, setEquippable} = useContext(CharacterContext)
+	const getCharacterAC = useContext(CharacterContext).characterEquipment.getCharacterAC
 	const [equippedState, setEquippedState] = useState(equipment)
 
 	const toggleEquipped = (selectedItemIndex) => {
@@ -15,10 +16,8 @@ const EquipmentBlock = ({ category, equipment }) => {
 		))
 		setEquippedState(toggle)
 		setEquippable(toggle)
+		getCharacterAC(toggle)
 	}	
-
-	//console.log(equippedState)
-	//console.log(equippable)
 
 	return (
 		<View>
@@ -32,7 +31,6 @@ const EquipmentBlock = ({ category, equipment }) => {
 				</DataTable.Header>
 				{
 					equippedState.map((item) => {
-					//equipment.map((item) => {
 						return (
 							<DataTable.Row style={styles.tableRow} key={item.name}>
 								<Pressable style={{ flex: 1, flexDirection: 'row' }} onPress={() => toggleEquipped(item.name)}>
@@ -65,9 +63,6 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 20,
         color: 'white'
-    },
-	tableHeaderText: {
-        fontWeight: 'bold'
     },
     tableDataText: {
         fontSize: 12,

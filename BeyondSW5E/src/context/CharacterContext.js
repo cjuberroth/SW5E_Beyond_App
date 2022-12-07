@@ -657,6 +657,7 @@ export const CharacterProvider = ({children}) => {
 	
 	// Equipment -----------------------------------------------------------------------------------------
 	//capture character inventory via the JSON
+	const [equippable, setEquippable] = useState()
 	var equipmentList = charData.equipment
 	
 	//extract out any tweaked equipment
@@ -713,23 +714,8 @@ export const CharacterProvider = ({children}) => {
 		}
 	}
 
-	const stateEquipment = equipmentData
-	//console.log(stateEquipment)
-
-	/* var equipableItems = {}
-	for(let i = 0; i < equipmentData.length; i++) {
-		//if (equipmentData[i].equipped != undefined) {
-			equipableItems[i] = {
-				name: equipmentData[i].name,
-				equippedStatus: equipmentData[i].equipped
-			}
-		//}
-	} */
-	
-	const [equippable, setEquippable] = useState()
-	console.log(equippable)
-
 	//determine AC --------------------------------------------------------------------------------------
+	const [characterAC, setCharacterAC] = useState(0)
 	var charAC = 0
 	for(let i = 0; i < equipmentData.length; i++) {
 		if (equipmentData[i].equipmentCategory === "Armor" && equipmentData[i].equipped === true) {
@@ -754,17 +740,54 @@ export const CharacterProvider = ({children}) => {
 		}
 	}
 
-	if (charAC === 0) {
-		charAC = 10
+	if (charAC < 10) {
+		charAC = 10 + characterMods.dex_mod
 	}
 
-	const [characterAC, setCharacterAC] = useState()
-	console.log(characterAC)
+	useEffect(() => {
+		setCharacterAC(charAC)
+	}, [charAC])
 
+	const getCharacterAC = (updatedEquipment) => {
+		//currently not accounting for multiple armors being equipped at the same time
+		if (updatedEquipment != undefined) {
+			var charAC = 0
+				for(let i = 0; i < updatedEquipment.length; i++) {
+					if (updatedEquipment[i].equipmentCategory === "Armor" && updatedEquipment[i].equipped === true) {
+						switch (updatedEquipment[i].armorClassification) {
+							case 'Light':
+								charAC = parseInt(updatedEquipment[i].ac) + characterMods.dex_mod
+								break
+							case 'Medium':
+								if (characterMods.dex_mod >= 2) {
+									charAC = parseInt(updatedEquipment[i].ac) + 2
+								} else {
+									charAC = parseInt(updatedEquipment[i].ac) + characterMods.dex_mod
+								}
+								break
+							case 'Heavy':
+								charAC = updatedEquipment[i].ac
+								break
+						}
+						if (updatedEquipment[i].armorClassification === 'Shield') {
+							charAC = charAC + parseInt(updatedEquipment[i].ac)
+						}
+					}
+				}
+
+			if (charAC < 10) {
+				charAC = 10 + characterMods.dex_mod
+			}
+
+			setCharacterAC(charAC)
+		}
+	}
+	
 	//object to export equipment data --------------------------------------------------------------------
 	const characterEquipment = {
 		equipment: equipmentData,
-		armorClass: charAC
+		armorClass: characterAC,
+		getCharacterAC: getCharacterAC
 	}
 	
 	//console.log("Render")
