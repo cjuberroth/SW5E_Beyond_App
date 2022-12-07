@@ -1,10 +1,25 @@
-import React, { useState } from "react";
-import { Text, View, StyleSheet } from "react-native";
-import { DataTable } from "react-native-paper";
-import AppStyles from "../styles/AppStyles";
-import Checkbox from "./Checkbox";
+import React, { useContext, useState } from "react"
+import { Text, View, StyleSheet, Pressable, Alert } from "react-native"
+import { DataTable } from "react-native-paper"
+import { Entypo } from '@expo/vector-icons'
+import AppStyles from "../styles/AppStyles"
+import CharacterContext from '../context/CharacterContext'
 
 const EquipmentBlock = ({ category, equipment }) => {
+	const {equippable, setEquippable} = useContext(CharacterContext)
+	const [equippedState, setEquippedState] = useState(equipment)
+
+	const toggleEquipped = (selectedItemIndex) => {
+		let toggle = equippedState.map(el => (
+			el.name === selectedItemIndex ? {...el, equipped: !el.equipped} : el
+		))
+		setEquippedState(toggle)
+		setEquippable(toggle)
+	}	
+
+	//console.log(equippedState)
+	//console.log(equippable)
+
 	return (
 		<View>
 			<DataTable style={styles.dataTable}>
@@ -16,32 +31,25 @@ const EquipmentBlock = ({ category, equipment }) => {
 					</DataTable.Title>
 				</DataTable.Header>
 				{
-					equipment.map((item) => {
-						//const [checked, onChange] = useState(item.equipped)
+					equippedState.map((item) => {
+					//equipment.map((item) => {
 						return (
 							<DataTable.Row style={styles.tableRow} key={item.name}>
-								<DataTable.Cell style={styles.colEquip}>
-									{
-										item.equipped != null
-										? 	
-											<Checkbox
-												checked={item.equipped}
-												//onChange={onChange}
-												buttonStyle={styles.checkboxBase}
-												activeButtonStyle={styles.checkboxChecked}
-											/>
-										:
-											<Text></Text>
-									}
-								</DataTable.Cell>
-								<DataTable.Cell style={styles.colItem}>
-									<Text style={styles.tableDataText}>{item.name}</Text>
-								</DataTable.Cell>
-								<DataTable.Cell style={styles.colCost}>
-									<Text style={styles.tableDataText}>{item.cost}</Text>
-								</DataTable.Cell>
-								<DataTable.Cell style={styles.colQty}>
-									<Text style={styles.tableDataText}>{item.quantity}</Text>
+								<Pressable style={{ flex: 1, flexDirection: 'row' }} onPress={() => toggleEquipped(item.name)}>
+									<DataTable.Cell style={styles.colItem}>
+										<Text style={item.equipped ? styles.tableDataTextEquipped : styles.tableDataText}>{item.name}</Text>
+									</DataTable.Cell>
+									<DataTable.Cell style={styles.colCost}>
+										<Text style={item.equipped ? styles.tableDataTextEquipped : styles.tableDataText}>{item.cost}</Text>
+									</DataTable.Cell>
+									<DataTable.Cell style={styles.colQty}>
+										<Text style={ item.equipped ? styles.tableDataTextEquipped : styles.tableDataText}>{item.quantity}</Text>
+									</DataTable.Cell>
+								</Pressable>
+								<DataTable.Cell style={styles.colInfo}>
+									<Pressable onPress={() => Alert.alert('Equipment info modal')}>
+										<Entypo style={{fontSize: 20, color: 'white'}} name='info-with-circle' />
+									</Pressable>
 								</DataTable.Cell>
 							</DataTable.Row>
 						);
@@ -65,40 +73,35 @@ const styles = StyleSheet.create({
         fontSize: 12,
         color: 'white'
     },
+	tableDataTextEquipped: {
+        fontSize: 14,
+        color: 'white',
+		fontWeight: 'bold'
+    },
     tableHeaderRow: {
         backgroundColor: 'gray'
     },
     tableRow: {
-        borderBottomColor: 'gray'
+        borderBottomColor: 'gray', 
+		flex: 1
     },
-	colEquip: { 
-		flex: 4, 
-		fontSize: 12 
+	colInfo: { 
+		flex: .1, 
+		fontSize: 12,
+		justifyContent: 'center'
 	},
 	colItem: { 
 		flex: 12, 
-		fontSize: 12 
+		fontSize: 12
 	},
 	colQty: { 
-		flex: 3, 
-		fontSize: 12 
+		flex: 2, 
+		fontSize: 12
 	},
 	colCost: { 
-		flex: 5, 
-		fontSize: 12 
-	},
-	checkboxBase: {
-		flex: 2,
-		justifyContent: "center",
-		alignItems: "center",
-		borderRadius: 4,
-		borderWidth: 2,
-		borderColor: "white",
-		backgroundColor: "transparent"
-	},
-	checkboxChecked: {
-		backgroundColor: "white"
+		flex: 4, 
+		fontSize: 12
 	}
-});
+})
 
 export default EquipmentBlock;
