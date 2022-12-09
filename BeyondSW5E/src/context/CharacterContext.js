@@ -511,6 +511,7 @@ export const CharacterProvider = ({children}) => {
 	
 	//object to export saving throw scores ---------------------------------------------------------------
 	const characterSaves = {
+		characterSaves: charSave,
 		str_save: strSave,
 		dex_save: dexSave,
 		con_save: conSave,
@@ -657,7 +658,6 @@ export const CharacterProvider = ({children}) => {
 	
 	// Equipment -----------------------------------------------------------------------------------------
 	//capture character inventory via the JSON
-	const [equippable, setEquippable] = useState()
 	var equipmentList = charData.equipment
 	
 	//extract out any tweaked equipment
@@ -713,6 +713,8 @@ export const CharacterProvider = ({children}) => {
 			}
 		}
 	}
+
+	const [equippable, setEquippable] = useState()
 
 	//determine AC --------------------------------------------------------------------------------------
 	const [characterAC, setCharacterAC] = useState(0)

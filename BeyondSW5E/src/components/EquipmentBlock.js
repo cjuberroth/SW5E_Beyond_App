@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react"
 import { Text, View, StyleSheet, Pressable, Alert } from "react-native"
 import { DataTable } from "react-native-paper"
+import { useNavigation } from '@react-navigation/native'
 import { Entypo } from '@expo/vector-icons'
 import AppStyles from "../styles/AppStyles"
 import CharacterContext from '../context/CharacterContext'
@@ -9,6 +10,7 @@ const EquipmentBlock = ({ category, equipment }) => {
 	const {equippable, setEquippable} = useContext(CharacterContext)
 	const getCharacterAC = useContext(CharacterContext).characterEquipment.getCharacterAC
 	const [equippedState, setEquippedState] = useState(equipment)
+	const navigation = useNavigation()
 
 	const toggleEquipped = (selectedItemIndex) => {
 		let toggle = equippedState.map(el => (
@@ -18,6 +20,32 @@ const EquipmentBlock = ({ category, equipment }) => {
 		setEquippable(toggle)
 		getCharacterAC(toggle)
 	}	
+
+	const showItemDetails = (item) => {
+		console.log(item)
+		navigation.navigate('EquipmentDetailsModal', {
+			name: item.name,
+			eqDescription: item.description,
+			eqArmorType: item.armorClassification,
+			eqProperty: item.properties,
+    		eqCost: item.cost,
+    		eqWeight: item.weight,
+    		eqArmorAC: item.ac,
+    		eqArmorStealth: item.stealthDisadvantage,
+    		eqWeaponType: item.weaponClassification,
+			eqWeaponDamageDieNumber: item.damageNumberOfDice,
+    		eqWeaponDamageDie: item.damageDieType,
+    		eqWeaponDamageType: item.damageType,
+    		eqCategory: item.equipmentCategory,
+    		ehType: item.type,
+    		ehSubtype: item.subtype,
+    		ehRarity: item.rarityText,
+    		ehPrereq: item.hasPrerequisite,
+    		ehAttunement: item.requiresAttunement,
+    		ehDescription: item.text,
+			customTweaks: item.tweaks	
+		})
+	}
 
 	return (
 		<View>
@@ -45,7 +73,7 @@ const EquipmentBlock = ({ category, equipment }) => {
 									</DataTable.Cell>
 								</Pressable>
 								<DataTable.Cell style={styles.colInfo}>
-									<Pressable onPress={() => Alert.alert('Equipment info modal')}>
+									<Pressable onPress={() => showItemDetails(item)}>
 										<Entypo style={{fontSize: 20, color: 'white'}} name='info-with-circle' />
 									</Pressable>
 								</DataTable.Cell>

@@ -127,37 +127,37 @@ const AbilitiesScreen = () => {
                         <View style={styles.boxStyle}>
                             <Text style={styles.textStyle}>Strength</Text>
                             <Pressable onPress={() => diceRoll(1, 20, 'Strength Save')}>
-                                <Text style={styles.modStyle}>{numberPresent(characterSaves.str_save)}{characterSaves.str_save}</Text>
+                                <Text style={ characterSaves.characterSaves.includes('Strength') ? styles.modStyleProficient : styles.modStyle}>{numberPresent(characterSaves.str_save)}{characterSaves.str_save}</Text>
                             </Pressable>
                         </View>
                         <View style={styles.boxStyle}>
                             <Text style={styles.textStyle}>Dexterity</Text>
                             <Pressable onPress={() => diceRoll(1, 20, 'Dexterity Save')}>
-                                <Text style={styles.modStyle}>{numberPresent(characterSaves.dex_save)}{characterSaves.dex_save}</Text>
+                                <Text style={characterSaves.characterSaves.includes('Dexterity') ? styles.modStyleProficient : styles.modStyle}>{numberPresent(characterSaves.dex_save)}{characterSaves.dex_save}</Text>
                             </Pressable>
                         </View>
                         <View style={styles.boxStyle}>
                             <Text style={styles.textStyle}>Constitution</Text>
                             <Pressable onPress={() => diceRoll(1, 20, 'Constitution Save')}>
-                                <Text style={styles.modStyle}>{numberPresent(characterSaves.con_save)}{characterSaves.con_save}</Text>
+                                <Text style={characterSaves.characterSaves.includes('Constitution') ? styles.modStyleProficient : styles.modStyle}>{numberPresent(characterSaves.con_save)}{characterSaves.con_save}</Text>
                             </Pressable>
                         </View>
                         <View style={styles.boxStyle}>
                             <Text style={styles.textStyle}>Intelligence</Text>
                             <Pressable onPress={() => diceRoll(1, 20, 'Intelligence Save')}>
-                                <Text style={styles.modStyle}>{numberPresent(characterSaves.int_save)}{characterSaves.int_save}</Text>
+                                <Text style={characterSaves.characterSaves.includes('Intelligence') ? styles.modStyleProficient : styles.modStyle}>{numberPresent(characterSaves.int_save)}{characterSaves.int_save}</Text>
                             </Pressable>
                         </View>
                         <View style={styles.boxStyle}>
                             <Text style={styles.textStyle}>Wisdom</Text>
                             <Pressable onPress={() => diceRoll(1, 20, 'Wisdom Save')}>
-                                <Text style={styles.modStyle}>{numberPresent(characterSaves.wis_save)}{characterSaves.wis_save}</Text>
+                                <Text style={characterSaves.characterSaves.includes('Wisdom') ? styles.modStyleProficient : styles.modStyle}>{numberPresent(characterSaves.wis_save)}{characterSaves.wis_save}</Text>
                             </Pressable>
                         </View>
                         <View style={styles.boxStyle}>
                             <Text style={styles.textStyle}>Charisma</Text>
                             <Pressable onPress={() => diceRoll(1, 20, 'Charisma Save')}>
-                            <Text style={styles.modStyle}>{numberPresent(characterSaves.cha_save)}{characterSaves.cha_save}</Text>
+                            <Text style={characterSaves.characterSaves.includes('Charisma') ? styles.modStyleProficient : styles.modStyle}>{numberPresent(characterSaves.cha_save)}{characterSaves.cha_save}</Text>
                             </Pressable>
                         </View>
                     </View>
@@ -207,6 +207,18 @@ const styles = StyleSheet.create({
         marginTop: 2,
         borderWidth: 2,
         borderColor: '#4A0C05',
+        alignSelf: 'center',
+        width: '50%',
+        borderRadius: 5
+    },
+    modStyleProficient: {
+        fontSize: 30,
+        textAlign: 'center',
+        color: 'white',
+        marginBottom: 9,
+        marginTop: 2,
+        borderWidth: 2,
+        borderColor: '#15f2fd',
         alignSelf: 'center',
         width: '50%',
         borderRadius: 5
