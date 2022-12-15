@@ -3,8 +3,6 @@ import { Text, Button, Platform, StyleSheet } from 'react-native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
-import { NavigationContainer } from '@react-navigation/native'
-import HomeScreen from '../screens/HomeScreen'
 import AbilitiesScreen from '../screens/AbilitiesScreen'
 import ActionsScreen from '../screens/ActionsScreen'
 import DescriptionScreen from '../screens/DescriptionScreen'
@@ -23,6 +21,8 @@ import ConditionsModal from '../components/modals/ConditionsModal'
 import DefensesModal from '../components/modals/DefensesModal'
 import ShortRestModal from '../components/modals/ShortRestModal'
 import LongRestModal from '../components/modals/LongRestModal'
+import DiceResultModal from '../components/modals/DiceResultModal'
+import EquipmentDetailsModal from '../components/modals/EquipmentDetailsModal'
 import CharacterContext from '../context/CharacterContext'
 
 function getHeaderTitle(route) {
@@ -33,6 +33,8 @@ function getHeaderTitle(route) {
             return 'Abilities'
         case 'Skills':
             return 'Skills'
+        case 'Actions':
+            return 'Actions'
         case 'Inventory':
             return 'Inventory'
         case 'Casting':
@@ -73,6 +75,7 @@ function MyTabs() {
         >
             <Tab.Screen name="Abilities" component={ AbilitiesScreen } options={{ tabBarLabel: 'Abilities' }} />
             <Tab.Screen name="Skills" component={ SkillsScreen } />
+            <Tab.Screen name="Actions" component={ ActionsScreen } />
             <Tab.Screen name="Inventory" component={ InventoryScreen } />
             <Tab.Screen name="Casting" component={ SpellsScreen } />
             <Tab.Screen name="Features" component={ FeaturesScreen } />
@@ -163,6 +166,22 @@ const MainNavigator = ({ navigation }) => {
                         <Stack.Screen
                             name="LongRestModal"
                             component={LongRestModal}
+                            options={{
+                                presentation: 'transparentModal',
+                                headerShown: false
+                            }}
+                        />
+                        <Stack.Screen
+                            name="DiceResultModal"
+                            component={DiceResultModal}
+                            options={{
+                                presentation: 'transparentModal',
+                                headerShown: false
+                            }}
+                        />
+                        <Stack.Screen
+                            name="EquipmentDetailsModal"
+                            component={EquipmentDetailsModal}
                             options={{
                                 presentation: 'transparentModal',
                                 headerShown: false

@@ -9,8 +9,7 @@ const Checkbox = (props) => {
     activeButtonStyle = {},
     inactiveButtonStyle = {},
     activeIconProps = {},
-    inactiveIconProps = {},
-    id
+    inactiveIconProps = {}
   } = props
   
   function onCheckmarkPress() {
@@ -31,8 +30,8 @@ const Checkbox = (props) => {
       {checked && (
         <Ionicons
           name="checkmark"
-          size={8}
-          color="white"
+          size={16}
+          color="black"
           {...iconProps}
         />
       )}

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Text, View, StyleSheet, ImageBackground, ScrollView } from 'react-native'
 import CharacterContext from '../context/CharacterContext'
 import EquipmentBlock from '../components/EquipmentBlock'
@@ -8,14 +8,16 @@ import HeaderContext from '../context/HeaderContext'
 import AppStyles from '../styles/AppStyles'
 
 const InventoryScreen = () => {
-
     const equipment = useContext(CharacterContext).characterEquipment.equipment
     const flexValue = useContext(HeaderContext).headerUtils.flexValue
     const headerCollapsed = useContext(HeaderContext).headerUtils.isCollapsed
+
     
+
     // This block loads the equipment categories within the loaded equipment block
     var itemCategories = []
     equipment.forEach(element => {
+    //equipment.forEach(element => {
         //console.log(element.name + ' ' + element.equipped)
         if(!itemCategories.includes(element.equipmentCategory)){
             itemCategories.push(element.equipmentCategory)
@@ -32,7 +34,7 @@ const InventoryScreen = () => {
                 <ImageBackground style={ AppStyles.globalStyles.screenBackground }
                     source={ require('../../assets/header-background.jpg') }>
                     <View style={styles.tableHeader}>
-                        <Text style = {[ styles.column, styles.colEquip, styles.colHeader ]}>Equipped</Text>
+                        {/* <Text style = {[ styles.column, styles.colEquip, styles.colHeader ]}>Equipped</Text> */}
                         <Text style = {[ styles.column, styles.colItem, styles.colHeader ]}>Item</Text>
                         <Text style = {[ styles.column, styles.colQty, styles.colHeader ]}>Cost</Text>
                         <Text style = {[ styles.column, styles.colCost, styles.colHeader ]}>Qty</Text>
@@ -41,7 +43,7 @@ const InventoryScreen = () => {
                         {
                             itemCategories.map(category => {
                                 let filteredEquipment = equipment.filter((item) => {
-                                    if(item.equipmentCategory == category) {
+                                    if(item.equipmentCategory === category) {
                                         return item
                                     }
                                 })
@@ -79,7 +81,7 @@ const styles = StyleSheet.create({
     },
     colHeader: {
         fontWeight: 'bold',
-        fontSize: 12
+        fontSize: 14
     },
     colEquip: {
         flex: 4

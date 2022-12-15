@@ -70,17 +70,21 @@ const styles = StyleSheet.create({
     modCol: {
         flex:1,
         fontSize: 15,
-        color: 'white'
+        color: 'white',
+        fontWeight: 'bold'
     },
     skillCol: {
         flex:5,
         fontSize: 15,
-        color: 'white'
+        color: 'white',
+        fontWeight: 'bold'
     },
     bonusCol: {
-        flex: 2,
+        flex: 1.5,
         fontSize: 15,
-        color: 'white'
+        color: 'white',
+        textAlign: 'right',
+        fontWeight: 'bold'
     }
 })
 
