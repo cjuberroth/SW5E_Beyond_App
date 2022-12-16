@@ -1,4 +1,5 @@
-import React, { useContext, useState, useEffect, useRef } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
+import { Alert } from 'react-native'
 import swapi from '../api/swapi'
 import {SpeciesCall, ClassCall, FeatCall, PowerCall, ArchetypeCall,
 		ArmorPropertyCall, BackgroundCall, ConditionsCall,
@@ -751,7 +752,21 @@ export const CharacterProvider = ({children}) => {
 	}, [charAC])
 
 	const getCharacterAC = (updatedEquipment) => {
-		//currently not accounting for multiple armors being equipped at the same time
+		//check to see if there is already armor equipped
+		var equippedArmorCount = 0
+		for (let i = 0; i < updatedEquipment.length; i++) {
+			if (updatedEquipment[i].equipmentCategory === "Armor" 
+				&& updatedEquipment[i].equipped === true
+				&& updatedEquipment[i].armorClassification != 'Shield') {
+				equippedArmorCount+=1
+			}
+		}
+		//if trying to equip more than one armor at a time, alert and exit
+		if (equippedArmorCount >1) {
+			Alert.alert('You alread have armor equipped. To equip this armor, unequip the other.')
+			return 'OverArmored'
+		}
+
 		if (updatedEquipment != undefined) {
 			var charAC = 0
 				for(let i = 0; i < updatedEquipment.length; i++) {
