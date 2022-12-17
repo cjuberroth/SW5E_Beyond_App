@@ -28,7 +28,8 @@ const HeaderCollapsed = () => {
                 </View>
                 <View style={{alignItems: 'center', flex: 1}}>
                     <Pressable style={styles.collapseButton} onPress={toggleHeader}>
-                        <Text style={styles.collapseButtonText}>{characterInfo.name}  </Text>
+                        <Text style={styles.collapseButtonText}>{characterInfo.name}</Text>
+                        <Text style={styles.collapseButtonText}> | Lvl {characterInfo.level} </Text>
                         <FontAwesome5 style={ styles.icon } name='angle-down' />
                     </Pressable>
                 </View>
@@ -62,7 +63,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
         color: 'white',
-        paddingHorizontal: 5
+        //paddingHorizontal: 5
     },
     icon: {
         fontSize: 25, 

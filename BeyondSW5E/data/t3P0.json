@@ -29,7 +29,9 @@
       "name": "Scout",
       "levels": 3,
       "hitPoints": [4, 10, 3],
-      "abilityScoreImprovements": [],
+      "abilityScoreImprovements": [
+        { "type": "Feat", "name": "Weapon Expert" }
+      ],
       "archetype": { "name": "Mastermind Technique" },
       "techPowers": [
         "Assess the Situation",

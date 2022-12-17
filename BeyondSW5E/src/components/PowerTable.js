@@ -1,9 +1,11 @@
 import React, { useContext } from 'react'
 import { Text, View, StyleSheet, Pressable } from 'react-native'
 import { DataTable } from 'react-native-paper'
+import { useNavigation } from '@react-navigation/native'
 import CharacterContext from '../context/CharacterContext'
 
 const PowerTable = ({ powerLevel, powerToggle }) => {
+    const navigation = useNavigation()
     const forcePowers = useContext(CharacterContext).characterCasting.forcePowersData
     const techPowers = useContext(CharacterContext).characterCasting.techPowersData
     let powersByLevel = powerToggle ? forcePowers : techPowers
@@ -19,6 +21,21 @@ const PowerTable = ({ powerLevel, powerToggle }) => {
     }
     else {
         tableTitle = 'Level ' + powerLevel
+    }
+
+    const showPowerDetails = (power) => {
+        navigation.navigate('PowerDetailModal', {
+            name: power.name,
+            level: power.level,
+            forceAlignment: power.forceAlignment,
+            castingPeriod: power.castingPeriod,
+            range: power.range,
+            duration: power.duration,
+            concentration: power.concentration,
+            hasPrereq: power.prerequisite,
+            description: power.description,
+            powerType: power.powerType
+        })
     }
 
     return (
@@ -43,20 +60,22 @@ const PowerTable = ({ powerLevel, powerToggle }) => {
                     {
                         powersByLevel.map(power => {
                             return (
-                                <DataTable.Row style={styles.tableRow} key={power.name}>
-                                    <DataTable.Cell>
-                                        <Text style={styles.tableDataText}>{power.name}</Text>
-                                    </DataTable.Cell>
-                                    <DataTable.Cell>
-                                        <Text style={styles.tableDataText}>{power.castingPeriodText}</Text>
-                                    </DataTable.Cell>
-                                    <DataTable.Cell>
-                                        <Text style={styles.tableDataText}>{power.range}</Text>
-                                    </DataTable.Cell>
-                                    <DataTable.Cell>
-                                        <Text style={styles.tableDataText}>{power.duration}</Text>
-                                    </DataTable.Cell>
-                                </DataTable.Row>
+                                <Pressable style={styles.tableRow} onPress={() => showPowerDetails(power)}>
+                                    <DataTable.Row key={power.name}>
+                                        <DataTable.Cell>
+                                            <Text style={styles.tableDataText}>{power.name}</Text>
+                                        </DataTable.Cell>
+                                        <DataTable.Cell>
+                                            <Text style={styles.tableDataText}>{power.castingPeriodText}</Text>
+                                        </DataTable.Cell>
+                                        <DataTable.Cell>
+                                            <Text style={styles.tableDataText}>{power.range}</Text>
+                                        </DataTable.Cell>
+                                        <DataTable.Cell>
+                                            <Text style={styles.tableDataText}>{power.duration}</Text>
+                                        </DataTable.Cell>
+                                    </DataTable.Row>
+                                </Pressable>
                             )
                         })
                     }
@@ -81,7 +100,7 @@ const styles = StyleSheet.create({
         color: 'white'
     },
     tableHeaderRow: {
-        backgroundColor: 'gray'
+        backgroundColor: 'rgba(52, 52, 52, 0.6)'
     },
     tableRow: {
         borderBottomColor: 'gray'
