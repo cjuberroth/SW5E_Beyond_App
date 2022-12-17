@@ -23,6 +23,7 @@ import ShortRestModal from '../components/modals/ShortRestModal'
 import LongRestModal from '../components/modals/LongRestModal'
 import DiceResultModal from '../components/modals/DiceResultModal'
 import EquipmentDetailsModal from '../components/modals/EquipmentDetailsModal'
+import CastingPointsModal from '../components/modals/CastingPointsModal'
 import CharacterContext from '../context/CharacterContext'
 
 function getHeaderTitle(route) {
@@ -182,6 +183,14 @@ const MainNavigator = ({ navigation }) => {
                         <Stack.Screen
                             name="EquipmentDetailsModal"
                             component={EquipmentDetailsModal}
+                            options={{
+                                presentation: 'transparentModal',
+                                headerShown: false
+                            }}
+                        />
+                        <Stack.Screen
+                            name="CastingPointsModal"
+                            component={CastingPointsModal}
                             options={{
                                 presentation: 'transparentModal',
                                 headerShown: false
