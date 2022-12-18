@@ -24,6 +24,8 @@ const SkillsScreen = () => {
             <View style={{flex: flexValue}}>
                 <ImageBackground style={ AppStyles.globalStyles.screenBackground }
                     source={ require('../../assets/header-background.jpg') }>
+                    <ImageBackground imageStyle={styles.imgBackground} 
+                        source={require('../../assets/rebel-alliance.png')}>
                     <View style={styles.rowStyle}>
                         <Text style={styles.modCol}>MOD</Text>
                         <Text style={styles.skillCol}>SKILL</Text>
@@ -42,6 +44,7 @@ const SkillsScreen = () => {
                                     />
                         }}
                     />
+                </ImageBackground>
                 </ImageBackground>
             </View>
         </View>
@@ -85,7 +88,11 @@ const styles = StyleSheet.create({
         color: 'white',
         textAlign: 'right',
         fontWeight: 'bold'
-    }
+    },
+    imgBackground: {
+        width: '100%',
+        resizeMode: 'contain'
+    },
 })
 
 export default SkillsScreen
