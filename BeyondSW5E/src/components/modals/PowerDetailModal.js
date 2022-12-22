@@ -10,39 +10,61 @@ const PowerDetailModal = ({ route }) => {
     const {forcePointsState, setForcePointsState} = useContext(CharacterContext)
     const {techPointsState, setTechPointsState} = useContext(CharacterContext)
     const charClasses = useContext(CharacterContext).characterInformation.classes
+    const powerDescription = route.params.description
 
-    let castingClassLevels = []
+    let canOverPower = false
+    if (powerDescription.includes('***Overcharge Tech') || powerDescription.includes('***Force Potency')) {
+        canOverPower = true
+    }
+
+    let castingClassName = ''
+    let castingClassLevel = 0
     for (i = 0; i < charClasses.length; i++) {
         if (charClasses[i].class === 'Consular' 
             || charClasses[i].class === 'Guardian' 
             || charClasses[i].class === 'Sentinel' 
             || charClasses[i].class === 'Engineer' 
             || charClasses[i].class === 'Scout') {
-            castingClassLevels.push(charClasses[i].level)
+            if (charClasses[i].level > castingClassLevel) {
+                castingClassName = charClasses[i].class
+                castingClassLevel = charClasses[i].level
+            }
         }
     }
-
-    let highestCastingClass = Math.max(...castingClassLevels)
 
     let castingArray = []
-
-    for (i = 1; i <= highestCastingClass; i++) {
-        castingArray.push(i)
+    if (CastingClassMaxLevels(castingClassName, castingClassLevel) >= route.params.level) {
+        for (i = route.params.level; i <= CastingClassMaxLevels(castingClassName, castingClassLevel); i++) {
+            castingArray.push(i)
+        }
     }
-
     console.log(castingArray)
-    
     const castPower = (level) => {
-        if (level === 0) { //this is an at-will power
+        if (!canOverPower) {
+            if (level === 0) { //this is an at-will power
+                navigation.goBack()
+                return
+            }
+            if (route.params.powerType === 'Force') {
+                setForcePointsState(forcePointsState - (level + 1))
+            } else {
+                setTechPointsState(techPointsState - (level + 1))
+            }
             navigation.goBack()
-            return
-        }
-        if (route.params.powerType === 'Force') {
-            setForcePointsState(forcePointsState - (level + 1))
+        } else if (level >= CastingClassMaxLevels(castingClassName, castingClassLevel)) {
+            if (level === 0) { //this is an at-will power
+                navigation.goBack()
+                return
+            }
+            if (route.params.powerType === 'Force') {
+                setForcePointsState(forcePointsState - (level + 1))
+            } else {
+                setTechPointsState(techPointsState - (level + 1))
+            }
+            navigation.goBack()
         } else {
-            setTechPointsState(techPointsState - (level + 1))
+
         }
-        navigation.goBack()
     }
     
     return (
@@ -64,6 +86,25 @@ const PowerDetailModal = ({ route }) => {
                 <Pressable style={ styles.modalButton } onPress={() => castPower(route.params.level)} >
                     <Text style={ styles.modalButtonText }>Cast</Text>
                 </Pressable>
+                {/* <View style={{ flex: 1}}>
+                {
+                    castingArray.map(el => {
+                        console.log(el)
+                        if (el === route.params.level) {
+                            {console.log('Should render a Cast button')}
+                            <Pressable style={ styles.modalButton } onPress={() => castPower(route.params.level)} >
+                                <Text style={ styles.modalButtonText }>Cast</Text>
+                            </Pressable>
+                            return
+                        } else {
+                            {console.log('Should render multiple Cast buttons')}
+                            <Pressable style={ styles.modalButton } onPress={() => castPower(el)} >
+                                <Text style={ styles.modalButtonText }>Cast Level {el}</Text>
+                            </Pressable>
+                        }
+                    })
+                }
+                </View> */}
                 <View style={styles.modalStats}>
                     { route.params.powerType === "Force" ?
                         <>
