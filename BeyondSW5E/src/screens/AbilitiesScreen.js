@@ -161,6 +161,29 @@ const AbilitiesScreen = () => {
                             </Pressable>
                         </View>
                     </View>
+                    <View>
+                        <Text style={styles.headingStyle}>Passive Senses</Text>
+                    </View>
+                    <View style={styles.saveView}>
+                        <View style={styles.boxStyle}>
+                            <Text style={styles.textStyle}>Perception</Text>
+                            <Pressable onPress={() => diceRoll(1, 20, 'Perception')}>
+                                <Text style={ characterSaves.characterSaves.includes('Strength') ? styles.modStyleProficient : styles.modStyle}>{numberPresent(characterSaves.str_save)}{characterSaves.str_save}</Text>
+                            </Pressable>
+                        </View>
+                        <View style={styles.boxStyle}>
+                            <Text style={styles.textStyle}>Investigation</Text>
+                            <Pressable onPress={() => diceRoll(1, 20, 'Investigation')}>
+                                <Text style={characterSaves.characterSaves.includes('Dexterity') ? styles.modStyleProficient : styles.modStyle}>{numberPresent(characterSaves.dex_save)}{characterSaves.dex_save}</Text>
+                            </Pressable>
+                        </View>
+                        <View style={styles.boxStyle}>
+                            <Text style={styles.textStyle}>Insight</Text>
+                            <Pressable onPress={() => diceRoll(1, 20, 'Insight')}>
+                                <Text style={characterSaves.characterSaves.includes('Constitution') ? styles.modStyleProficient : styles.modStyle}>{numberPresent(characterSaves.con_save)}{characterSaves.con_save}</Text>
+                            </Pressable>
+                        </View>
+                    </View>
                 </ScrollView>
                 </ImageBackground>
             </View>
