@@ -1,0 +1,234 @@
+{
+    "name": "Consular Sentinel",
+    "id": "62a276eb-b160-4e08-956f-ba1ac4ba7e22",
+    "userId": "003ec484-bf35-410e-a35d-431aa238b400",
+    "builderVersion": "0.7.5",
+    "image": "",
+    "user": "",
+    "experiencePoints": 34000,
+    "species": {
+        "name": "Chiss",
+        "abilityScoreImprovementSelectedOption": 0,
+        "abilityScoreImprovement": {}
+    },
+    "classes": [
+        {
+            "name": "Consular",
+            "levels": 4,
+            "hitPoints": [
+                4,
+                4,
+                4
+            ],
+            "abilityScoreImprovements": [
+                {
+                    "type": "Ability Score Improvement",
+                    "abilitiesIncreased": [
+                        {
+                            "name": "Charisma",
+                            "value": 2
+                        }
+                    ]
+                }
+            ],
+            "archetype": {
+                "name": "Way of Lightning"
+            },
+            "forcePowers": [
+                "Affect Mind",
+                "Battle Insight",
+                "Break",
+                "Burst",
+                "Defensive Technique",
+                "Denounce",
+                "Enfeeble",
+                "Feedback",
+                "Force Disarm",
+                "Force Imbuement",
+                "Agile Defense",
+                "Armor of Abeloth",
+                "Animate Weapon",
+                "Battle Meditation",
+                "Coerce Mind"
+            ]
+        },
+        {
+            "name": "Sentinel",
+            "levels": 4,
+            "hitPoints": [
+                5,
+                5,
+                5,
+                5
+            ],
+            "abilityScoreImprovements": [
+                {
+                    "type": "Feat",
+                    "name": "Force of Personality"
+                }
+            ],
+            "forcePowers": [
+                "Force Leap",
+                "Force Push/Pull",
+                "Force Shunt",
+                "Force Technique",
+                "Force Whisper",
+                "Give Life",
+                "Guidance",
+                "Battle Precognition",
+                "Beast Trick",
+                "Breath Control",
+                "Battlemind",
+                "Danger Sense",
+                "Dark Shear"
+            ]
+        }
+    ],
+    "baseAbilityScores": {
+        "Strength": 8,
+        "Dexterity": 10,
+        "Constitution": 12,
+        "Intelligence": 13,
+        "Wisdom": 14,
+        "Charisma": 15
+    },
+    "background": {
+        "name": "Sith",
+        "feat": {
+            "name": "Force-Sensitive",
+            "type": "Feat"
+        },
+        "feature": ""
+    },
+    "characteristics": {
+        "alignment": "Chaotic Dark",
+        "Personality Traits": "Some personality trait",
+        "Ideal": "Some ideal",
+        "Bond": "Some bond",
+        "Flaw": "Some flaw",
+        "Gender": "Fluid",
+        "Place of Birth": "The Force",
+        "Age": "???",
+        "Height": "6' 5\"",
+        "Weight": "275",
+        "Hair": "White",
+        "Eyes": "Red",
+        "Skin": "Blue",
+        "Appearance": "Scary",
+        "Backstory": "Angry boi"
+    },
+    "credits": 0,
+    "equipment": [
+        {
+            "name": "Duravlex fiber armor",
+            "quantity": 1,
+            "category": "Equipment",
+            "equipped": true
+        },
+        {
+            "name": "Combat suit",
+            "quantity": 1,
+            "category": "Equipment",
+            "equipped": false
+        },
+        {
+            "name": "Martial lightsaber",
+            "quantity": 1,
+            "category": "Equipment",
+            "equipped": true
+        },
+        {
+            "name": "Lightsaber",
+            "quantity": "2",
+            "category": "Equipment",
+            "equipped": false
+        },
+        {
+            "name": "Saberstaff",
+            "quantity": 1,
+            "category": "Equipment",
+            "equipped": false
+        },
+        {
+            "name": "Sabergauntlet",
+            "quantity": 1,
+            "category": "Equipment",
+            "equipped": false
+        },
+        {
+            "name": "Thermal detonator",
+            "quantity": "7",
+            "category": "Equipment"
+        },
+        {
+            "name": "Pazaak deck",
+            "quantity": 1,
+            "category": "Equipment"
+        },
+        {
+            "name": "Respirator",
+            "quantity": 1,
+            "category": "Equipment"
+        },
+        {
+            "name": "Synthweaver's implements",
+            "quantity": 1,
+            "category": "Equipment"
+        },
+        {
+            "name": "Security spike",
+            "quantity": "45",
+            "category": "Equipment"
+        },
+        {
+            "name": "Stealth field generator",
+            "quantity": 1,
+            "category": "Equipment"
+        },
+        {
+            "name": "Sith Lord's Robe",
+            "quantity": 1,
+            "category": "EnhancedItem",
+            "attuned": false
+        }
+    ],
+    "currentStats": {
+        "hitPointsLost": 0,
+        "temporaryHitPoints": 0,
+        "techPointsUsed": 0,
+        "forcePointsUsed": 0,
+        "superiorityDiceUsed": 0,
+        "hitDiceUsed": {},
+        "deathSaves": {
+            "successes": 0,
+            "failures": 0
+        },
+        "hasInspiration": false,
+        "featuresTimesUsed": {},
+        "conditions": [],
+        "exhaustion": 0,
+        "highLevelCasting": {
+            "level6": false,
+            "level7": false,
+            "level8": false,
+            "level9": false
+        }
+    },
+    "tweaks": {},
+    "customProficiencies": [],
+    "customLanguages": [],
+    "customFeatures": [],
+    "customFeats": [],
+    "customTechPowers": [],
+    "customForcePowers": [],
+    "customEquipment": [],
+    "settings": {
+        "isEnforcingForcePrerequisites": true,
+        "isFixedHitPoints": false,
+        "abilityScoreMethod": "Standard Array"
+    },
+    "notes": "",
+    "createdAt": 1671348075770,
+    "changedAt": 1671348926804,
+    "localId": "temp-sm41jd3vg"
+}

@@ -1,10 +1,49 @@
-import React from 'react'
-import { View, Pressable, Text, StyleSheet } from 'react-native'
+import React, { useContext } from 'react'
+import { View, Pressable, Text, StyleSheet, ScrollView } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { FontAwesome5 } from '@expo/vector-icons'
+import CharacterContext from '../../context/CharacterContext'
+import CastingClassMaxLevels from '../../components/CastingClassMaxLevels'
 
 const PowerDetailModal = ({ route }) => {
     const navigation = useNavigation()
+    const {forcePointsState, setForcePointsState} = useContext(CharacterContext)
+    const {techPointsState, setTechPointsState} = useContext(CharacterContext)
+    const charClasses = useContext(CharacterContext).characterInformation.classes
+
+    let castingClassLevels = []
+    for (i = 0; i < charClasses.length; i++) {
+        if (charClasses[i].class === 'Consular' 
+            || charClasses[i].class === 'Guardian' 
+            || charClasses[i].class === 'Sentinel' 
+            || charClasses[i].class === 'Engineer' 
+            || charClasses[i].class === 'Scout') {
+            castingClassLevels.push(charClasses[i].level)
+        }
+    }
+
+    let highestCastingClass = Math.max(...castingClassLevels)
+
+    let castingArray = []
+
+    for (i = 1; i <= highestCastingClass; i++) {
+        castingArray.push(i)
+    }
+
+    console.log(castingArray)
+    
+    const castPower = (level) => {
+        if (level === 0) { //this is an at-will power
+            navigation.goBack()
+            return
+        }
+        if (route.params.powerType === 'Force') {
+            setForcePointsState(forcePointsState - (level + 1))
+        } else {
+            setTechPointsState(techPointsState - (level + 1))
+        }
+        navigation.goBack()
+    }
     
     return (
         <View style={ styles.modalContainer}>
@@ -22,6 +61,9 @@ const PowerDetailModal = ({ route }) => {
                         : <Text style={ styles.modalHeading }>{route.params.name} - Level {route.params.level}</Text>
                     }
                 </View>
+                <Pressable style={ styles.modalButton } onPress={() => castPower(route.params.level)} >
+                    <Text style={ styles.modalButtonText }>Cast</Text>
+                </Pressable>
                 <View style={styles.modalStats}>
                     { route.params.powerType === "Force" ?
                         <>
@@ -58,8 +100,10 @@ const PowerDetailModal = ({ route }) => {
                         : <></>
                     }
                 </View>
+                <ScrollView>
                 { route.params.description ? <Text style={styles.modalDescriptionText}>{route.params.description}</Text>
                     : <Text style={styles.modalDescriptionText}>Description: None</Text>}
+                </ScrollView>
             </View>
         </View>
     )
@@ -74,7 +118,7 @@ const styles = StyleSheet.create({
         borderRadius: 5
     },
     modalInner: {
-        //height: '75%',
+        height: '80%',
         width: '95%',
         backgroundColor: '#ECEFF1',
         justifyContent: 'center',
@@ -113,6 +157,40 @@ const styles = StyleSheet.create({
     },
     modalStatValueCol: {
         flex: 2
+    },
+    modalButton: {
+        alignItems: 'center',
+        justifyContent: 'space-evenly',
+        paddingVertical: 5,
+        paddingHorizontal: 5,
+        borderRadius: 4,
+        backgroundColor: '#4A0C05',
+        marginHorizontal: 20,
+        marginVertical: 5,
+        minWidth: '80%',
+        flexDirection: 'row',
+        marginBottom: 10
+    },
+    modalButtonText: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: 'white',
+        alignSelf: 'center',
+        padding: 5
+    },
+    modalCastingButton: {
+        flexDirection: 'row',
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'space-evenly',
+        paddingVertical: 5,
+        paddingHorizontal: 5,
+        borderRadius: 4,
+        backgroundColor: '#4A0C05',
+        marginHorizontal: 20,
+        marginVertical: 5,
+        minWidth: '80%',
+        marginBottom: 10
     }
 })
 
