@@ -83,63 +83,61 @@ const PowerDetailModal = ({ route }) => {
                         : <Text style={ styles.modalHeading }>{route.params.name} - Level {route.params.level}</Text>
                     }
                 </View>
-                <Pressable style={ styles.modalButton } onPress={() => castPower(route.params.level)} >
-                    <Text style={ styles.modalButtonText }>Cast</Text>
-                </Pressable>
-                {/* <View style={{ flex: 1}}>
+                <View style={{flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center'}}>
                 {
                     castingArray.map(el => {
                         console.log(el)
                         if (el === route.params.level) {
                             {console.log('Should render a Cast button')}
-                            <Pressable style={ styles.modalButton } onPress={() => castPower(route.params.level)} >
+                             return <Pressable style={ styles.modalButton } onPress={() => castPower(route.params.level)} >
                                 <Text style={ styles.modalButtonText }>Cast</Text>
                             </Pressable>
-                            return
-                        } else {
+                        } else if (canOverPower) {
                             {console.log('Should render multiple Cast buttons')}
-                            <Pressable style={ styles.modalButton } onPress={() => castPower(el)} >
+                            return <Pressable style={ styles.modalCastingButton } onPress={() => castPower(el)} >
                                 <Text style={ styles.modalButtonText }>Cast Level {el}</Text>
                             </Pressable>
                         }
                     })
                 }
-                </View> */}
-                <View style={styles.modalStats}>
-                    { route.params.powerType === "Force" ?
-                        <>
-                            <Text style={styles.modalStatCol}>Force Alignment:</Text>
-                            <Text style={styles.modalStatValueCol}>{route.params.forceAlignment}</Text>
-                        </>
-                        : <></>
-                    }
                 </View>
-                <View style={styles.modalStats}>
-                    <Text style={styles.modalStatCol}>Casting Period:</Text>
-                    <Text style={styles.modalStatValueCol}>{route.params.castingPeriod}</Text>
-                </View>
-                <View style={styles.modalStats}>
-                    <Text style={styles.modalStatCol}>Range:</Text>
-                    <Text style={styles.modalStatValueCol}>{route.params.range}</Text>
-                </View>
-                <View style={styles.modalStats}>
-                    <Text style={styles.modalStatCol}>Duration:</Text>
-                    <Text style={styles.modalStatValueCol}>{route.params.duration}</Text>
-                </View>
-                <View style={styles.modalStats}>
-                    <Text style={styles.modalStatCol}>Concentration:</Text>
-                    { route.params.concentration ? <Text style={styles.modalStatValueCol}>Yes</Text>
-                    : <Text style={styles.modalStatValueCol}>No</Text>}
-                </View>
-                <View style={styles.modalStats}>
-                    { route.params.powerType === 'Force' ?
-                        <>
-                            <Text style={styles.modalStatCol}>Prerequisite:</Text>
-                            { route.params.hasPrereq ? <Text style={styles.modalStatValueCol}>{route.params.hasPrereq}</Text>
-                            : <Text style={styles.modalStatValueCol}>None</Text>}
-                        </>
-                        : <></>
-                    }
+                <View style={{marginTop: 7}}>
+                    <View style={styles.modalStats}>
+                        { route.params.powerType === "Force" ?
+                            <>
+                                <Text style={styles.modalStatCol}>Force Alignment:</Text>
+                                <Text style={styles.modalStatValueCol}>{route.params.forceAlignment}</Text>
+                            </>
+                            : <></>
+                        }
+                    </View>
+                    <View style={styles.modalStats}>
+                        <Text style={styles.modalStatCol}>Casting Period:</Text>
+                        <Text style={styles.modalStatValueCol}>{route.params.castingPeriod}</Text>
+                    </View>
+                    <View style={styles.modalStats}>
+                        <Text style={styles.modalStatCol}>Range:</Text>
+                        <Text style={styles.modalStatValueCol}>{route.params.range}</Text>
+                    </View>
+                    <View style={styles.modalStats}>
+                        <Text style={styles.modalStatCol}>Duration:</Text>
+                        <Text style={styles.modalStatValueCol}>{route.params.duration}</Text>
+                    </View>
+                    <View style={styles.modalStats}>
+                        <Text style={styles.modalStatCol}>Concentration:</Text>
+                        { route.params.concentration ? <Text style={styles.modalStatValueCol}>Yes</Text>
+                        : <Text style={styles.modalStatValueCol}>No</Text>}
+                    </View>
+                    <View style={styles.modalStats}>
+                        { route.params.powerType === 'Force' ?
+                            <>
+                                <Text style={styles.modalStatCol}>Prerequisite:</Text>
+                                { route.params.hasPrereq ? <Text style={styles.modalStatValueCol}>{route.params.hasPrereq}</Text>
+                                : <Text style={styles.modalStatValueCol}>None</Text>}
+                            </>
+                            : <></>
+                        }
+                    </View>
                 </View>
                 <ScrollView>
                 { route.params.description ? <Text style={styles.modalDescriptionText}>{route.params.description}</Text>
@@ -210,7 +208,7 @@ const styles = StyleSheet.create({
         marginVertical: 5,
         minWidth: '80%',
         flexDirection: 'row',
-        marginBottom: 10
+        marginBottom: 5
     },
     modalButtonText: {
         fontSize: 20,
@@ -224,14 +222,13 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'space-evenly',
-        paddingVertical: 5,
+        paddingVertical: 2,
         paddingHorizontal: 5,
         borderRadius: 4,
         backgroundColor: '#4A0C05',
-        marginHorizontal: 20,
-        marginVertical: 5,
-        minWidth: '80%',
-        marginBottom: 10
+        marginHorizontal: 5,
+        marginVertical: 2,
+        minWidth: '33%'
     }
 })
 
