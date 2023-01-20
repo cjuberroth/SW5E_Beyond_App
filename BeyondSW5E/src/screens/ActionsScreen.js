@@ -9,7 +9,8 @@ import AppStyles from '../styles/AppStyles'
 const ActionsScreen = () => {
     const flexValue = useContext(HeaderContext).headerUtils.flexValue
     const headerCollapsed = useContext(HeaderContext).headerUtils.isCollapsed
-
+    const {equippable, setEquippable} = useContext(CharacterContext)
+    console.log(equippable)
     return (
         <View style={ styles.container }>
             <View style={styles.header}>
@@ -20,6 +21,21 @@ const ActionsScreen = () => {
                     source={ require('../../assets/header-background.jpg') }>
                     <View>
                         <Text>Actions Screen</Text>
+                    </View>
+                    <View>
+                        <Text>List of equipped weapons</Text>
+                        {
+                            equippable.map((item) => {
+                                //console.log(item.equipped && item.equipmentCategory=="Weapon")
+                                if(item.equipped && item.equipmentCategory=="Weapon"){
+                                    return (
+                                        <View>
+                                            <Text>{item.name}</Text>
+                                        </View>
+                                    )
+                                }
+                            })
+                        }
                     </View>
                 </ImageBackground>
             </View>

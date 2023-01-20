@@ -714,8 +714,6 @@ export const CharacterProvider = ({children}) => {
 		}
 	}
 
-	const [equippable, setEquippable] = useState()
-
 	//determine AC --------------------------------------------------------------------------------------
 	const [characterAC, setCharacterAC] = useState(0)
 	var charAC = 0
@@ -791,6 +789,10 @@ export const CharacterProvider = ({children}) => {
 		armorClass: characterAC,
 		getCharacterAC: getCharacterAC
 	}
+
+	//console.log(characterEquipment.equipment)
+	const [equippable, setEquippable] = useState(equipmentData)
+	
 	
 	//console.log("Render")
 
