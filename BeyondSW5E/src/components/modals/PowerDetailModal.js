@@ -38,7 +38,7 @@ const PowerDetailModal = ({ route }) => {
             castingArray.push(i)
         }
     }
-    console.log(castingArray)
+    
     const castPower = (level) => {
         if (!canOverPower) {
             if (level === 0) { //this is an at-will power
@@ -86,14 +86,11 @@ const PowerDetailModal = ({ route }) => {
                 <View style={{flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center'}}>
                 {
                     castingArray.map(el => {
-                        console.log(el)
                         if (el === route.params.level) {
-                            {console.log('Should render a Cast button')}
                              return <Pressable style={ styles.modalButton } onPress={() => castPower(route.params.level)} >
                                 <Text style={ styles.modalButtonText }>Cast</Text>
                             </Pressable>
                         } else if (canOverPower) {
-                            {console.log('Should render multiple Cast buttons')}
                             return <Pressable style={ styles.modalCastingButton } onPress={() => castPower(el)} >
                                 <Text style={ styles.modalButtonText }>Cast Level {el}</Text>
                             </Pressable>

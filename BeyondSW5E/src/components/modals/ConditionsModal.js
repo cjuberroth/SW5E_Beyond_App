@@ -1,38 +1,41 @@
-import React, { useContext, useState, useEffect } from 'react'
-import { View, Pressable, Text, StyleSheet, FlatList, TouchableOpacity, ScrollView } from 'react-native'
+import React, { useContext, useEffect, useState } from 'react'
+import { View, Pressable, Text, StyleSheet, FlatList } from 'react-native'
 import Collapsible from 'react-native-collapsible'
-import Accordion from 'react-native-collapsible/Accordion'
 import * as Animatable from 'react-native-animatable'
 import { FontAwesome5 } from '@expo/vector-icons'
 import CharacterContext from '../../context/CharacterContext'
-import ConditionCard from '../ConditionCard'
-import Checkbox from '../Checkbox'
 
 const ConditionsModal = ({ navigation }) => {
     const apiConditions = useContext(CharacterContext).apiData.conditions
-    const characterInfo = useContext(CharacterContext).characterInformation
-    
-    const getConditions = (charCondition) => {
-        for (i = 0; i < characterInfo.conditions.length; i++) {
-            if (characterInfo.conditions[i] === charCondition) {
-                return true
-            }
-        }
-    }    
-    
-    const [checked, onChange] = useState([])
+    const {conditionsState, setConditionsState} = useContext(CharacterContext)
+
+    /* console.log(conditionsState)
 
     for(let i = 0; i < apiConditions.length; i++) {
         apiConditions[i]["collapsed"] = true
     }
 
-    const [conditions, setConditions] = useState(apiConditions)
+    const [collapsingConditions, setCollapsingConditions] = useState(apiConditions)
     
     const toggleConditionsExpanded = (selectedItemIndex) => {
-        let toggle = conditions.map(el => (
+        let toggle = collapsingConditions.map(el => (
             el.name === selectedItemIndex ? {...el, collapsed: !el.collapsed} : el
         ))
-        setConditions(toggle)
+        setCollapsingConditions(toggle)
+    } */
+
+    const toggleConditions = (selectedItemIndex) => {
+        let toggle = conditionsState.map(el => (
+            el.name === selectedItemIndex ? {...el, afflicted: !el.afflicted} : el
+        ))
+        setConditionsState(toggle)
+    }
+    
+    const toggleConditionsExpanded = (selectedItemIndex) => {
+        let toggle = conditionsState.map(el => (
+            el.name === selectedItemIndex ? {...el, collapsed: !el.collapsed} : el
+        ))
+        setConditionsState(toggle)
     }
 
     return (
@@ -40,26 +43,29 @@ const ConditionsModal = ({ navigation }) => {
             <Pressable style={[StyleSheet.absoluteFill, { backgroundColor: 'rgba(0, 0, 0, 0.5)' },]} onPress={navigation.goBack}/>
             <View style={ styles.modalInner }>
                 <FlatList
-                    data = {conditions}
+                    data = {conditionsState}
                     keyExtractor = {(condition) => condition.rowKey}
                     renderItem = {({ item }) => {return (
                         <View>
-                            <TouchableOpacity onPress={() => toggleConditionsExpanded(item.name)}>
+                            <Pressable onPress={() => toggleConditionsExpanded(item.name)}>
                                 <View style={styles.conditionHeader}>
-                                    <Checkbox
-                                        checked={getConditions(item.name)}
-                                        onChange={onChange}
-                                        buttonStyle={styles.checkboxBase}
-                                        activeButtonStyle={styles.checkboxChecked} />
-                                    <Text style={styles.conditionHeaderText}>{item.name}</Text>
+                                    <Text style={item.afflicted ? styles.conditionHeaderTextAfflicted : styles.conditionHeaderText}>{item.name}</Text>
                                 </View>
-                            </TouchableOpacity>
+                            </Pressable>
                             <Collapsible collapsed={item.collapsed}>
                                 <View style={styles.content}>
                                     <Animatable.Text
-                                        animation={conditions ? undefined : 'zoomIn'}
+                                        animation={conditionsState ? undefined : 'zoomIn'}
                                         duration={300}
-                                        useNativeDriver>{item.description}</Animatable.Text>
+                                        useNativeDriver>{item.description}
+                                    </Animatable.Text>
+                                    {item.afflicted ? 
+                                        <Pressable onPress={() => toggleConditions(item.name)}>
+                                            <Text style={styles.conditionToggle}>ON</Text>
+                                        </Pressable>
+                                        : <Pressable onPress={() => toggleConditions(item.name)}>
+                                            <Text style={styles.conditionToggle}>OFF</Text>
+                                        </Pressable>}
                                 </View>
                             </Collapsible>
                         </View>
@@ -130,28 +136,25 @@ const styles = StyleSheet.create({
         fontWeight: '500',
         flex: 9
     },
+    conditionHeaderTextAfflicted: {
+        //textAlign: 'center',
+        paddingLeft: 5,
+        fontSize: 16,
+        fontWeight: '900',
+        flex: 9
+    },
     content: {
         padding: 20
     },
-    active: {
-        backgroundColor: 'rgba(255,255,255,1)',
-    },
-    inactive: {
-        backgroundColor: 'rgba(245,252,255,1)',
-    },
-    checkboxBase: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 4,
-        borderWidth: 2,
+    conditionToggle: {
+        marginTop: 5,
+        fontSize: 16,
         borderColor: 'black',
-        backgroundColor: 'transparent',
-        height: 20
-      },
-      checkboxChecked: {
-        backgroundColor: 'black',
-      },
+        borderWidth: 2,
+        borderRadius: 5,
+        width: '25%',
+        textAlign: 'center'
+    }
 })
 
 export default ConditionsModal

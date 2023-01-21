@@ -433,6 +433,17 @@ export const CharacterProvider = ({children}) => {
 		}
 	}
 	
+	//set up conditions state for use in ConditionsModal -----------------------------------------------------
+	
+	const [conditionsState, setConditionsState] = useState([])
+
+	useEffect(() => {
+		const characterConditions = api_Conditions.map(el => (
+			charData.currentStats.conditions.includes(el.name) ? {...el, afflicted: true, collapsed: true} : {...el, afflicted: false, collapsed: true}
+		))
+		setConditionsState(characterConditions)
+	}, [api_Conditions, charData.currentStats.conditions])
+	
 	//object for exporting character information -------------------------------------------------------
 	const characterInformation = {
 		name: charData.name,
@@ -833,6 +844,7 @@ export const CharacterProvider = ({children}) => {
 		characterAC, setCharacterAC,
 		forcePointsState, setForcePointsState,
 		techPointsState, setTechPointsState,
+		conditionsState, setConditionsState,
 		characterInformation, 
 		characterAbilities, 
 		characterMods, 

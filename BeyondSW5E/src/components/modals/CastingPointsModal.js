@@ -88,10 +88,10 @@ const styles = StyleSheet.create({
         borderRadius: 5
     },
     modalInner: {
-        height: '75%',
         width: '95%',
         backgroundColor: '#ECEFF1',
-        borderRadius: 5
+        borderRadius: 5,
+        flexBasis: '50%'
     },
     modalHeader: {
         flexDirection: 'row',
@@ -105,9 +105,9 @@ const styles = StyleSheet.create({
     },
     hpContainer: {
         flexDirection: 'row',
-        justifyContent: 'space-around',
-        paddingHorizontal: 50,
-        paddingBottom: 50
+        justifyContent: 'center',
+        //paddingHorizontal: 50,
+        paddingBottom: 25
     },
     hpText: {
         fontSize: 30,

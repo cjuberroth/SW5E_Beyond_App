@@ -156,7 +156,7 @@ const AbilitiesScreen = () => {
                                 <View style={styles.boxStyle}>
                                     <Text style={styles.textStyle}>Charisma</Text>
                                     <Pressable onPress={() => diceRoll(1, 20, 'Charisma Save')}>
-                                    <Text style={characterSaves.characterSaves.includes('Charisma') ? styles.modStyleProficient : styles.modStyle}>{numberPresent(characterSaves.cha_save)}{characterSaves.cha_save}</Text>
+                                        <Text style={characterSaves.characterSaves.includes('Charisma') ? styles.modStyleProficient : styles.modStyle}>{numberPresent(characterSaves.cha_save)}{characterSaves.cha_save}</Text>
                                     </Pressable>
                                 </View>
                             </View>
@@ -189,7 +189,7 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderColor: '#4A0C05',
         borderRadius: 5,
-        flexBasis: 115
+        flexBasis: '29.7%'
     },
     textStyle: {
         flexDirection: 'column',
