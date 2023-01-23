@@ -20,7 +20,7 @@ const FeaturesScreen = () => {
         apiArchetypes[i]["collapsed"] = true
     }
 
-    for(let i = 0; i < apiArchetypes.length; i++){
+    for(let i = 0; i < apiFeats.length; i++){
         apiFeats[i]["collapsed"] = true
     }
 

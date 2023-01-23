@@ -9,15 +9,17 @@ const DiceRoll = (numDie, dieSides) => {
         return dieRoll()
     } else {
 
-        var result = Array.from({length: numDie}, () => dieRoll())
+        var rolls = Array.from({length: numDie}, () => dieRoll())
 
-        if (result.length === 1) {
-            result = result.map(x => {
+        if (rolls.length === 1) {
+            rolls = rolls.map(x => {
                 return parseInt(x, 10)
             })
         }
 
-        console.log(result)
+        var result = 0
+
+        rolls.forEach(i => result += i)
 
         return result
     }

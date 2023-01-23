@@ -5,12 +5,12 @@ import Header from '../components/Header'
 import HeaderCollapsed from '../components/HeaderCollapsed'
 import HeaderContext from '../context/HeaderContext'
 import AppStyles from '../styles/AppStyles'
+import ActionCard from '../components/ActionCard'
 
 const ActionsScreen = () => {
     const flexValue = useContext(HeaderContext).headerUtils.flexValue
     const headerCollapsed = useContext(HeaderContext).headerUtils.isCollapsed
     const {equippable, setEquippable} = useContext(CharacterContext)
-    console.log(equippable)
     return (
         <View style={ styles.container }>
             <View style={styles.header}>
@@ -20,22 +20,26 @@ const ActionsScreen = () => {
                 <ImageBackground style={ AppStyles.globalStyles.screenBackground }
                     source={ require('../../assets/header-background.jpg') }>
                     <View>
-                        <Text>Actions Screen</Text>
-                    </View>
-                    <View>
-                        <Text>List of equipped weapons</Text>
                         {
                             equippable.map((item) => {
                                 //console.log(item.equipped && item.equipmentCategory=="Weapon")
                                 if(item.equipped && item.equipmentCategory=="Weapon"){
                                     return (
-                                        <View>
-                                            <Text>{item.name}</Text>
-                                        </View>
+                                        <ActionCard
+                                            item={item}
+                                            />
                                     )
                                 }
                             })
                         }
+                        <ActionCard 
+                            item={{
+                                name: 'Unarmed Strike',
+                                damageDiceDieTypeEnum: 4,
+                                damageNumberOfDice: 1,
+                                damageType: 'Kinetic'
+                            }}
+                        />
                     </View>
                 </ImageBackground>
             </View>
