@@ -1,28 +1,14 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext } from 'react'
 import { View, Pressable, Text, StyleSheet, FlatList } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
 import Collapsible from 'react-native-collapsible'
 import * as Animatable from 'react-native-animatable'
 import { FontAwesome5 } from '@expo/vector-icons'
 import CharacterContext from '../../context/CharacterContext'
 
-const ConditionsModal = ({ navigation }) => {
-    const apiConditions = useContext(CharacterContext).apiData.conditions
+const ConditionsModal = () => {
+    const navigation = useNavigation()
     const {conditionsState, setConditionsState} = useContext(CharacterContext)
-
-    /* console.log(conditionsState)
-
-    for(let i = 0; i < apiConditions.length; i++) {
-        apiConditions[i]["collapsed"] = true
-    }
-
-    const [collapsingConditions, setCollapsingConditions] = useState(apiConditions)
-    
-    const toggleConditionsExpanded = (selectedItemIndex) => {
-        let toggle = collapsingConditions.map(el => (
-            el.name === selectedItemIndex ? {...el, collapsed: !el.collapsed} : el
-        ))
-        setCollapsingConditions(toggle)
-    } */
 
     const toggleConditions = (selectedItemIndex) => {
         let toggle = conditionsState.map(el => (
@@ -42,6 +28,12 @@ const ConditionsModal = ({ navigation }) => {
         <View style={styles.modalContainer}>
             <Pressable style={[StyleSheet.absoluteFill, { backgroundColor: 'rgba(0, 0, 0, 0.5)' },]} onPress={navigation.goBack}/>
             <View style={ styles.modalInner }>
+                <View style={ styles.modalHeader }>
+                    <Pressable style={ styles.modalCloseButton } onPress={() => {navigation.goBack()}} >
+                        <FontAwesome5 style={ styles.modalCloseButton } name="window-close" />
+                    </Pressable>
+                    <Text style={ styles.modalHeaderText }>Manage Conditions</Text>
+                </View>
                 <FlatList
                     data = {conditionsState}
                     keyExtractor = {(condition) => condition.rowKey}

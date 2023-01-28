@@ -1,0 +1,69 @@
+[
+    {
+        "title": "Light Side",
+        "data": [
+            {
+                "value": "rebel-alliance.png",
+                "label": "Rebel Alliance"
+            },
+            {
+                "value": "galactic-republic.png",
+                "label": "Galactic Republic"
+            },
+            {
+                "value": "jedi-order.png",
+                "label": "Jedi Order"
+            },
+            {
+                "value": "old-republic.png",
+                "label": "Old Republic"
+            },
+            {
+                "value": "phoenix-squad.png",
+                "label": "Phoenix Squad"
+            },
+            {
+                "value": "new-republic.png",
+                "label": "New Republic"
+            }
+        ]
+    },
+    {
+        "title": "Dark Side",
+        "data": [
+            {
+                "value": "galactic-empire.png",
+                "label": "Galactic Empire"
+            },
+            {
+                "value": "first-order.png",
+                "label": "First Order"
+            },
+            {
+                "value": "trade-federation.png",
+                "label": "Trade Federation"
+            },
+            {
+                "value": "sith.png",
+                "label": "Sith"
+            }
+        ]
+    },
+    {
+        "title": "Unaligned",
+        "data": [
+            {
+                "value": "clan-fett.png",
+                "label": "Clan Fett (Bounty Hunters)"
+            },
+            {
+                "value": "death-watch.png",
+                "label": "Death Watch"
+            },
+            {
+                "value": "pyke-syndicate",
+                "label": "Pyke Syndicate"
+            }
+        ]
+    }
+]
