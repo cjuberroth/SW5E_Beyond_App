@@ -1,80 +1,54 @@
-import React from 'react'
-import { createAppContainer, createSwitchNavigator } from 'react-navigation'
-import { createStackNavigator } from 'react-navigation-stack'
-import { createBottomTabNavigator } from 'react-navigation-tabs'
-import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
+import React, { useCallback, useEffect, useState } from 'react'
+import { View } from 'react-native'
+import * as SplashScreen from 'expo-splash-screen'
 import { NavigationContainer } from '@react-navigation/native'
-import { Ionicons } from "@expo/vector-icons"
-import HomeScreen from './src/screens/HomeScreen'
-import AbilitiesScreen from './src/screens/AbilitiesScreen'
-import ActionsScreen from './src/screens/ActionsScreen'
-import DescriptionScreen from './src/screens/DescriptionScreen'
-import FeaturesScreen from './src/screens/FeaturesScreen'
-import InventoryScreen from './src/screens/InventoryScreen'
-import ManageInventoryScreen from './src/screens/ManageInventoryScreen'
-import ManageSpellsScreen from './src/screens/ManageSpellsScreen'
-import NotesScreen from './src/screens/NotesScreen'
-import ProficienciesScreen from './src/screens/ProficienciesScreen'
-import SkillsScreen from './src/screens/SkillsScreen'
-import SpellsScreen from './src/screens/SpellsScreen'
-import CharacterSelectorScreen from './src/screens/CharacterSelectorScreen'
-import {CharacterProvider} from './src/context/CharacterContext'
-import {AbilitiesProvider} from './src/context/AbilitiesContext'
-import {SkillsProvider} from './src/context/SkillsContext'
+import MainNavigator from './src/navigators/MainNavigator'
+import { CharacterProvider } from './src/context/CharacterContext'
+import { HeaderProvider } from './src/context/HeaderContext'
+import { SelectProvider } from '@mobile-reality/react-native-select-pro'
 
-const Tab = createMaterialTopTabNavigator()
+SplashScreen.preventAutoHideAsync()
 
-function MyTabs() {
-  return (
-    <Tab.Navigator 
-      tabBarPosition="bottom"
-      screenOptions={{
-        tabBarActiveTintColor: 'white',
-        tabBarInactiveTintColor: 'black',
-        tabBarLabelStyle: { fontSize: 12 },
-        tabBarScrollEnabled: true,
-        tabBarBounces: true,
-        tabBarStyle: {
-          backgroundColor: 'gray'
-        },
-        tabBarItemStyle: {
-          width: 100
+function App() {
+    const [isReady, setReady] = useState(false)
+
+    useEffect(() => {
+        async function prepare() {
+            try {
+                require('./assets/header-background-upsidedown.jpg')
+                require('./assets/header-background.jpg')
+            } catch (e) {
+                console.warn(e)
+            } finally {
+                setReady(true)
+            }
         }
-      }}
-    >
-      <Tab.Screen name="Abilities" component={ AbilitiesScreen } />
-      <Tab.Screen name="Skills" component={ SkillsScreen } />
-      <Tab.Screen name="Manage Inventory" component={ ManageInventoryScreen } />
-    </Tab.Navigator>
+        prepare()
+    }, [])
+
+    const onLayoutRootView = useCallback(async () => {
+        if (isReady) {
+            await SplashScreen.hideAsync()
+        }
+    }, [isReady])
+
+    if (!isReady) {
+        return null
+    }
+
+    return (
+        <View style={{flex: 1}} onLayout={onLayoutRootView}>
+            <SelectProvider>
+                <CharacterProvider>
+                    <HeaderProvider>
+                        <NavigationContainer>
+                            <MainNavigator />
+                        </NavigationContainer>
+                    </HeaderProvider>
+                </CharacterProvider>
+            </SelectProvider>
+        </View>
     )
 }
 
-const StackNavigator = createStackNavigator({
-    Character: CharacterSelectorScreen,
-    SW5EBeyond: MyTabs},{
-      defaultNavigationOptions: {
-        headerStyle: {
-          backgroundColor: 'gray'
-        },
-        headerTintColor: 'white'
-      }
-    }
-
-)
-
-const App = createAppContainer(StackNavigator)
-
-export default () => {
-  return (
-    <CharacterProvider>
-      <AbilitiesProvider>
-        <SkillsProvider>
-          <NavigationContainer>
-            <App />
-          </NavigationContainer>
-        </SkillsProvider>
-      </AbilitiesProvider>
-    </CharacterProvider>
-  )
-}
+export default App

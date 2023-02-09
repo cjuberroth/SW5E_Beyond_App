@@ -1,146 +1,267 @@
-import React, {useContext} from 'react'
-import { Text, View, StyleSheet, ImageBackground } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import React, { useContext } from 'react'
+import { Text, View, StyleSheet, ImageBackground, ScrollView, Pressable } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
 import CharacterContext from '../context/CharacterContext'
-import AbilitiesContext from '../context/AbilitiesContext'
-import SkillsContext from '../context/SkillsContext'
+import Header from '../components/Header'
+import HeaderCollapsed from '../components/HeaderCollapsed'
+import HeaderContext from '../context/HeaderContext'
+import AppStyles from '../styles/AppStyles'
+import DiceRoll from '../components/DiceRolls'
 
 const AbilitiesScreen = () => {
-    const characterAbilities = useContext(AbilitiesContext)
-    const characterMods = useContext(SkillsContext)
+    const navigation = useNavigation()
+    const flexValue = useContext(HeaderContext).headerUtils.flexValue
+    const headerCollapsed = useContext(HeaderContext).headerUtils.isCollapsed
+    
+    //import character data from context
+    const characterSkills = useContext(CharacterContext).character.tweaks?.abilityScores
+    const characterInfo = useContext(CharacterContext).characterInformation
+    const characterAbilities = useContext(CharacterContext).characterAbilities
+    const characterMods = useContext(CharacterContext).characterMods
+    const characterSaves = useContext(CharacterContext).characterSaves
+    const numberPresent = useContext(CharacterContext).functions.numberPresent
 
-    const numberPresent = function(score) {
-        if(score >= 0) {
-            return "+"
-        } else {
-            return
+    const getSkillMod = function(skill) {
+        let mod = 0
+        switch(skill) {
+            case ('Perception'):
+                if(characterSkills?.Wisdom?.skills?.[skill]?.proficiency === 'Proficient'){
+                    mod += characterInfo.proficiency
+                }
+                else if(characterSkills?.Wisdom?.skills?.[skill]?.proficiency === 'Expertise'){
+                    mod += 2 * characterInfo.proficiency
+                }
+                mod += characterMods.wis_mod
+                break
+            case ('Investigation'):
+                if(characterSkills?.Intelligence?.skills?.[skill]?.proficiency === 'Proficient'){
+                    mod += characterInfo.proficiency
+                }
+                else if(characterSkills?.Intelligence?.skills?.[skill]?.proficiency === 'Expertise'){
+                    mod += 2 * characterInfo.proficiency
+                }
+                mod += characterMods.int_mod
+                break
+            case ('Insight'):
+                if(characterSkills?.Wisdom?.skills?.[skill]?.proficiency === 'Proficient'){
+                    mod += characterInfo.proficiency
+                }
+                else if(characterSkills?.Wisdom?.skills?.[skill]?.proficiency === 'Expertise'){
+                    mod += 2 * characterInfo.proficiency
+                }
+                mod += characterMods.wis_mod
+                break
         }
+        return mod
     }
 
-/*    return (
-        <View style={styles.containerStyle}>    
-            <Text style={styles.headerStyle}>{characterAbilities.name}</Text>
-            
-            <View style={styles.parentStyle}>
-                <View style={styles.boxStyle}>
-                    <ImageBackground style={styles.imgBackground} source={require('../../assets/rebel-alliance2.png')}>
-                        <Text style={styles.textStyle}>Strength</Text>
-                        <Text style={styles.modStyle}>{numberPresent(characterMods.str_mod)}{characterMods.str_mod}</Text>
-                        <Text style={styles.textStyle}>{characterAbilities.abilitiesStrength}</Text>
-                    </ImageBackground>
-                </View>
-                <View style={styles.boxStyle}>
-                    <ImageBackground style={styles.imgBackground} source={require('../../assets/rebel-alliance2.png')}>
-                        <Text style={styles.textStyle}>Dexterity</Text>
-                        <Text style={styles.modStyle}>{numberPresent(characterMods.dex_mod)}{characterMods.dex_mod}</Text>
-                        <Text style={styles.textStyle}>{characterAbilities.abilitiesDexterity}</Text>
-                    </ImageBackground>
-                </View>
-                <View style={styles.boxStyle}>
-                    <ImageBackground style={styles.imgBackground} source={require('../../assets/rebel-alliance2.png')}>
-                        <Text style={styles.textStyle}>Constitution</Text>
-                        <Text style={styles.modStyle}>{numberPresent(characterMods.con_mod)}{characterMods.con_mod}</Text>
-                        <Text style={styles.textStyle}>{characterAbilities.abilitiesConstitution}</Text>
-                    </ImageBackground>
-                </View>
-                <View style={styles.boxStyle}>
-                    <ImageBackground style={styles.imgBackground} source={require('../../assets/rebel-alliance2.png')}>
-                        <Text style={styles.textStyle}>Intelligence</Text>
-                        <Text style={styles.modStyle}>{numberPresent(characterMods.int_mod)}{characterMods.int_mod}</Text>
-                        <Text style={styles.textStyle}>{characterAbilities.abilitiesIntelligence}</Text>
-                    </ImageBackground>
-                </View>
-                <View style={styles.boxStyle}>
-                    <ImageBackground style={styles.imgBackground} source={require('../../assets/rebel-alliance2.png')}>
-                        <Text style={styles.textStyle}>Wisdom</Text>
-                        <Text style={styles.modStyle}>{numberPresent(characterMods.wis_mod)}{characterMods.wis_mod}</Text>
-                        <Text style={styles.textStyle}>{characterAbilities.abilitiesWisdom}</Text>
-                    </ImageBackground>
-                </View>
-                <View style={styles.boxStyle}>
-                    <ImageBackground style={styles.imgBackground} source={require('../../assets/rebel-alliance2.png')}>
-                        <Text style={styles.textStyle}>Charisma</Text>
-                        <Text style={styles.modStyle}>{numberPresent(characterMods.cha_mod)}{characterMods.cha_mod}</Text>
-                        <Text style={styles.textStyle}>{characterAbilities.abilitiesCharisma}</Text>
-                    </ImageBackground>
-                </View>
-            </View>
-        </View>
-    )
-}
-*/
+    const perceptionMod = getSkillMod('Perception')
+    const investigationMod = getSkillMod('Investigation')
+    const insightMod = getSkillMod('Insight')
 
-return (
-    
-        <View style={styles.containerStyle}>    
-            
-            <Text style={styles.headerStyle}>{characterAbilities.name}</Text>
-            <ImageBackground style={styles.imgBackground} source={require('../../assets/rebel-alliance2.png')}>
-            <View style={styles.parentStyle}>
-                <View style={styles.boxStyle}>
-                        <Text style={styles.textStyle}>Strength</Text>
-                        <Text style={styles.modStyle}>{numberPresent(characterMods.str_mod)}{characterMods.str_mod}</Text>
-                        <Text style={styles.textStyle}>{characterAbilities.abilitiesStrength}</Text>
-                    
-                </View>
-                <View style={styles.boxStyle}>
-                    
-                        <Text style={styles.textStyle}>Dexterity</Text>
-                        <Text style={styles.modStyle}>{numberPresent(characterMods.dex_mod)}{characterMods.dex_mod}</Text>
-                        <Text style={styles.textStyle}>{characterAbilities.abilitiesDexterity}</Text>
-                    
-                </View>
-                <View style={styles.boxStyle}>
-                    
-                        <Text style={styles.textStyle}>Constitution</Text>
-                        <Text style={styles.modStyle}>{numberPresent(characterMods.con_mod)}{characterMods.con_mod}</Text>
-                        <Text style={styles.textStyle}>{characterAbilities.abilitiesConstitution}</Text>
-                    
-                </View>
-                <View style={styles.boxStyle}>
-                    
-                        <Text style={styles.textStyle}>Intelligence</Text>
-                        <Text style={styles.modStyle}>{numberPresent(characterMods.int_mod)}{characterMods.int_mod}</Text>
-                        <Text style={styles.textStyle}>{characterAbilities.abilitiesIntelligence}</Text>
-                    
-                </View>
-                <View style={styles.boxStyle}>
-                    
-                        <Text style={styles.textStyle}>Wisdom</Text>
-                        <Text style={styles.modStyle}>{numberPresent(characterMods.wis_mod)}{characterMods.wis_mod}</Text>
-                        <Text style={styles.textStyle}>{characterAbilities.abilitiesWisdom}</Text>
-                    
-                </View>
-                <View style={styles.boxStyle}>
-                    
-                        <Text style={styles.textStyle}>Charisma</Text>
-                        <Text style={styles.modStyle}>{numberPresent(characterMods.cha_mod)}{characterMods.cha_mod}</Text>
-                        <Text style={styles.textStyle}>{characterAbilities.abilitiesCharisma}</Text>
-                    
-                </View>
+    const diceRoll = (numDice, numSides, rollType) => {
+        const rollResult = DiceRoll(numDice, numSides)
+        var mod = ''
+        switch (rollType) {
+            case 'Strength':
+                mod = characterMods.str_mod
+                break
+            case 'Dexterity':
+                mod = characterMods.dex_mod
+                break
+            case 'Constitution':
+                mod = characterMods.con_mod
+                break
+            case 'Intelligence':
+                mod = characterMods.int_mod
+                break
+            case 'Wisdom':
+                mod = characterMods.wis_mod
+                break
+            case 'Charisma':
+                mod = characterMods.cha_mod
+                break
+            case 'Strength Save':
+                mod = characterSaves.str_save
+                break
+            case 'Dexterity Save':
+                mod = characterSaves.dex_save
+                break
+            case 'Constitution Save':
+                mod = characterSaves.con_save
+                break
+            case 'Intelligence Save':
+                mod = characterSaves.int_save
+                break
+            case 'Wisdom Save':
+                mod = characterSaves.wis_save
+                break
+            case 'Charisma Save':
+                mod = characterSaves.cha_save
+                break
+            case 'Perception':
+                mod = perceptionMod
+                break
+            case 'Investigation':
+                mod = investigationMod
+                break
+            case 'Insight':
+                mod = insightMod
+                break
+        }
+        navigation.navigate('DiceResultModal', {rollResult: rollResult, mod: mod, rollType: rollType, numDice: numDice, numSides: numSides})
+    }
+
+    return (
+        // This style import is a POC for the ability to extract common styles into a separate file
+        <View style={AppStyles.globalStyles.parentContainerView}>
+            <View style={styles.header}>
+                {!headerCollapsed ? <Header /> : <HeaderCollapsed />}
             </View>
-            </ImageBackground>
+            <View style={{ flex: flexValue }}>
+                <ImageBackground style={ AppStyles.globalStyles.screenBackground }
+                    source={ require('../../assets/header-background.jpg') }>
+                    <ImageBackground imageStyle={styles.imgBackground} 
+                        source={require('../../assets/rebel-alliance.png')}>
+                        <ScrollView>
+                            <View style={styles.parentStyle}>
+                                <View style={styles.boxStyle}>
+                                    <Text style={styles.textStyle}>Strength</Text>
+                                    <Pressable onPress={() => diceRoll(1, 20, 'Strength')}>
+                                        <Text style={styles.modStyle}>{numberPresent(characterMods.str_mod)}{characterMods.str_mod}</Text>
+                                    </Pressable>
+                                    <Text style={styles.textStyle}>{characterAbilities.abilitiesStrength}</Text>
+                                </View>
+                                <View style={styles.boxStyle}>
+                                    <Text style={styles.textStyle}>Dexterity</Text>
+                                    <Pressable onPress={() => diceRoll(1, 20, 'Dexterity')}>
+                                        <Text style={styles.modStyle}>{numberPresent(characterMods.dex_mod)}{characterMods.dex_mod}</Text>
+                                    </Pressable>
+                                    <Text style={styles.textStyle}>{characterAbilities.abilitiesDexterity}</Text>
+                                </View>
+                                <View style={styles.boxStyle}>
+                                    <Text style={styles.textStyle}>Constitution</Text>
+                                    <Pressable onPress={() => diceRoll(1, 20, 'Constitution')}>
+                                        <Text style={styles.modStyle}>{numberPresent(characterMods.con_mod)}{characterMods.con_mod}</Text>
+                                    </Pressable>
+                                    <Text style={styles.textStyle}>{characterAbilities.abilitiesConstitution}</Text>
+                                </View>
+                                <View style={styles.boxStyle}>
+                                    <Text style={styles.textStyle}>Intelligence</Text>
+                                    <Pressable onPress={() => diceRoll(1, 20, 'Intelligence')}>
+                                        <Text style={styles.modStyle}>{numberPresent(characterMods.int_mod)}{characterMods.int_mod}</Text>
+                                    </Pressable>
+                                    <Text style={styles.textStyle}>{characterAbilities.abilitiesIntelligence}</Text>
+                                </View>
+                                <View style={styles.boxStyle}>
+                                    <Text style={styles.textStyle}>Wisdom</Text>
+                                    <Pressable onPress={() => diceRoll(1, 20, 'Wisdom')}>
+                                        <Text style={styles.modStyle}>{numberPresent(characterMods.wis_mod)}{characterMods.wis_mod}</Text>
+                                    </Pressable>
+                                    <Text style={styles.textStyle}>{characterAbilities.abilitiesWisdom}</Text>
+                                </View>
+                                <View style={styles.boxStyle}>
+                                    <Text style={styles.textStyle}>Charisma</Text>
+                                    <Pressable onPress={() => diceRoll(1, 20, 'Charisma')}>
+                                        <Text style={styles.modStyle}>{numberPresent(characterMods.cha_mod)}{characterMods.cha_mod}</Text>
+                                    </Pressable>
+                                    <Text style={styles.textStyle}>{characterAbilities.abilitiesCharisma}</Text>
+                                </View>
+                            </View>
+                            <View>
+                                <Text style={styles.headingStyle}>Saving Throws</Text>
+                            </View>
+                            <View style={styles.saveView}>
+                                <View style={styles.boxStyle}>
+                                    <Text style={styles.textStyle}>Strength</Text>
+                                    <Pressable onPress={() => diceRoll(1, 20, 'Strength Save')}>
+                                        <Text style={ characterSaves.characterSaves.includes('Strength') ? styles.modStyleProficient : styles.modStyle}>{numberPresent(characterSaves.str_save)}{characterSaves.str_save}</Text>
+                                    </Pressable>
+                                </View>
+                                <View style={styles.boxStyle}>
+                                    <Text style={styles.textStyle}>Dexterity</Text>
+                                    <Pressable onPress={() => diceRoll(1, 20, 'Dexterity Save')}>
+                                        <Text style={characterSaves.characterSaves.includes('Dexterity') ? styles.modStyleProficient : styles.modStyle}>{numberPresent(characterSaves.dex_save)}{characterSaves.dex_save}</Text>
+                                    </Pressable>
+                                </View>
+                                <View style={styles.boxStyle}>
+                                    <Text style={styles.textStyle}>Constitution</Text>
+                                    <Pressable onPress={() => diceRoll(1, 20, 'Constitution Save')}>
+                                        <Text style={characterSaves.characterSaves.includes('Constitution') ? styles.modStyleProficient : styles.modStyle}>{numberPresent(characterSaves.con_save)}{characterSaves.con_save}</Text>
+                                    </Pressable>
+                                </View>
+                                <View style={styles.boxStyle}>
+                                    <Text style={styles.textStyle}>Intelligence</Text>
+                                    <Pressable onPress={() => diceRoll(1, 20, 'Intelligence Save')}>
+                                        <Text style={characterSaves.characterSaves.includes('Intelligence') ? styles.modStyleProficient : styles.modStyle}>{numberPresent(characterSaves.int_save)}{characterSaves.int_save}</Text>
+                                    </Pressable>
+                                </View>
+                                <View style={styles.boxStyle}>
+                                    <Text style={styles.textStyle}>Wisdom</Text>
+                                    <Pressable onPress={() => diceRoll(1, 20, 'Wisdom Save')}>
+                                        <Text style={characterSaves.characterSaves.includes('Wisdom') ? styles.modStyleProficient : styles.modStyle}>{numberPresent(characterSaves.wis_save)}{characterSaves.wis_save}</Text>
+                                    </Pressable>
+                                </View>
+                                <View style={styles.boxStyle}>
+                                    <Text style={styles.textStyle}>Charisma</Text>
+                                    <Pressable onPress={() => diceRoll(1, 20, 'Charisma Save')}>
+                                        <Text style={characterSaves.characterSaves.includes('Charisma') ? styles.modStyleProficient : styles.modStyle}>{numberPresent(characterSaves.cha_save)}{characterSaves.cha_save}</Text>
+                                    </Pressable>
+                                </View>
+                            </View>
+                            <View>
+                        <Text style={styles.headingStyle}>Passive Senses</Text>
+                    </View>
+                    <View style={styles.saveView}>
+                        <View style={styles.boxStyle}>
+                            <Text style={styles.textStyle}>Perception</Text>
+                            <Pressable onPress={() => diceRoll(1, 20, 'Perception')}>
+                                <Text style={ styles.modStyle }>{perceptionMod + 10}</Text>
+                            </Pressable>
+                        </View>
+                        <View style={styles.boxStyle}>
+                            <Text style={styles.textStyle}>Investigation</Text>
+                            <Pressable onPress={() => diceRoll(1, 20, 'Investigation')}>
+                                <Text style={ styles.modStyle }>{investigationMod}</Text>
+                            </Pressable>
+                        </View>
+                        <View style={styles.boxStyle}>
+                            <Text style={styles.textStyle}>Insight</Text>
+                            <Pressable onPress={() => diceRoll(1, 20, 'Insight')}>
+                                <Text style={ styles.modStyle }>{insightMod}</Text>
+                            </Pressable>
+                        </View>
+                    </View>
+                </ScrollView>
+                    </ImageBackground>
+                </ImageBackground>
+            </View>
         </View>
-    
+
     )
 }
 
 const styles = StyleSheet.create({
-    containerStyle: {
-        flex: 1,
-        backgroundColor: 'gray'
+    // containerStyle: {
+    //     flex: 1,
+    //     backgroundColor: '#263238'
+    // },
+    header: {
+        flex: 1
     },
     parentStyle: {
         alignItems: 'flex-start',
         flexWrap: 'wrap',
         flexDirection: 'row',
-        justifyContent: 'space-evenly'
+        justifyContent: 'space-evenly',
+        paddingVertical: 35
     },
     boxStyle: {
-        height: 120,
-        width: 120,
         marginBottom: 15,
-        marginTop: 20 //this would need to be removed if going back to the individual symbols
+        borderWidth: 2,
+        borderColor: '#4A0C05',
+        borderRadius: 5,
+        flexBasis: '29.7%'
     },
     textStyle: {
         flexDirection: 'column',
@@ -154,18 +275,46 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: 'white',
         marginBottom: 9,
-        marginTop: 2
+        marginTop: 2,
+        borderWidth: 2,
+        borderColor: '#4A0C05',
+        alignSelf: 'center',
+        width: '50%',
+        borderRadius: 5
     },
-    headerStyle: {
+    modStyleProficient: {
         fontSize: 30,
-        backgroundColor: 'gray',
+        textAlign: 'center',
+        color: 'white',
+        marginBottom: 9,
+        marginTop: 2,
+        borderWidth: 2,
+        borderColor: '#15f2fd',
+        alignSelf: 'center',
+        width: '50%',
+        borderRadius: 5
+    },
+    headingStyle: {
+        fontSize: 30,
+        //backgroundColor: '#263238',
         color: 'white',
         textAlign: 'center',
         marginBottom: 15
     },
     imgBackground: {
         width: '100%',
-        //height: '100%' //this would need to be added back if going back to the individual symbols
+        resizeMode: 'contain'
+    },
+    saveView: {
+        alignItems: 'flex-start',
+        flexWrap: 'wrap',
+        flexDirection: 'row',
+        justifyContent: 'space-evenly'
+    },
+    saveText: {
+        color: 'white',
+        textAlign: 'left',
+        fontSize: 20
     }
 })
 

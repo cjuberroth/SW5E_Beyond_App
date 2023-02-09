@@ -7,5 +7,13 @@ Within project directory, npm install axios
 ## Installing Pop Up Dialog Project
 npm install react-native-popup-dialog
 
-## Branch Rules Demo for GitHub
-Making this trivial change which will get removed as a method of demonstrating branch rules.
+## Merging Branch Workflow
+1. Reconcile from Parent to Child
+    - Fetch all remotes
+    - Merge parent to child in Sourcetree
+    - Resolve conflicts
+    - Commit and Push
+2. Create pull request from Child to Parent
+    - Using browser version of GitHub, create pull request merging child branch to parent
+    - Request review from appropriate user
+    - Review and merge
