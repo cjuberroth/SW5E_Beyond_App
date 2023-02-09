@@ -1,4 +1,5 @@
-import React, { useContext, useState, useEffect, useRef } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
+import { Alert } from 'react-native'
 import swapi from '../api/swapi'
 import {SpeciesCall, ClassCall, FeatCall, PowerCall, ArchetypeCall,
 		ArmorPropertyCall, BackgroundCall, ConditionsCall,
@@ -71,7 +72,9 @@ export const CharacterProvider = ({children}) => {
 
 	  //object to export functions
 	  const functions = {
-		numberPresent: numberPresent
+		numberPresent: numberPresent,
+		isForceClass: isForceClass,
+		isTechClass: isTechClass
 	  }
 	
 	// API Calling -------------------------------------------------------------------------------
@@ -430,6 +433,17 @@ export const CharacterProvider = ({children}) => {
 		}
 	}
 	
+	//set up conditions state for use in ConditionsModal -----------------------------------------------------
+	
+	const [conditionsState, setConditionsState] = useState([])
+
+	useEffect(() => {
+		const characterConditions = api_Conditions.map(el => (
+			charData.currentStats.conditions.includes(el.name) ? {...el, afflicted: true, collapsed: true} : {...el, afflicted: false, collapsed: true}
+		))
+		setConditionsState(characterConditions)
+	}, [api_Conditions, charData.currentStats.conditions])
+	
 	//object for exporting character information -------------------------------------------------------
 	const characterInformation = {
 		name: charData.name,
@@ -569,19 +583,27 @@ export const CharacterProvider = ({children}) => {
 	var classLevel = ''
 	//#region ForcePowerData
 	let numOr0 = n => isNaN(n) ? 0 : n
-	var forcePoints = []
+	var maxForcePoints = []
 	for(k = 0; k < charData.classes.length; k++) {
 		if(isForceClass(charData.classes[k].name)) {
 			classLevel = charData.classes[k].levels
 			for(j = 0; j < api_Class.length; j++) {
 				if(api_Class[j].name === charData.classes[k].name) {
-					forcePoints.push(parseInt((api_Class[j]["levelChanges"][classLevel]["Force Points"]), 10))
+					maxForcePoints.push(parseInt((api_Class[j]["levelChanges"][classLevel]["Force Points"]), 10))
 				}
 			}
 		}
 	}
-	forcePoints = forcePoints.reduce((a, b) => numOr0(a) + numOr0(b), 0)
-	forcePoints = forcePoints + Math.max(characterMods.wis_mod, characterMods.cha_mod)
+	maxForcePoints = maxForcePoints.reduce((a, b) => numOr0(a) + numOr0(b), 0)
+	maxForcePoints = maxForcePoints + Math.max(characterMods.wis_mod, characterMods.cha_mod)
+
+	const currentForcePoints = maxForcePoints - charData.currentStats.forcePointsUsed
+
+	const [forcePointsState, setForcePointsState] = useState()
+
+	useEffect(() => {
+		setForcePointsState(currentForcePoints)
+	}, [currentForcePoints])
 
 	//get force powers known
 	var forcePowers = []
@@ -609,19 +631,26 @@ export const CharacterProvider = ({children}) => {
 	// Tech -----------------------------------------------------------------------------------------------
 	//#region TechPowerData
 	//calculate max tech points
-	var techPoints = []
+	var maxTechPoints = []
 	for(k = 0; k < charData.classes.length; k++) {
 		if(isTechClass(charData.classes[k].name)) {
 			classLevel = charData.classes[k].levels
 			for(j = 0; j < api_Class.length; j++) {
 				if(api_Class[j].name === charData.classes[k].name) {
-					techPoints.push(parseInt((api_Class[j]["levelChanges"][classLevel]["Tech Points"]), 10))
+					maxTechPoints.push(parseInt((api_Class[j]["levelChanges"][classLevel]["Tech Points"]), 10))
 				}
 			}
 		}
 	}
-	techPoints = techPoints.reduce((a, b) => numOr0(a) + numOr0(b), 0)
-	techPoints = techPoints + characterMods.int_mod
+	maxTechPoints = maxTechPoints.reduce((a, b) => numOr0(a) + numOr0(b), 0)
+	maxTechPoints = maxTechPoints + characterMods.int_mod
+
+	const currentTechPoints = maxTechPoints - charData.currentStats.techPointsUsed
+	const [techPointsState, setTechPointsState] = useState()
+
+	useEffect(() => {
+		setTechPointsState(currentTechPoints)
+	}, [currentTechPoints])
 
 	//get tech powers known
 	var techPowers = []
@@ -648,10 +677,10 @@ export const CharacterProvider = ({children}) => {
 	
 	//object to export character casting information ------------------------------------------------------
 	const characterCasting = {
-		forcePoints: forcePoints,
+		maxForcePoints: maxForcePoints,
 		forcePowers: forcePowers,
 		forcePowersData: forcePowersData,
-		techPoints: techPoints,
+		maxTechPoints: maxTechPoints,
 		techPowers: techPowers,
 		techPowersData: techPowersData
 	}
@@ -749,7 +778,21 @@ export const CharacterProvider = ({children}) => {
 	}, [charAC])
 
 	const getCharacterAC = (updatedEquipment) => {
-		//currently not accounting for multiple armors being equipped at the same time
+		//check to see if there is already armor equipped
+		var equippedArmorCount = 0
+		for (let i = 0; i < updatedEquipment.length; i++) {
+			if (updatedEquipment[i].equipmentCategory === "Armor" 
+				&& updatedEquipment[i].equipped === true
+				&& updatedEquipment[i].armorClassification != 'Shield') {
+				equippedArmorCount+=1
+			}
+		}
+		//if trying to equip more than one armor at a time, alert and exit
+		if (equippedArmorCount >1) {
+			Alert.alert('You alread have armor equipped. To equip this armor, unequip the other.')
+			return 'OverArmored'
+		}
+
 		if (updatedEquipment != undefined) {
 			var charAC = 0
 				for(let i = 0; i < updatedEquipment.length; i++) {
@@ -801,6 +844,9 @@ export const CharacterProvider = ({children}) => {
 		hitPoints, setHitPoints, 
 		equippable, setEquippable,
 		characterAC, setCharacterAC,
+		forcePointsState, setForcePointsState,
+		techPointsState, setTechPointsState,
+		conditionsState, setConditionsState,
 		characterInformation, 
 		characterAbilities, 
 		characterMods, 

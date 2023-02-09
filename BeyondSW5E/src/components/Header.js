@@ -67,7 +67,7 @@ const Header = () => {
             <View style={{alignItems: 'center', flex: 1}}>
                 <Pressable style={styles.collapseButton } onPress={toggleHeader}>
                     <Text style={styles.collapseButtonText}>{characterInfo.name}</Text>
-                    <Text style={styles.collapseButtonText}>Lvl {characterInfo.level}</Text>
+                    <Text style={styles.collapseButtonText}> | Lvl {characterInfo.level} </Text>
                     <FontAwesome5 style={ styles.icon } name='angle-up' />
                 </Pressable>
             </View>
@@ -90,6 +90,20 @@ const styles = StyleSheet.create({
         paddingVertical: 5,
         paddingHorizontal: 5,
         borderRadius: 4,
+        backgroundColor: '#4A0C05',
+        marginHorizontal: 20,
+        marginVertical: 5,
+        minWidth: '80%'
+      },
+      headerButtonActive: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingVertical: 5,
+        paddingHorizontal: 5,
+        borderRadius: 4,
+        borderWidth: 2,
+        borderColor: '#15f2fd',
         backgroundColor: '#4A0C05',
         marginHorizontal: 20,
         marginVertical: 5,
@@ -151,7 +165,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
         color: 'white',
-        paddingHorizontal: 5
+        //paddingHorizontal: 5
     },
     icon: {
         fontSize: 25, 

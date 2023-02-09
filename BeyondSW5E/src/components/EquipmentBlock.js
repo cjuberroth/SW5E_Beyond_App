@@ -16,9 +16,12 @@ const EquipmentBlock = ({ category, equipment }) => {
 		let toggle = equippedState.map(el => (
 			el.name === selectedItemIndex ? {...el, equipped: !el.equipped} : el
 		))
+		if (getCharacterAC(toggle) === 'OverArmored') {
+			return
+		}
 		setEquippedState(toggle)
 		setEquippable(toggle)
-		getCharacterAC(toggle)
+		
 	}	
 
 	const showItemDetails = (item) => {

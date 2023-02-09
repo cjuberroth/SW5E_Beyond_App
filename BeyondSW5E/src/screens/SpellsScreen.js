@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react'
-import { Text, View, StyleSheet, ScrollView, ImageBackground } from 'react-native'
+import { Text, View, StyleSheet, ScrollView, ImageBackground, Pressable } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
 import DuoToggleSwitch from "react-native-duo-toggle-switch"
 import CharacterContext from '../context/CharacterContext'
 import PowerTable from '../components/PowerTable'
@@ -9,19 +10,23 @@ import HeaderContext from '../context/HeaderContext'
 import AppStyles from '../styles/AppStyles'
 
 const SpellsScreen = () => {
-    const charData = useContext(CharacterContext).character
+    const navigation = useNavigation()
     const proficiency = useContext(CharacterContext).characterInformation.proficiency
-    const forcePoints = useContext(CharacterContext).characterCasting.forcePoints
+    const forcePoints = useContext(CharacterContext).characterCasting.maxForcePoints
     const charMods = useContext(CharacterContext).characterMods
-    const currentForcePoints = forcePoints - charData.currentStats.forcePointsUsed
+    const {forcePointsState, setForcePointsState} = useContext(CharacterContext)
     const wisdomForceSave = 8 + charMods.wis_mod + proficiency
     const charismaForceSave = 8 + charMods.cha_mod + proficiency
     const techSave = 8 + charMods.int_mod + proficiency
-    const techPoints = useContext(CharacterContext).characterCasting.techPoints
-    const currentTechPoints = techPoints - charData.currentStats.techPointsUsed
+    const techPoints = useContext(CharacterContext).characterCasting.maxTechPoints
+    const {techPointsState, setTechPointsState} = useContext(CharacterContext)
     const [powerToggle, setPowerToggle] = useState(true)
     const flexValue = useContext(HeaderContext).headerUtils.flexValue
     const headerCollapsed = useContext(HeaderContext).headerUtils.isCollapsed
+
+    const castingPointsModal = (pointsType) => {
+        navigation.navigate('CastingPointsModal', { pointsType: pointsType })
+    }
 
     return (
         <View style = {AppStyles.globalStyles.parentContainerView}>
@@ -37,6 +42,9 @@ const SpellsScreen = () => {
                             secondaryText="TECH"
                             onPrimaryPress={() => { powerToggle ? null : setPowerToggle(!powerToggle) }}
                             onSecondaryPress={() => { powerToggle ? setPowerToggle(!powerToggle) : null }}
+                            activeColor='#4A0C05'
+                            activeTextColor='#ffffff'
+                            inactiveTextColor='#CFD8DC'
                         />
                     </View>
                     <View style={{flex:1}}>
@@ -45,27 +53,30 @@ const SpellsScreen = () => {
                             ?   <View style={{alignItems: 'center', flexDirection: 'row'}}>
                                     <View style={{flex: 1, alignItems: 'center'}}>
                                         <View style={{flexDirection: 'row', width: '80%'}}>
-                                            <View style={{backgroundColor: '#15f2fd', flex: 1, alignItems: 'center', borderTopLeftRadius: 10, borderBottomLeftRadius: 10, borderRightWidth: 2}}>
+                                            <View style={{backgroundColor: '#15f2fd', flex: 1, alignItems: 'center', borderTopLeftRadius: 5, borderBottomLeftRadius: 5, borderRightWidth: 2}}>
                                                 <Text style={{fontSize: 20}}>{wisdomForceSave}</Text>
                                             </View>
-                                            <View style={{backgroundColor: '#EB212E', flex: 1, alignItems: 'center', borderTopRightRadius: 10, borderBottomRightRadius: 10, borderLeftWidth: 2}}>
+                                            <View style={{backgroundColor: '#EB212E', flex: 1, alignItems: 'center', borderTopRightRadius: 5, borderBottomRightRadius: 5, borderLeftWidth: 2}}>
                                                 <Text style={{fontSize: 20}}>{charismaForceSave}</Text>
                                             </View>
                                         </View>
                                         <Text style={{color: 'white', fontSize: 16}}>Force Saves</Text>
                                     </View>
                                     <View style={{flex:1, alignItems: 'center'}}>
-                                        <View style={{backgroundColor: '#ffffbf', alignItems: 'center', borderRadius: 10, width: '80%'}}>
-                                            <Text style={{fontSize: 20}}>{currentForcePoints} / {forcePoints}</Text>
-                                        </View>
+                                        <Pressable style={{borderColor: '#4A0C05', borderWidth: 2, alignItems: 'center', borderRadius: 5, width: '80%'}}
+                                            onPress={() => castingPointsModal('Force')}>
+                                            <View >
+                                                <Text style={{fontSize: 20, color: 'white'}}>{forcePointsState} / {forcePoints}</Text>
+                                            </View>
+                                        </Pressable>
                                         <Text style={{color: 'white', fontSize: 16}}>Force Points</Text>
                                     </View>
                                     <View style={{flex:1, alignItems: 'center'}}>
                                         <View style={{flexDirection: 'row', width: '80%'}}>
-                                            <View style={{backgroundColor: '#15f2fd', flex: 1, alignItems: 'center', borderTopLeftRadius: 10, borderBottomLeftRadius: 10, borderRightWidth: 2}}>
+                                            <View style={{backgroundColor: '#15f2fd', flex: 1, alignItems: 'center', borderTopLeftRadius: 5, borderBottomLeftRadius: 5, borderRightWidth: 2}}>
                                                 <Text style={{fontSize: 20}}>+{charMods.wis_mod + proficiency}</Text>
                                             </View>
-                                            <View style={{backgroundColor: '#EB212E', flex: 1, alignItems: 'center', borderTopRightRadius: 10, borderBottomRightRadius: 10, borderLeftWidth: 2}}>
+                                            <View style={{backgroundColor: '#EB212E', flex: 1, alignItems: 'center', borderTopRightRadius: 5, borderBottomRightRadius: 5, borderLeftWidth: 2}}>
                                                 <Text style={{fontSize: 20}}>+{charMods.cha_mod + proficiency}</Text>
                                             </View>
                                         </View>
@@ -74,29 +85,27 @@ const SpellsScreen = () => {
                                 </View>
                             :   <View style={{alignItems: 'center', flexDirection: 'row'}}>
                                     <View style={{flex:1, alignItems: 'center'}}>
-                                        <View style={{backgroundColor: '#ffffbf', alignItems: 'center', borderRadius: 10, width: '80%'}}>
+                                        <View style={{backgroundColor: '#ffffbf', alignItems: 'center', borderRadius: 5, width: '80%'}}>
                                             <Text style={{fontSize: 20}}>{techSave}</Text>
                                         </View>
                                         <Text style={{color: 'white', fontSize: 16}}>Tech Save</Text>
                                     </View>
                                     <View style={{flex:1, alignItems: 'center'}}>
-                                        <View style={{backgroundColor: '#ffffbf', alignItems: 'center', borderRadius: 10, width: '80%'}}>
-                                            <Text style={{fontSize: 20}}>{currentTechPoints} / {techPoints}</Text>
-                                        </View>
+                                        <Pressable style={{borderColor: '##4A0C05', borderWidth: 2, alignItems: 'center', borderRadius: 5, width: '80%'}}
+                                            onPress={() => castingPointsModal('Tech')}>
+                                            <View>
+                                                <Text style={{fontSize: 20, color: 'white'}}>{techPointsState} / {techPoints}</Text>
+                                            </View>
+                                        </Pressable>
                                         <Text style={{color: 'white', fontSize: 16}}>Tech Points</Text>
                                     </View>
                                     <View style={{flex:1, alignItems: 'center'}}>
-                                        <View style={{backgroundColor: '#ffffbf', alignItems: 'center', borderRadius: 10, width: '80%'}}>
+                                        <View style={{backgroundColor: '#ffffbf', alignItems: 'center', borderRadius: 5, width: '80%'}}>
                                             <Text style={{fontSize: 20}}>+{charMods.int_mod + proficiency}</Text>
                                         </View>
                                         <Text style={{color: 'white', fontSize: 16}}>Tech Hit</Text>
                                     </View>
                                 </View>
-                                // <View style={{alignItems: 'center'}}>
-                                //     <Text>Tech Points: {currentTechPoints} / {techPoints}</Text>
-                                //     <Text>Tech Save: {techSave}</Text>
-                                //     <Text>Tech Power Hit: +{charMods.int_mod + proficiency}</Text>
-                                // </View>
                         }
                         <ScrollView bounces={false}>
                             <PowerTable powerLevel = { 0 } powerToggle = { powerToggle } />

@@ -1,8 +1,9 @@
 import React, { useContext } from 'react'
-import { Text, Button, Platform, StyleSheet } from 'react-native'
+import { Text, Button, Platform, StyleSheet, Pressable } from 'react-native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
+import { FontAwesome5 } from '@expo/vector-icons'
 import AbilitiesScreen from '../screens/AbilitiesScreen'
 import ActionsScreen from '../screens/ActionsScreen'
 import DescriptionScreen from '../screens/DescriptionScreen'
@@ -16,6 +17,7 @@ import SkillsScreen from '../screens/SkillsScreen'
 import SpellsScreen from '../screens/SpellsScreen'
 import CharacterSelectorScreen from '../screens/CharacterSelectorScreen'
 import HPModal from '../components/modals/HPModal'
+import SettingsModal from '../components/modals/SettingsModal'
 import RestModal from '../components/modals/RestModal'
 import ConditionsModal from '../components/modals/ConditionsModal'
 import DefensesModal from '../components/modals/DefensesModal'
@@ -24,6 +26,8 @@ import LongRestModal from '../components/modals/LongRestModal'
 import DiceResultModal from '../components/modals/DiceResultModal'
 import EquipmentDetailsModal from '../components/modals/EquipmentDetailsModal'
 import ActionDetailsModal from '../components/modals/ActionDetailsModal'
+import CastingPointsModal from '../components/modals/CastingPointsModal'
+import PowerDetailModal from '../components/modals/PowerDetailModal'
 import CharacterContext from '../context/CharacterContext'
 
 function getHeaderTitle(route) {
@@ -65,7 +69,7 @@ function MyTabs() {
                     backgroundColor: '#263238'
                  },
                 tabBarItemStyle: {
-                    width: 100
+                    width: 110
                 },
                 tabBarIndicatorStyle: {
                     //backgroundColor: 'red',
@@ -94,100 +98,130 @@ const MainNavigator = ({ navigation }) => {
     
     return (
         <Stack.Navigator>
-                        <Stack.Screen 
-                            name="Character" 
-                            component={CharacterSelectorScreen}
-                            options={{ title: 'Choose Character',
-                                        headerStyle: {
-                                            backgroundColor: '#263238',
-                                        },
-                                        headerTintColor: '#ffffff'
-                            }} 
-                        />
-                        <Stack.Screen 
-                            name="Tabs" 
-                            component={MyTabs}
-                            options={({ route, navigation }) => ({
-                                headerTitle: getHeaderTitle(route),
-                                headerStyle: {
-                                    backgroundColor: '#263238',
-                                },
-                                headerTintColor: '#ffffff',
-                                headerBackTitleVisible: false,
-                                headerRight: () => (
-                                    <Button style={styles.headerButton}
-                                        onPress={() => navigation.navigate('HPModal')}
-                                        title={hitPoints + "/" + charData.hitPoints}
-                                        color={Platform.OS === 'ios' ? '#ffffff' : '#263238'}>
-                                    </Button>
-                                ),
-                            })}
-                        />
-                        <Stack.Screen
-                            name="HPModal"
-                            component={HPModal}
-                            options={{ 
-                                presentation: 'transparentModal',
-                                title: 'HP Management',
-                                headerShown: false
-                            }}
-                        />
-                        <Stack.Screen
-                            name="RestModal"
-                            component={RestModal}
-                            options={{
-                                presentation: 'transparentModal',
-                                headerShown: false
-                            }}
-                        />
-                        <Stack.Screen
-                            name="ConditionsModal"
-                            component={ConditionsModal}
-                            options={{
-                                presentation: 'transparentModal',
-                                headerShown: false
-                            }}
-                        />
-                        <Stack.Screen
-                            name="DefensesModal"
-                            component={DefensesModal}
-                            options={{
-                                presentation: 'transparentModal',
-                                headerShown: false
-                            }}
-                        />
-                        <Stack.Screen
-                            name="ShortRestModal"
-                            component={ShortRestModal}
-                            options={{
-                                presentation: 'transparentModal',
-                                headerShown: false
-                            }}
-                        />
-                        <Stack.Screen
-                            name="LongRestModal"
-                            component={LongRestModal}
-                            options={{
-                                presentation: 'transparentModal',
-                                headerShown: false
-                            }}
-                        />
-                        <Stack.Screen
-                            name="DiceResultModal"
-                            component={DiceResultModal}
-                            options={{
-                                presentation: 'transparentModal',
-                                headerShown: false
-                            }}
-                        />
-                        <Stack.Screen
-                            name="EquipmentDetailsModal"
-                            component={EquipmentDetailsModal}
-                            options={{
-                                presentation: 'transparentModal',
-                                headerShown: false
-                            }}
-                        />
+            <Stack.Screen 
+                name="Character" 
+                component={CharacterSelectorScreen}
+                options={({navigation}) => ({ 
+                    title: 'Choose Character',
+                    headerStyle: {
+                        backgroundColor: '#263238',
+                    },
+                    headerTintColor: '#ffffff',
+                    headerRight: () => (
+                        <Pressable style={{fontSize: 25, color: 'white'}} onPress={() => navigation.navigate('SettingsModal')} >
+                            <FontAwesome5 style={{fontSize: 25, color: 'white'}} name="cog" />
+                        </Pressable>
+                    ),
+                })} 
+            />
+            <Stack.Screen 
+                name="Tabs" 
+                component={MyTabs}
+                options={({ route, navigation }) => ({
+                    headerTitle: getHeaderTitle(route),
+                    headerStyle: {
+                        backgroundColor: '#263238',
+                    },
+                    headerTintColor: '#ffffff',
+                    headerBackTitleVisible: false,
+                    headerRight: () => (
+                        <Button style={styles.headerButton}
+                            onPress={() => navigation.navigate('HPModal')}
+                            title={hitPoints + "/" + charData.hitPoints}
+                            color={Platform.OS === 'ios' ? '#ffffff' : '#263238'}>
+                        </Button>
+                    ),
+                })}
+            />
+            <Stack.Screen
+                name="HPModal"
+                component={HPModal}
+                options={{ 
+                    presentation: 'transparentModal',
+                    title: 'HP Management',
+                    headerShown: false
+                }}
+            />
+            <Stack.Screen
+                name="RestModal"
+                component={RestModal}
+                options={{
+                    presentation: 'transparentModal',
+                    headerShown: false
+                }}
+            />
+            <Stack.Screen
+                name="ConditionsModal"
+                component={ConditionsModal}
+                options={{
+                    presentation: 'transparentModal',
+                    headerShown: false
+                }}
+            />
+            <Stack.Screen
+                name="DefensesModal"
+                component={DefensesModal}
+                options={{
+                    presentation: 'transparentModal',
+                    headerShown: false
+                }}
+            />
+            <Stack.Screen
+                name="ShortRestModal"
+                component={ShortRestModal}
+                options={{
+                    presentation: 'transparentModal',
+                    headerShown: false
+                }}
+            />
+            <Stack.Screen
+                name="LongRestModal"
+                component={LongRestModal}
+                options={{
+                    presentation: 'transparentModal',
+                    headerShown: false
+                }}
+            />
+            <Stack.Screen
+                name="DiceResultModal"
+                component={DiceResultModal}
+                options={{
+                    presentation: 'transparentModal',
+                    headerShown: false
+                }}
+            />
+            <Stack.Screen
+                name="EquipmentDetailsModal"
+                component={EquipmentDetailsModal}
+                options={{
+                    presentation: 'transparentModal',
+                    headerShown: false
+                }}
+            />
+            <Stack.Screen
+                name="CastingPointsModal"
+                component={CastingPointsModal}
+                options={{
+                    presentation: 'transparentModal',
+                    headerShown: false
+                }}
+            />
+            <Stack.Screen
+                name="PowerDetailModal"
+                component={PowerDetailModal}
+                options={{
+                    presentation: 'transparentModal',
+                    headerShown: false
+                }}
+            />
+            <Stack.Screen
+                name="SettingsModal"
+                component={SettingsModal}
+                options={{
+                    presentation: 'transparentModal',
+                    headerShown: false
+                }}
+            />
                         <Stack.Screen
                             name="ActionDetailsModal"
                             component={ActionDetailsModal}
@@ -196,7 +230,7 @@ const MainNavigator = ({ navigation }) => {
                                 headerShown: false
                             }}
                         />
-                    </Stack.Navigator>
+        </Stack.Navigator>
     )
 }
 
