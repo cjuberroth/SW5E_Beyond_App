@@ -14,10 +14,50 @@ const AbilitiesScreen = () => {
     const headerCollapsed = useContext(HeaderContext).headerUtils.isCollapsed
     
     //import character data from context
+    const characterSkills = useContext(CharacterContext).character.tweaks?.abilityScores
+    const characterInfo = useContext(CharacterContext).characterInformation
     const characterAbilities = useContext(CharacterContext).characterAbilities
     const characterMods = useContext(CharacterContext).characterMods
     const characterSaves = useContext(CharacterContext).characterSaves
     const numberPresent = useContext(CharacterContext).functions.numberPresent
+
+    const getSkillMod = function(skill) {
+        let mod = 0
+        switch(skill) {
+            case ('Perception'):
+                if(characterSkills?.Wisdom?.skills?.[skill]?.proficiency === 'Proficient'){
+                    mod += characterInfo.proficiency
+                }
+                else if(characterSkills?.Wisdom?.skills?.[skill]?.proficiency === 'Expertise'){
+                    mod += 2 * characterInfo.proficiency
+                }
+                mod += characterMods.wis_mod
+                break
+            case ('Investigation'):
+                if(characterSkills?.Intelligence?.skills?.[skill]?.proficiency === 'Proficient'){
+                    mod += characterInfo.proficiency
+                }
+                else if(characterSkills?.Intelligence?.skills?.[skill]?.proficiency === 'Expertise'){
+                    mod += 2 * characterInfo.proficiency
+                }
+                mod += characterMods.int_mod
+                break
+            case ('Insight'):
+                if(characterSkills?.Wisdom?.skills?.[skill]?.proficiency === 'Proficient'){
+                    mod += characterInfo.proficiency
+                }
+                else if(characterSkills?.Wisdom?.skills?.[skill]?.proficiency === 'Expertise'){
+                    mod += 2 * characterInfo.proficiency
+                }
+                mod += characterMods.wis_mod
+                break
+        }
+        return mod
+    }
+
+    const perceptionMod = getSkillMod('Perception')
+    const investigationMod = getSkillMod('Investigation')
+    const insightMod = getSkillMod('Insight')
 
     const diceRoll = (numDice, numSides, rollType) => {
         const rollResult = DiceRoll(numDice, numSides)
@@ -58,6 +98,15 @@ const AbilitiesScreen = () => {
                 break
             case 'Charisma Save':
                 mod = characterSaves.cha_save
+                break
+            case 'Perception':
+                mod = perceptionMod
+                break
+            case 'Investigation':
+                mod = investigationMod
+                break
+            case 'Insight':
+                mod = insightMod
                 break
         }
         navigation.navigate('DiceResultModal', {rollResult: rollResult, mod: mod, rollType: rollType, numDice: numDice, numSides: numSides})
@@ -160,7 +209,30 @@ const AbilitiesScreen = () => {
                                     </Pressable>
                                 </View>
                             </View>
-                        </ScrollView>
+                            <View>
+                        <Text style={styles.headingStyle}>Passive Senses</Text>
+                    </View>
+                    <View style={styles.saveView}>
+                        <View style={styles.boxStyle}>
+                            <Text style={styles.textStyle}>Perception</Text>
+                            <Pressable onPress={() => diceRoll(1, 20, 'Perception')}>
+                                <Text style={ styles.modStyle }>{perceptionMod + 10}</Text>
+                            </Pressable>
+                        </View>
+                        <View style={styles.boxStyle}>
+                            <Text style={styles.textStyle}>Investigation</Text>
+                            <Pressable onPress={() => diceRoll(1, 20, 'Investigation')}>
+                                <Text style={ styles.modStyle }>{investigationMod}</Text>
+                            </Pressable>
+                        </View>
+                        <View style={styles.boxStyle}>
+                            <Text style={styles.textStyle}>Insight</Text>
+                            <Pressable onPress={() => diceRoll(1, 20, 'Insight')}>
+                                <Text style={ styles.modStyle }>{insightMod}</Text>
+                            </Pressable>
+                        </View>
+                    </View>
+                </ScrollView>
                     </ImageBackground>
                 </ImageBackground>
             </View>

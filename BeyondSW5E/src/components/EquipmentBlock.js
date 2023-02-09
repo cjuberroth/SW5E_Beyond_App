@@ -25,7 +25,6 @@ const EquipmentBlock = ({ category, equipment }) => {
 	}	
 
 	const showItemDetails = (item) => {
-		//console.log(item)
 		navigation.navigate('EquipmentDetailsModal', {
 			name: item.name,
 			eqDescription: item.description,

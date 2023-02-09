@@ -25,6 +25,7 @@ import ShortRestModal from '../components/modals/ShortRestModal'
 import LongRestModal from '../components/modals/LongRestModal'
 import DiceResultModal from '../components/modals/DiceResultModal'
 import EquipmentDetailsModal from '../components/modals/EquipmentDetailsModal'
+import ActionDetailsModal from '../components/modals/ActionDetailsModal'
 import CastingPointsModal from '../components/modals/CastingPointsModal'
 import PowerDetailModal from '../components/modals/PowerDetailModal'
 import CharacterContext from '../context/CharacterContext'
@@ -221,6 +222,14 @@ const MainNavigator = ({ navigation }) => {
                     headerShown: false
                 }}
             />
+                        <Stack.Screen
+                            name="ActionDetailsModal"
+                            component={ActionDetailsModal}
+                            options={{
+                                presentation: 'transparentModal',
+                                headerShown: false
+                            }}
+                        />
         </Stack.Navigator>
     )
 }
