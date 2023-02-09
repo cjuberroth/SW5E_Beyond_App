@@ -11,8 +11,11 @@ const InventoryScreen = () => {
     const equipment = useContext(CharacterContext).characterEquipment.equipment
     const flexValue = useContext(HeaderContext).headerUtils.flexValue
     const headerCollapsed = useContext(HeaderContext).headerUtils.isCollapsed
-
-    
+    const {equippable, setEquippable} = useContext(CharacterContext)
+    const lockout = 0
+    useEffect(() => {
+        setEquippable(equipment)
+    }, [lockout])
 
     // This block loads the equipment categories within the loaded equipment block
     var itemCategories = []
