@@ -835,7 +835,10 @@ export const CharacterProvider = ({children}) => {
 
 	//console.log(characterEquipment.equipment)
 	const [equippable, setEquippable] = useState(equipmentData)
-	
+
+	const [shortRestDice, setShortRestDice] = useState([])
+	const [shortRestHitDice, setShortRestHitDice] = useState([])
+	const [shortRestHitDiceUsed, setShortRestHitDiceUsed] = useState([{class: '', numDice: 0}])
 	
 	//console.log("Render")
 
@@ -847,6 +850,9 @@ export const CharacterProvider = ({children}) => {
 		forcePointsState, setForcePointsState,
 		techPointsState, setTechPointsState,
 		conditionsState, setConditionsState,
+		shortRestDice, setShortRestDice,
+		shortRestHitDice, setShortRestHitDice,
+		shortRestHitDiceUsed, setShortRestHitDiceUsed,
 		characterInformation, 
 		characterAbilities, 
 		characterMods, 

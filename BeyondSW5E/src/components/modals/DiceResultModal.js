@@ -20,7 +20,9 @@ const DiceResultModal = ({ route }) => {
                 <View style={ styles.modalResultsContainer }>
                     <View>
                         <Text style={ styles.resultText }>{'Roll Result: ' + route.params.rollResult + ' + ' + route.params.mod + ' = ' + (route.params.rollResult+route.params.mod)}</Text>
-                        <Text>{route.params.numDice + 'd' + route.params.numSides + ' + ' + route.params.mod}</Text>
+                        {route.params.numDice != '' ?
+                            <Text>{route.params.numDice + 'd' + route.params.numSides + ' + ' + route.params.mod}</Text>
+                        : <Text></Text>}
                     </View>
                     <Text style={{fontSize: 35, marginRight: 40, borderWidth: 1, borderRadius: 4, paddingHorizontal: 5}}>{(route.params.rollResult+route.params.mod)}</Text>
                 </View>

@@ -4,7 +4,7 @@ import { useNavigation, StackActions } from '@react-navigation/native'
 import { FontAwesome5 } from '@expo/vector-icons'
 import AppStyles from '../../styles/AppStyles'
 import CharacterContext from '../../context/CharacterContext'
-import Checkbox from '../Checkbox'
+import CheckBox from '../CheckBox'
 
 const LongRestModal = () => {
     const navigation = useNavigation()
@@ -41,7 +41,7 @@ const LongRestModal = () => {
                 </View>
                 <Text>{charData.hitPoints-hitPoints} Hit Points; up to {Math.ceil(charData.level/2)} Hit Dice</Text>
                 <View style={ AppStyles.tableStyles.tableRow }>
-                    <Checkbox 
+                    <CheckBox 
                         checked={checkedReset}
                         onChange={onChangeReset}
                         buttonStyle = {styles.checkboxBase}
