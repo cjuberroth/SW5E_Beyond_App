@@ -21,11 +21,15 @@ const ShortRestModal = () => {
     const {shortRestHitDice, setShortRestHitDice} = useContext(CharacterContext)
     const {shortRestDice, setShortRestDice} = useContext(CharacterContext)
     const {shortRestHitDiceUsed, setShortRestHitDiceUsed} = useContext(CharacterContext)
+    const [hitDiceUsed, setHitDiceUsed] = useState([])
     const {hitPoints, setHitPoints} = useContext(CharacterContext)
+    
+    console.log(shortRestHitDiceUsed)
 
     const closeModal = () => {
-        navigation.dispatch(StackActions.pop(2))
         setMessage('')
+        
+        navigation.dispatch(StackActions.pop(2))
     }
 
     const getHitDie = (charClass) => {
@@ -47,7 +51,7 @@ const ShortRestModal = () => {
 
     let numLevels = 0
     const getLevels = (charClass) => {
-        if (shortRestHitDiceUsed.length == 1) { //this is the first load
+        if (shortRestHitDiceUsed.length == 1) { //this is the first load or none completed
             for(i = 0; i < charClasses.length; i++) {
                 if (charClasses[i].class === charClass) {
                     numLevels = charClasses[i].level
@@ -93,7 +97,7 @@ const ShortRestModal = () => {
             setShortRestHitDiceUsed(updatedUsed)
         }
     }
-
+    
     const [beenSelected, setBeenSelected] = useState([])
     const handleSelect = (item) => {
         setBeenSelected([...beenSelected, item.value])
@@ -106,21 +110,23 @@ const ShortRestModal = () => {
             setTotalMod(conMod * item.label)
             setShortRestDice([...shortRestDice, item.label])
             setShortRestHitDice([...shortRestHitDice, getHitDie(item.value)])
-            if (shortRestHitDiceUsed.some(obj => obj.class === item.value)) {
+            setHitDiceUsed((prev) => [...prev, {class: item.value, numDice: item.label}])
+            /* if (shortRestHitDiceUsed.some(obj => obj.class === item.value)) {
                 updateUsed(item.value, item.label)
             } else {
                 setShortRestHitDiceUsed((prev) => [...prev, {class: item.value, numDice: item.label}])
-            }
+            } */
         } else {
             setMessage(message + ' + ' + item.label + 'd' + getHitDie(item.value))
             setTotalMod(totalMod + (conMod * item.label))
             setShortRestDice([...shortRestDice, item.label])
             setShortRestHitDice([...shortRestHitDice, getHitDie(item.value)])
-            if (shortRestHitDiceUsed.some(obj => obj.class === item.value)) {
+            setHitDiceUsed((prev) => [...prev, {class: item.value, numDice: item.label}])
+            /* if (shortRestHitDiceUsed.some(obj => obj.class === item.value)) {
                 updateUsed(item.value, item.label)
             } else {
                 setShortRestHitDiceUsed((prev) => [...prev, {class: item.value, numDice: item.label}])
-            }
+            } */
         }
     }
 
@@ -131,14 +137,28 @@ const ShortRestModal = () => {
     const handleResetHPCheckbox = () => {
         onChangeReset(!checkedReset)
     }
-
+    console.log(hitDiceUsed)
     let healResult = 0
     const completeShortRest = () => {
+        for (i = 0; i < hitDiceUsed.length; i++) {
+            console.log(hitDiceUsed[i].class)
+            let temp = hitDiceUsed[i].class
+            let tempDice = hitDiceUsed[i].numDice
+            if (shortRestHitDiceUsed.some(obj => obj.class === temp)) {
+                updateUsed(temp, tempDice)
+            } else {
+                setShortRestHitDiceUsed((prev) => [...prev, {class: temp, numDice: tempDice}])
+            }
+        }
+        /* if (shortRestHitDiceUsed.some(obj => obj.class === item.value)) {
+                updateUsed(item.value, item.label)
+            } else {
+                setShortRestHitDiceUsed((prev) => [...prev, {class: item.value, numDice: item.label}])
+            } */
         for (i = 0; i < shortRestDice.length; i++) {
             healResult = healResult + DiceRoll(shortRestDice[i], shortRestHitDice[i])
-            navigation.navigate('DiceResultModal', {rollResult: healResult, mod: totalMod, rollType: 'Short Rest', numDice: '', numSides: ''})
         }
-        //closeModal()
+        setMessage('')
         setShortRestDice([])
         setShortRestHitDice([])
         
@@ -153,6 +173,7 @@ const ShortRestModal = () => {
         if (checkedReset) {
             //changes to maxHP have not yet been implemented
         }
+        navigation.navigate('DiceResultModal', {rollResult: healResult, mod: totalMod, rollType: 'Short Rest', numDice: '', numSides: '', origin: 'shortRestModal'})
     }
 
     return (
@@ -210,8 +231,8 @@ const ShortRestModal = () => {
                         }}
                     />
                     { message == ''?
-                        <Text></Text>
-                        : <Text style={{textAlign: 'center', paddingTop: 15}}>{message} + {totalMod}</Text>
+                        <Text style={{marginTop: 30}}></Text>
+                        : <Text style={{textAlign: 'center', marginTop: 30, paddingTop: 15}}>{message} + {totalMod}</Text>
                     }
                     <Pressable style={styles.modalButton} onPress={() => completeShortRest()}>
                         <Text style={styles.modalButtonText}>Complete Short Rest</Text>

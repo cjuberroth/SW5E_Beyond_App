@@ -10,17 +10,33 @@ const LongRestModal = () => {
     const navigation = useNavigation()
     const charData = useContext(CharacterContext).characterInformation
     const { hitPoints, setHitPoints } = useContext(CharacterContext)
-    const [checkedReset, onChangeReset] = useState(true)
+    const [checkedReset, onChangeReset] = useState(false)
+    const [checkedApply, onChangeApply] = useState(true)
+    const [checkedHitDice, onChangeHitDice] = useState(true)
 
     const closeModal = () => {
         navigation.dispatch(StackActions.pop(2))
     }
+
+    const handleAutoHealCheckbox = () => {
+        onChangeApply(!checkedApply)
+    }
+
+    const handleHitDiceCheckbox = () => {
+        onChangeHitDice(!checkedHitDice)
+    }
+
+    const recoverHitDice = () => {
+        
+    }
     
     const takeLongRest = () => {
-        setHitPoints(charData.hitPoints)
+        if (checkedApply) {
+            setHitPoints(charData.hitPoints)
+        }
         //there will need to be code here later to reset max hp changes once they've been implemented
         //there will need to be code here later to regain hit dice once they've been implemented
-        //navigation.dispatch(StackActions.pop(2))
+        
         closeModal()
     }
 
@@ -39,15 +55,38 @@ const LongRestModal = () => {
                 <View style={ styles.modalHeading }>
                     <Text style={ styles.modalHeading }>Recover</Text>
                 </View>
-                <Text>{charData.hitPoints-hitPoints} Hit Points; up to {Math.ceil(charData.level/2)} Hit Dice</Text>
+                <Text style={{paddingVertical: 5, textAlign: 'center'}}>{charData.hitPoints-hitPoints} Hit Points; up to {Math.ceil(charData.level/2)} Hit Dice</Text>
                 <View style={ AppStyles.tableStyles.tableRow }>
                     <CheckBox 
                         checked={checkedReset}
                         onChange={onChangeReset}
                         buttonStyle = {styles.checkboxBase}
                         activeButtonStyle = {styles.checkboxChecked} />
-                    <Text style={{flex: 9, paddingLeft: 5, fontSize: 14}}>Reset max HP changes during this rest</Text>
+                    <Text style={{flex: 9, paddingLeft: 5, fontSize: 14}}>Reset max HP changes during this rest (coming soon)</Text>
                 </View>
+                <View style={ AppStyles.tableStyles.tableRow }>
+                    <CheckBox 
+                        checked={checkedHitDice}
+                        onChange={handleHitDiceCheckbox}
+                        buttonStyle = {styles.checkboxBase}
+                        activeButtonStyle = {styles.checkboxChecked} />
+                    { checkedHitDice ?
+                        <Text style={{flex: 9, paddingLeft: 5, fontSize: 14}}>Automatically choose which Hit Dice to recover</Text>
+                        : <Text style={{flex: 9, paddingLeft: 5, fontSize: 14}}>Manually choose which Hit Dice to recover</Text>
+                    }
+                </View>
+                <View style={ AppStyles.tableStyles.tableRow }>
+                        <CheckBox 
+                            checked={checkedApply}
+                            onChange={handleAutoHealCheckbox}
+                            buttonStyle = {styles.checkboxBase}
+                            activeButtonStyle = {styles.checkboxChecked} />
+                        <Text style={{flex: 9, paddingLeft: 5, fontSize: 14}}>Automatically apply healing</Text>
+                    </View>
+                    { checkedApply ?
+                            <Text></Text>
+                            : <Text style={{fontSize: 12}}>Healing will not be applied automatically</Text>
+                    }
                 <Pressable style={ styles.modalButton } onPress={takeLongRest} >
                     <Text style={ styles.modalButtonText }>Long Rest</Text>
                 </Pressable>
