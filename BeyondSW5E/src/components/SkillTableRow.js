@@ -55,7 +55,8 @@ const styles = StyleSheet.create({
         flex: 1,
         fontSize: 15,
         color: 'white',
-        paddingRight: 3
+        paddingRight: 3,
+        paddingVertical: 3
     },
     skillCol: {
         flex: 7.5,

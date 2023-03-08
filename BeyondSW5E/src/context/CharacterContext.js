@@ -367,23 +367,7 @@ export const CharacterProvider = ({children}) => {
 	charLevel = charLevel.reduce((a, b) => a + b, 0)
 
 	//calculate proficiency based on character level -----------------------------------------------------
-	switch (true) {
-		case (charLevel < 5):
-			charProf = 2
-			break
-		case (charLevel < 9):
-			charProf = 3
-			break
-		case (charLevel < 13):
-			charProf = 4
-			break
-		case (charLevel < 17):
-			charProf = 5
-			break
-		case (charLevel < 21):
-			charProf = 6
-			break
-	}
+	charProf = Math.ceil(charLevel / 4) + 1
 
 	//determine character hit points --------------------------------------------------------------------
 	var charHP = 0

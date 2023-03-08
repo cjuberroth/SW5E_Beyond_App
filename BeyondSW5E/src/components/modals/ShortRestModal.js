@@ -24,7 +24,7 @@ const ShortRestModal = () => {
     const [hitDiceUsed, setHitDiceUsed] = useState([])
     const {hitPoints, setHitPoints} = useContext(CharacterContext)
     
-    console.log(shortRestHitDiceUsed)
+    //console.log(shortRestHitDiceUsed)
 
     const closeModal = () => {
         setMessage('')
@@ -137,11 +137,11 @@ const ShortRestModal = () => {
     const handleResetHPCheckbox = () => {
         onChangeReset(!checkedReset)
     }
-    console.log(hitDiceUsed)
+    //console.log(hitDiceUsed)
     let healResult = 0
     const completeShortRest = () => {
         for (i = 0; i < hitDiceUsed.length; i++) {
-            console.log(hitDiceUsed[i].class)
+            //console.log(hitDiceUsed[i].class)
             let temp = hitDiceUsed[i].class
             let tempDice = hitDiceUsed[i].numDice
             if (shortRestHitDiceUsed.some(obj => obj.class === temp)) {

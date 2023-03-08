@@ -38,9 +38,9 @@ const InventoryScreen = () => {
                     source={ require('../../assets/header-background.jpg') }>
                     <View style={styles.tableHeader}>
                         {/* <Text style = {[ styles.column, styles.colEquip, styles.colHeader ]}>Equipped</Text> */}
-                        <Text style = {[ styles.column, styles.colItem, styles.colHeader ]}>Item</Text>
-                        <Text style = {[ styles.column, styles.colQty, styles.colHeader ]}>Cost</Text>
-                        <Text style = {[ styles.column, styles.colCost, styles.colHeader ]}>Qty</Text>
+                        <Text style = {[ styles.column, styles.colItem, styles.colHeader ]}>Credits:</Text>
+                        {/* <Text style = {[ styles.column, styles.colQty, styles.colHeader ]}>Cost</Text> */}
+                        <Text style = {[ styles.column, styles.colCost, styles.colHeader ]}>Carried Weight:</Text>
                     </View>
                     <ScrollView bounces={false}>
                         {

@@ -27,7 +27,7 @@ const SkillsScreen = () => {
                     <ImageBackground imageStyle={styles.imgBackground} 
                         source={require('../../assets/rebel-alliance.png')}>
                     <View style={styles.rowStyle}>
-                        <Text style={styles.modCol}>MOD</Text>
+                        <Text style={styles.modCol}>PROF</Text>
                         <Text style={styles.skillCol}>SKILL</Text>
                         <Text style={styles.bonusCol}>BONUS</Text>
                     </View>

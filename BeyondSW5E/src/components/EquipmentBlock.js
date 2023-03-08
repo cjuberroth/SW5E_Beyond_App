@@ -63,13 +63,12 @@ const EquipmentBlock = ({ category, equipment }) => {
 					equippedState.map((item) => {
 						return (
 							<DataTable.Row style={styles.tableRow} key={item.name}>
-								{ console.log(item.name) }
 								<Pressable style={{ flex: 1, flexDirection: 'row' }} onPress={() => toggleEquipped(item.name)}>
 									<DataTable.Cell style={styles.colItem}>
 										<Text style={item.equipped ? styles.tableDataTextEquipped : styles.tableDataText}>{item.name}</Text>
 									</DataTable.Cell>
 									<DataTable.Cell style={styles.colQty}>
-										<Text style={ item.equipped ? styles.tableDataTextEquipped : styles.tableDataText}>{item.quantity}</Text>
+										<Text style={ item.equipped ? styles.tableDataTextEquipped : styles.tableDataText}>x{item.quantity}</Text>
 									</DataTable.Cell>
 								</Pressable>
 								<DataTable.Cell style={styles.colInfo}>
@@ -102,7 +101,8 @@ const styles = StyleSheet.create({
 		fontWeight: 'bold'
     },
     tableHeaderRow: {
-        backgroundColor: 'gray'
+        backgroundColor: 'gray',
+		borderBottomColor: 'red'
     },
     tableRow: {
         borderBottomColor: 'gray', 
