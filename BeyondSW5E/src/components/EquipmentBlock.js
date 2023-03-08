@@ -63,12 +63,10 @@ const EquipmentBlock = ({ category, equipment }) => {
 					equippedState.map((item) => {
 						return (
 							<DataTable.Row style={styles.tableRow} key={item.name}>
+								{ console.log(item.name) }
 								<Pressable style={{ flex: 1, flexDirection: 'row' }} onPress={() => toggleEquipped(item.name)}>
 									<DataTable.Cell style={styles.colItem}>
 										<Text style={item.equipped ? styles.tableDataTextEquipped : styles.tableDataText}>{item.name}</Text>
-									</DataTable.Cell>
-									<DataTable.Cell style={styles.colCost}>
-										<Text style={item.equipped ? styles.tableDataTextEquipped : styles.tableDataText}>{item.cost}</Text>
 									</DataTable.Cell>
 									<DataTable.Cell style={styles.colQty}>
 										<Text style={ item.equipped ? styles.tableDataTextEquipped : styles.tableDataText}>{item.quantity}</Text>
