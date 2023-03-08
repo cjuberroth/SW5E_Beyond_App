@@ -12,11 +12,11 @@ export const HeaderProvider = ({children}) => {
         setCollapsed(!isCollapsed)
     }
 
-    var bodyFlexValue = 2
+    var bodyFlexValue = 3
     if(isCollapsed){
         bodyFlexValue = 8
     } else {
-        bodyFlexValue = 2
+        bodyFlexValue = 3
     }
     
     const toggleInspiration = () => {
