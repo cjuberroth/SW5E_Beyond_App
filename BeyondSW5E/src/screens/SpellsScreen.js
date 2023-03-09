@@ -20,7 +20,7 @@ const SpellsScreen = () => {
     const techSave = 8 + charMods.int_mod + proficiency
     const techPoints = useContext(CharacterContext).characterCasting.maxTechPoints
     const {techPointsState, setTechPointsState} = useContext(CharacterContext)
-    const [powerToggle, setPowerToggle] = useState(true)
+    let [powerToggle, setPowerToggle] = useState(true)
     const flexValue = useContext(HeaderContext).headerUtils.flexValue
     const headerCollapsed = useContext(HeaderContext).headerUtils.isCollapsed
 
@@ -28,6 +28,15 @@ const SpellsScreen = () => {
         navigation.navigate('CastingPointsModal', { pointsType: pointsType })
     }
 
+    const castsBoth = forcePoints > 0 && techPoints > 0
+    if(!castsBoth){
+        if(techPoints > 0) {
+            powerToggle = false
+        }
+        else {
+            powerToggle = true
+        }
+    }
     return (
         <View style = {AppStyles.globalStyles.parentContainerView}>
             <View style={styles.header}>
@@ -36,21 +45,25 @@ const SpellsScreen = () => {
             <View style={{flex: flexValue}}>
                 <ImageBackground style={ AppStyles.globalStyles.screenBackground }
                     source={ require('../../assets/header-background.jpg') }>
-                    <View style={{alignItems: 'center'}}>
-                        <DuoToggleSwitch 
-                            primaryText="FORCE"
-                            secondaryText="TECH"
-                            onPrimaryPress={() => { powerToggle ? null : setPowerToggle(!powerToggle) }}
-                            onSecondaryPress={() => { powerToggle ? setPowerToggle(!powerToggle) : null }}
-                            activeColor='#4A0C05'
-                            activeTextColor='#ffffff'
-                            inactiveTextColor='#CFD8DC'
-                        />
-                    </View>
+                    {
+                        castsBoth
+                        ?   <View style={{alignItems: 'center'}}>
+                                <DuoToggleSwitch 
+                                    primaryText="FORCE"
+                                    secondaryText="TECH"
+                                    onPrimaryPress={() => { powerToggle ? null : setPowerToggle(!powerToggle) }}
+                                    onSecondaryPress={() => { powerToggle ? setPowerToggle(!powerToggle) : null }}
+                                    activeColor='#4A0C05'
+                                    activeTextColor='#ffffff'
+                                    inactiveTextColor='#CFD8DC'
+                                />
+                            </View>
+                        :   null
+                    }
                     <View style={{flex:1}}>
                         {
                             powerToggle
-                            ?   <View style={{alignItems: 'center', flexDirection: 'row'}}>
+                            ?   <View style={{alignItems: 'center', flexDirection: 'row', marginTop: 5}}>
                                     <View style={{flex: 1, alignItems: 'center'}}>
                                         <View style={{flexDirection: 'row', width: '80%'}}>
                                             <View style={{backgroundColor: '#15f2fd', flex: 1, alignItems: 'center', borderTopLeftRadius: 5, borderBottomLeftRadius: 5, borderRightWidth: 2}}>
