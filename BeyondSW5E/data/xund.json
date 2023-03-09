@@ -1,0 +1,131 @@
+{
+  "name": "Xund",
+  "id": "299c55ea-ff92-4e2e-9b48-cf635732fc0b",
+  "userId": "31a54266-22bc-4ce8-9fd1-597aa79899dd",
+  "builderVersion": "0.6.1",
+  "image": "",
+  "user": "",
+  "experiencePoints": 265000,
+  "species": {
+    "name": "Muun",
+    "abilityScoreImprovementSelectedOption": 0,
+    "abilityScoreImprovement": {}
+  },
+  "classes": [
+    {
+      "name": "Monk",
+      "levels": 18,
+      "hitPoints": [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
+      "abilityScoreImprovements": [
+        {
+          "type": "Ability Score Improvement",
+          "abilitiesIncreased": [{ "name": "Dexterity", "value": 2 }]
+        },
+        {
+          "type": "Ability Score Improvement",
+          "abilitiesIncreased": [{ "name": "Dexterity", "value": 2 }]
+        },
+        {
+          "type": "Ability Score Improvement",
+          "abilitiesIncreased": [{ "name": "Constitution", "value": 2 }]
+        },
+        {
+          "type": "Ability Score Improvement",
+          "abilitiesIncreased": [{ "name": "Constitution", "value": 2 }]
+        },
+        {
+          "type": "Ability Score Improvement",
+          "abilitiesIncreased": [{ "name": "Wisdom", "value": 2 }]
+        }
+      ],
+      "archetype": { "name": "Crimson Order" }
+    }
+  ],
+  "baseAbilityScores": {
+    "Strength": 10,
+    "Dexterity": 15,
+    "Constitution": 14,
+    "Intelligence": 8,
+    "Wisdom": 13,
+    "Charisma": 12
+  },
+  "background": {
+    "name": "Gladiator",
+    "feat": { "name": "Acrobat", "type": "Feat" },
+    "feature": ""
+  },
+  "characteristics": {
+    "alignment": "Lawful Balanced",
+    "Personality Traits": "",
+    "Ideal": "",
+    "Bond": "",
+    "Flaw": "",
+    "Gender": "",
+    "Place of Birth": "",
+    "Age": "",
+    "Height": "",
+    "Weight": "",
+    "Hair": "",
+    "Eyes": "",
+    "Skin": "",
+    "Appearance": "",
+    "Backstory": ""
+  },
+  "credits": 0,
+  "equipment": [
+    {
+      "name": "Fleximetal fiber armor",
+      "quantity": 1,
+      "category": "Equipment",
+      "equipped": true
+    },
+    {
+      "name": "Baragwin Stealth Unit",
+      "quantity": 1,
+      "category": "EnhancedItem",
+      "attuned": true
+    },
+    {
+      "name": "Echostaff",
+      "quantity": 1,
+      "category": "Equipment",
+      "equipped": true
+    }
+  ],
+  "currentStats": {
+    "hitPointsLost": 164,
+    "temporaryHitPoints": 0,
+    "techPointsUsed": 0,
+    "forcePointsUsed": 0,
+    "superiorityDiceUsed": 0,
+    "hitDiceUsed": {},
+    "deathSaves": { "successes": 0, "failures": 0 },
+    "hasInspiration": false,
+    "featuresTimesUsed": {},
+    "conditions": [],
+    "exhaustion": 0,
+    "highLevelCasting": {
+      "level6": false,
+      "level7": false,
+      "level8": false,
+      "level9": false
+    }
+  },
+  "tweaks": {},
+  "customProficiencies": [],
+  "customLanguages": [],
+  "customFeatures": [],
+  "customFeats": [],
+  "customTechPowers": [],
+  "customForcePowers": [],
+  "customEquipment": [],
+  "settings": {
+    "isEnforcingForcePrerequisites": true,
+    "isFixedHitPoints": false,
+    "abilityScoreMethod": "Standard Array"
+  },
+  "notes": "",
+  "createdAt": 1635007102640,
+  "changedAt": 1635039628467,
+  "localId": "temp-4jw3osxsu"
+}

@@ -56,6 +56,8 @@ function getHeaderTitle(route) {
 const Tab = createMaterialTopTabNavigator()
 
 function MyTabs() {
+    const charCasting = useContext(CharacterContext).characterCasting
+    const isCaster = charCasting.maxForcePoints > 0 || charCasting.maxTechPoints > 0
     return (
         <Tab.Navigator 
             tabBarPosition="bottom"
@@ -82,7 +84,7 @@ function MyTabs() {
             <Tab.Screen name="Skills" component={ SkillsScreen } />
             <Tab.Screen name="Actions" component={ ActionsScreen } />
             <Tab.Screen name="Inventory" component={ InventoryScreen } />
-            <Tab.Screen name="Casting" component={ SpellsScreen } />
+            { isCaster ? <Tab.Screen name="Casting" component={ SpellsScreen } /> : null }
             <Tab.Screen name="Features" component={ FeaturesScreen } />
             <Tab.Screen name="Description" component={ DescriptionScreen } />
             <Tab.Screen name="Notes" component={ NotesScreen } />
