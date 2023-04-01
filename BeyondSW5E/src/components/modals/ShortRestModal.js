@@ -4,7 +4,7 @@ import { useNavigation, StackActions } from '@react-navigation/native'
 import { FontAwesome5 } from '@expo/vector-icons'
 import AppStyles from '../../styles/AppStyles'
 import CheckBox from '../CheckBox'
-import { Select, SelectModalProvider, SelectProvider } from '@mobile-reality/react-native-select-pro'
+import { Select, SelectModalProvider } from '@mobile-reality/react-native-select-pro'
 import CharacterContext from '../../context/CharacterContext'
 import DiceRoll from '../DiceRolls'
 
@@ -23,12 +23,9 @@ const ShortRestModal = () => {
     const {shortRestHitDiceUsed, setShortRestHitDiceUsed} = useContext(CharacterContext)
     const [hitDiceUsed, setHitDiceUsed] = useState([])
     const {hitPoints, setHitPoints} = useContext(CharacterContext)
-    
-    //console.log(shortRestHitDiceUsed)
 
     const closeModal = () => {
         setMessage('')
-        
         navigation.dispatch(StackActions.pop(2))
     }
 
@@ -88,14 +85,20 @@ const ShortRestModal = () => {
         return array
     }
 
-    const updateUsed = (key, value) => {
-        const index = shortRestHitDiceUsed.findIndex(item => item.class === key)
-        let usedDice = shortRestHitDiceUsed[index].numDice
-        if (index !== -1) {
-            const updatedUsed = [...shortRestHitDiceUsed]
-            updatedUsed[index] = { ...shortRestHitDiceUsed[index], "numDice": usedDice + value }
-            setShortRestHitDiceUsed(updatedUsed)
-        }
+    const updateUsed = (keyToUpdate, valueToUpdate, diceToAdd) => {
+        setShortRestHitDiceUsed((prevArray) => {
+            const updatedArray = prevArray.map((item) => {
+                if (item[keyToUpdate] === valueToUpdate) {
+                    return {
+                        ...item,
+                        numDice: item.numDice + diceToAdd
+                    }
+                } else {
+                    return item
+                }
+            })
+            return updatedArray
+        })
     }
     
     const [beenSelected, setBeenSelected] = useState([])
@@ -107,27 +110,13 @@ const ShortRestModal = () => {
         }
         if (message == '') {
             setMessage('Recover: ' + item.label + 'd' + getHitDie(item.value))
-            setTotalMod(conMod * item.label)
-            setShortRestDice([...shortRestDice, item.label])
-            setShortRestHitDice([...shortRestHitDice, getHitDie(item.value)])
-            setHitDiceUsed((prev) => [...prev, {class: item.value, numDice: item.label}])
-            /* if (shortRestHitDiceUsed.some(obj => obj.class === item.value)) {
-                updateUsed(item.value, item.label)
-            } else {
-                setShortRestHitDiceUsed((prev) => [...prev, {class: item.value, numDice: item.label}])
-            } */
         } else {
             setMessage(message + ' + ' + item.label + 'd' + getHitDie(item.value))
-            setTotalMod(totalMod + (conMod * item.label))
-            setShortRestDice([...shortRestDice, item.label])
-            setShortRestHitDice([...shortRestHitDice, getHitDie(item.value)])
-            setHitDiceUsed((prev) => [...prev, {class: item.value, numDice: item.label}])
-            /* if (shortRestHitDiceUsed.some(obj => obj.class === item.value)) {
-                updateUsed(item.value, item.label)
-            } else {
-                setShortRestHitDiceUsed((prev) => [...prev, {class: item.value, numDice: item.label}])
-            } */
         }
+        setTotalMod(conMod * item.label)
+        setShortRestDice([...shortRestDice, item.label])
+        setShortRestHitDice([...shortRestHitDice, getHitDie(item.value)])
+        setHitDiceUsed((prev) => [...prev, {class: item.value, numDice: item.label}])
     }
 
     const handleAutoHealCheckbox = () => {
@@ -137,24 +126,19 @@ const ShortRestModal = () => {
     const handleResetHPCheckbox = () => {
         onChangeReset(!checkedReset)
     }
-    //console.log(hitDiceUsed)
+    
     let healResult = 0
     const completeShortRest = () => {
         for (i = 0; i < hitDiceUsed.length; i++) {
-            //console.log(hitDiceUsed[i].class)
             let temp = hitDiceUsed[i].class
             let tempDice = hitDiceUsed[i].numDice
             if (shortRestHitDiceUsed.some(obj => obj.class === temp)) {
-                updateUsed(temp, tempDice)
+                updateUsed("class", temp, tempDice)
             } else {
                 setShortRestHitDiceUsed((prev) => [...prev, {class: temp, numDice: tempDice}])
             }
         }
-        /* if (shortRestHitDiceUsed.some(obj => obj.class === item.value)) {
-                updateUsed(item.value, item.label)
-            } else {
-                setShortRestHitDiceUsed((prev) => [...prev, {class: item.value, numDice: item.label}])
-            } */
+        
         for (i = 0; i < shortRestDice.length; i++) {
             healResult = healResult + DiceRoll(shortRestDice[i], shortRestHitDice[i])
         }

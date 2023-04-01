@@ -7,19 +7,29 @@ import { Select, SelectModalProvider, SelectProvider } from '@mobile-reality/rea
 import CharacterContext from '../../context/CharacterContext'
 import DiceRoll from '../DiceRolls'
 
-const recoverHitDiceModal = () => {
+const RecoverHitDiceModal = () => {
     const navigation = useNavigation()
-    const [message, setMessage] = useState('')
-    const conMod = useContext(CharacterContext).characterMods.con_mod
+    const characterLevel = useContext(CharacterContext).characterInformation.level
     const classData = useContext(CharacterContext).apiData.class
-    const [totalMod, setTotalMod] = useState(conMod)
-    const {shortRestHitDice, setShortRestHitDice} = useContext(CharacterContext)
-    const {shortRestDice, setShortRestDice} = useContext(CharacterContext)
     const {shortRestHitDiceUsed, setShortRestHitDiceUsed} = useContext(CharacterContext)
+    const [hitDiceUsed, setHitDiceUsed] = useState([])
+    const [recovering, setRecovering] = useState(0)
+    let maxRecoverableDice = Math.ceil(characterLevel/2)
+    let tempHitDiceArray = shortRestHitDiceUsed
+    let recoverableDice = 0
 
+    tempHitDiceArray = tempHitDiceArray.slice(1)
+
+    for (i = 0; i < shortRestHitDiceUsed.length; i++) {
+        recoverableDice = recoverableDice + shortRestHitDiceUsed[i].numDice
+    }
+
+    if (recoverableDice < maxRecoverableDice) {
+        maxRecoverableDice = recoverableDice
+    }
+    
     const closeModal = () => {
         navigation.dispatch(StackActions.pop(2))
-        setMessage('')
     }
 
     const getHitDie = (charClass) => {
@@ -43,54 +53,62 @@ const recoverHitDiceModal = () => {
         if (shortRestHitDiceUsed.length == 1) { //no hit dice have been spent
             return
         } else { //there are spent hit dice
-            if (!shortRestHitDiceUsed.some(obj => obj.class == charClass)) {
+            if (shortRestHitDiceUsed.some(obj => obj.class == charClass)) {
                 var array = []
                 const index = shortRestHitDiceUsed.findIndex(item => item.class === charClass)
-                for (i = 1; i <= shortRestDiceUsed[index].numDice; i++) {
+                for (i = 1; i <= shortRestHitDiceUsed[index].numDice; i++) {
                     array.push({label: i, value: charClass})
                 }
             } 
         }
-        
+
         return array
     }
 
-    const updateUsed = (key, value) => {
-        const index = shortRestHitDiceUsed.findIndex(item => item.class === key)
-        let usedDice = shortRestHitDiceUsed[index].numDice
-        if (index !== -1) {
-            const updatedUsed = [...shortRestHitDiceUsed]
-            updatedUsed[index] = { ...shortRestHitDiceUsed[index], "numDice": usedDice + value }
-            setShortRestHitDiceUsed(updatedUsed)
-        }
+    const updateUsed = (keyToUpdate, valueToUpdate, diceToSubtract) => {
+        setShortRestHitDiceUsed((prevArray) => {
+            const updatedArray = prevArray.map((item) => {
+                if (item[keyToUpdate] === valueToUpdate) {
+                    return {
+                        ...item,
+                        numDice: item.numDice - diceToSubtract
+                    }
+                } else {
+                    return item
+                }
+            })
+            return updatedArray
+        })
     }
 
     const [beenSelected, setBeenSelected] = useState([])
     const handleSelect = (item) => {
         setBeenSelected([...beenSelected, item.value])
         if (beenSelected.includes(item.value)) {
-            Alert.alert('Selection Changed', 'Adjusting a selection has not been implemented yet. This is coming in a future release. You will have to start your Short Rest selection over. We apologize for the inconvenience.')
+            Alert.alert('Selection Changed', 'Adjusting a selection has not been implemented yet. This is coming in a future release. You will have to start your Recovery selection over. We apologize for the inconvenience.')
             closeModal()
         }
-        if (message == '') {
-            setMessage('Recover: ' + item.label + 'd' + getHitDie(item.value))
-            if (shortRestHitDiceUsed.some(obj => obj.class === item.value)) {
-                updateUsed(item.value, item.label)
-            } else {
-                setShortRestHitDiceUsed((prev) => [...prev, {class: item.value, numDice: item.label}])
-            }
-        } else {
-            setMessage(message + ' + ' + item.label + 'd' + getHitDie(item.value))
-            if (shortRestHitDiceUsed.some(obj => obj.class === item.value)) {
-                updateUsed(item.value, item.label)
-            } else {
-                setShortRestHitDiceUsed((prev) => [...prev, {class: item.value, numDice: item.label}])
-            }
-        }
+        setRecovering(recovering + item.label)
+        setHitDiceUsed((prev) => [...prev, {class: item.value, numDice: item.label}])
     }
 
+    let recoveredDice = 0
+    let recoveringDice = 0
     const recoverDice = () => {
-        Alert.alert('Recovered!', 'You have recovered ')
+        const diceRecovery =  hitDiceUsed.map(item => recoveringDice += item.numDice)
+        if (diceRecovery > maxRecoverableDice) {
+            Alert.alert('Error', 'You have selected too many dice. Try again. Your hit points have been recovered.')
+            navigation.dispatch(StackActions.pop(3))
+        } else {
+            for (i = 0; i < hitDiceUsed.length; i++) {
+                let temp = hitDiceUsed[i].class
+                let tempDice = hitDiceUsed[i].numDice
+                recoveredDice = recoveredDice + tempDice
+                updateUsed("class", temp, tempDice)
+            }
+        Alert.alert('Recovered!', 'You have recovered ' + recoveredDice + ' hit dice.')
+        navigation.dispatch(StackActions.pop(3))
+        }
     }
 
     return (
@@ -102,35 +120,31 @@ const recoverHitDiceModal = () => {
                         <Pressable style={ styles.modalCloseButton } onPress={closeModal} >
                             <FontAwesome5 style={ styles.modalCloseButton } name="window-close" />
                         </Pressable>
-                        <Text style={ styles.modalHeaderText}>Recover Hit Dice</Text>
+                        <Text style={ styles.modalHeaderText}>Recover Hit Dice </Text>
                         <FontAwesome5 style={ styles.modalCloseButton } name="dice-d20" />
                     </View>
-                    <Text style={{fontSize: 14}}>Of the spent hit dice, choose which dice to recover.</Text>
+                    <Text style={{fontSize: 14}}>Of the spent hit dice, choose which to recover (up to half your total number of them).</Text>
+                    <View style={ styles.modalHeading }>
+                        <Text style={ styles.modalHeading }>Recovering {recovering} of {maxRecoverableDice} possible dice</Text>
+                    </View>
                     <View style={ styles.modalHeading }>
                         <Text style={ styles.modalHeading }>Recover</Text>
                     </View>
                     <FlatList
-                        data = { shortRestHitDiceUsed }
+                        data = { tempHitDiceArray }
                         keyExtractor = {(item) => item.class}
                         renderItem = {({ item }) => {
                             return (
-                                <>
-                                    <Text style={{paddingTop: 10, fontWeight: 'bold'}}>{item.class} (Hit Die: 1d{getHitDie(item.class)}+{conMod})</Text>
-                                    <View>
-                                        <Select options={getDice(item.class)}
-                                            closeOptionsListOnSelect={true}
-                                            onSelect={handleSelect}
-                                            style={styles.select} />
-                                        <Text style={{paddingBottom: 5}}>Select between 1 and {getNumDice(item.class)} dice</Text>
-                                    </View>
-                                </>
+                                <View>
+                                    <Select options={getDice(item.class)}
+                                        closeOptionsListOnSelect={true}
+                                        onSelect={handleSelect}
+                                        style={styles.select} />
+                                    <Text style={{paddingBottom: 5}}>Select between 1 and {getNumDice(item.class)} {item.class} dice (d{getHitDie(item.class)})</Text>
+                                </View>
                             )
                         }}
                     />
-                    { message == ''?
-                        <Text></Text>
-                        : <Text style={{textAlign: 'center', paddingTop: 15}}>{message}</Text>
-                    }
                     <Pressable style={styles.modalButton} onPress={() => recoverDice()}>
                         <Text style={styles.modalButtonText}>Recover Hit Dice</Text>
                     </Pressable>
@@ -220,4 +234,4 @@ const styles = StyleSheet.create({
     },
 })
 
-export default recoverHitDiceModal
+export default RecoverHitDiceModal

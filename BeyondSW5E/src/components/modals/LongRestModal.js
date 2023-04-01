@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { View, Pressable, Text, StyleSheet } from 'react-native'
+import { View, Pressable, Text, StyleSheet, Alert } from 'react-native'
 import { useNavigation, StackActions } from '@react-navigation/native'
 import { FontAwesome5 } from '@expo/vector-icons'
 import AppStyles from '../../styles/AppStyles'
@@ -9,14 +9,48 @@ import CheckBox from '../CheckBox'
 const LongRestModal = () => {
     const navigation = useNavigation()
     const charData = useContext(CharacterContext).characterInformation
+    const classData = useContext(CharacterContext).apiData.class
     const { hitPoints, setHitPoints } = useContext(CharacterContext)
     const [checkedReset, onChangeReset] = useState(false)
     const [checkedApply, onChangeApply] = useState(true)
     const [checkedHitDice, onChangeHitDice] = useState(true)
+    const { shortRestHitDiceUsed, setShortRestHitDiceUsed } = useContext(CharacterContext)
+    let tempHitDiceArray = shortRestHitDiceUsed
+    const hitDice = []
+    let hitDiceRecovery = false
 
+    tempHitDiceArray = tempHitDiceArray.slice(1)
+
+    let numberOfDice = 0
+    for (i = 0; i < tempHitDiceArray.length; i++) {
+        numberOfDice = numberOfDice + tempHitDiceArray[i].numDice
+    }
+
+    if (numberOfDice != 0) {
+        hitDiceRecovery =  true
+    }
+    
     const closeModal = () => {
         navigation.dispatch(StackActions.pop(2))
     }
+
+    const getHitDie = (charClass) => {
+        for(i = 0; i < classData.length; i++) {
+            if (classData[i].name === charClass) {
+                return classData[i].hitDiceDieType
+            }
+        }
+    }
+
+    for (let i = 0; i < tempHitDiceArray.length; i++) {
+        let tempClass = tempHitDiceArray[i].class
+        let tempNumDice = tempHitDiceArray[i].numDice
+        let tempHitDie = getHitDie(tempClass)
+
+        hitDice.push({class: tempClass, numDice: tempNumDice, hitDie: tempHitDie})
+    }
+    
+    hitDice.sort((a, b) => b.hitDie - a.hitDie)
 
     const handleAutoHealCheckbox = () => {
         onChangeApply(!checkedApply)
@@ -26,8 +60,20 @@ const LongRestModal = () => {
         onChangeHitDice(!checkedHitDice)
     }
 
-    const recoverHitDice = () => {
-        
+    const updateUsed = (keyToUpdate, valueToUpdate, diceToSubtract) => {
+        setShortRestHitDiceUsed((prevArray) => {
+            const updatedArray = prevArray.map((item) => {
+                if (item[keyToUpdate] === valueToUpdate) {
+                    return {
+                        ...item,
+                        numDice: item.numDice - diceToSubtract
+                    }
+                } else {
+                    return item
+                }
+            })
+            return updatedArray
+        })
     }
     
     const takeLongRest = () => {
@@ -35,11 +81,41 @@ const LongRestModal = () => {
             setHitPoints(charData.hitPoints)
         }
         //there will need to be code here later to reset max hp changes once they've been implemented
-        //there will need to be code here later to regain hit dice once they've been implemented
         
-        closeModal()
+        
+        if (!checkedHitDice) {
+            navigation.navigate('RecoverHitDiceModal')
+        } else {
+            //user has elected to automatically recover hit dice
+            //hit dice recovery will start with the class with the largest hit die size
+            let maxRecoveryDice = Math.ceil(charData.level/2)
+            console.log('maxRecoveryDice: ' + maxRecoveryDice)
+            let diceRecovered = 0
+            let diceDifference = maxRecoveryDice - diceRecovered
+            if (diceRecovered <= maxRecoveryDice) {
+                for (let i = 0; i < hitDice.length; i++) {
+                    console.log('diceRecovered: ' + diceRecovered)
+                    console.log('diceDifference: ' + diceDifference)
+                    let temp = hitDice[i].class
+                    let tempDice = hitDice[i].numDice
+                    if (tempDice <= diceDifference) {
+                        updateUsed("class", temp, tempDice)
+                        diceRecovered = diceRecovered + tempDice
+                        diceDifference = maxRecoveryDice - diceRecovered
+                    } else {
+                        updateUsed("class", temp, diceDifference)
+                        diceRecovered = diceRecovered + diceDifference
+                        diceDifference = maxRecoveryDice - diceRecovered
+                    }
+                }
+            }
+            Alert.alert('Recovered', 'Recovered ' + (charData.hitPoints - hitPoints) + ' hit points and ' + diceRecovered + ' hit dice')
+            navigation.dispatch(StackActions.pop(2))
+        }
+        
+        //closeModal()
     }
-
+    
     return (
         <View style={ styles.modalContainer}>
             <Pressable style={[StyleSheet.absoluteFill, { backgroundColor: 'rgba(0, 0, 0, 0.5)' },]} onPress={closeModal}/>
@@ -55,7 +131,10 @@ const LongRestModal = () => {
                 <View style={ styles.modalHeading }>
                     <Text style={ styles.modalHeading }>Recover</Text>
                 </View>
-                <Text style={{paddingVertical: 5, textAlign: 'center'}}>{charData.hitPoints-hitPoints} Hit Points; up to {Math.ceil(charData.level/2)} Hit Dice</Text>
+                { hitDiceRecovery ?
+                    <Text style={{paddingVertical: 5, textAlign: 'center'}}>{charData.hitPoints-hitPoints} Hit Points; up to {Math.ceil(charData.level/2)} Hit Dice</Text>
+                    : <Text style={{paddingVertical: 5, textAlign: 'center'}}>{charData.hitPoints-hitPoints} Hit Points</Text>
+                }
                 <View style={ AppStyles.tableStyles.tableRow }>
                     <CheckBox 
                         checked={checkedReset}
@@ -64,17 +143,20 @@ const LongRestModal = () => {
                         activeButtonStyle = {styles.checkboxChecked} />
                     <Text style={{flex: 9, paddingLeft: 5, fontSize: 14}}>Reset max HP changes during this rest (coming soon)</Text>
                 </View>
-                <View style={ AppStyles.tableStyles.tableRow }>
-                    <CheckBox 
-                        checked={checkedHitDice}
-                        onChange={handleHitDiceCheckbox}
-                        buttonStyle = {styles.checkboxBase}
-                        activeButtonStyle = {styles.checkboxChecked} />
-                    { checkedHitDice ?
-                        <Text style={{flex: 9, paddingLeft: 5, fontSize: 14}}>Automatically choose which Hit Dice to recover</Text>
-                        : <Text style={{flex: 9, paddingLeft: 5, fontSize: 14}}>Manually choose which Hit Dice to recover</Text>
-                    }
-                </View>
+                { !hitDiceRecovery ?
+                    <View></View> :
+                    <View style={ AppStyles.tableStyles.tableRow }>
+                        <CheckBox 
+                            checked={checkedHitDice}
+                            onChange={handleHitDiceCheckbox}
+                            buttonStyle = {styles.checkboxBase}
+                            activeButtonStyle = {styles.checkboxChecked} />
+                        { checkedHitDice ?
+                            <Text style={{flex: 9, paddingLeft: 5, fontSize: 14}}>Automatically choose which Hit Dice to recover</Text>
+                            : <Text style={{flex: 9, paddingLeft: 5, fontSize: 14}}>Manually choose which Hit Dice to recover</Text>
+                        }
+                    </View>
+                }
                 <View style={ AppStyles.tableStyles.tableRow }>
                         <CheckBox 
                             checked={checkedApply}

@@ -823,6 +823,8 @@ export const CharacterProvider = ({children}) => {
 	const [shortRestDice, setShortRestDice] = useState([])
 	const [shortRestHitDice, setShortRestHitDice] = useState([])
 	const [shortRestHitDiceUsed, setShortRestHitDiceUsed] = useState([{class: '', numDice: 0}])
+
+	//console.info(shortRestHitDiceUsed)
 	
 	//console.log("Render")
 
