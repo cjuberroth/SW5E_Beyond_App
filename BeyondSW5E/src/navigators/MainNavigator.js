@@ -29,6 +29,7 @@ import ActionDetailsModal from '../components/modals/ActionDetailsModal'
 import CastingPointsModal from '../components/modals/CastingPointsModal'
 import PowerDetailModal from '../components/modals/PowerDetailModal'
 import RecoverHitDiceModal from '../components/modals/RecoverHitDiceModal'
+import CreditsModal from '../components/modals/CreditsModal'
 import CharacterContext from '../context/CharacterContext'
 
 function getHeaderTitle(route) {
@@ -234,6 +235,14 @@ const MainNavigator = ({ navigation }) => {
             <Stack.Screen
                 name="RecoverHitDiceModal"
                 component={RecoverHitDiceModal}
+                options={{
+                    presentation: 'transparentModal',
+                    headerShown: false
+                }}
+            />
+            <Stack.Screen
+                name="CreditsModal"
+                component={CreditsModal}
                 options={{
                     presentation: 'transparentModal',
                     headerShown: false

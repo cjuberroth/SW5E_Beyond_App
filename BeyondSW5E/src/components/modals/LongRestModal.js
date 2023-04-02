@@ -112,8 +112,6 @@ const LongRestModal = () => {
             Alert.alert('Recovered', 'Recovered ' + (charData.hitPoints - hitPoints) + ' hit points and ' + diceRecovered + ' hit dice')
             navigation.dispatch(StackActions.pop(2))
         }
-        
-        //closeModal()
     }
     
     return (

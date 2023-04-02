@@ -403,6 +403,14 @@ export const CharacterProvider = ({children}) => {
 		setHitPoints(currentHP)
 	}, [currentHP])
 
+	//Used to control credits on inventory screen and modal---------------------------------------------
+	const currentCredits = charData.credits
+	const [credits, setCredits] = useState(currentCredits)
+
+	useEffect(() => {
+		setCredits(currentCredits)
+	}, [currentCredits])
+
 	//base walking speed by species ---------------------------------------------------------------------
 	var charSpeed = 0
 	if (!isEmpty(api_Species)) {
@@ -440,7 +448,8 @@ export const CharacterProvider = ({children}) => {
 		classes: charClasses,
 		level: charLevel,
 		background: charData.background,
-		characteristics: charData.characteristics
+		characteristics: charData.characteristics,
+		credits: charData.credits
 	}
 	
 	//object for exporting ability scores --------------------------------------------------------------
@@ -831,6 +840,7 @@ export const CharacterProvider = ({children}) => {
 	return <CharacterContext.Provider value={{
 		character, setCharacter, 
 		hitPoints, setHitPoints, 
+		credits, setCredits,
 		equippable, setEquippable,
 		characterAC, setCharacterAC,
 		forcePointsState, setForcePointsState,

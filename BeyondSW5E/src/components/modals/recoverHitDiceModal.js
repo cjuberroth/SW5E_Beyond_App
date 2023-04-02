@@ -3,9 +3,8 @@ import { View, Pressable, Text, StyleSheet, FlatList, Alert } from 'react-native
 import { useNavigation, StackActions } from '@react-navigation/native'
 import { FontAwesome5 } from '@expo/vector-icons'
 import AppStyles from '../../styles/AppStyles'
-import { Select, SelectModalProvider, SelectProvider } from '@mobile-reality/react-native-select-pro'
+import { Select, SelectModalProvider } from '@mobile-reality/react-native-select-pro'
 import CharacterContext from '../../context/CharacterContext'
-import DiceRoll from '../DiceRolls'
 
 const RecoverHitDiceModal = () => {
     const navigation = useNavigation()
