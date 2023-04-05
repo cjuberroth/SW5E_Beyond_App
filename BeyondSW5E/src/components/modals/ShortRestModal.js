@@ -53,8 +53,8 @@ const ShortRestModal = () => {
                 if (charClasses[i].class === charClass) {
                     numLevels = charClasses[i].level
                     var array = []
-                    for (i = 1; i <= numLevels; i++) {
-                        array.push({label: i, value: charClass})
+                    for (j = 1; j <= numLevels; j++) {
+                        array.push({label: j, value: charClass})
                     }
                 }
             }
@@ -64,8 +64,8 @@ const ShortRestModal = () => {
                     if (charClasses[i].class === charClass) {
                         numLevels = charClasses[i].level
                         var array = []
-                        for (i = 1; i <= numLevels; i++) {
-                            array.push({label: i, value: charClass})
+                        for (j = 1; j <= numLevels; j++) {
+                            array.push({label: j, value: charClass})
                         }
                     }
                 }
@@ -74,8 +74,8 @@ const ShortRestModal = () => {
                     if (charClasses[i].class === charClass) {
                         numLevels = charClasses[i].level - getNumDice(charClass)
                         var array = []
-                        for (i = 1; i <= numLevels; i++) {
-                            array.push({label: i, value: charClass})
+                        for (j = 1; j <= numLevels; j++) {
+                            array.push({label: j, value: charClass})
                         }
                     }
                 }
