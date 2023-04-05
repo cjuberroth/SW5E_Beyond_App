@@ -9,6 +9,7 @@ import theebisRoh from '../../data/theebisRoh'
 import trevalla from '../../data/trevalla'
 import t3P0 from '../../data/t3P0'
 import consularSentinel from '../../data/consularSentinel'
+import xund from '../../data/xund'
 
 const CharacterSelectorScreen = ({navigation}) => {
 
@@ -37,6 +38,7 @@ const CharacterSelectorScreen = ({navigation}) => {
 			<Button title="Trevalla" onPress={ () => setChar(trevalla) }/>
 			<Button title="T-3P0" onPress={ () => setChar(t3P0) }/>
 			<Button title="Consular Sentinel" onPress={ () => setChar(consularSentinel) }/>
+			<Button title="Xund" onPress={ () => setChar(xund) }/>
 			<TextInput 
 				style={styles.input} 
 				placeholder="Enter character JSON here" 

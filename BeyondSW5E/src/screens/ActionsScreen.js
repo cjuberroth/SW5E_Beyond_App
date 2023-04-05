@@ -12,6 +12,8 @@ const ActionsScreen = () => {
     const flexValue = useContext(HeaderContext).headerUtils.flexValue
     const headerCollapsed = useContext(HeaderContext).headerUtils.isCollapsed
     const {equippable, setEquippable} = useContext(CharacterContext)
+    const charData = useContext(CharacterContext).character
+    const charLevel = useContext(CharacterContext).characterInformation.level
     const navigation = useNavigation()
 
     const showActionDetails = (action) => {
@@ -19,6 +21,14 @@ const ActionsScreen = () => {
 			actionName: action	
 		})
 	}
+
+    let unarmedDamageDie = 0
+
+    //Determine if the character has any monk levels and what their unarmed strike damage should be if they are
+    charData.classes.forEach(charClass => {
+        if(charClass.name == 'Monk')
+            unarmedDamageDie = Math.ceil(charClass.levels / 4) * 2 + 2
+    });
 
     return (
         <View style={ styles.container }>
@@ -45,9 +55,10 @@ const ActionsScreen = () => {
                             <ActionCard 
                                 item={{
                                     name: 'Unarmed Strike',
-                                    damageDiceDieTypeEnum: 4,
+                                    damageDiceDieTypeEnum: unarmedDamageDie,
                                     damageNumberOfDice: 1,
-                                    damageType: 'Kinetic'
+                                    damageType: 'Kinetic',
+                                    isMonk: unarmedDamageDie > 0
                                 }}
                             />
                         </View>

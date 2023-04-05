@@ -588,7 +588,9 @@ export const CharacterProvider = ({children}) => {
 		}
 	}
 	maxForcePoints = maxForcePoints.reduce((a, b) => numOr0(a) + numOr0(b), 0)
-	maxForcePoints = maxForcePoints + Math.max(characterMods.wis_mod, characterMods.cha_mod)
+	if(maxForcePoints != 0){
+		maxForcePoints = maxForcePoints + Math.max(characterMods.wis_mod, characterMods.cha_mod)
+	}
 
 	const currentForcePoints = maxForcePoints - charData.currentStats.forcePointsUsed
 
@@ -636,7 +638,9 @@ export const CharacterProvider = ({children}) => {
 		}
 	}
 	maxTechPoints = maxTechPoints.reduce((a, b) => numOr0(a) + numOr0(b), 0)
-	maxTechPoints = maxTechPoints + characterMods.int_mod
+	if(maxTechPoints != 0){
+		maxTechPoints = maxTechPoints + characterMods.int_mod
+	}
 
 	const currentTechPoints = maxTechPoints - charData.currentStats.techPointsUsed
 	const [techPointsState, setTechPointsState] = useState()
