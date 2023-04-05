@@ -367,23 +367,7 @@ export const CharacterProvider = ({children}) => {
 	charLevel = charLevel.reduce((a, b) => a + b, 0)
 
 	//calculate proficiency based on character level -----------------------------------------------------
-	switch (true) {
-		case (charLevel < 5):
-			charProf = 2
-			break
-		case (charLevel < 9):
-			charProf = 3
-			break
-		case (charLevel < 13):
-			charProf = 4
-			break
-		case (charLevel < 17):
-			charProf = 5
-			break
-		case (charLevel < 21):
-			charProf = 6
-			break
-	}
+	charProf = Math.ceil(charLevel / 4) + 1
 
 	//determine character hit points --------------------------------------------------------------------
 	var charHP = 0
@@ -418,6 +402,14 @@ export const CharacterProvider = ({children}) => {
 	useEffect(() => {
 		setHitPoints(currentHP)
 	}, [currentHP])
+
+	//Used to control credits on inventory screen and modal---------------------------------------------
+	const currentCredits = charData.credits
+	const [credits, setCredits] = useState(currentCredits)
+
+	useEffect(() => {
+		setCredits(currentCredits)
+	}, [currentCredits])
 
 	//base walking speed by species ---------------------------------------------------------------------
 	var charSpeed = 0
@@ -456,7 +448,8 @@ export const CharacterProvider = ({children}) => {
 		classes: charClasses,
 		level: charLevel,
 		background: charData.background,
-		characteristics: charData.characteristics
+		characteristics: charData.characteristics,
+		credits: charData.credits
 	}
 	
 	//object for exporting ability scores --------------------------------------------------------------
@@ -839,18 +832,27 @@ export const CharacterProvider = ({children}) => {
 
 	//console.log(characterEquipment.equipment)
 	const [equippable, setEquippable] = useState(equipmentData)
-	
+
+	const [shortRestDice, setShortRestDice] = useState([])
+	const [shortRestHitDice, setShortRestHitDice] = useState([])
+	const [shortRestHitDiceUsed, setShortRestHitDiceUsed] = useState([{class: '', numDice: 0}])
+
+	//console.info(shortRestHitDiceUsed)
 	
 	//console.log("Render")
 
 	return <CharacterContext.Provider value={{
 		character, setCharacter, 
 		hitPoints, setHitPoints, 
+		credits, setCredits,
 		equippable, setEquippable,
 		characterAC, setCharacterAC,
 		forcePointsState, setForcePointsState,
 		techPointsState, setTechPointsState,
 		conditionsState, setConditionsState,
+		shortRestDice, setShortRestDice,
+		shortRestHitDice, setShortRestHitDice,
+		shortRestHitDiceUsed, setShortRestHitDiceUsed,
 		characterInformation, 
 		characterAbilities, 
 		characterMods, 

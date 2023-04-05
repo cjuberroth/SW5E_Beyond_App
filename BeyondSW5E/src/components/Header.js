@@ -57,6 +57,7 @@ const Header = () => {
                     <Text style={styles.statText}>Initiative</Text>
                     <Pressable style={styles.initiative} onPress={() => diceRoll(1, 20)}>
                         <Text style={styles.statTextBig}>{numberPresent(characterMods.dex_mod) + characterMods.dex_mod}</Text>
+                        <FontAwesome5 name='dice-d20' style={styles.d20} />
                     </Pressable>
                 </View>
                 <View style={styles.statBox}>
@@ -147,9 +148,9 @@ const styles = StyleSheet.create({
     initiative: {
         fontSize: 25,
         color: 'white',
-        borderColor: '#4A0C05',
-        borderRadius: 4,
-        borderWidth: 2,
+        //borderColor: '#4A0C05',
+        //borderRadius: 4,
+        //borderWidth: 2,
         textAlign: 'center',
         width: '90%'
     },
@@ -173,6 +174,13 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         paddingRight: 5
       },
+    d20: {
+        fontSize: 15, 
+        position: 'absolute',
+        top: 8,
+        right: -8,
+        color: 'white'
+    }
 })
 
 export default Header

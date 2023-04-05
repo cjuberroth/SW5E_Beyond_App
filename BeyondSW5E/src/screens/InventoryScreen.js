@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from 'react'
-import { Text, View, StyleSheet, ImageBackground, ScrollView } from 'react-native'
+import { Text, View, StyleSheet, ImageBackground, ScrollView, Pressable } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
 import CharacterContext from '../context/CharacterContext'
 import EquipmentBlock from '../components/EquipmentBlock'
 import Header from '../components/Header'
@@ -8,14 +9,24 @@ import HeaderContext from '../context/HeaderContext'
 import AppStyles from '../styles/AppStyles'
 
 const InventoryScreen = () => {
+    const navigation = useNavigation()
     const equipment = useContext(CharacterContext).characterEquipment.equipment
     const flexValue = useContext(HeaderContext).headerUtils.flexValue
     const headerCollapsed = useContext(HeaderContext).headerUtils.isCollapsed
     const {equippable, setEquippable} = useContext(CharacterContext)
+    const {credits, setCredits} = useContext(CharacterContext)
     const lockout = 0
     useEffect(() => {
         setEquippable(equipment)
     }, [lockout])
+
+    let carriedWeight = 0
+    for (let i = 0; i < equipment.length; i++) {
+        let temp = parseInt(equipment[i].weight)
+        if (!isNaN(temp)) {
+            carriedWeight = carriedWeight + temp
+        }
+    }
 
     // This block loads the equipment categories within the loaded equipment block
     var itemCategories = []
@@ -38,9 +49,11 @@ const InventoryScreen = () => {
                     source={ require('../../assets/header-background.jpg') }>
                     <View style={styles.tableHeader}>
                         {/* <Text style = {[ styles.column, styles.colEquip, styles.colHeader ]}>Equipped</Text> */}
-                        <Text style = {[ styles.column, styles.colItem, styles.colHeader ]}>Item</Text>
-                        <Text style = {[ styles.column, styles.colQty, styles.colHeader ]}>Cost</Text>
-                        <Text style = {[ styles.column, styles.colCost, styles.colHeader ]}>Qty</Text>
+                        <Pressable style = {[ styles.column, styles.colHeader ]} onPress={() => navigation.navigate('CreditsModal')}>
+                            <Text style = {[ styles.column, styles.colHeader, styles.credits ]}>Credits: {credits}</Text>
+                        </Pressable>
+                        {/* <Text style = {[ styles.column, styles.colQty, styles.colHeader ]}>Cost</Text> */}
+                        <Text style = {[ styles.column, styles.colCost, styles.colHeader, {textAlign: 'right'} ]}>Carried Weight: {carriedWeight}</Text>
                     </View>
                     <ScrollView bounces={false}>
                         {
@@ -75,7 +88,7 @@ const styles = StyleSheet.create({
     },
     tableHeader: {
         flexDirection: 'row',
-        margin: 5,
+        marginVertical: 5
     },
     column: {
         fontSize: 15,
@@ -90,7 +103,7 @@ const styles = StyleSheet.create({
         flex: 4
     },
     colItem: {
-        flex: 12
+        flex: 1
     },
     colQty: {
         flex: 3
@@ -98,7 +111,13 @@ const styles = StyleSheet.create({
     colCost: {
         flex: 5
     },
-    
+    credits: {
+        borderWidth: 1,
+        borderRadius: 5,
+        borderColor: '#4A0C05',
+        alignItems: 'center',
+        backgroundColor: '#4A0C05'
+    }
     
 })
 

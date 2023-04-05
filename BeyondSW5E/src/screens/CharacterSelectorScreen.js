@@ -18,11 +18,13 @@ const CharacterSelectorScreen = ({navigation}) => {
 	const headerCollapsed = useContext(HeaderContext).headerUtils.isCollapsed
 	const { setCollapsed} = useContext(HeaderContext).headerUtils
 	const { setCharacter } = useContext(CharacterContext)
+	const { shortRestHitDiceUsed, setShortRestHitDiceUsed } = useContext(CharacterContext) 
     const setChar = (char) => {
         setCharacter(char)
         navigation.navigate('Tabs')
 		if (inspiration) {setInspiration(false)}
 		if (headerCollapsed) {setCollapsed(false)}
+		if (shortRestHitDiceUsed.length != 1) {setShortRestHitDiceUsed([{class: '', numDice: 0}])}
     }
 
     const [characterJSON, changeCharacterJSON] = useState({})
