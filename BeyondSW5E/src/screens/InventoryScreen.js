@@ -46,7 +46,7 @@ const InventoryScreen = () => {
             </View>
             <View style={{flex: flexValue}}>
                 <ImageBackground style={ AppStyles.globalStyles.screenBackground }
-                    source={ require('../../assets/header-background.jpg') }>
+                    source={ require('../../assets/starBackgroundVert.jpg') }>
                     <View style={styles.tableHeader}>
                         {/* <Text style = {[ styles.column, styles.colEquip, styles.colHeader ]}>Equipped</Text> */}
                         <Pressable style = {[ styles.column, styles.colHeader ]} onPress={() => navigation.navigate('CreditsModal')}>
@@ -114,9 +114,9 @@ const styles = StyleSheet.create({
     credits: {
         borderWidth: 1,
         borderRadius: 5,
-        borderColor: '#4A0C05',
+        borderColor: 'gray',
         alignItems: 'center',
-        backgroundColor: '#4A0C05'
+        backgroundColor: 'gray'
     }
     
 })

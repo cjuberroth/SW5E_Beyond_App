@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
         margin: 5,
         padding: 5,
         paddingLeft: 10,
-        borderColor: '#4A0C05'
+        borderColor: 'white'
     },
     cardText: {
         fontSize: 24,
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
         padding: 5,
         fontSize: 18,
         color: 'white',
-        borderColor: '#4A0C05',
+        borderColor: 'white',
         borderRadius: 5
     },
     pressables: {

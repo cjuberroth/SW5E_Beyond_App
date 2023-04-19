@@ -120,7 +120,7 @@ const AbilitiesScreen = () => {
             </View>
             <View style={{ flex: flexValue }}>
                 <ImageBackground style={ AppStyles.globalStyles.screenBackground }
-                    source={ require('../../assets/header-background.jpg') }>
+                    source={ require('../../assets/starBackgroundVert.jpg') }>
                     <ImageBackground imageStyle={styles.imgBackground} 
                         source={require('../../assets/rebel-alliance.png')}>
                         <ScrollView>
@@ -259,7 +259,8 @@ const styles = StyleSheet.create({
     boxStyle: {
         marginBottom: 15,
         borderWidth: 2,
-        borderColor: '#4A0C05',
+        //borderColor: '#4A0C05',
+        borderColor: 'white',
         borderRadius: 5,
         flexBasis: '29.7%'
     },
@@ -277,7 +278,8 @@ const styles = StyleSheet.create({
         marginBottom: 9,
         marginTop: 2,
         borderWidth: 2,
-        borderColor: '#4A0C05',
+        //borderColor: '#4A0C05',
+        borderColor: 'white',
         alignSelf: 'center',
         width: '50%',
         borderRadius: 5

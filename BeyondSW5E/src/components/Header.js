@@ -25,7 +25,7 @@ const Header = () => {
 
     return (
         <ImageBackground style={ {flex:1} }
-                source={require('../../assets/header-background-upsidedown.jpg')}>
+                source={require('../../assets/starBackground.jpg')}>
             <View style={styles.headerContainer}>
                 <View style={styles.headerBtnCol}>
                     <HeaderButton onPress={() => navigation.navigate('ConditionsModal')} title="Conditions" buttonStyle={styles.headerButton} />

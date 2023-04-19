@@ -23,7 +23,7 @@ const SkillsScreen = () => {
             </View>
             <View style={{flex: flexValue}}>
                 <ImageBackground style={ AppStyles.globalStyles.screenBackground }
-                    source={ require('../../assets/header-background.jpg') }>
+                    source={ require('../../assets/starBackgroundVert.jpg') }>
                     <ImageBackground imageStyle={styles.imgBackground} 
                         source={require('../../assets/rebel-alliance.png')}>
                     <View style={styles.rowStyle}>

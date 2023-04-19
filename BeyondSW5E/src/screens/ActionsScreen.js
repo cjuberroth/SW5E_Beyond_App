@@ -37,7 +37,7 @@ const ActionsScreen = () => {
             </View>
             <View style={{flex: flexValue}}>
                 <ImageBackground style={ AppStyles.globalStyles.screenBackground }
-                    source={ require('../../assets/header-background.jpg') }>
+                    source={ require('../../assets/starBackgroundVert.jpg') }>
                     <ScrollView>
                         <View>
                             {
