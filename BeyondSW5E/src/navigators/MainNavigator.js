@@ -70,7 +70,7 @@ function MyTabs() {
                 tabBarScrollEnabled: true,
                 tabBarBounces: true,
                 tabBarStyle: {
-                    backgroundColor: '#263238'
+                    backgroundColor: 'black'
                  },
                 tabBarItemStyle: {
                     width: 110
@@ -108,7 +108,7 @@ const MainNavigator = ({ navigation }) => {
                 options={({navigation}) => ({ 
                     title: 'Choose Character',
                     headerStyle: {
-                        backgroundColor: '#263238',
+                        backgroundColor: 'black',
                     },
                     headerTintColor: '#ffffff',
                     headerRight: () => (
@@ -124,7 +124,7 @@ const MainNavigator = ({ navigation }) => {
                 options={({ route, navigation }) => ({
                     headerTitle: getHeaderTitle(route),
                     headerStyle: {
-                        backgroundColor: '#263238',
+                        backgroundColor: 'black',
                     },
                     headerTintColor: '#ffffff',
                     headerBackTitleVisible: false,

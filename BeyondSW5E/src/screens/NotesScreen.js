@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { Text, View, StyleSheet, ImageBackground, TextInput } from 'react-native'
 import CharacterContext from '../context/CharacterContext'
 import Header from '../components/Header'
@@ -9,6 +9,8 @@ import AppStyles from '../styles/AppStyles'
 const NotesScreen = () => {
     const flexValue = useContext(HeaderContext).headerUtils.flexValue
     const headerCollapsed = useContext(HeaderContext).headerUtils.isCollapsed
+    const [notes, setNotes] = useState('')
+
     return (
         <View style = { AppStyles.globalStyles.parentContainerView }>
             <View style={ styles.header }>
@@ -16,11 +18,12 @@ const NotesScreen = () => {
             </View>
             <View style={{flex: flexValue}}>
                 <ImageBackground style={ AppStyles.globalStyles.screenBackground }
-                    source={ require('../../assets/header-background.jpg') }>
+                    source={ require('../../assets/starBackgroundVert.jpg') }>
                         <View style={styles.contentView}>
                             <Text style={styles.screenHeader}>Notes</Text>
                             <TextInput
                                 style={styles.input}
+                                onChangeText={setNotes}
                                 multiline={true}
                                 returnKeyType='none'
                             />
@@ -37,7 +40,7 @@ const styles = StyleSheet.create({
     },
     input: {
         borderWidth: 3,
-        borderColor: '#4A0C05',
+        borderColor: 'white',
         height: '100%',
         flex: 1,
         color: 'white',

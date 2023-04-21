@@ -101,11 +101,10 @@ const styles = StyleSheet.create({
 		fontWeight: 'bold'
     },
     tableHeaderRow: {
-        backgroundColor: 'gray',
-		borderBottomColor: 'red'
+        backgroundColor: 'rgba(52, 52, 52, 0.2)'
     },
     tableRow: {
-        borderBottomColor: 'gray', 
+        borderBottomColor: 'rgba(52, 52, 52, 0.8)', 
 		flex: 1
     },
 	colInfo: { 

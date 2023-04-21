@@ -17,7 +17,7 @@ const HeaderCollapsed = () => {
 
     return (
         <ImageBackground style={{height: '100%', resizeMode: 'contain'}}
-                source={require('../../assets/header-background-upsidedown.jpg')}>
+                source={require('../../assets/starBackground.jpg')}>
             <View style={{flex: 1}} >
                 <View style={styles.headerContainer}>
                     <HeaderButtonSmall onPress={() => navigation.navigate('ConditionsModal')} icon='allergies' buttonStyle={styles.headerButton} />
@@ -46,17 +46,20 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-around',
         paddingTop: 2,
-        borderBottomColor: '#4A0C05', 
+        //borderBottomColor: '#4A0C05', 
+        borderBottomColor: 'rgba(21, 242, 253, 0.1)',
         //borderBottomWidth: 2
     },
     collapseButton: {
         flex: 1,
         flexDirection: 'row',
         borderWidth: 2,
-        borderColor: '#4A0C05',
+        //borderColor: '#4A0C05',
+        borderColor: 'rgba(21, 242, 253, 0.1)',
         width: '100%',
         justifyContent: 'center',
-        backgroundColor: '#4A0C05',
+        //backgroundColor: '#4A0C05',
+        backgroundColor: 'rgba(21, 242, 253, 0.1)',
         alignItems: 'center'
     },
     collapseButtonText: {
@@ -78,7 +81,8 @@ const styles = StyleSheet.create({
         paddingVertical: 1,
         paddingHorizontal: 1,
         borderRadius: 4,
-        backgroundColor: '#4A0C05',
+        //backgroundColor: '#4A0C05',
+        backgroundColor: 'rgba(21, 242, 253, 0.1)',
         marginHorizontal: 20,
         width: '75%'
     }

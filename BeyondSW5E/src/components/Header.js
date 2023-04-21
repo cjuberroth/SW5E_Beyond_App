@@ -36,7 +36,7 @@ const Header = () => {
                         characterInfo.image != '' ? {uri: characterInfo.image}
                         : require('../../assets/defaultCharImage.png')
                     }
-                    style={{ flex: 1, width: '100%', height: '100%', borderRadius: 5, borderWidth: 2, borderColor: '#4A0C05' }}
+                    style={{ flex: 1, width: '100%', height: '100%', borderRadius: 5, borderWidth: 2, borderColor: 'rgba(21, 242, 253, 0.1)' }}
                     resizeMode={"cover"}
                 />
                 <View style={styles.headerBtnCol}>
@@ -91,7 +91,8 @@ const styles = StyleSheet.create({
         paddingVertical: 5,
         paddingHorizontal: 5,
         borderRadius: 4,
-        backgroundColor: '#4A0C05',
+        //backgroundColor: '#4A0C05',
+        backgroundColor: 'rgba(21, 242, 253, 0.1)',
         marginHorizontal: 20,
         marginVertical: 5,
         minWidth: '80%'
@@ -105,7 +106,8 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         borderWidth: 2,
         borderColor: '#15f2fd',
-        backgroundColor: '#4A0C05',
+        //backgroundColor: '#4A0C05',
+        backgroundColor: 'rgba(21, 242, 253, 0.1)',
         marginHorizontal: 20,
         marginVertical: 5,
         minWidth: '80%'
@@ -131,7 +133,8 @@ const styles = StyleSheet.create({
         justifyContent: 'space-evenly',
         paddingTop: 10,
         paddingBottom: 10,
-        borderBottomColor: '#4A0C05', 
+        //borderBottomColor: '#4A0C05', 
+        borderBottomColor: 'rgba(21, 242, 253, 0.1)',
         borderBottomWidth: 2
     },
     statBox: {
@@ -158,7 +161,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         width: '100%',
         justifyContent: 'center',
-        backgroundColor: '#4A0C05',
+        //backgroundColor: '#4A0C05',
+        backgroundColor: 'rgba(21, 242, 253, 0.1)',
         flex: 1,
         alignItems: 'center'
     },

@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { Text, View, StyleSheet, ImageBackground, Pressable, ScrollView } from 'react-native'
+import { FontAwesome5 } from '@expo/vector-icons'
 import CharacterContext from '../context/CharacterContext'
 import * as Animatable from 'react-native-animatable'
 import Header from '../components/Header'
@@ -48,7 +49,7 @@ const FeaturesScreen = () => {
             </View>
             <View style={{flex: flexValue}}>
                 <ImageBackground style={ AppStyles.globalStyles.screenBackground }
-                   source={ require('../../assets/header-background.jpg')}>
+                   source={ require('../../assets/starBackgroundVert.jpg')}>
                     <View style={styles.levelsView}>
                         {
                             charClasses.map(charClass => {
@@ -67,8 +68,13 @@ const FeaturesScreen = () => {
                                         archetypes.map(arch => {
                                             return (
                                                 <View style={styles.featsView}>
-                                                    <Pressable onPress={() => toggleArchetypesExpanded(arch.rowKey)}>
-                                                        <Text style={styles.featItem}>{arch.name}</Text>
+                                                    <Pressable style={{ flexDirection: 'row' }} onPress={() => toggleArchetypesExpanded(arch.rowKey)}>
+                                                        <Text style={styles.featItem}>{arch.name} </Text>
+                                                        {
+                                                            arch.collapsed ?
+                                                                <FontAwesome5 style={ styles.icon } name='angle-up' />
+                                                                : <FontAwesome5 style={ styles.icon } name='angle-down' />
+                                                        }
                                                     </Pressable>
                                                     <Collapsible collapsed={arch.collapsed}>
                                                         <View style={styles.content}>
@@ -92,8 +98,13 @@ const FeaturesScreen = () => {
                                 feats.map(feat => {
                                     return (
                                         <View style={styles.featsView}>
-                                            <Pressable onPress={() => toggleFeatsExpanded(feat.name)}>
-                                                <Text style={styles.featItem}>{feat.name}</Text>
+                                            <Pressable style={{ flexDirection: 'row' }} onPress={() => toggleFeatsExpanded(feat.name)}>
+                                                <Text style={styles.featItem}>{feat.name} </Text>
+                                                {
+                                                    feat.collapsed ?
+                                                        <FontAwesome5 style={ styles.icon } name='angle-up' />
+                                                        : <FontAwesome5 style={ styles.icon } name='angle-down' />
+                                                }
                                             </Pressable>
                                             <Collapsible collapsed={feat.collapsed}>
                                                 <View style={styles.content}>
@@ -141,7 +152,7 @@ const styles = StyleSheet.create({
     featHeader: {
         fontSize: 24,
         fontWeight: 'bold',
-        color: '#4A0C05',
+        color: 'white',
         paddingVertical: 5
     },
     featText: {
@@ -153,14 +164,20 @@ const styles = StyleSheet.create({
     featItem: {
         fontSize: 22,
         color: '#ffffff',
-        textDecorationLine: 'underline'
+        //textDecorationLine: 'underline'
     },
     featsView: {
         paddingHorizontal: 30
     },
     scrollingView: {
         paddingHorizontal: 5
-    }
+    },
+    icon: {
+        fontSize: 25, 
+        color: 'white',
+        alignSelf: 'center',
+        paddingRight: 5
+      }
 })
 
 export default FeaturesScreen

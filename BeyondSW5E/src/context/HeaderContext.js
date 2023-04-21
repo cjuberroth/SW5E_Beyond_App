@@ -63,7 +63,8 @@ const styles = StyleSheet.create({
         paddingVertical: 5,
         paddingHorizontal: 5,
         borderRadius: 4,
-        backgroundColor: '#4A0C05',
+        //backgroundColor: '#4A0C05',
+        backgroundColor: 'rgba(21, 242, 253, 0.1)',
         marginHorizontal: 20,
         marginVertical: 5,
         minWidth: '80%'
@@ -87,7 +88,8 @@ const styles = StyleSheet.create({
         paddingVertical: 1,
         paddingHorizontal: 1,
         borderRadius: 4,
-        backgroundColor: '#4A0C05',
+        //backgroundColor: '#4A0C05',
+        backgroundColor: 'rgba(21, 242, 253, 0.1)',
         marginHorizontal: 20,
         width: '75%'
       },

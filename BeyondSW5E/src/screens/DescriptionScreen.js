@@ -20,7 +20,7 @@ const DescriptionScreen = () => {
             </View>
             <View style={{flex: flexValue}}>
                 <ImageBackground style={ AppStyles.globalStyles.screenBackground }
-                    source={ require('../../assets/header-background.jpg') }>
+                    source={ require('../../assets/starBackgroundVert.jpg') }>
                     <ScrollView>
                         <Text style={ styles.headerStyle }>Background</Text>
                         <Text style={styles.chars}>{ background.name } | Feature: { background.feat.name }</Text>
@@ -75,7 +75,8 @@ const styles = StyleSheet.create({
     headerStyle: {
         fontSize: 18,
         fontWeight: 'bold',
-        color: '#4A0C05'
+        color: 'white',
+        marginTop: 10
     }
 })
 
