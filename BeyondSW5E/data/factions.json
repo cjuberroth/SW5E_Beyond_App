@@ -3,27 +3,27 @@
         "title": "Light Side",
         "data": [
             {
-                "value": "rebel-alliance.png",
+                "value": "rebelAlliance",
                 "label": "Rebel Alliance"
             },
             {
-                "value": "galactic-republic.png",
+                "value": "galacticRepublic",
                 "label": "Galactic Republic"
             },
             {
-                "value": "jedi-order.png",
+                "value": "jediOrder",
                 "label": "Jedi Order"
             },
             {
-                "value": "old-republic.png",
+                "value": "oldRepublic",
                 "label": "Old Republic"
             },
             {
-                "value": "phoenix-squad.png",
+                "value": "phoenixSquad",
                 "label": "Phoenix Squad"
             },
             {
-                "value": "new-republic.png",
+                "value": "newRepublic",
                 "label": "New Republic"
             }
         ]
@@ -32,19 +32,19 @@
         "title": "Dark Side",
         "data": [
             {
-                "value": "galactic-empire.png",
+                "value": "galacticEmpire",
                 "label": "Galactic Empire"
             },
             {
-                "value": "first-order.png",
+                "value": "firstOrder",
                 "label": "First Order"
             },
             {
-                "value": "trade-federation.png",
+                "value": "tradeFederation",
                 "label": "Trade Federation"
             },
             {
-                "value": "sith.png",
+                "value": "sith",
                 "label": "Sith"
             }
         ]
@@ -53,15 +53,15 @@
         "title": "Unaligned",
         "data": [
             {
-                "value": "clan-fett.png",
+                "value": "clanFett",
                 "label": "Clan Fett (Bounty Hunters)"
             },
             {
-                "value": "death-watch.png",
+                "value": "deathWatch",
                 "label": "Death Watch"
             },
             {
-                "value": "pyke-syndicate",
+                "value": "pykeSyndicate",
                 "label": "Pyke Syndicate"
             }
         ]

@@ -1,7 +1,9 @@
 import React, { useContext } from 'react'
 import { Text, View, StyleSheet, ImageBackground, ScrollView, Pressable } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
+import { FontAwesome5 } from '@expo/vector-icons'
 import CharacterContext from '../context/CharacterContext'
+import SettingsContext from '../context/SettingsContext'
 import Header from '../components/Header'
 import HeaderCollapsed from '../components/HeaderCollapsed'
 import HeaderContext from '../context/HeaderContext'
@@ -20,6 +22,7 @@ const AbilitiesScreen = () => {
     const characterMods = useContext(CharacterContext).characterMods
     const characterSaves = useContext(CharacterContext).characterSaves
     const numberPresent = useContext(CharacterContext).functions.numberPresent
+    const {emblem} = useContext(SettingsContext)
 
     const getSkillMod = function(skill) {
         let mod = 0
@@ -122,13 +125,16 @@ const AbilitiesScreen = () => {
                 <ImageBackground style={ AppStyles.globalStyles.screenBackground }
                     source={ require('../../assets/starBackgroundVert.jpg') }>
                     <ImageBackground imageStyle={styles.imgBackground} 
-                        source={require('../../assets/rebel-alliance.png')}>
+                        //source={require('../../assets/rebel-alliance.png')}
+                        source={emblem && {uri: emblem}}
+                        >
                         <ScrollView>
                             <View style={styles.parentStyle}>
                                 <View style={styles.boxStyle}>
                                     <Text style={styles.textStyle}>Strength</Text>
                                     <Pressable onPress={() => diceRoll(1, 20, 'Strength')}>
                                         <Text style={styles.modStyle}>{numberPresent(characterMods.str_mod)}{characterMods.str_mod}</Text>
+                                        <FontAwesome5 name='dice-d20' style={styles.d20} />
                                     </Pressable>
                                     <Text style={styles.textStyle}>{characterAbilities.abilitiesStrength}</Text>
                                 </View>
@@ -136,6 +142,7 @@ const AbilitiesScreen = () => {
                                     <Text style={styles.textStyle}>Dexterity</Text>
                                     <Pressable onPress={() => diceRoll(1, 20, 'Dexterity')}>
                                         <Text style={styles.modStyle}>{numberPresent(characterMods.dex_mod)}{characterMods.dex_mod}</Text>
+                                        <FontAwesome5 name='dice-d20' style={styles.d20} />
                                     </Pressable>
                                     <Text style={styles.textStyle}>{characterAbilities.abilitiesDexterity}</Text>
                                 </View>
@@ -143,6 +150,7 @@ const AbilitiesScreen = () => {
                                     <Text style={styles.textStyle}>Constitution</Text>
                                     <Pressable onPress={() => diceRoll(1, 20, 'Constitution')}>
                                         <Text style={styles.modStyle}>{numberPresent(characterMods.con_mod)}{characterMods.con_mod}</Text>
+                                        <FontAwesome5 name='dice-d20' style={styles.d20} />
                                     </Pressable>
                                     <Text style={styles.textStyle}>{characterAbilities.abilitiesConstitution}</Text>
                                 </View>
@@ -150,6 +158,7 @@ const AbilitiesScreen = () => {
                                     <Text style={styles.textStyle}>Intelligence</Text>
                                     <Pressable onPress={() => diceRoll(1, 20, 'Intelligence')}>
                                         <Text style={styles.modStyle}>{numberPresent(characterMods.int_mod)}{characterMods.int_mod}</Text>
+                                        <FontAwesome5 name='dice-d20' style={styles.d20} />
                                     </Pressable>
                                     <Text style={styles.textStyle}>{characterAbilities.abilitiesIntelligence}</Text>
                                 </View>
@@ -157,6 +166,7 @@ const AbilitiesScreen = () => {
                                     <Text style={styles.textStyle}>Wisdom</Text>
                                     <Pressable onPress={() => diceRoll(1, 20, 'Wisdom')}>
                                         <Text style={styles.modStyle}>{numberPresent(characterMods.wis_mod)}{characterMods.wis_mod}</Text>
+                                        <FontAwesome5 name='dice-d20' style={styles.d20} />
                                     </Pressable>
                                     <Text style={styles.textStyle}>{characterAbilities.abilitiesWisdom}</Text>
                                 </View>
@@ -164,6 +174,7 @@ const AbilitiesScreen = () => {
                                     <Text style={styles.textStyle}>Charisma</Text>
                                     <Pressable onPress={() => diceRoll(1, 20, 'Charisma')}>
                                         <Text style={styles.modStyle}>{numberPresent(characterMods.cha_mod)}{characterMods.cha_mod}</Text>
+                                        <FontAwesome5 name='dice-d20' style={styles.d20} />
                                     </Pressable>
                                     <Text style={styles.textStyle}>{characterAbilities.abilitiesCharisma}</Text>
                                 </View>
@@ -175,19 +186,22 @@ const AbilitiesScreen = () => {
                                 <View style={styles.boxStyle}>
                                     <Text style={styles.textStyle}>Strength</Text>
                                     <Pressable onPress={() => diceRoll(1, 20, 'Strength Save')}>
-                                        <Text style={ characterSaves.characterSaves.includes('Strength') ? styles.modStyleProficient : styles.modStyle}>{numberPresent(characterSaves.str_save)}{characterSaves.str_save}</Text>
+                                        <Text style={styles.modStyle}>{numberPresent(characterSaves.str_save)}{characterSaves.str_save}</Text>
+                                        <FontAwesome5 name='dice-d20' style={ characterSaves.characterSaves.includes('Strength') ? styles.d20Proficient : styles.d20 } />
                                     </Pressable>
                                 </View>
                                 <View style={styles.boxStyle}>
                                     <Text style={styles.textStyle}>Dexterity</Text>
                                     <Pressable onPress={() => diceRoll(1, 20, 'Dexterity Save')}>
-                                        <Text style={characterSaves.characterSaves.includes('Dexterity') ? styles.modStyleProficient : styles.modStyle}>{numberPresent(characterSaves.dex_save)}{characterSaves.dex_save}</Text>
+                                        <Text style={styles.modStyle}>{numberPresent(characterSaves.dex_save)}{characterSaves.dex_save}</Text>
+                                        <FontAwesome5 name='dice-d20' style={ characterSaves.characterSaves.includes('Dexterity') ? styles.d20Proficient : styles.d20} />
                                     </Pressable>
                                 </View>
                                 <View style={styles.boxStyle}>
                                     <Text style={styles.textStyle}>Constitution</Text>
                                     <Pressable onPress={() => diceRoll(1, 20, 'Constitution Save')}>
                                         <Text style={characterSaves.characterSaves.includes('Constitution') ? styles.modStyleProficient : styles.modStyle}>{numberPresent(characterSaves.con_save)}{characterSaves.con_save}</Text>
+                                        <FontAwesome5 name='dice-d20' style={styles.d20} />
                                     </Pressable>
                                 </View>
                                 <View style={styles.boxStyle}>
@@ -200,12 +214,14 @@ const AbilitiesScreen = () => {
                                     <Text style={styles.textStyle}>Wisdom</Text>
                                     <Pressable onPress={() => diceRoll(1, 20, 'Wisdom Save')}>
                                         <Text style={characterSaves.characterSaves.includes('Wisdom') ? styles.modStyleProficient : styles.modStyle}>{numberPresent(characterSaves.wis_save)}{characterSaves.wis_save}</Text>
+                                        <FontAwesome5 name='dice-d20' style={styles.d20} />
                                     </Pressable>
                                 </View>
                                 <View style={styles.boxStyle}>
                                     <Text style={styles.textStyle}>Charisma</Text>
                                     <Pressable onPress={() => diceRoll(1, 20, 'Charisma Save')}>
                                         <Text style={characterSaves.characterSaves.includes('Charisma') ? styles.modStyleProficient : styles.modStyle}>{numberPresent(characterSaves.cha_save)}{characterSaves.cha_save}</Text>
+                                        <FontAwesome5 name='dice-d20' style={styles.d20} />
                                     </Pressable>
                                 </View>
                             </View>
@@ -260,7 +276,7 @@ const styles = StyleSheet.create({
         marginBottom: 15,
         borderWidth: 2,
         //borderColor: '#4A0C05',
-        borderColor: 'white',
+        borderColor: '#ffe81f',
         borderRadius: 5,
         flexBasis: '29.7%'
     },
@@ -277,9 +293,9 @@ const styles = StyleSheet.create({
         color: 'white',
         marginBottom: 9,
         marginTop: 2,
-        borderWidth: 2,
+        //borderWidth: 2,
         //borderColor: '#4A0C05',
-        borderColor: 'white',
+        //borderColor: 'white',
         alignSelf: 'center',
         width: '50%',
         borderRadius: 5
@@ -299,7 +315,7 @@ const styles = StyleSheet.create({
     headingStyle: {
         fontSize: 30,
         //backgroundColor: '#263238',
-        color: 'white',
+        color: '#ffe81f',
         textAlign: 'center',
         marginBottom: 15
     },
@@ -317,6 +333,20 @@ const styles = StyleSheet.create({
         color: 'white',
         textAlign: 'left',
         fontSize: 20
+    },
+    d20: {
+        fontSize: 15, 
+        position: 'absolute',
+        top: 14,
+        right: 25,
+        color: 'white'
+    },
+    d20Proficient: {
+        fontSize: 15, 
+        position: 'absolute',
+        top: 14,
+        right: 25,
+        color: '#15f2fd'
     }
 })
 

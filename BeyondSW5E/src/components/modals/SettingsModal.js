@@ -1,18 +1,38 @@
-import React, { useContext } from 'react'
-import { View, Pressable, Text, StyleSheet } from 'react-native'
+import React, { useContext, useEffect, useState } from 'react'
+import { View, Pressable, Text, StyleSheet, Button } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import { FontAwesome5 } from '@expo/vector-icons'
 import { Select, SelectModalProvider } from '@mobile-reality/react-native-select-pro'
-import CharacterContext from '../../context/CharacterContext'
-import useSettings from '../../hooks/useSettings'
+import SettingsContext from '../../context/SettingsContext'
 import factions from '../../../data/factions.json'
 
 const SettingsModal = () => {
     const navigation = useNavigation()
-    const [value, setData, removeData, getData] = useSettings()
+    let localEmblem = ''
+    const { emblemText } = useContext(SettingsContext)
+    const { updateEmblem, updateEmblemText } = useContext(SettingsContext)
+
+    const handleSetValue = async () => {
+        try {
+            await AsyncStorage.setItem('emblem', localEmblem).then(updateEmblem(localEmblem))
+            await AsyncStorage.setItem('emblemText', localEmblem).then(updateEmblemText(localEmblem))
+        } catch (error) {
+            console.log('Error saving value: ', error)
+        }
+    }
 
     const handleSelect = (item) => {
-        console.log(item.label)
+        localEmblem = item.value
+    }
+
+    const handleRemoveFaction = async () => {
+        try {
+            await AsyncStorage.removeItem('emblem').then(updateEmblem(''))
+            await AsyncStorage.removeItem('emblemText').then(updateEmblemText(''))
+        } catch (error) {
+            console.log('Error removing data: ', error)
+        }
     }
 
     return (
@@ -38,13 +58,20 @@ const SettingsModal = () => {
                                 <Text style={{fontSize: 18}}>Dark Side</Text>
                             </Pressable>
                         </View>
-                        <Text style={styles.modalSubheadText}>Choose Faction: </Text>
+                        <Text style={styles.modalSubheadText}>Choose Faction: ({emblemText})</Text>
                         <View >
                             <Select options={factions}
-                                clearable={true}
                                 closeOptionsListOnSelect={true}
+                                scrollToSelectedOption={true}
+                                //searchable={true}
                                 onSelect={handleSelect} />
                         </View>
+                        <Pressable onPress={() => handleRemoveFaction()}>
+                            <Text style={styles.modalRemoveButton}>Remove Faction</Text>
+                        </Pressable>
+                        <Pressable style={styles.modalButton} onPress={() => handleSetValue()}>
+                            <Text style={styles.modalButtonText}>Save</Text>
+                        </Pressable>
                     </View>
                 </View>
             </View>
@@ -90,6 +117,32 @@ const styles = StyleSheet.create({
     },
     modalButtons: {
         paddingBottom: 5
+    },
+    modalButton: {
+        alignItems: 'center',
+        justifyContent: 'space-evenly',
+        paddingVertical: 5,
+        paddingHorizontal: 5,
+        borderRadius: 4,
+        backgroundColor: '#4A0C05',
+        marginHorizontal: 20,
+        marginVertical: 5,
+        minWidth: '80%',
+        flexDirection: 'row',
+        marginBottom: 5
+    },
+    modalButtonText: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: 'white',
+        alignSelf: 'center',
+        padding: 5
+    },
+    modalRemoveButton: {
+        fontSize: 14,
+        color: 'red',
+        alignSelf: 'center',
+        paddingVertical: 7
     }
 })
 

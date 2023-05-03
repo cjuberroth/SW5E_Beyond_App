@@ -557,7 +557,7 @@ export const CharacterProvider = ({children}) => {
 	for(let i = 0; i < charData.classes.length; i++) {
 		if(charData.classes[i].archetype?.name != undefined) {
 			//charArchetype.push(charData.classes[i].archetype?.name)
-			for (j = 0; j < api_Archetype.length; j++) {
+			for (let j = 0; j < api_Archetype.length; j++) {
 				if (api_Archetype[j].name === charData.classes[i].archetype?.name) {
 					charArchetype.push(api_Archetype[j])
 				}
@@ -580,7 +580,7 @@ export const CharacterProvider = ({children}) => {
 	for(k = 0; k < charData.classes.length; k++) {
 		if(isForceClass(charData.classes[k].name)) {
 			classLevel = charData.classes[k].levels
-			for(j = 0; j < api_Class.length; j++) {
+			for(let j = 0; j < api_Class.length; j++) {
 				if(api_Class[j].name === charData.classes[k].name) {
 					maxForcePoints.push(parseInt((api_Class[j]["levelChanges"][classLevel]["Force Points"]), 10))
 				}
@@ -604,7 +604,7 @@ export const CharacterProvider = ({children}) => {
 	var forcePowers = []
 	for (m = 0; m < charData.classes.length; m++) {
 		if (isForceClass(charData.classes[m].name)) {
-			for (j = 0; j < charData.classes[m].forcePowers.length; j++) {
+			for (let j = 0; j < charData.classes[m].forcePowers.length; j++) {
 				forcePowers.push(charData.classes[m].forcePowers[j])
 			}
 		}
@@ -630,7 +630,7 @@ export const CharacterProvider = ({children}) => {
 	for(k = 0; k < charData.classes.length; k++) {
 		if(isTechClass(charData.classes[k].name)) {
 			classLevel = charData.classes[k].levels
-			for(j = 0; j < api_Class.length; j++) {
+			for(let j = 0; j < api_Class.length; j++) {
 				if(api_Class[j].name === charData.classes[k].name) {
 					maxTechPoints.push(parseInt((api_Class[j]["levelChanges"][classLevel]["Tech Points"]), 10))
 				}
@@ -653,7 +653,7 @@ export const CharacterProvider = ({children}) => {
 	var techPowers = []
 	for (m = 0; m < charData.classes.length; m++) {
 		if (isTechClass(charData.classes[m].name)) {
-			for (j = 0; j < charData.classes[m].techPowers.length; j++) {
+			for (let j = 0; j < charData.classes[m].techPowers.length; j++) {
 				techPowers.push(charData.classes[m].techPowers[j])
 			}
 		}
@@ -836,8 +836,6 @@ export const CharacterProvider = ({children}) => {
 	const [shortRestDice, setShortRestDice] = useState([])
 	const [shortRestHitDice, setShortRestHitDice] = useState([])
 	const [shortRestHitDiceUsed, setShortRestHitDiceUsed] = useState([{class: '', numDice: 0}])
-
-	//console.info(shortRestHitDiceUsed)
 	
 	//console.log("Render")
 

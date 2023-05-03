@@ -9,6 +9,7 @@ const useSettings = (key) => {
             const data = await AsyncStorage.getItem(key)
             if (data !== null) {
                 setValue(data)
+                console.log('Value retrieved successfully: ', data)
             }
         } catch (error) {
             console.log(error)
@@ -19,6 +20,7 @@ const useSettings = (key) => {
         try {
             await AsyncStorage.setItem(key, data)
             setValue(data)
+            console.log('Value saved successfully: ' + key)
         } catch (error) {
             console.log(error)
         }

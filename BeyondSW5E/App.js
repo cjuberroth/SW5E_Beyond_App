@@ -5,6 +5,7 @@ import { NavigationContainer } from '@react-navigation/native'
 import MainNavigator from './src/navigators/MainNavigator'
 import { CharacterProvider } from './src/context/CharacterContext'
 import { HeaderProvider } from './src/context/HeaderContext'
+import { SettingsProvider } from './src/context/SettingsContext'
 import { SelectProvider } from '@mobile-reality/react-native-select-pro'
 
 SplashScreen.preventAutoHideAsync()
@@ -41,9 +42,11 @@ function App() {
             <SelectProvider>
                 <CharacterProvider>
                     <HeaderProvider>
-                        <NavigationContainer>
-                            <MainNavigator />
-                        </NavigationContainer>
+                        <SettingsProvider>
+                            <NavigationContainer>
+                                <MainNavigator />
+                            </NavigationContainer>
+                        </SettingsProvider>
                     </HeaderProvider>
                 </CharacterProvider>
             </SelectProvider>
