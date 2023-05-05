@@ -403,6 +403,10 @@ export const CharacterProvider = ({children}) => {
 		setHitPoints(currentHP)
 	}, [currentHP])
 
+	//Used to control temporary and max hit points in modal ----------------------------------------------------
+	const [tempHitPoints, setTempHitPoints] = useState(0)
+	const [maxHP, setMaxHP] = useState(0)
+
 	//Used to control credits on inventory screen and modal---------------------------------------------
 	const currentCredits = charData.credits
 	const [credits, setCredits] = useState(currentCredits)
@@ -842,6 +846,8 @@ export const CharacterProvider = ({children}) => {
 	return <CharacterContext.Provider value={{
 		character, setCharacter, 
 		hitPoints, setHitPoints, 
+		tempHitPoints, setTempHitPoints,
+		maxHP, setMaxHP,
 		credits, setCredits,
 		equippable, setEquippable,
 		characterAC, setCharacterAC,

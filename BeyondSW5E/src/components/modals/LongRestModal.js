@@ -11,6 +11,8 @@ const LongRestModal = () => {
     const charData = useContext(CharacterContext).characterInformation
     const classData = useContext(CharacterContext).apiData.class
     const { hitPoints, setHitPoints } = useContext(CharacterContext)
+    const { maxHP, setMaxHP } = useContext(CharacterContext)
+    const { tempHitPoints, setTempHitPoints } = useContext(CharacterContext)
     const [checkedReset, onChangeReset] = useState(false)
     const [checkedApply, onChangeApply] = useState(true)
     const [checkedHitDice, onChangeHitDice] = useState(true)
@@ -52,6 +54,10 @@ const LongRestModal = () => {
     
     hitDice.sort((a, b) => b.hitDie - a.hitDie)
 
+    const handleResetHPCheckbox = () => {
+        onChangeReset(!checkedRest)
+    }
+    
     const handleAutoHealCheckbox = () => {
         onChangeApply(!checkedApply)
     }
@@ -80,9 +86,12 @@ const LongRestModal = () => {
         if (checkedApply) {
             setHitPoints(charData.hitPoints)
         }
-        //there will need to be code here later to reset max hp changes once they've been implemented
         
-        
+        if (checkedReset) {
+            setMaxHP(0)
+            setTempHitPoints(0)
+        }
+                
         if (!checkedHitDice) {
             navigation.navigate('RecoverHitDiceModal')
         } else {
@@ -136,10 +145,10 @@ const LongRestModal = () => {
                 <View style={ AppStyles.tableStyles.tableRow }>
                     <CheckBox 
                         checked={checkedReset}
-                        onChange={onChangeReset}
+                        onChange={handleResetHPCheckbox}
                         buttonStyle = {styles.checkboxBase}
                         activeButtonStyle = {styles.checkboxChecked} />
-                    <Text style={{flex: 9, paddingLeft: 5, fontSize: 14}}>Reset max HP changes during this rest (coming soon)</Text>
+                    <Text style={{flex: 9, paddingLeft: 5, fontSize: 14}}>Reset max HP changes and clear temporary hit points during this rest</Text>
                 </View>
                 { !hitDiceRecovery ?
                     <View></View> :

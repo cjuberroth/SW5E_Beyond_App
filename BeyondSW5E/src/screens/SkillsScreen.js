@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import { Text, View, FlatList, StyleSheet, ImageBackground } from 'react-native'
 import CharacterContext from '../context/CharacterContext'
+import SettingsContext from '../context/SettingsContext'
 import SkillTableRow from '../components/SkillTableRow'
 import Header from '../components/Header'
 import HeaderCollapsed from '../components/HeaderCollapsed'
@@ -15,6 +16,7 @@ const SkillsScreen = () => {
     const skillsLU = useContext(CharacterContext).apiData.skillsLU
     const flexValue = useContext(HeaderContext).headerUtils.flexValue
     const headerCollapsed = useContext(HeaderContext).headerUtils.isCollapsed
+    const {emblem} = useContext(SettingsContext)
 
     return (
         <View style={styles.parentView}>
@@ -25,7 +27,7 @@ const SkillsScreen = () => {
                 <ImageBackground style={ AppStyles.globalStyles.screenBackground }
                     source={ require('../../assets/starBackgroundVert.jpg') }>
                     <ImageBackground imageStyle={styles.imgBackground} 
-                        source={require('../../assets/rebel-alliance.png')}>
+                        source={emblem && {uri: emblem}}>
                     <View style={styles.rowStyle}>
                         <Text style={styles.modCol}>PROF</Text>
                         <Text style={styles.skillCol}>SKILL</Text>

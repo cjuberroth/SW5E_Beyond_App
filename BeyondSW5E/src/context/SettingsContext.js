@@ -10,7 +10,7 @@ export const SettingsProvider = ({children}) => {
 	//emblemText is what should be displayed for the user to show which emblem is current
     const [emblemText, setEmblemText] = useState('')
 	
-	const rebelAlliance = require('../../assets/rebel-alliance.png')
+	const rebelAlliance = require('../../assets/rebel_alliance.png')
 	const sourceRebel = Image.resolveAssetSource(rebelAlliance)
 	const galacticEmpire = require('../../assets/galactic-empire.png')
 	const sourceEmpire = Image.resolveAssetSource(galacticEmpire)
@@ -69,8 +69,6 @@ export const SettingsProvider = ({children}) => {
 				setEmblem('')
 		}
 	}
-
-	console.log(emblem)
 
     return <SettingsContext.Provider value={{
         emblem, setEmblem,

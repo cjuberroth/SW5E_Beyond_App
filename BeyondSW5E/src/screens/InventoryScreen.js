@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from 'react'
 import { Text, View, StyleSheet, ImageBackground, ScrollView, Pressable } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import CharacterContext from '../context/CharacterContext'
+import SettingsContext from '../context/SettingsContext'
 import EquipmentBlock from '../components/EquipmentBlock'
 import Header from '../components/Header'
 import HeaderCollapsed from '../components/HeaderCollapsed'
@@ -15,6 +16,8 @@ const InventoryScreen = () => {
     const headerCollapsed = useContext(HeaderContext).headerUtils.isCollapsed
     const {equippable, setEquippable} = useContext(CharacterContext)
     const {credits, setCredits} = useContext(CharacterContext)
+    const {emblem} = useContext(SettingsContext)
+
     const lockout = 0
     useEffect(() => {
         setEquippable(equipment)
@@ -47,31 +50,36 @@ const InventoryScreen = () => {
             <View style={{flex: flexValue}}>
                 <ImageBackground style={ AppStyles.globalStyles.screenBackground }
                     source={ require('../../assets/starBackgroundVert.jpg') }>
-                    <View style={styles.tableHeader}>
-                        {/* <Text style = {[ styles.column, styles.colEquip, styles.colHeader ]}>Equipped</Text> */}
-                        <Pressable style = {[ styles.column, styles.colHeader ]} onPress={() => navigation.navigate('CreditsModal')}>
-                            <Text style = {[ styles.column, styles.colHeader, styles.credits ]}>Credits: {credits}</Text>
-                        </Pressable>
-                        {/* <Text style = {[ styles.column, styles.colQty, styles.colHeader ]}>Cost</Text> */}
-                        <Text style = {[ styles.column, styles.colCost, styles.colHeader, {textAlign: 'right'} ]}>Carried Weight: {carriedWeight}</Text>
-                    </View>
-                    <ScrollView bounces={false}>
-                        {
-                            itemCategories.map(category => {
-                                let filteredEquipment = equipment.filter((item) => {
-                                    if(item.equipmentCategory === category) {
-                                        return item
-                                    }
+                    <ImageBackground imageStyle={styles.imgBackground} 
+                    //source={require('../../assets/rebel-alliance.png')}
+                    source={emblem && {uri: emblem}}
+                    >
+                        <View style={styles.tableHeader}>
+                            {/* <Text style = {[ styles.column, styles.colEquip, styles.colHeader ]}>Equipped</Text> */}
+                            <Pressable style = {[ styles.column, styles.colHeader ]} onPress={() => navigation.navigate('CreditsModal')}>
+                                <Text style = {[ styles.column, styles.colHeader, styles.credits ]}>Credits: {credits}</Text>
+                            </Pressable>
+                            {/* <Text style = {[ styles.column, styles.colQty, styles.colHeader ]}>Cost</Text> */}
+                            <Text style = {[ styles.column, styles.colCost, styles.colHeader, {textAlign: 'right'} ]}>Carried Weight: {carriedWeight}</Text>
+                        </View>
+                        <ScrollView bounces={false}>
+                            {
+                                itemCategories.map(category => {
+                                    let filteredEquipment = equipment.filter((item) => {
+                                        if(item.equipmentCategory === category) {
+                                            return item
+                                        }
+                                    })
+                                    return (
+                                        <EquipmentBlock 
+                                            category={category} 
+                                            equipment={filteredEquipment}
+                                        />
+                                    )
                                 })
-                                return (
-                                    <EquipmentBlock 
-                                        category={category} 
-                                        equipment={filteredEquipment}
-                                    />
-                                )
-                            })
-                        }
-                    </ScrollView>
+                            }
+                        </ScrollView>
+                    </ImageBackground>
                 </ImageBackground>
             </View>
         </View>
@@ -117,7 +125,11 @@ const styles = StyleSheet.create({
         borderColor: 'gray',
         alignItems: 'center',
         backgroundColor: 'gray'
-    }
+    },
+    imgBackground: {
+        width: '100%',
+        resizeMode: 'contain'
+    },
     
 })
 

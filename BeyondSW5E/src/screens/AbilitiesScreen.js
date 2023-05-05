@@ -194,34 +194,35 @@ const AbilitiesScreen = () => {
                                     <Text style={styles.textStyle}>Dexterity</Text>
                                     <Pressable onPress={() => diceRoll(1, 20, 'Dexterity Save')}>
                                         <Text style={styles.modStyle}>{numberPresent(characterSaves.dex_save)}{characterSaves.dex_save}</Text>
-                                        <FontAwesome5 name='dice-d20' style={ characterSaves.characterSaves.includes('Dexterity') ? styles.d20Proficient : styles.d20} />
+                                        <FontAwesome5 name='dice-d20' style={ characterSaves.characterSaves.includes('Dexterity') ? styles.d20Proficient : styles.d20 } />
                                     </Pressable>
                                 </View>
                                 <View style={styles.boxStyle}>
                                     <Text style={styles.textStyle}>Constitution</Text>
                                     <Pressable onPress={() => diceRoll(1, 20, 'Constitution Save')}>
-                                        <Text style={characterSaves.characterSaves.includes('Constitution') ? styles.modStyleProficient : styles.modStyle}>{numberPresent(characterSaves.con_save)}{characterSaves.con_save}</Text>
-                                        <FontAwesome5 name='dice-d20' style={styles.d20} />
+                                        <Text style={styles.modStyle}>{numberPresent(characterSaves.con_save)}{characterSaves.con_save}</Text>
+                                        <FontAwesome5 name='dice-d20' style={ characterSaves.characterSaves.includes('Constitution') ? styles.d20Proficient : styles.d20 } />
                                     </Pressable>
                                 </View>
                                 <View style={styles.boxStyle}>
                                     <Text style={styles.textStyle}>Intelligence</Text>
                                     <Pressable onPress={() => diceRoll(1, 20, 'Intelligence Save')}>
-                                        <Text style={characterSaves.characterSaves.includes('Intelligence') ? styles.modStyleProficient : styles.modStyle}>{numberPresent(characterSaves.int_save)}{characterSaves.int_save}</Text>
+                                        <Text style={styles.modStyle}>{numberPresent(characterSaves.int_save)}{characterSaves.int_save}</Text>
+                                        <FontAwesome5 name='dice-d20' style={ characterSaves.characterSaves.includes('Intelligence') ? styles.d20Proficient : styles.d20 } />
                                     </Pressable>
                                 </View>
                                 <View style={styles.boxStyle}>
                                     <Text style={styles.textStyle}>Wisdom</Text>
                                     <Pressable onPress={() => diceRoll(1, 20, 'Wisdom Save')}>
-                                        <Text style={characterSaves.characterSaves.includes('Wisdom') ? styles.modStyleProficient : styles.modStyle}>{numberPresent(characterSaves.wis_save)}{characterSaves.wis_save}</Text>
-                                        <FontAwesome5 name='dice-d20' style={styles.d20} />
+                                        <Text style={styles.modStyle}>{numberPresent(characterSaves.wis_save)}{characterSaves.wis_save}</Text>
+                                        <FontAwesome5 name='dice-d20' style={ characterSaves.characterSaves.includes('Wisdom') ? styles.d20Proficient : styles.d20 } />
                                     </Pressable>
                                 </View>
                                 <View style={styles.boxStyle}>
                                     <Text style={styles.textStyle}>Charisma</Text>
                                     <Pressable onPress={() => diceRoll(1, 20, 'Charisma Save')}>
-                                        <Text style={characterSaves.characterSaves.includes('Charisma') ? styles.modStyleProficient : styles.modStyle}>{numberPresent(characterSaves.cha_save)}{characterSaves.cha_save}</Text>
-                                        <FontAwesome5 name='dice-d20' style={styles.d20} />
+                                        <Text style={styles.modStyle}>{numberPresent(characterSaves.cha_save)}{characterSaves.cha_save}</Text>
+                                        <FontAwesome5 name='dice-d20' style={ characterSaves.characterSaves.includes('Charisma') ? styles.d20Proficient : styles.d20 } />
                                     </Pressable>
                                 </View>
                             </View>
@@ -338,14 +339,14 @@ const styles = StyleSheet.create({
         fontSize: 15, 
         position: 'absolute',
         top: 14,
-        right: 25,
+        right: 20,
         color: 'white'
     },
     d20Proficient: {
         fontSize: 15, 
         position: 'absolute',
         top: 14,
-        right: 25,
+        right: 20,
         color: '#15f2fd'
     }
 })

@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import { Text, View, StyleSheet, ImageBackground, ScrollView, Pressable } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import CharacterContext from '../context/CharacterContext'
+import SettingsContext from '../context/SettingsContext'
 import Header from '../components/Header'
 import HeaderCollapsed from '../components/HeaderCollapsed'
 import HeaderContext from '../context/HeaderContext'
@@ -14,6 +15,7 @@ const ActionsScreen = () => {
     const {equippable, setEquippable} = useContext(CharacterContext)
     const charData = useContext(CharacterContext).character
     const charLevel = useContext(CharacterContext).characterInformation.level
+    const {emblem} = useContext(SettingsContext)
     const navigation = useNavigation()
 
     const showActionDetails = (action) => {
@@ -38,52 +40,56 @@ const ActionsScreen = () => {
             <View style={{flex: flexValue}}>
                 <ImageBackground style={ AppStyles.globalStyles.screenBackground }
                     source={ require('../../assets/starBackgroundVert.jpg') }>
-                    <ScrollView>
-                        <View>
-                            {
-                                equippable.map((item) => {
-                                    //console.log(item.equipped && item.equipmentCategory=="Weapon")
-                                    if(item.equipped && item.equipmentCategory=="Weapon"){
-                                        return (
-                                            <ActionCard
-                                                item={item}
-                                                />
-                                        )
-                                    }
-                                })
-                            }
-                            <ActionCard 
-                                item={{
-                                    name: 'Unarmed Strike',
-                                    damageDiceDieTypeEnum: unarmedDamageDie,
-                                    damageNumberOfDice: 1,
-                                    damageType: 'Kinetic',
-                                    isMonk: unarmedDamageDie > 0
-                                }}
-                            />
-                        </View>
-                        {/* TODO: This will need to be modified to be dynamically sized */}
-                        <View style={styles.genericActionsView}>
-                            <Text style={styles.genericActionHeader}>Actions in Combat</Text>
-                            <View style={styles.genericActionsBlock}>
-                                <Pressable onPress={() => showActionDetails('ATTACK')}><Text style={styles.genericActionText}>Attack</Text></Pressable><Text style={styles.genericActionText}>*</Text>
-                                <Pressable onPress={() => showActionDetails('CAST')}><Text style={styles.genericActionText}>Cast</Text></Pressable><Text style={styles.genericActionText}>*</Text>
-                                <Pressable onPress={() => showActionDetails('DASH')}><Text style={styles.genericActionText}>Dash</Text></Pressable><Text style={styles.genericActionText}>*</Text>
-                                <Pressable onPress={() => showActionDetails('DISENGAGE')}><Text style={styles.genericActionText}>Disengage</Text></Pressable>
+                    <ImageBackground imageStyle={styles.imgBackground}
+                        source={emblem && {uri: emblem}}
+                        >
+                        <ScrollView>
+                            <View>
+                                {
+                                    equippable.map((item) => {
+                                        //console.log(item.equipped && item.equipmentCategory=="Weapon")
+                                        if(item.equipped && item.equipmentCategory=="Weapon"){
+                                            return (
+                                                <ActionCard
+                                                    item={item}
+                                                    />
+                                            )
+                                        }
+                                    })
+                                }
+                                <ActionCard 
+                                    item={{
+                                        name: 'Unarmed Strike',
+                                        damageDiceDieTypeEnum: unarmedDamageDie,
+                                        damageNumberOfDice: 1,
+                                        damageType: 'Kinetic',
+                                        isMonk: unarmedDamageDie > 0
+                                    }}
+                                />
                             </View>
-                            <View style={styles.genericActionsBlock}>
-                                <Pressable onPress={() => showActionDetails('DODGE')}><Text style={styles.genericActionText}>Dodge</Text></Pressable><Text style={styles.genericActionText}>*</Text>
-                                <Pressable onPress={() => showActionDetails('GUARD')}><Text style={styles.genericActionText}>Guard</Text></Pressable><Text style={styles.genericActionText}>*</Text>
-                                <Pressable onPress={() => showActionDetails('HELP')}><Text style={styles.genericActionText}>Help</Text></Pressable><Text style={styles.genericActionText}>*</Text>
-                                <Pressable onPress={() => showActionDetails('HIDE')}><Text style={styles.genericActionText}>Hide</Text></Pressable>
+                            {/* TODO: This will need to be modified to be dynamically sized */}
+                            <View style={styles.genericActionsView}>
+                                <Text style={styles.genericActionHeader}>Actions in Combat</Text>
+                                <View style={styles.genericActionsBlock}>
+                                    <Pressable onPress={() => showActionDetails('ATTACK')}><Text style={styles.genericActionText}>Attack</Text></Pressable><Text style={styles.genericActionText}>*</Text>
+                                    <Pressable onPress={() => showActionDetails('CAST')}><Text style={styles.genericActionText}>Cast</Text></Pressable><Text style={styles.genericActionText}>*</Text>
+                                    <Pressable onPress={() => showActionDetails('DASH')}><Text style={styles.genericActionText}>Dash</Text></Pressable><Text style={styles.genericActionText}>*</Text>
+                                    <Pressable onPress={() => showActionDetails('DISENGAGE')}><Text style={styles.genericActionText}>Disengage</Text></Pressable>
+                                </View>
+                                <View style={styles.genericActionsBlock}>
+                                    <Pressable onPress={() => showActionDetails('DODGE')}><Text style={styles.genericActionText}>Dodge</Text></Pressable><Text style={styles.genericActionText}>*</Text>
+                                    <Pressable onPress={() => showActionDetails('GUARD')}><Text style={styles.genericActionText}>Guard</Text></Pressable><Text style={styles.genericActionText}>*</Text>
+                                    <Pressable onPress={() => showActionDetails('HELP')}><Text style={styles.genericActionText}>Help</Text></Pressable><Text style={styles.genericActionText}>*</Text>
+                                    <Pressable onPress={() => showActionDetails('HIDE')}><Text style={styles.genericActionText}>Hide</Text></Pressable>
+                                </View>
+                                <View style={styles.genericActionsBlock}>
+                                    <Pressable onPress={() => showActionDetails('READY')}><Text style={styles.genericActionText}>Ready</Text></Pressable><Text style={styles.genericActionText}>*</Text>
+                                    <Pressable onPress={() => showActionDetails('SEARCH')}><Text style={styles.genericActionText}>Search</Text></Pressable><Text style={styles.genericActionText}>*</Text>
+                                    <Pressable onPress={() => showActionDetails('USE')}><Text style={styles.genericActionText}>Use</Text></Pressable>
+                                </View>
                             </View>
-                            <View style={styles.genericActionsBlock}>
-                                <Pressable onPress={() => showActionDetails('READY')}><Text style={styles.genericActionText}>Ready</Text></Pressable><Text style={styles.genericActionText}>*</Text>
-                                <Pressable onPress={() => showActionDetails('SEARCH')}><Text style={styles.genericActionText}>Search</Text></Pressable><Text style={styles.genericActionText}>*</Text>
-                                <Pressable onPress={() => showActionDetails('USE')}><Text style={styles.genericActionText}>Use</Text></Pressable>
-                            </View>
-                        </View>
-                    </ScrollView>
+                        </ScrollView>
+                    </ImageBackground>
                 </ImageBackground>
             </View>
         </View>
@@ -121,7 +127,11 @@ const styles = StyleSheet.create({
         color: 'white',
         padding: 4,
         textDecorationLine: 'underline'
-    }
+    },
+    imgBackground: {
+        width: '100%',
+        resizeMode: 'contain'
+    },
 })
 
 export default ActionsScreen
