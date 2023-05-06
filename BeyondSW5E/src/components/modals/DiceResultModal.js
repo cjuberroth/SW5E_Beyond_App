@@ -1,11 +1,31 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { View, Text, Pressable, StyleSheet } from 'react-native'
 import { useNavigation, StackActions } from '@react-navigation/native'
 import { FontAwesome5 } from '@expo/vector-icons'
+import { Audio } from 'expo-av'
 
 const DiceResultModal = ({ route }) => {
     const navigation = useNavigation()
     //const rollResult = route.params.rollResult
+
+    useEffect(() => {
+        const playSound = async () => {
+            const soundObject = new Audio.Sound()
+            try {
+                await soundObject.loadAsync(require('../../../assets/dice-roll-1.mp3'))
+                await soundObject.playAsync()
+            } catch (error) {
+                console.log(error)
+            }
+        }
+
+        playSound()
+
+        //Clean up the sound object when the component unmounts
+        /* return () => {
+            soundObject.unloadAsync()
+        } */
+    }, [])
 
     const closeModal = () => {
         switch (route.params.origin) {

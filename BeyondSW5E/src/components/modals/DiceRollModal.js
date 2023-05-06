@@ -55,8 +55,6 @@ const DiceRollModal = ({ navigation }) => {
         navigation.navigate('DiceResultModal', {rollResult: rollResult, rollType: 'Custom', dieResults: dieResults, diceRolled: diceRolled, origin: 'diceRollModal'})
     }
 
-    console.log(dice)
-
     return (
         <View style={ styles.modalContainer}>
             <Pressable style={[StyleSheet.absoluteFill, { backgroundColor: 'rgba(0, 0, 0, 0.5)' },]} onPress={navigation.goBack}/>
