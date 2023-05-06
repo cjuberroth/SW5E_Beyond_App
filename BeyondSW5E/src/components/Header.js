@@ -65,11 +65,14 @@ const Header = () => {
                     <Text style={styles.statTextBig}>{characterEquipment.armorClass}</Text>
                 </View>
             </View>
-            <View style={{alignItems: 'center', flex: 1}}>
-                <Pressable style={styles.collapseButton } onPress={toggleHeader}>
-                    <Text style={styles.collapseButtonText}>{characterInfo.name}</Text>
-                    <Text style={styles.collapseButtonText}> | Lvl {characterInfo.level} </Text>
+            <View style={styles.collapseButton}>
+                <Pressable style={{flexDirection: 'row', width: '84%'}} onPress={toggleHeader}>
+                    <Text style={styles.collapseButtonText}>{characterInfo.name} | Lvl {characterInfo.level} </Text>
                     <FontAwesome5 style={ styles.icon } name='angle-up' />
+                </Pressable>
+                <Pressable style={{flexDirection: 'row'}} onPress={() => {navigation.navigate('DiceRollModal')}}>
+                    <Text style={styles.collapseButtonText}>Roll </Text>
+                    <FontAwesome5 style={ styles.icond20 } name='dice-d20' />
                 </Pressable>
             </View>
         </ImageBackground>
@@ -160,7 +163,7 @@ const styles = StyleSheet.create({
     collapseButton: {
         flexDirection: 'row',
         width: '100%',
-        justifyContent: 'center',
+        //justifyContent: 'space-between',
         //backgroundColor: '#4A0C05',
         backgroundColor: 'rgba(21, 242, 253, 0.1)',
         flex: 1,
@@ -177,7 +180,13 @@ const styles = StyleSheet.create({
         color: 'white',
         alignSelf: 'center',
         paddingRight: 5
-      },
+    },
+    icond20: {
+        fontSize: 20, 
+        color: 'white',
+        alignSelf: 'center',
+        paddingRight: 5
+    },
     d20: {
         fontSize: 15, 
         position: 'absolute',

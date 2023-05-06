@@ -26,14 +26,16 @@ const HeaderCollapsed = () => {
                     <HeaderButtonSmall onPress={toggleInspiration} icon='lightbulb' buttonStyle={toggleInspirationStyle} />
                     
                 </View>
-                <View style={{alignItems: 'center', flex: 1}}>
-                    <Pressable style={styles.collapseButton} onPress={toggleHeader}>
-                        <Text style={styles.collapseButtonText}>{characterInfo.name}</Text>
-                        <Text style={styles.collapseButtonText}> | Lvl {characterInfo.level} </Text>
+                <View style={styles.collapseButton}>
+                    <Pressable style={{flexDirection: 'row', width: '84%'}} onPress={toggleHeader}>
+                        <Text style={styles.collapseButtonText}>{characterInfo.name} | Lvl {characterInfo.level}</Text>
                         <FontAwesome5 style={ styles.icon } name='angle-down' />
                     </Pressable>
+                    <Pressable style={{flexDirection: 'row'}} onPress={() => {navigation.navigate('DiceRollModal')}}>
+                        <Text style={styles.collapseButtonText}>Roll </Text>
+                        <FontAwesome5 style={ styles.icond20 } name='dice-d20' />
+                    </Pressable>
                 </View>
-                
             </View>
         </ImageBackground>
     )
@@ -85,7 +87,13 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(21, 242, 253, 0.1)',
         marginHorizontal: 20,
         width: '75%'
-    }
+    },
+    icond20: {
+        fontSize: 20, 
+        color: 'white',
+        alignSelf: 'center',
+        paddingRight: 5
+    },
 })
 
 export default HeaderCollapsed

@@ -8,11 +8,21 @@ const DiceResultModal = ({ route }) => {
     //const rollResult = route.params.rollResult
 
     const closeModal = () => {
-        if (route.params.origin == 'shortRestModal') {
+        switch (route.params.origin) {
+            case 'shortRestModal':
+                navigation.dispatch(StackActions.pop(3))
+                break
+            case 'diceRollModal':
+                navigation.dispatch(StackActions.pop(2))
+                break
+            default:
+                navigation.goBack()
+        }
+        /* if (route.params.origin == 'shortRestModal') {
             navigation.dispatch(StackActions.pop(3))
         } else {
             navigation.goBack()
-        }
+        } */
     }
 
     return (
@@ -26,14 +36,36 @@ const DiceResultModal = ({ route }) => {
                     <Text style={ styles.modalHeaderText}>{route.params.rollType + ' Roll'}</Text>
                 </View>
                 <View style={ styles.modalResultsContainer }>
-                    <View>
-                        <Text style={ styles.resultText }>{'Roll Result: ' + route.params.rollResult + ' + ' + route.params.mod + ' = ' + (route.params.rollResult+route.params.mod)}</Text>
-                        {route.params.numDice != '' ?
-                            <Text>{route.params.numDice + 'd' + route.params.numSides + ' + ' + route.params.mod}</Text>
-                        : <Text></Text>}
+                    {
+                        route.params.rollType != 'Custom' ?
+                            <>
+                                <View>
+                                    <Text style={ styles.resultText }>{'Roll Result: ' + route.params.rollResult + ' + ' + route.params.mod + ' = ' + (route.params.rollResult+route.params.mod)}</Text>
+                                    {route.params.numDice != '' ?
+                                        <Text>{route.params.numDice + 'd' + route.params.numSides + ' + ' + route.params.mod}</Text>
+                                    : <Text></Text>}
+                                </View>
+                                <Text style={{fontSize: 35, marginRight: 40, borderWidth: 1, borderRadius: 4, paddingHorizontal: 5}}>{(route.params.rollResult+route.params.mod)}</Text>
+                            </>
+                        : 
+                            route.params.diceRolled.length > 1 ?
+                                <>
+                                    <View>
+                                        <Text style={ styles.resultText }>{route.params.dieResults.map((item) => item.toString()).join('+') + ' = ' + route.params.rollResult}</Text>
+                                        <Text style={ styles.resultText }>{route.params.diceRolled.join('+')}</Text>
+                                    </View>
+                                    <Text style={{fontSize: 35, marginRight: 40, borderWidth: 1, borderRadius: 4, paddingHorizontal: 5}}>{route.params.rollResult}</Text>
+                                </>
+                            :
+                            <>
+                            <View>
+                                <Text style={ styles.resultText }>{route.params.dieResults.map((item) => item.toString()).join('+')}</Text>
+                                <Text style={ styles.resultText }>{route.params.diceRolled.join('+')}</Text>
+                            </View>
+                            <Text style={{fontSize: 35, marginRight: 40, borderWidth: 1, borderRadius: 4, paddingHorizontal: 5}}>{route.params.rollResult}</Text>
+                        </>
+                    }
                     </View>
-                    <Text style={{fontSize: 35, marginRight: 40, borderWidth: 1, borderRadius: 4, paddingHorizontal: 5}}>{(route.params.rollResult+route.params.mod)}</Text>
-                </View>
             </View>
         </View>
     )
