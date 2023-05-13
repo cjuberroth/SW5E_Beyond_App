@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { Text, View, StyleSheet, Pressable, Alert } from 'react-native'
 import { FontAwesome5 } from '@expo/vector-icons'
 import { Entypo } from '@expo/vector-icons'
@@ -6,6 +6,7 @@ import CharacterContext from '../../context/CharacterContext'
 
 const HPModal = ({ navigation }) => {
     const charData = useContext(CharacterContext).characterInformation
+    const { maxHitPointsState, setMaxHitPointsState } = useContext(CharacterContext)
     const { hitPoints, setHitPoints } = useContext(CharacterContext)
     const { tempHitPoints, setTempHitPoints } = useContext(CharacterContext)
     const { maxHP, setMaxHP } = useContext(CharacterContext)
@@ -14,7 +15,6 @@ const HPModal = ({ navigation }) => {
         if (tempHitPoints > 0) {
             if (amount <= tempHitPoints) {
                 setTempHitPoints(tempHitPoints - amount)
-                console.log(tempHitPoints)
             } else {
                 let difference = amount - tempHitPoints
                 setHitPoints(hitPoints - difference)
@@ -26,8 +26,12 @@ const HPModal = ({ navigation }) => {
     }
 
     const handleHeal = (amount) => {
-        if (hitPoints <= (charData.hitPoints + (maxHP - 1))) {
-            setHitPoints(hitPoints + amount)
+        if (hitPoints <= maxHitPointsState) {
+            if ((hitPoints + amount) > maxHitPointsState) {
+                setHitPoints(maxHitPointsState)
+            } else {
+                setHitPoints(hitPoints + amount)
+            }
         }
     }
 
@@ -36,6 +40,22 @@ const HPModal = ({ navigation }) => {
             return
         } else {
             setTempHitPoints(tempHitPoints + amount)
+        }
+    }
+
+    const handleMaxHP = (amount) => {
+        if (amount === -1) {
+            if (hitPoints >= maxHitPointsState) {
+                setHitPoints(hitPoints - 1)
+                setMaxHitPointsState(maxHitPointsState - 1)
+                setMaxHP(maxHP - 1)
+            } else {
+                setMaxHitPointsState(maxHitPointsState - 1)
+                setMaxHP(maxHP - 1)
+            }
+        } else {
+            setMaxHitPointsState(maxHitPointsState + 1)
+            setMaxHP(maxHP + 1)
         }
     }
 
@@ -58,9 +78,9 @@ const HPModal = ({ navigation }) => {
                                     <Text style={ styles.hpText }> / </Text>
                                     {
                                         maxHP > 0 ?
-                                            <Text style={ [styles.hpText, {color: 'green'}] }>{charData.hitPoints + maxHP}</Text>
+                                            <Text style={ [styles.hpText, {color: 'green'}] }>{maxHitPointsState}</Text>
                                         :
-                                            <Text style={ [styles.hpText, {color: 'red'}] }>{charData.hitPoints + maxHP}</Text>
+                                            <Text style={ [styles.hpText, {color: 'red'}] }>{maxHitPointsState}</Text>
                                     }
                                     <Text style={ styles.hpText }> ({charData.hitPoints})</Text>
                                 </>
@@ -77,9 +97,9 @@ const HPModal = ({ navigation }) => {
                                     <Text style={ styles.hpText }> / </Text>
                                     {
                                         maxHP > 0 ?
-                                            <Text style={ [styles.hpText, {color: 'green'}] }>{charData.hitPoints + maxHP}</Text>
+                                            <Text style={ [styles.hpText, {color: 'green'}] }>{maxHitPointsState}</Text>
                                         :
-                                            <Text style={ [styles.hpText, {color: 'red'}] }>{charData.hitPoints + maxHP}</Text>
+                                            <Text style={ [styles.hpText, {color: 'red'}] }>{maxHitPointsState}</Text>
                                     }
                                     <Text style={ styles.hpText }> ({charData.hitPoints})</Text>
                                 </>
@@ -93,24 +113,6 @@ const HPModal = ({ navigation }) => {
                         
                     </View>
                     <View style={ styles.modificationContainer }>
-                        <View style={ styles.healButtonContainer }>
-                            <Text style={ styles.hpText }>Heal</Text>
-                            <Pressable style={ styles.healButton } onPress={() => handleHeal(1)}>
-                                <Text style={ styles.modalButtonText }>+1</Text>
-                            </Pressable>
-                            <Pressable style={ styles.healButton } onPress={() => handleHeal(5)}>
-                                <Text style={ styles.modalButtonText }>+5</Text>
-                            </Pressable>
-                            <Pressable style={ styles.healButton } onPress={() => handleHeal(10)}>
-                                <Text style={ styles.modalButtonText }>+10</Text>
-                            </Pressable>
-                            <Pressable style={ styles.healButton } onPress={() => handleHeal(20)}>
-                                <Text style={ styles.modalButtonText }>+20</Text>
-                            </Pressable>
-                            <Pressable style={ styles.healButton } onPress={() => handleHeal(50)}>
-                                <Text style={ styles.modalButtonText }>+50</Text>
-                            </Pressable>
-                        </View>
                         <View style={ styles.damageButtonContainer }>
                         <Text style={ styles.hpText }>Damage</Text>
                         <Pressable style={ styles.damageButton } onPress={() => handleDamage(1)}>
@@ -129,6 +131,24 @@ const HPModal = ({ navigation }) => {
                                 <Text style={ styles.modalButtonText }>-50</Text>
                             </Pressable>
                         </View>
+                        <View style={ styles.healButtonContainer }>
+                            <Text style={ styles.hpText }>Heal</Text>
+                            <Pressable style={ styles.healButton } onPress={() => handleHeal(1)}>
+                                <Text style={ styles.modalButtonText }>+1</Text>
+                            </Pressable>
+                            <Pressable style={ styles.healButton } onPress={() => handleHeal(5)}>
+                                <Text style={ styles.modalButtonText }>+5</Text>
+                            </Pressable>
+                            <Pressable style={ styles.healButton } onPress={() => handleHeal(10)}>
+                                <Text style={ styles.modalButtonText }>+10</Text>
+                            </Pressable>
+                            <Pressable style={ styles.healButton } onPress={() => handleHeal(20)}>
+                                <Text style={ styles.modalButtonText }>+20</Text>
+                            </Pressable>
+                            <Pressable style={ styles.healButton } onPress={() => handleHeal(50)}>
+                                <Text style={ styles.modalButtonText }>+50</Text>
+                            </Pressable>
+                        </View>
                     </View>
                     <View style={ styles.modalHeader }>
                         <Text style={ styles.modalHeaderText }>Advanced</Text>
@@ -144,24 +164,24 @@ const HPModal = ({ navigation }) => {
                         </View>
                         <View style={ styles.advancedContainerRight }>
                             <View style={ styles.advancedContainerRightColumn}>
-                                <Pressable style={ styles.tempHPButton } onPress={() => handleTempHP(1)}>
-                                    <Text >+</Text>
-                                </Pressable>
-                                <Text style={{ fontWeight: 'bold' }}>{tempHitPoints}</Text>
                                 <Pressable style={ styles.tempHPButton } onPress={() => handleTempHP(-1)}>
                                     <Text >-</Text>
+                                </Pressable>
+                                <Text style={{ fontWeight: 'bold' }}>{tempHitPoints}</Text>
+                                <Pressable style={ styles.tempHPButton } onPress={() => handleTempHP(1)}>
+                                    <Text >+</Text>
                                 </Pressable>
                                 <Pressable onPress={() => Alert.alert('Temporary HP', "Healing can’t restore temporary hit points, and they can’t be added together. If you have temporary hit points and receive more of them, you decide whether to keep the ones you have or to gain the new ones. For example, if a power grants you 12 temporary hit points when you already have 10, you can have 12 or 10, not 22.\n\nIf you have 0 hit points, receiving temporary hit points doesn’t restore you to consciousness or stabilize you. They can still absorb damage directed at you while you’re in that state, but only true healing can save you.\n\nUnless a feature that grants you temporary hit points has a duration, they last until they’re depleted or you finish a long rest.")}>
                                     <Entypo style={{fontSize: 20}} name='info-with-circle' />
                                 </Pressable>
                             </View>
                             <View style={ styles.advancedContainerRightColumn}>
-                                <Pressable style={ styles.tempHPButton } onPress={() => setMaxHP(maxHP + 1)}>
-                                    <Text >+</Text>
+                                <Pressable style={ styles.tempHPButton } onPress={() => handleMaxHP(-1)}>
+                                    <Text >-</Text>
                                 </Pressable>
                                 <Text style={{ fontWeight: 'bold' }}>{maxHP}</Text>
-                                <Pressable style={ styles.tempHPButton } onPress={() => setMaxHP(maxHP - 1)}>
-                                    <Text >-</Text>
+                                <Pressable style={ styles.tempHPButton } onPress={() => handleMaxHP(1)}>
+                                    <Text >+</Text>
                                 </Pressable>
                                 <Pressable onPress={() => Alert.alert('Max HP Modifier', 'Adjusts maximum hit points by the selected value.')}>
                                     <Entypo style={{fontSize: 20}} name='info-with-circle' />

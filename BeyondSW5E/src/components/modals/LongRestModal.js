@@ -55,7 +55,7 @@ const LongRestModal = () => {
     hitDice.sort((a, b) => b.hitDie - a.hitDie)
 
     const handleResetHPCheckbox = () => {
-        onChangeReset(!checkedRest)
+        onChangeReset(!checkedReset)
     }
     
     const handleAutoHealCheckbox = () => {
@@ -89,8 +89,10 @@ const LongRestModal = () => {
         
         if (checkedReset) {
             setMaxHP(0)
-            setTempHitPoints(0)
         }
+
+        //temporary hit points are purged on long rest
+        setTempHitPoints(0)
                 
         if (!checkedHitDice) {
             navigation.navigate('RecoverHitDiceModal')
@@ -98,13 +100,10 @@ const LongRestModal = () => {
             //user has elected to automatically recover hit dice
             //hit dice recovery will start with the class with the largest hit die size
             let maxRecoveryDice = Math.ceil(charData.level/2)
-            console.log('maxRecoveryDice: ' + maxRecoveryDice)
             let diceRecovered = 0
             let diceDifference = maxRecoveryDice - diceRecovered
             if (diceRecovered <= maxRecoveryDice) {
                 for (let i = 0; i < hitDice.length; i++) {
-                    console.log('diceRecovered: ' + diceRecovered)
-                    console.log('diceDifference: ' + diceDifference)
                     let temp = hitDice[i].class
                     let tempDice = hitDice[i].numDice
                     if (tempDice <= diceDifference) {
@@ -148,7 +147,7 @@ const LongRestModal = () => {
                         onChange={handleResetHPCheckbox}
                         buttonStyle = {styles.checkboxBase}
                         activeButtonStyle = {styles.checkboxChecked} />
-                    <Text style={{flex: 9, paddingLeft: 5, fontSize: 14}}>Reset max HP changes and clear temporary hit points during this rest</Text>
+                    <Text style={{flex: 9, paddingLeft: 5, fontSize: 14}}>Reset max HP changes during this rest</Text>
                 </View>
                 { !hitDiceRecovery ?
                     <View></View> :

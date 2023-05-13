@@ -16,6 +16,7 @@ const Header = () => {
     const toggleHeader = useContext(HeaderContext).headerUtils.toggleHeader
     const toggleInspiration = useContext(HeaderContext).headerUtils.toggleInspiration
     const toggleInspirationStyle = useContext(HeaderContext).headerUtils.toggleInspirationStyle
+    const { conditionsState } = useContext(CharacterContext)
 
     const diceRoll = (numDice, numSides) => {
         const rollResult = DiceRoll(numDice, numSides)
@@ -23,12 +24,22 @@ const Header = () => {
         navigation.navigate('DiceResultModal', {rollResult: rollResult, mod: dexMod, rollType: 'Initiative', numDice: numDice, numSides: numSides})
     }
 
+    const getConditions = () => {
+        let numConditions = 0
+        conditionsState.map((el) => {
+            if (el.afflicted) {
+                numConditions += 1
+            }
+        })
+        return 'Conditions ' + '(' + numConditions + ')'
+    }
+
     return (
         <ImageBackground style={ {flex:1} }
                 source={require('../../assets/starBackground.jpg')}>
             <View style={styles.headerContainer}>
                 <View style={styles.headerBtnCol}>
-                    <HeaderButton onPress={() => navigation.navigate('ConditionsModal')} title="Conditions" buttonStyle={styles.headerButton} />
+                    <HeaderButton onPress={() => navigation.navigate('ConditionsModal')} title={getConditions()} buttonStyle={styles.headerButton} />
                     <HeaderButton onPress={() => navigation.navigate('RestModal')} title="Rest" buttonStyle={styles.headerButton} />
                 </View>
                 <Image

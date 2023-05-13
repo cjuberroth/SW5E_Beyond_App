@@ -405,7 +405,19 @@ export const CharacterProvider = ({children}) => {
 
 	//Used to control temporary and max hit points in modal ----------------------------------------------------
 	const [tempHitPoints, setTempHitPoints] = useState(0)
-	const [maxHP, setMaxHP] = useState(0)
+	const [maxHP, setMaxHP] = useState(0) //controls max HP modifier
+	const [maxHitPointsState, setMaxHitPointsState] = useState(charHP) //tracks maximum hit points changes
+
+	useEffect(() => {
+		setMaxHitPointsState(charHP)
+	}, [charHP])
+
+	//Used to control temporary and mad force/tech points in modal
+	const [tempForcePoints, setTempForcePoints] = useState(0)
+	const [maxForcePointsMod, setMaxForcePointsMod] = useState(0)
+
+	const [tempTechPoints, setTempTechPoints] = useState(0)
+	const [maxTechPointsMod, setMaxTechPointsMod] = useState(0)
 
 	//Used to control credits on inventory screen and modal---------------------------------------------
 	const currentCredits = charData.credits
@@ -674,6 +686,19 @@ export const CharacterProvider = ({children}) => {
 		}
 	}
 	techPowersData = techPowersData.flat()
+
+	//used to track max force/tech points changes in modal
+	const [maxForcePointsState, setMaxForcePointsState] = useState(maxForcePoints)
+	const [maxTechPointsState, setMaxTechPointsState] = useState(maxTechPoints)
+
+	useEffect(() => {
+		setMaxForcePointsState(maxForcePoints)
+	}, [maxForcePoints])
+
+	useEffect(() => {
+		setMaxTechPointsState(maxTechPoints)
+	}, [maxTechPoints])
+
 	//#endregion
 	
 	//object to export character casting information ------------------------------------------------------
@@ -847,7 +872,14 @@ export const CharacterProvider = ({children}) => {
 		character, setCharacter, 
 		hitPoints, setHitPoints, 
 		tempHitPoints, setTempHitPoints,
+		maxHitPointsState, setMaxHitPointsState,
 		maxHP, setMaxHP,
+		tempForcePoints, setTempForcePoints,
+		maxForcePointsMod, setMaxForcePointsMod,
+		tempTechPoints, setTempTechPoints,
+		maxTechPointsMod, setMaxTechPointsMod,
+		maxForcePointsState, setMaxForcePointsState,
+		maxTechPointsState, setMaxTechPointsState,
 		credits, setCredits,
 		equippable, setEquippable,
 		characterAC, setCharacterAC,

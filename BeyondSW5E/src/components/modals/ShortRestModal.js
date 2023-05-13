@@ -158,7 +158,6 @@ const ShortRestModal = () => {
 
         if (checkedReset) {
             setMaxHP(0)
-            setTempHitPoints(0)
         }
 
         navigation.navigate('DiceResultModal', {rollResult: healResult, mod: totalMod, rollType: 'Short Rest', numDice: '', numSides: '', origin: 'shortRestModal'})
@@ -186,7 +185,7 @@ const ShortRestModal = () => {
                             onChange={handleResetHPCheckbox}
                             buttonStyle = {styles.checkboxBase}
                             activeButtonStyle = {styles.checkboxChecked} />
-                        <Text style={{flex: 9, paddingLeft: 5, fontSize: 14}}>Reset max HP changes and clear temporary hit points during this rest</Text>
+                        <Text style={{flex: 9, paddingLeft: 5, fontSize: 14}}>Reset max HP changes</Text>
                     </View>
                     <View style={ AppStyles.tableStyles.tableRow }>
                         <CheckBox 
