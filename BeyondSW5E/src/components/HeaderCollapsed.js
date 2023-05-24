@@ -12,18 +12,32 @@ const HeaderCollapsed = () => {
     const toggleHeader = useContext(HeaderContext).headerUtils.toggleHeader
     const toggleInspiration = useContext(HeaderContext).headerUtils.toggleInspiration
     const toggleInspirationStyle = useContext(HeaderContext).headerUtils.toggleInspirationStyle
+    const { conditionsState } = useContext(CharacterContext)
     
-
-
     return (
         <ImageBackground style={{height: '100%', resizeMode: 'contain'}}
                 source={require('../../assets/starBackground.jpg')}>
             <View style={{flex: 1}} >
                 <View style={styles.headerContainer}>
-                    <HeaderButtonSmall onPress={() => navigation.navigate('ConditionsModal')} icon='allergies' buttonStyle={styles.headerButton} />
-                    <HeaderButtonSmall onPress={() => navigation.navigate('RestModal')} icon='bed' buttonStyle={styles.headerButton} />
-                    <HeaderButtonSmall onPress={() => navigation.navigate('DefensesModal')} icon='shield-alt' buttonStyle={styles.headerButton} />
-                    <HeaderButtonSmall onPress={toggleInspiration} icon='lightbulb' buttonStyle={toggleInspirationStyle} />
+                    <HeaderButtonSmall onPress={() => navigation.navigate('ConditionsModal')} 
+                        icon='allergies' 
+                        buttonStyle=
+                        {
+                            conditionsState > 0 ?
+                                styles.headerButton
+                            :
+                                styles.headerButtonActive
+                        }
+                         />
+                    <HeaderButtonSmall onPress={() => navigation.navigate('RestModal')} 
+                        icon='bed' 
+                        buttonStyle={styles.headerButton} />
+                    <HeaderButtonSmall onPress={() => navigation.navigate('DefensesModal')} 
+                        icon='shield-alt' 
+                        buttonStyle={styles.headerButton} />
+                    <HeaderButtonSmall onPress={toggleInspiration} 
+                        icon='lightbulb' 
+                        buttonStyle={toggleInspirationStyle} />
                     
                 </View>
                 <View style={styles.collapseButton}>
@@ -82,6 +96,20 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         paddingVertical: 1,
         paddingHorizontal: 1,
+        borderRadius: 4,
+        //backgroundColor: '#4A0C05',
+        backgroundColor: 'rgba(21, 242, 253, 0.1)',
+        marginHorizontal: 20,
+        width: '75%'
+    },
+    headerButtonActive: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingVertical: 1,
+        paddingHorizontal: 1,
+        borderColor: '#15f2fd',
+        borderWidth: 2,
         borderRadius: 4,
         //backgroundColor: '#4A0C05',
         backgroundColor: 'rgba(21, 242, 253, 0.1)',

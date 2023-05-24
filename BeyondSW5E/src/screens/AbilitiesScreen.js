@@ -291,15 +291,20 @@ const styles = StyleSheet.create({
     modStyle: {
         fontSize: 30,
         textAlign: 'center',
-        color: 'white',
-        marginBottom: 9,
+        color: '#ffe81f',
+        paddingTop: 5,
+        marginBottom: 4,
         marginTop: 2,
         //borderWidth: 2,
         //borderColor: '#4A0C05',
-        //borderColor: 'white',
+        //borderColor: '#ffe81f',
+        //backgroundColor: '#ffe81f',
+        //overflow: 'hidden',
         alignSelf: 'center',
         width: '50%',
-        borderRadius: 5
+        //borderRadius: 20,
+        zIndex: 1,
+        
     },
     modStyleProficient: {
         fontSize: 30,
@@ -336,11 +341,11 @@ const styles = StyleSheet.create({
         fontSize: 20
     },
     d20: {
-        fontSize: 15, 
+        fontSize: 45, 
         position: 'absolute',
-        top: 14,
-        right: 20,
-        color: 'white'
+        top: 3,
+        right: 35,
+        color: '#154360'
     },
     d20Proficient: {
         fontSize: 15, 

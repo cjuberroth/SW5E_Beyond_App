@@ -24,7 +24,8 @@ const styles = StyleSheet.create({
     minWidth: '80%'
   },
   text: {
-    fontSize: 16,
+    //fontSize: 15,
+    adjustsFontSizeToFit: true,
     fontWeight: 'bold',
     color: 'white',
     alignSelf: 'center'

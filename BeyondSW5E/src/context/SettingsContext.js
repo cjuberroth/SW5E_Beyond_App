@@ -18,18 +18,24 @@ export const SettingsProvider = ({children}) => {
 	const sourceGalacticRepublic = Image.resolveAssetSource(galacticRepublic)
 	const jediOrder = require('../../assets/jedi-order.png')
 	const sourceJediOrder = Image.resolveAssetSource(jediOrder)
-	//const oldRepublic = 
-	//const phoenixSquad = 
-	//const newRepublic = 
+	const oldRepublic = require('../../assets/old-republic.png')
+	const sourceOldRepublic = Image.resolveAssetSource(oldRepublic) 
+	const phoenixSquad = require('../../assets/phoenix-squad.png')
+	const sourcePhoenixSquad = Image.resolveAssetSource(phoenixSquad) 
+	const newRepublic = require('../../assets/new-republic.png')
+	const sourceNewRepublic = Image.resolveAssetSource(newRepublic) 
 	const firstOrder = require('../../assets/first-order-2.png')
 	const sourceFirstOrder = Image.resolveAssetSource(firstOrder)
-	//const tradeFederation = 
-	//const sith = 
+	const tradeFederation = require('../../assets/trade-federation.png')
+	const sourceTradeFederation = Image.resolveAssetSource(tradeFederation) 
+	const sith = require('../../assets/sith.png')
+	const sourceSith = Image.resolveAssetSource(sith) 
 	const clanFett = require('../../assets/mandalorian.png')
 	const sourceMandalorian = Image.resolveAssetSource(clanFett)
 	const deathWatch = require('../../assets/death-watch.png')
 	const sourceDeathWatch = Image.resolveAssetSource(deathWatch)
-	//const pykeSynidcate = 
+	const pykeSyndicate = require('../../assets/pyke-syndicate.png')
+	const sourcePykeSyndicate = Image.resolveAssetSource(pykeSyndicate) 
 
 	//if an emblem is stored already, set it
 	useEffect(() => {
@@ -60,14 +66,32 @@ export const SettingsProvider = ({children}) => {
 			case 'jediOrder':
 				setEmblemText('Jedi Order')
 				break
+			case 'oldRepublic':
+				setEmblemText('Old Republic')
+				break
+			case 'phoenixSquad':
+				setEmblemText('Phoenix Squad')
+				break
+			case 'newRepublic':
+				setEmblemText('New Republic')
+				break
 			case 'firstOrder':
 				setEmblemText('First Order')
+				break
+			case 'tradeFederation':
+				setEmblemText('Trade Federation')
+				break
+			case 'sith':
+				setEmblemText('Sith')
 				break
 			case 'clanFett':
 				setEmblemText('Mandalorian')
 				break
 			case 'deathWatch':
 				setEmblemText('Death Watch')
+				break
+			case 'pykeSyndicate':
+				setEmblemText('Pyke Syndicate')
 				break
 			default:
 				setEmblemText('')
@@ -93,9 +117,29 @@ export const SettingsProvider = ({children}) => {
 				AsyncStorage.setItem('emblem', sourceJediOrder.uri.toString())
 				setEmblem(sourceJediOrder.uri.toString())
 				break
+			case 'oldRepublic':
+				AsyncStorage.setItem('emblem', sourceOldRepublic.uri.toString())
+				setEmblem(sourceOldRepublic.uri.toString())
+				break
+			case 'phoenixSquad':
+				AsyncStorage.setItem('emblem', sourcePhoenixSquad.uri.toString())
+				setEmblem(sourcePhoenixSquad.uri.toString())
+				break
+			case 'newRepublic':
+				AsyncStorage.setItem('emblem', sourceNewRepublic.uri.toString())
+				setEmblem(sourceNewRepublic.uri.toString())
+				break
 			case 'firstOrder':
 				AsyncStorage.setItem('emblem', sourceFirstOrder.uri.toString())
 				setEmblem(sourceFirstOrder.uri.toString())
+				break
+			case 'tradeFederation':
+				AsyncStorage.setItem('emblem', sourceTradeFederation.uri.toString())
+				setEmblem(sourceTradeFederation.uri.toString())
+				break
+			case 'sith':
+				AsyncStorage.setItem('emblem', sourceSith.uri.toString())
+				setEmblem(sourceSith.uri.toString())
 				break
 			case 'clanFett':
 				AsyncStorage.setItem('emblem', sourceMandalorian.uri.toString())
@@ -104,6 +148,10 @@ export const SettingsProvider = ({children}) => {
 			case 'deathWatch':
 				AsyncStorage.setItem('emblem', sourceDeathWatch.uri.toString())
 				setEmblem(sourceDeathWatch.uri.toString())
+				break
+			case 'pykeSyndicate':
+				AsyncStorage.setItem('emblem', sourcePykeSyndicate.uri.toString())
+				setEmblem(sourcePykeSyndicate.uri.toString())
 				break
 			default:
 				setEmblem('')
