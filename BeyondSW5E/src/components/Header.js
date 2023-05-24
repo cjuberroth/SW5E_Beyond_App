@@ -78,12 +78,12 @@ const Header = () => {
             </View>
             <View style={styles.collapseButton}>
                 <Pressable style={{flexDirection: 'row', width: '84%'}} onPress={toggleHeader}>
-                    <Text style={styles.collapseButtonText}>{characterInfo.name} | Lvl {characterInfo.level} </Text>
-                    <FontAwesome5 style={ styles.icon } name='angle-up' />
+                    <Text style={styles.collapseButtonText} adjustsFontSizeToFit> {characterInfo.name} | Lvl {characterInfo.level} </Text>
+                    <FontAwesome5 style={ styles.icon } name='angle-up' adjustsFontSizeToFit />
                 </Pressable>
                 <Pressable style={{flexDirection: 'row'}} onPress={() => {navigation.navigate('DiceRollModal')}}>
-                    <Text style={styles.collapseButtonText}>Roll </Text>
-                    <FontAwesome5 style={ styles.icond20 } name='dice-d20' />
+                    <Text style={styles.collapseButtonText} adjustsFontSizeToFit numberOfLines={1}>Roll </Text>
+                    <FontAwesome5 style={ styles.icond20 } name='dice-d20' adjustsFontSizeToFit numberOfLines={1}/>
                 </Pressable>
             </View>
         </ImageBackground>
@@ -177,33 +177,34 @@ const styles = StyleSheet.create({
         //justifyContent: 'space-between',
         //backgroundColor: '#4A0C05',
         backgroundColor: 'rgba(21, 242, 253, 0.1)',
-        flex: 1,
+        flex: 1.5,
         alignItems: 'center'
     },
     collapseButtonText: {
-        fontSize: 18,
+        //fontSize: 18,
         fontWeight: 'bold',
         color: 'white',
-        //paddingHorizontal: 5
+        marginVertical: -5,
+        alignSelf: 'center'
     },
     icon: {
-        fontSize: 25, 
-        color: 'white',
-        alignSelf: 'center',
-        paddingRight: 5
-    },
-    icond20: {
         fontSize: 20, 
         color: 'white',
         alignSelf: 'center',
         paddingRight: 5
     },
-    d20: {
+    icond20: {
         fontSize: 15, 
+        color: 'white',
+        alignSelf: 'center',
+        paddingRight: 2
+    },
+    d20: {
+        fontSize: 36, 
         position: 'absolute',
-        top: 8,
-        right: -8,
-        color: 'white'
+        top: -3,
+        right: 5,
+        color: 'rgba(21, 242, 253, 0.3)'
     }
 })
 

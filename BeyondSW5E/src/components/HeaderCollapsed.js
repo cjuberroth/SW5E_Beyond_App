@@ -42,7 +42,7 @@ const HeaderCollapsed = () => {
                 </View>
                 <View style={styles.collapseButton}>
                     <Pressable style={{flexDirection: 'row', width: '84%'}} onPress={toggleHeader}>
-                        <Text style={styles.collapseButtonText}>{characterInfo.name} | Lvl {characterInfo.level}</Text>
+                        <Text style={styles.collapseButtonText} adjustsFontSizeToFit>{characterInfo.name} | Lvl {characterInfo.level} </Text>
                         <FontAwesome5 style={ styles.icon } name='angle-down' />
                     </Pressable>
                     <Pressable style={{flexDirection: 'row'}} onPress={() => {navigation.navigate('DiceRollModal')}}>
@@ -67,11 +67,11 @@ const styles = StyleSheet.create({
         //borderBottomWidth: 2
     },
     collapseButton: {
-        flex: 1,
+        flex: 0.5,
         flexDirection: 'row',
-        borderWidth: 2,
+        //borderWidth: 2,
         //borderColor: '#4A0C05',
-        borderColor: 'rgba(21, 242, 253, 0.1)',
+        //borderColor: 'rgba(21, 242, 253, 0.1)',
         width: '100%',
         justifyContent: 'center',
         //backgroundColor: '#4A0C05',
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
         //paddingHorizontal: 5
     },
     icon: {
-        fontSize: 25, 
+        fontSize: 20, 
         color: 'white',
         alignSelf: 'center',
         paddingRight: 5
@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
         width: '75%'
     },
     icond20: {
-        fontSize: 20, 
+        fontSize: 15, 
         color: 'white',
         alignSelf: 'center',
         paddingRight: 5

@@ -133,7 +133,7 @@ const MainNavigator = ({ navigation }) => {
                         <Button style={styles.headerButton}
                             onPress={() => navigation.navigate('HPModal')}
                             title={hitPoints + "/" + charData.hitPoints}
-                            color={Platform.OS === 'ios' ? '#ffffff' : '#263238'}>
+                            color={Platform.OS === 'ios' ? '#ffffff' : 'black'}>
                         </Button>
                     ),
                 })}

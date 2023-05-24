@@ -189,6 +189,7 @@ const AbilitiesScreen = () => {
                                         <Text style={styles.modStyle}>{numberPresent(characterSaves.str_save)}{characterSaves.str_save}</Text>
                                         <FontAwesome5 name='dice-d20' style={ characterSaves.characterSaves.includes('Strength') ? styles.d20Proficient : styles.d20 } />
                                     </Pressable>
+                                    <Text style={{fontSize: 6}}> </Text>
                                 </View>
                                 <View style={styles.boxStyle}>
                                     <Text style={styles.textStyle}>Dexterity</Text>
@@ -196,6 +197,7 @@ const AbilitiesScreen = () => {
                                         <Text style={styles.modStyle}>{numberPresent(characterSaves.dex_save)}{characterSaves.dex_save}</Text>
                                         <FontAwesome5 name='dice-d20' style={ characterSaves.characterSaves.includes('Dexterity') ? styles.d20Proficient : styles.d20 } />
                                     </Pressable>
+                                    <Text style={{fontSize: 6}}> </Text>
                                 </View>
                                 <View style={styles.boxStyle}>
                                     <Text style={styles.textStyle}>Constitution</Text>
@@ -203,6 +205,7 @@ const AbilitiesScreen = () => {
                                         <Text style={styles.modStyle}>{numberPresent(characterSaves.con_save)}{characterSaves.con_save}</Text>
                                         <FontAwesome5 name='dice-d20' style={ characterSaves.characterSaves.includes('Constitution') ? styles.d20Proficient : styles.d20 } />
                                     </Pressable>
+                                    <Text style={{fontSize: 6}}> </Text>
                                 </View>
                                 <View style={styles.boxStyle}>
                                     <Text style={styles.textStyle}>Intelligence</Text>
@@ -210,6 +213,7 @@ const AbilitiesScreen = () => {
                                         <Text style={styles.modStyle}>{numberPresent(characterSaves.int_save)}{characterSaves.int_save}</Text>
                                         <FontAwesome5 name='dice-d20' style={ characterSaves.characterSaves.includes('Intelligence') ? styles.d20Proficient : styles.d20 } />
                                     </Pressable>
+                                    <Text style={{fontSize: 6}}> </Text>
                                 </View>
                                 <View style={styles.boxStyle}>
                                     <Text style={styles.textStyle}>Wisdom</Text>
@@ -217,6 +221,7 @@ const AbilitiesScreen = () => {
                                         <Text style={styles.modStyle}>{numberPresent(characterSaves.wis_save)}{characterSaves.wis_save}</Text>
                                         <FontAwesome5 name='dice-d20' style={ characterSaves.characterSaves.includes('Wisdom') ? styles.d20Proficient : styles.d20 } />
                                     </Pressable>
+                                    <Text style={{fontSize: 6}}> </Text>
                                 </View>
                                 <View style={styles.boxStyle}>
                                     <Text style={styles.textStyle}>Charisma</Text>
@@ -224,6 +229,7 @@ const AbilitiesScreen = () => {
                                         <Text style={styles.modStyle}>{numberPresent(characterSaves.cha_save)}{characterSaves.cha_save}</Text>
                                         <FontAwesome5 name='dice-d20' style={ characterSaves.characterSaves.includes('Charisma') ? styles.d20Proficient : styles.d20 } />
                                     </Pressable>
+                                    <Text style={{fontSize: 6}}> </Text>
                                 </View>
                             </View>
                             <View>
@@ -271,13 +277,14 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap',
         flexDirection: 'row',
         justifyContent: 'space-evenly',
-        paddingVertical: 35
+        paddingTop: 20,
+        
     },
     boxStyle: {
         marginBottom: 15,
         borderWidth: 2,
         //borderColor: '#4A0C05',
-        borderColor: '#ffe81f',
+        borderColor: 'rgba(255, 232, 31, 0.8)',
         borderRadius: 5,
         flexBasis: '29.7%'
     },
@@ -291,7 +298,7 @@ const styles = StyleSheet.create({
     modStyle: {
         fontSize: 30,
         textAlign: 'center',
-        color: '#ffe81f',
+        color: 'white',
         paddingTop: 5,
         marginBottom: 4,
         marginTop: 2,
@@ -309,14 +316,16 @@ const styles = StyleSheet.create({
     modStyleProficient: {
         fontSize: 30,
         textAlign: 'center',
-        color: 'white',
-        marginBottom: 9,
+        color: '#ffe81f',
+        paddingTop: 5,
+        marginBottom: 4,
         marginTop: 2,
-        borderWidth: 2,
-        borderColor: '#15f2fd',
+        //borderWidth: 2,
+        //borderColor: '#15f2fd',
         alignSelf: 'center',
         width: '50%',
-        borderRadius: 5
+        //borderRadius: 5,
+        zIndex: 1
     },
     headingStyle: {
         fontSize: 30,
@@ -345,14 +354,15 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: 3,
         right: 35,
-        color: '#154360'
+        color: 'rgba(21, 242, 253, 0.3)'
     },
     d20Proficient: {
-        fontSize: 15, 
+        fontSize: 45, 
         position: 'absolute',
-        top: 14,
-        right: 20,
-        color: '#15f2fd'
+        top: 3,
+        right: 35,
+        //color: '#15f2fd'
+        color: 'rgba(255, 255, 255, 0.5)'
     }
 })
 
