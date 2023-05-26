@@ -4,12 +4,14 @@ import CharacterContext from '../context/CharacterContext'
 import Header from '../components/Header'
 import HeaderCollapsed from '../components/HeaderCollapsed'
 import HeaderContext from '../context/HeaderContext'
+import SettingsContext from '../context/SettingsContext'
 import AppStyles from '../styles/AppStyles'
 
 const NotesScreen = () => {
     const flexValue = useContext(HeaderContext).headerUtils.flexValue
     const headerCollapsed = useContext(HeaderContext).headerUtils.isCollapsed
     const [notes, setNotes] = useState('')
+    const {emblem} = useContext(SettingsContext)
 
     return (
         <View style = { AppStyles.globalStyles.parentContainerView }>
@@ -19,6 +21,10 @@ const NotesScreen = () => {
             <View style={{flex: flexValue}}>
                 <ImageBackground style={ AppStyles.globalStyles.screenBackground }
                     source={ require('../../assets/starBackgroundVert.jpg') }>
+                    <ImageBackground imageStyle={styles.imgBackground} 
+                    //source={require('../../assets/rebel-alliance.png')}
+                    source={emblem && {uri: emblem}}
+                    >
                         <View style={styles.contentView}>
                             <Text style={styles.screenHeader}>Notes</Text>
                             <TextInput
@@ -28,6 +34,7 @@ const NotesScreen = () => {
                                 returnKeyType='none'
                             />
                         </View>
+                    </ImageBackground>
                 </ImageBackground>
             </View>
         </View>
@@ -49,12 +56,16 @@ const styles = StyleSheet.create({
     },
     contentView: {
         padding: 10,
-        flex: 1
+        height: '100%'
     },
     screenHeader: {
         fontSize: 18,
         color: 'white'
-    }
+    },
+    imgBackground: {
+        width: '100%',
+        resizeMode: 'contain'
+    },
 })
 
 export default NotesScreen

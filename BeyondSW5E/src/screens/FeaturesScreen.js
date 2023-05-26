@@ -175,7 +175,8 @@ const styles = StyleSheet.create({
         paddingHorizontal: 30
     },
     scrollingView: {
-        paddingHorizontal: 5
+        paddingHorizontal: 5,
+        height: '100%'
     },
     icon: {
         fontSize: 25, 
