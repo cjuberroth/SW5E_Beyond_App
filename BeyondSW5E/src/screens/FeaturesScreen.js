@@ -58,7 +58,7 @@ const FeaturesScreen = () => {
                             {
                                 charClasses.map(charClass => {
                                     return(
-                                        <Text style={styles.levelHeader}>{charClass.class + ' | Level: ' + charClass.level}</Text>
+                                        <Text key={charClass.class} style={styles.levelHeader}>{charClass.class + ' | Level: ' + charClass.level}</Text>
                                     )
                                 })
                             }
@@ -71,7 +71,7 @@ const FeaturesScreen = () => {
                                         {
                                             archetypes.map(arch => {
                                                 return (
-                                                    <View style={styles.featsView}>
+                                                    <View key={arch.name} style={styles.featsView}>
                                                         <Pressable style={{ flexDirection: 'row' }} onPress={() => toggleArchetypesExpanded(arch.rowKey)}>
                                                             <Text style={styles.featItem}>{arch.name} </Text>
                                                             {
@@ -101,7 +101,7 @@ const FeaturesScreen = () => {
                                 {
                                     feats.map(feat => {
                                         return (
-                                            <View style={styles.featsView}>
+                                            <View key={feat.name} style={styles.featsView}>
                                                 <Pressable style={{ flexDirection: 'row' }} onPress={() => toggleFeatsExpanded(feat.name)}>
                                                     <Text style={styles.featItem}>{feat.name} </Text>
                                                     {

@@ -65,14 +65,15 @@ const InventoryScreen = () => {
                         </View>
                         <ScrollView bounces={false}>
                             {
-                                itemCategories.map(category => {
+                                itemCategories.map((category, index) => {
                                     let filteredEquipment = equipment.filter((item) => {
                                         if(item.equipmentCategory === category) {
                                             return item
                                         }
                                     })
                                     return (
-                                        <EquipmentBlock 
+                                        <EquipmentBlock
+                                            key={index} 
                                             category={category} 
                                             equipment={filteredEquipment}
                                         />

@@ -58,9 +58,9 @@ const PowerTable = ({ powerLevel, powerToggle }) => {
                         </DataTable.Title>
                     </DataTable.Header>
                     {
-                        powersByLevel.map(power => {
+                        powersByLevel.map((power, index) => {
                             return (
-                                <Pressable style={styles.tableRow} onPress={() => showPowerDetails(power)}>
+                                <Pressable key={index} style={styles.tableRow} onPress={() => showPowerDetails(power)}>
                                     <DataTable.Row key={power.name}>
                                         <DataTable.Cell style={{ flex: 2 }}>
                                             <Text style={styles.tableDataText}>{power.name}</Text>
