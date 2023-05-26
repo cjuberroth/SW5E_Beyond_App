@@ -55,7 +55,7 @@ const EquipmentBlock = ({ category, equipment }) => {
 				<DataTable.Header style={[styles.tableHeaderRow, styles.tableRow]}>
 					<DataTable.Title>
 						<Text style={styles.tableTitle}>
-							{category == null ? 'Miscellaneous' : category}
+							{category == null ? 'miscellaneous' : category.toLowerCase()}
 						</Text>
 					</DataTable.Title>
 				</DataTable.Header>
@@ -87,9 +87,10 @@ const EquipmentBlock = ({ category, equipment }) => {
 
 const styles = StyleSheet.create({
 	tableTitle: {
-        fontWeight: 'bold',
+        //fontWeight: 'bold',
+		fontFamily: 'star-font',
         fontSize: 20,
-        color: 'white'
+        color: '#ffe81f'
     },
     tableDataText: {
         fontSize: 12,

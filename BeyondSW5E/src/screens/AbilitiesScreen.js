@@ -23,7 +23,7 @@ const AbilitiesScreen = () => {
     const characterSaves = useContext(CharacterContext).characterSaves
     const numberPresent = useContext(CharacterContext).functions.numberPresent
     const {emblem} = useContext(SettingsContext)
-
+    
     const getSkillMod = function(skill) {
         let mod = 0
         switch(skill) {
@@ -243,7 +243,7 @@ const AbilitiesScreen = () => {
                             </Pressable>
                         </View>
                         <View style={styles.boxStyle}>
-                            <Text style={styles.textStyle}>Investigation</Text>
+                            <Text style={styles.textStyle} adjustsFontSizeToFit numberOfLines={1}>Investigation</Text>
                             <Pressable onPress={() => diceRoll(1, 20, 'Investigation')}>
                                 <Text style={ styles.modStyle }>{investigationMod}</Text>
                             </Pressable>
@@ -328,6 +328,7 @@ const styles = StyleSheet.create({
         zIndex: 1
     },
     headingStyle: {
+        fontFamily: 'star-font',
         fontSize: 30,
         //backgroundColor: '#263238',
         color: '#ffe81f',
@@ -354,7 +355,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: 3,
         right: 35,
-        color: 'rgba(21, 242, 253, 0.3)'
+        color: 'rgba(21, 242, 253, 0.4)'
     },
     d20Proficient: {
         fontSize: 45, 

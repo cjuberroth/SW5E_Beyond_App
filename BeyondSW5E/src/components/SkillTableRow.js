@@ -2,6 +2,7 @@ import React from 'react'
 import { Text, View, StyleSheet, Pressable } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { FontAwesome } from '@expo/vector-icons'
+import { FontAwesome5 } from '@expo/vector-icons'
 import DiceRoll from './DiceRolls'
 
 function SkillTableRow({ skillName, skillProficiency, baseAttribute, charAttributeMod, charProficiencyMod }) {
@@ -37,9 +38,22 @@ function SkillTableRow({ skillName, skillProficiency, baseAttribute, charAttribu
             <Text style={styles.modCol}>{ baseAttribute.toUpperCase().substring(0, 3) }</Text>
             <Text style={styles.skillCol}>{ skillName }</Text>
             <Pressable style={styles.bonusCol} onPress={() => diceRoll(1, 20, skillName, charAttributeMod, charProficiencyMod, skillProficiency)}>
-                {skillProficiency === "Proficient" ? <Text style={{color: 'white', textAlign: 'center'}}>{numberPresent(charAttributeMod + charProficiencyMod)}{charAttributeMod + charProficiencyMod}</Text>
-                    : skillProficiency === "Expertise" ? <Text style={{color: 'white', textAlign: 'center'}}>{numberPresent(charAttributeMod + (charProficiencyMod * 2))}{charAttributeMod + (charProficiencyMod * 2)}</Text>
-                    : <Text style={{color: 'white', textAlign: 'center'}}>{numberPresent(charAttributeMod)}{charAttributeMod}</Text>}
+                {skillProficiency === "Proficient" ? 
+                    <>
+                        <Text style={styles.bonusText}>{numberPresent(charAttributeMod + charProficiencyMod)}{charAttributeMod + charProficiencyMod}</Text>
+                        <FontAwesome5 name='dice-d20' style={styles.d20} />
+                    </>
+                : skillProficiency === "Expertise" ? 
+                    <>
+                        <Text style={styles.bonusText}>{numberPresent(charAttributeMod + (charProficiencyMod * 2))}{charAttributeMod + (charProficiencyMod * 2)}</Text>
+                        <FontAwesome5 name='dice-d20' style={styles.d20} />
+                    </>
+                : 
+                    <>
+                        <Text style={styles.bonusText}>{numberPresent(charAttributeMod)}{charAttributeMod}</Text>
+                        <FontAwesome5 name='dice-d20' style={styles.d20} />
+                    </>
+                }
             </Pressable>        
         </View>
     )
@@ -61,23 +75,39 @@ const styles = StyleSheet.create({
     skillCol: {
         flex: 7.5,
         fontSize: 15,
-        color: 'white'
+        color: 'white',
+        paddingVertical: 3
     },
     bonusCol: {
         flex: 1,
         fontSize: 15,
-        color: 'white',
-        borderWidth: 1.5,
+        color: '#ffe81f',
+        //borderWidth: 1.5,
         textAlign: 'center',
-        borderColor: 'white',
-        borderRadius: 4,
-        paddingHorizontal: 2
+        //borderColor: 'white',
+        //borderRadius: 4,
+        paddingHorizontal: 2,
+        paddingVertical: 3
+    },
+    bonusText: {
+        color: 'white', 
+        textAlign: 'center', 
+        fontWeight: 'bold',
+        fontSize: 18
     },
     icon: {
         fontSize: 20,
         flex: 1.5,
         paddingLeft: 2,
-        color: 'white'
+        color: 'white',
+        paddingVertical: 3
+    },
+    d20: {
+        fontSize: 35,
+        position: 'absolute',
+        top: -4,
+        right: 1,
+        color: 'rgba(21, 242, 253, 0.4)'
     }
 })
 

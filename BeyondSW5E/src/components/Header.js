@@ -204,7 +204,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: -3,
         right: 5,
-        color: 'rgba(21, 242, 253, 0.3)'
+        color: 'rgba(21, 242, 253, 0.4)'
     }
 })
 

@@ -7,13 +7,32 @@ import { CharacterProvider } from './src/context/CharacterContext'
 import { HeaderProvider } from './src/context/HeaderContext'
 import { SettingsProvider } from './src/context/SettingsContext'
 import { SelectProvider } from '@mobile-reality/react-native-select-pro'
+import FontLoader from './src/components/FontLoader'
 
-SplashScreen.preventAutoHideAsync()
+//SplashScreen.preventAutoHideAsync()
 
 function App() {
     const [isReady, setReady] = useState(false)
+    const [fontsLoaded, setFontsLoaded] = useState(false)
 
-    useEffect(() => {
+    const handleFontsLoaded = () => {
+        setFontsLoaded(true)
+    }
+
+    if (!fontsLoaded) {
+        return (
+            <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+                <FontLoader
+                    fonts={{
+                        'star-font': require('./assets/starFont.ttf')
+                    }}
+                    onFinish={handleFontsLoaded}
+                />
+            </View>
+        )
+    }
+
+    /* useEffect(() => {
         async function prepare() {
             try {
                 require('./assets/header-background-upsidedown.jpg')
@@ -35,10 +54,10 @@ function App() {
 
     if (!isReady) {
         return null
-    }
+    } */
 
     return (
-        <View style={{flex: 1}} onLayout={onLayoutRootView}>
+        <View style={{flex: 1}} >
             <SelectProvider>
                 <CharacterProvider>
                     <HeaderProvider>

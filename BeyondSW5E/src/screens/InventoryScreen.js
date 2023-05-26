@@ -40,6 +40,7 @@ const InventoryScreen = () => {
             itemCategories.push(element.equipmentCategory)
         }
     })
+    
     itemCategories.sort()
 
     return (
@@ -122,9 +123,10 @@ const styles = StyleSheet.create({
     credits: {
         borderWidth: 1,
         borderRadius: 5,
-        borderColor: 'gray',
+        borderColor: 'rgba(21, 242, 253, 0.1)',
         alignItems: 'center',
-        backgroundColor: 'gray'
+        backgroundColor: 'rgba(21, 242, 253, 0.1)',
+        overflow: 'hidden'
     },
     imgBackground: {
         width: '100%',

@@ -123,10 +123,11 @@ const styles = StyleSheet.create({
         padding: 4
     },
     genericActionHeader: {
+        fontFamily: 'star-font',
         fontSize: 24,
-        color: 'white',
+        color: '#ffe81f',
         padding: 4,
-        textDecorationLine: 'underline'
+        //textDecorationLine: 'underline'
     },
     imgBackground: {
         width: '100%',

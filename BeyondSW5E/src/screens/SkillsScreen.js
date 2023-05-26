@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useLayoutEffect, useState } from 'react'
 import { Text, View, FlatList, StyleSheet, ImageBackground } from 'react-native'
 import CharacterContext from '../context/CharacterContext'
 import SettingsContext from '../context/SettingsContext'
@@ -28,25 +28,28 @@ const SkillsScreen = () => {
                     source={ require('../../assets/starBackgroundVert.jpg') }>
                     <ImageBackground imageStyle={styles.imgBackground} 
                         source={emblem && {uri: emblem}}>
-                    <View style={styles.rowStyle}>
-                        <Text style={styles.modCol}>PROF</Text>
-                        <Text style={styles.skillCol}>SKILL</Text>
-                        <Text style={styles.bonusCol}>BONUS</Text>
-                    </View>
-                    <FlatList 
-                        data = { skillsLU }
-                        keyExtractor = {(skill) => skill.rowKey}
-                        renderItem = { ({ item }) => {
-                            return <SkillTableRow
-                                        skillName = { item.name }
-                                        skillProficiency={ characterSkills?.[item.baseAttribute]?.skills?.[item.name]?.proficiency }
-                                        baseAttribute = { item.baseAttribute }
-                                        charAttributeMod = { characterMods[item.baseAttribute.toLowerCase().substring(0,3) + '_mod'] }
-                                        charProficiencyMod = { characterInfo.proficiency }
-                                    />
-                        }}
-                    />
-                </ImageBackground>
+                        <View style={styles.rowStyle}>
+                            <Text style={styles.modCol}>prof</Text>
+                            <Text style={styles.skillCol}>skill</Text>
+                            <Text style={styles.bonusCol}>bonus</Text>
+                        </View>
+                        <View style={{height: '94.2%'}}>
+                            <FlatList 
+                                data = { skillsLU }
+                                keyExtractor = {(skill) => skill.rowKey}
+                                contentContainerStyle={{flexGrow: 1}}
+                                renderItem = { ({ item }) => {
+                                    return <SkillTableRow
+                                                skillName = { item.name }
+                                                skillProficiency={ characterSkills?.[item.baseAttribute]?.skills?.[item.name]?.proficiency }
+                                                baseAttribute = { item.baseAttribute }
+                                                charAttributeMod = { characterMods[item.baseAttribute.toLowerCase().substring(0,3) + '_mod'] }
+                                                charProficiencyMod = { characterInfo.proficiency }
+                                            />
+                                }}
+                            />
+                        </View>
+                    </ImageBackground>
                 </ImageBackground>
             </View>
         </View>
@@ -69,30 +72,35 @@ const styles = StyleSheet.create({
     profCol: {
         flex:2,
         paddingLeft: 2,
+        fontFamily: 'star-font',
         fontSize: 15,
-        color: 'white'
+        color: '#ffe81f'
     },
     modCol: {
         flex:1,
+        fontFamily: 'star-font',
         fontSize: 15,
-        color: 'white',
-        fontWeight: 'bold'
+        color: '#ffe81f',
+        //fontWeight: 'bold'
     },
     skillCol: {
         flex:5,
+        fontFamily: 'star-font',
         fontSize: 15,
-        color: 'white',
-        fontWeight: 'bold'
+        color: '#ffe81f',
+        //fontWeight: 'bold'
     },
     bonusCol: {
         flex: 1.5,
+        fontFamily: 'star-font',
         fontSize: 15,
-        color: 'white',
+        color: '#ffe81f',
         textAlign: 'right',
-        fontWeight: 'bold'
+        //fontWeight: 'bold'
     },
     imgBackground: {
         width: '100%',
+        flex: 1,
         resizeMode: 'contain'
     },
 })
