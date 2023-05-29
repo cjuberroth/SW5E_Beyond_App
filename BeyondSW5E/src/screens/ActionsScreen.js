@@ -46,11 +46,12 @@ const ActionsScreen = () => {
                         <ScrollView>
                             <View>
                                 {
-                                    equippable.map((item) => {
+                                    equippable.map((item, index) => {
                                         //console.log(item.equipped && item.equipmentCategory=="Weapon")
                                         if(item.equipped && item.equipmentCategory=="Weapon"){
                                             return (
                                                 <ActionCard
+                                                    key={index}
                                                     item={item}
                                                     />
                                             )

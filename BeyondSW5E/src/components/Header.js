@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { Text, View, StyleSheet, Image, ImageBackground, Pressable } from 'react-native'
+import { Text, View, StyleSheet, Image, ImageBackground, Pressable, Alert } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { FontAwesome5 } from '@expo/vector-icons'
 import HeaderContext from '../context/HeaderContext'
@@ -17,6 +17,7 @@ const Header = () => {
     const toggleInspiration = useContext(HeaderContext).headerUtils.toggleInspiration
     const toggleInspirationStyle = useContext(HeaderContext).headerUtils.toggleInspirationStyle
     const { conditionsState } = useContext(CharacterContext)
+    const { armorProficient } = useContext(CharacterContext)
 
     const diceRoll = (numDice, numSides) => {
         const rollResult = DiceRoll(numDice, numSides)
@@ -73,7 +74,14 @@ const Header = () => {
                 </View>
                 <View style={styles.statBox}>
                     <Text style={styles.statText}>AC</Text>
-                    <Text style={styles.statTextBig}>{characterEquipment.armorClass}</Text>
+                    { armorProficient ? 
+                        <Text style={styles.statTextBig}>{characterEquipment.armorClass}</Text>
+                    :
+                        <Pressable style={{flexDirection: 'row'}} onPress={() => Alert.alert('Not Proficient', 'You have disadvantage on any ability check, attack roll, or saving throw that involves Strength or Dexterity, and you can’t force or tech cast.')}>
+                            <Text style={styles.statTextBig}>{characterEquipment.armorClass} </Text>
+                            <FontAwesome5 name='exclamation' style={styles.nonProficient} />
+                        </Pressable>
+                    }
                 </View>
             </View>
             <View style={styles.collapseButton}>
@@ -147,12 +155,12 @@ const styles = StyleSheet.create({
         justifyContent: 'space-evenly',
         paddingTop: 10,
         paddingBottom: 10,
-        //borderBottomColor: '#4A0C05', 
         borderBottomColor: 'rgba(21, 242, 253, 0.1)',
         borderBottomWidth: 2
     },
     statBox: {
-        alignItems: 'center'
+        alignItems: 'center',
+        paddingHorizontal: 20
     },
     statText: {
         color: 'white'
@@ -205,6 +213,14 @@ const styles = StyleSheet.create({
         top: -3,
         right: 5,
         color: 'rgba(21, 242, 253, 0.4)'
+    },
+    nonProficient: {
+        fontSize: 20, 
+       /*  position: 'absolute',
+        top: -3,
+        right: 4, */
+        color: 'rgba(204, 0, 0, 0.9)',
+        marginTop: 5
     }
 })
 

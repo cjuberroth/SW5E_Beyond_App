@@ -63,7 +63,7 @@ const InventoryScreen = () => {
                             {/* <Text style = {[ styles.column, styles.colQty, styles.colHeader ]}>Cost</Text> */}
                             <Text style = {[ styles.column, styles.colCost, styles.colHeader, {textAlign: 'right'} ]}>Carried Weight: {carriedWeight}</Text>
                         </View>
-                        <ScrollView bounces={false}>
+                        <ScrollView style={{height: '94.2%'}} bounces={false}>
                             {
                                 itemCategories.map((category, index) => {
                                     let filteredEquipment = equipment.filter((item) => {

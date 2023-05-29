@@ -3,12 +3,15 @@ import { Text, View, StyleSheet, Pressable, Alert } from "react-native"
 import { DataTable } from "react-native-paper"
 import { useNavigation } from '@react-navigation/native'
 import { Entypo } from '@expo/vector-icons'
+import { FontAwesome5 } from '@expo/vector-icons'
 import AppStyles from "../styles/AppStyles"
 import CharacterContext from '../context/CharacterContext'
 
 const EquipmentBlock = ({ category, equipment }) => {
 	const {equippable, setEquippable} = useContext(CharacterContext)
 	const getCharacterAC = useContext(CharacterContext).characterEquipment.getCharacterAC
+	const {armorProfs} = useContext(CharacterContext)
+	const {armorProficient} = useContext(CharacterContext)
 	const [equippedState, setEquippedState] = useState(equipment)
 	const navigation = useNavigation()
 
@@ -19,10 +22,11 @@ const EquipmentBlock = ({ category, equipment }) => {
 		if (getCharacterAC(toggle) === 'OverArmored') {
 			return
 		}
-		setEquippedState(toggle)
 		setEquippable(toggle)
-		
+		setEquippedState(toggle)
 	}	
+
+	console.log(equippable)
 
 	const showItemDetails = (item) => {
 		navigation.navigate('EquipmentDetailsModal', {
@@ -45,7 +49,8 @@ const EquipmentBlock = ({ category, equipment }) => {
     		ehPrereq: item.hasPrerequisite,
     		ehAttunement: item.requiresAttunement,
     		ehDescription: item.text,
-			customTweaks: item.tweaks	
+			customTweaks: item.tweaks,
+			equipped: item.equipped
 		})
 	}
 
@@ -65,7 +70,8 @@ const EquipmentBlock = ({ category, equipment }) => {
 							<DataTable.Row style={styles.tableRow} key={item.name}>
 								<Pressable style={{ flex: 1, flexDirection: 'row' }} onPress={() => toggleEquipped(item.name)}>
 									<DataTable.Cell style={styles.colItem}>
-										<Text style={item.equipped ? styles.tableDataTextEquipped : styles.tableDataText}>{item.name}</Text>
+										<Text style={item.equipped ? styles.tableDataTextEquipped : styles.tableDataText}>{item.name} </Text>
+										{/* <FontAwesome5 style={{fontSize: 15, color: 'white'}} name='fingerprint' /> */}
 									</DataTable.Cell>
 									<DataTable.Cell style={styles.colQty}>
 										<Text style={ item.equipped ? styles.tableDataTextEquipped : styles.tableDataText}>x{item.quantity}</Text>

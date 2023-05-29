@@ -1,12 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react'
 import { Alert } from 'react-native'
+import useAPIData from '../hooks/useAPIData'
 import swapi from '../api/swapi'
-import {SpeciesCall, ClassCall, FeatCall, PowerCall, ArchetypeCall,
-		ArmorPropertyCall, BackgroundCall, ConditionsCall,
-		EnhancedItemCall, EquipmentCall, FeatureCall,
-		FightingMasteryCall, FightingStyleCall, LightsaberFormCall,
-		ManeuversCall, WeaponFocusCall, WeaponPropertyCall,
-		WeaponSupremacyCall, SkillsCall} from '../api/apiCalls'
 import charAbilitiesImport from '../../data/jalenOrso2'
 import jalenOrso from '../../data/jalenOrso2'
 import archifamel from '../../data/archifamel'
@@ -68,6 +63,21 @@ export const CharacterProvider = ({children}) => {
 			return
 		}
 	  }
+
+	  const getArmorProficiencies = (str) => {
+		str = str.trim()
+		const spaceIndex = str.indexOf(' ')
+		if (spaceIndex !== -1) {
+			let convertedString = str.replace(/\w\S*/g,
+				function(txt) {
+					return txt.charAt(0).toUpperCase() + txt.substring(1).toLowerCase()
+				})
+			return convertedString.substring(0, spaceIndex)
+		} else {
+			return str
+		}
+	}
+
 	  //------------------------------------------------------------------------------------------
 
 	  //object to export functions
@@ -99,7 +109,7 @@ export const CharacterProvider = ({children}) => {
 	const [api_SkillsLU, set_api_SkillsLU] = useState([])
 
 	const searchApi = async () => {
-        var response = await swapi.get('/species')
+        let response = await swapi.get('/species')
         set_api_Species(response.data)
         response = await swapi.get('/class')
         set_api_Class(response.data)
@@ -109,32 +119,32 @@ export const CharacterProvider = ({children}) => {
 		set_api_Power(response.data)
 		response = await swapi.get('/archetype')
 		set_api_Archetype(response.data)
-		/* response = await swapi.get('/ArmorProperty')
-		set_api_ArmorProperty(response.data) */
-		/* response = await swapi.get('/background')
-		set_api_Background(response.data) */
+		//esponse = await swapi.get('/ArmorProperty')
+		//set_api_ArmorProperty(response.data)
+		//response = await swapi.get('/background')
+		//set_api_Background(response.data)
 		response = await swapi.get('/conditions')
 		set_api_Conditions(response.data)
 		response = await swapi.get('/enhancedItem')
 		set_api_EnhancedItem(response.data)
 		response = await swapi.get('/equipment')
 		set_api_Equipment(response.data)
-		/* response = await swapi.get('/Feature')
-		set_api_Feature(response.data) */
-		/* response = await swapi.get('/FightingMastery')
-		set_api_FightingMastery(response.data) */
-		/* response = await swapi.get('/FightingStyle')
-		set_api_FightingStyle(response.data) */
-		/* response = await swapi.get('/LightsaberForm')
-		set_api_LightsaberForm(response.data) */
-		/* response = await swapi.get('/Maneuvers')
-		set_api_Maneuvers(response.data) */
-		/* response = await swapi.get('/WeaponFocus')
-		set_api_WeaponFocus(response.data) */
-		/* response = await swapi.get('/WeaponProperty')
-		set_api_WeaponProperty(response.data) */
-		/* response = await swapi.get('/WeaponSupremacy')
-		set_api_WeaponSupremacy(response.data) */
+		//response = await swapi.get('/Feature')
+		//set_api_Feature(response.data)
+		// response = await swapi.get('/FightingMastery')
+		//set_api_FightingMastery(response.data)
+		// response = await swapi.get('/FightingStyle')
+		//set_api_FightingStyle(response.data)
+		// response = await swapi.get('/LightsaberForm')
+		//set_api_LightsaberForm(response.data)
+		// response = await swapi.get('/Maneuvers')
+		//set_api_Maneuvers(response.data)
+		// response = await swapi.get('/WeaponFocus')
+		//set_api_WeaponFocus(response.data)
+		// response = await swapi.get('/WeaponProperty')
+		//set_api_WeaponProperty(response.data)
+		// response = await swapi.get('/WeaponSupremacy')
+		//set_api_WeaponSupremacy(response.data)
 		response = await swapi.get('/skills')
 		set_api_SkillsLU(response.data)
     }
@@ -740,15 +750,17 @@ export const CharacterProvider = ({children}) => {
 		}
 	}
 
-	//used to get specific returns from enhanced item api
-	// for(let i = 0; i < api_EnhancedItem.length; i++) {
-	// 	if (api_EnhancedItem[i].name === 'Adapted Armor') {
-	// 		console.log (api_EnhancedItem[i])
-	// 	}
-	// }
-
 	//add custom equipment to full equipment data list
 	equipmentData = equipmentData.flat().concat(charData.customEquipment)
+
+	//flag custom equipment as such
+	for (let i = 0; i < equipmentData.length; i++) {
+		for (let j = 0; j < charData.customEquipment.length; j++) {
+			if (equipmentData[i].name === charData.customEquipment[j].name) {
+				equipmentData[i]["custom"] = true
+			}
+		}
+	}
 
 	//inject tweaks into equipment data
 	for(let i = 0; i < equipmentData.length; i++) {
@@ -859,14 +871,81 @@ export const CharacterProvider = ({children}) => {
 		getCharacterAC: getCharacterAC
 	}
 
-	//console.log(characterEquipment.equipment)
 	const [equippable, setEquippable] = useState(equipmentData)
 
 	const [shortRestDice, setShortRestDice] = useState([])
 	const [shortRestHitDice, setShortRestHitDice] = useState([])
 	const [shortRestHitDiceUsed, setShortRestHitDiceUsed] = useState([{class: '', numDice: 0}])
 	
-	//console.log("Render")
+	//Proficiencies---------------------------------------------------------------------------------------
+	const [armorProficient, setArmorProficient] = useState()
+	
+	//parse proficiencies from classes and only get the type ('light' vs 'light armor')
+	const armorProfs = new Set()
+	for (let i = 0; i < charData.classes.length; i++) {
+		for (let j = 0; j < api_Class.length; j++) {
+			if (charData.classes[i].name === api_Class[j].name) {
+				for (let k = 0; k < api_Class[j].armorProficiencies.length; k++) {
+					if (api_Class[j].armorProficiencies[k] === 'All armor') {
+						armorProfs.add('Light')
+						armorProfs.add('Medium')
+						armorProfs.add('Heavy')
+					} else {
+						armorProfs.add(getArmorProficiencies(api_Class[j].armorProficiencies[k]))
+					}
+				}
+			}
+		}
+	}
+
+	useEffect(() => {
+		const equippedArmor = new Set()
+		equippable.map(el => {
+			//first, get the equipped status of all armor as boolean (determines if armor is equipped at all)
+			if (el.equipmentCategory === 'Armor') {
+				equippedArmor.add(el.equipped)
+			}
+			//then, if true is in the set, move forward with determining armor proficiency
+			if (equippedArmor.has(true)) {
+				//if the armor is custom, do nothing (this will have to be tweaked if better data)
+				if (el.custom === true) {
+					return
+				}
+				//if the equipped armor is not a shield, set proficiency for armor
+				if (el.equipped === true && el.equipmentCategory === 'Armor' && el.armorClassification !== 'Shield') {
+					if (armorProfs.has(el.armorClassification)) {
+						setArmorProficient(true)
+					} else {
+						setArmorProficient(false)
+					}
+				} else if (el.equipped === true && el.armorclassification === 'Shield') { //it's a shield
+					if (el.name.includes('Light')) { //it's a light shield
+						if (armorProfs.has('Light')) {
+							setArmorProficient(true)
+						} else {
+							setArmorProficient(false)
+						}
+					} else if (el.name.includes('Medium')) { //it's a medium shield
+						if (armorProfs.has('Medium')) {
+							setArmorProficient(true)
+						} else {
+							setArmorProficient(false)
+						}
+					} else if (el.name.includes('Heavy')) { //it's a heavy shield
+						if (armorProfs.has('Heavy')) {
+							setArmorProficient(true)
+						} else {
+							setArmorProficient(false)
+						}
+					}
+				}
+			} else { //if no armor is equipped, set the proficiency to true
+				setArmorProficient(true)
+			}
+		})
+	}, [equippable])
+
+	console.log("Render")
 
 	return <CharacterContext.Provider value={{
 		character, setCharacter, 
@@ -897,6 +976,8 @@ export const CharacterProvider = ({children}) => {
 		characterCasting, 
 		apiData, 
 		characterEquipment, 
+		armorProfs,
+		armorProficient, setArmorProficient,
 		functions}}>
 		{children}
 	</CharacterContext.Provider>

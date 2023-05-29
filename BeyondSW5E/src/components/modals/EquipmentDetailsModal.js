@@ -7,6 +7,8 @@ const EquipmentDetailsModal = ({ route }) => {
     //currently doesn't take custom equipment into account
     //it will show some info, but not enough
     const navigation = useNavigation()
+
+    console.log(route.params.equipped)
     
     //for enhanced items
     if (route.params.ehType) {
@@ -27,6 +29,10 @@ const EquipmentDetailsModal = ({ route }) => {
                     </View>
                     <View style={ styles.modalHeading }>
                         <Text style={ styles.modalHeading }>{route.params.name}</Text>
+                    </View>
+                    <View style={styles.modalStats}>
+                        <Text style={styles.modalStatCol}>Equipped:</Text>
+                        <Text style={styles.modalStatValueCol}>{route.params.equipped ? 'Yes' : 'No'}</Text>
                     </View>
                     <View style={styles.modalStats}>
                         <Text style={styles.modalStatCol}>Item Type:</Text>
@@ -71,6 +77,10 @@ const EquipmentDetailsModal = ({ route }) => {
                     <View style={[styles.modalStats, {marginBottom: 10}]}>
                         <Text>Cost: {route.params.eqCost}</Text>
                         <Text>Weight: {route.params.eqWeight}</Text>
+                    </View>
+                    <View style={styles.modalStats}>
+                        <Text style={styles.modalStatCol}>Equipped:</Text>
+                        <Text style={styles.modalStatValueCol}>{route.params.equipped ? 'Yes' : 'No'}</Text>
                     </View>
                     { route.params.eqArmorType ? 
                         <View style={styles.modalStats}>
