@@ -7,6 +7,7 @@ import CheckBox from '../CheckBox'
 import { Select, SelectModalProvider } from '@mobile-reality/react-native-select-pro'
 import CharacterContext from '../../context/CharacterContext'
 import DiceRoll from '../DiceRolls'
+import useAPIData from '../../hooks/useAPIData'
 
 const ShortRestModal = () => {
     const navigation = useNavigation()
@@ -15,10 +16,9 @@ const ShortRestModal = () => {
     const [message, setMessage] = useState('')
     const charClasses = useContext(CharacterContext).characterInformation.classes
     const conMod = useContext(CharacterContext).characterMods.con_mod
-    const classData = useContext(CharacterContext).apiData.class
+    const { api_Class } = useAPIData()
     const maximumHP = useContext(CharacterContext).characterInformation.hitPoints
-    const { maxHP, setMaxHP } = useContext(CharacterContext)
-    const { tempHitPoints, setTempHitPoints } = useContext(CharacterContext)
+    const { setMaxHP } = useContext(CharacterContext)
     const [totalMod, setTotalMod] = useState(conMod)
     const {shortRestHitDice, setShortRestHitDice} = useContext(CharacterContext)
     const {shortRestDice, setShortRestDice} = useContext(CharacterContext)
@@ -32,9 +32,9 @@ const ShortRestModal = () => {
     }
 
     const getHitDie = (charClass) => {
-        for(i = 0; i < classData.length; i++) {
-            if (classData[i].name === charClass) {
-                return classData[i].hitDiceDieType
+        for(i = 0; i < api_Class.length; i++) {
+            if (api_Class[i].name === charClass) {
+                return api_Class[i].hitDiceDieType
             }
         }
     }

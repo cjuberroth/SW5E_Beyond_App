@@ -1,4 +1,4 @@
-import React, { useContext, useLayoutEffect, useState } from 'react'
+import React, { useContext } from 'react'
 import { Text, View, FlatList, StyleSheet, ImageBackground } from 'react-native'
 import CharacterContext from '../context/CharacterContext'
 import SettingsContext from '../context/SettingsContext'
@@ -7,13 +7,14 @@ import Header from '../components/Header'
 import HeaderCollapsed from '../components/HeaderCollapsed'
 import HeaderContext from '../context/HeaderContext'
 import AppStyles from '../styles/AppStyles'
+import useAPIData from '../hooks/useAPIData'
 
 const SkillsScreen = () => {
 
     const characterSkills = useContext(CharacterContext).character.tweaks?.abilityScores
     const characterInfo = useContext(CharacterContext).characterInformation
     const characterMods = useContext(CharacterContext).characterMods
-    const skillsLU = useContext(CharacterContext).apiData.skillsLU
+    const { api_SkillsLU } = useAPIData()
     const flexValue = useContext(HeaderContext).headerUtils.flexValue
     const headerCollapsed = useContext(HeaderContext).headerUtils.isCollapsed
     const {emblem} = useContext(SettingsContext)
@@ -35,7 +36,7 @@ const SkillsScreen = () => {
                         </View>
                         <View style={{height: '94.2%'}}>
                             <FlatList 
-                                data = { skillsLU }
+                                data = { api_SkillsLU }
                                 keyExtractor = {(skill) => skill.rowKey}
                                 contentContainerStyle={{flexGrow: 1}}
                                 renderItem = { ({ item }) => {

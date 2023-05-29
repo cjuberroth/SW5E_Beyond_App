@@ -7,31 +7,34 @@ const { api_Archetype, api_ArmorProperty, api_Background, api_Class, api_Conditi
     api_FightingStyle, api_LightsaberForm, api_Maneuvers, api_Power, api_SkillsLU,
     api_Species, api_WeaponFocus, api_WeaponProperty, api_WeaponSupremacy } = useAPIData()
 
-    const calculateAbilityScores = () => {
+    const calculateAbilityScores = calculateAbilityScores(api_Species)
+}
+
+export function calculateAbilityScores(api_Species) {
+    return () => {
         // Calculate ability scores
-        var species = character.species.name
-        var speciesIncrease = []
+        let species = character.species.name
+        let speciesIncrease = []
 
         //set the base ability scores from the JSON
-        var strength = charData.baseAbilityScores.Strength
-        var dexterity = charData.baseAbilityScores.Dexterity
-        var constitution = charData.baseAbilityScores.Constitution
-        var intelligence = charData.baseAbilityScores.Intelligence
-        var wisdom = charData.baseAbilityScores.Wisdom
-        var charisma = charData.baseAbilityScores.Charisma
+        let strength = charData.baseAbilityScores.Strength
+        let dexterity = charData.baseAbilityScores.Dexterity
+        let constitution = charData.baseAbilityScores.Constitution
+        let intelligence = charData.baseAbilityScores.Intelligence
+        let wisdom = charData.baseAbilityScores.Wisdom
+        let charisma = charData.baseAbilityScores.Charisma
 
-        if(isEmpty(charData.species.abilityScoreImprovement)) {
+        if (isEmpty(charData.species.abilityScoreImprovement)) {
             //several species present a choice of ability score improvements
             //if there is data here, it means at least 1 increase is a choice
             //if no data is here, ability score increases are static for the species and we get it from the api
-
             //this loop creates an array of objects that give the stat and increase from the api
-            for(let i = 0; i < api_Species.length; i++) {
+            for (let i = 0; i < api_Species.length; i++) {
                 if (api_Species[i].name === species) {
-                    for(let j = 0; j < api_Species[i].abilitiesIncreased.length; j++) {
-                        for(let k = 0; k < api_Species[i].abilitiesIncreased[j].length; k++) {
-                            for(let l = 0; l < api_Species[i].abilitiesIncreased[j][k].abilities.length; l++) {
-                                speciesIncrease.push({stat: api_Species[i].abilitiesIncreased[j][k].abilities[l], up: api_Species[i].abilitiesIncreased[j][k].amount})
+                    for (let j = 0; j < api_Species[i].abilitiesIncreased.length; j++) {
+                        for (let k = 0; k < api_Species[i].abilitiesIncreased[j].length; k++) {
+                            for (let l = 0; l < api_Species[i].abilitiesIncreased[j][k].abilities.length; l++) {
+                                speciesIncrease.push({ stat: api_Species[i].abilitiesIncreased[j][k].abilities[l], up: api_Species[i].abilitiesIncreased[j][k].amount })
                             }
                         }
                     }
@@ -39,7 +42,7 @@ const { api_Archetype, api_ArmorProperty, api_Background, api_Class, api_Conditi
             }
 
             //add the increases to the base ability scores
-            for(let i = 0; i < speciesIncrease.length; i++) {
+            for (let i = 0; i < speciesIncrease.length; i++) {
                 switch (speciesIncrease[i].stat) {
                     case 'Strength':
                         strength = strength + speciesIncrease[i].up
@@ -64,14 +67,14 @@ const { api_Archetype, api_ArmorProperty, api_Background, api_Class, api_Conditi
         } else {
             //there is data in the species abilityScoreImprovement, so we need to determine which scores are static
             //and which scores are a choice
-            for(let i = 0; i < api_Species.length; i++) {
+            for (let i = 0; i < api_Species.length; i++) {
                 if (api_Species[i].name === species) {
-                    for(let j = 0; j < api_Species[i].abilitiesIncreased.length; j++) {
-                        for(let k = 0; k < api_Species[i].abilitiesIncreased[j].length; k++) {
-                            for(let l = 0; l < api_Species[i].abilitiesIncreased[j][k].abilities.length; l++) {
-                                if (api_Species[i].abilitiesIncreased[j][k].abilities.length === 1 && 
+                    for (let j = 0; j < api_Species[i].abilitiesIncreased.length; j++) {
+                        for (let k = 0; k < api_Species[i].abilitiesIncreased[j].length; k++) {
+                            for (let l = 0; l < api_Species[i].abilitiesIncreased[j][k].abilities.length; l++) {
+                                if (api_Species[i].abilitiesIncreased[j][k].abilities.length === 1 &&
                                     api_Species[i].abilitiesIncreased[j][k].abilities[l].includes('Any') != true) {
-                                        speciesIncrease.push({stat: api_Species[i].abilitiesIncreased[j][k].abilities[l], up: api_Species[i].abilitiesIncreased[j][k].amount})
+                                    speciesIncrease.push({ stat: api_Species[i].abilitiesIncreased[j][k].abilities[l], up: api_Species[i].abilitiesIncreased[j][k].amount })
                                 }
                             }
                         }
@@ -80,7 +83,7 @@ const { api_Archetype, api_ArmorProperty, api_Background, api_Class, api_Conditi
             }
 
             //add the increases to the base ability scores
-            for(let i = 0; i < speciesIncrease.length; i++) {
+            for (let i = 0; i < speciesIncrease.length; i++) {
                 switch (speciesIncrease[i].stat) {
                     case 'Strength':
                         strength = strength + speciesIncrease[i].up
@@ -113,17 +116,17 @@ const { api_Archetype, api_ArmorProperty, api_Background, api_Class, api_Conditi
         }
 
         //variables to capture ability score increases from leveling
-        var strengthIncrease = 0
-        var dexterityIncrease = 0
-        var constitutionIncrease = 0
-        var intelligenceIncrease = 0
-        var wisdomIncrease = 0
-        var charismaIncrease = 0
+        let strengthIncrease = 0
+        let dexterityIncrease = 0
+        let constitutionIncrease = 0
+        let intelligenceIncrease = 0
+        let wisdomIncrease = 0
+        let charismaIncrease = 0
 
         //this loop captures all ability score increases resulting from leveling
-        for(let i = 0; i < charData.classes.length; i++) {
+        for (let i = 0; i < charData.classes.length; i++) {
             for (let y = 0; y < charData.classes[i].abilityScoreImprovements.length; y++) {
-                if(charData.classes[i].abilityScoreImprovements[y].type === "Ability Score Improvement") {
+                if (charData.classes[i].abilityScoreImprovements[y].type === "Ability Score Improvement") {
                     for (let j = 0; j < charData.classes[i].abilityScoreImprovements[y].abilitiesIncreased.length; j++) {
                         switch (charData.classes[i].abilityScoreImprovements[y].abilitiesIncreased[j].name) {
                             case 'Strength':
@@ -157,15 +160,23 @@ const { api_Archetype, api_ArmorProperty, api_Background, api_Class, api_Conditi
         intelligence = intelligence + (intelligenceIncrease ?? 0)
         wisdom = wisdom + (wisdomIncrease ?? 0)
         charisma = charisma + (charismaIncrease ?? 0)
-        
+
         //check for overrides from website character creator
-        if (charData.tweaks?.abilityScores?.Strength?.score?.override) {strength = charData.tweaks?.abilityScores?.Strength?.score?.override}
-        if (charData.tweaks?.abilityScores?.Dexterity?.score?.override) {dexterity = charData.tweaks?.abilityScores?.Dexterity?.score?.override}
-        if (charData.tweaks?.abilityScores?.Constitution?.score?.override) {constitution = charData.tweaks?.abilityScores?.Constitution?.score?.override}
-        if (charData.tweaks?.abilityScores?.Intelligence?.score?.override) {intelligence = charData.tweaks?.abilityScores?.Intelligence?.score?.override}
-        if (charData.tweaks?.abilityScores?.Wisdom?.score?.override) {wisdom = charData.tweaks?.abilityScores?.Wisdom?.score?.override}
-        if (charData.tweaks?.abilityScores?.Charisma?.score?.override) {charisma = charData.tweaks?.abilityScores?.Charisma?.score?.override}
+        if (charData.tweaks?.abilityScores?.Strength?.score?.override) { strength = charData.tweaks?.abilityScores?.Strength?.score?.override} 
+        if (charData.tweaks?.abilityScores?.Dexterity?.score?.override) { dexterity = charData.tweaks?.abilityScores?.Dexterity?.score?.override} 
+        if (charData.tweaks?.abilityScores?.Constitution?.score?.override) { constitution = charData.tweaks?.abilityScores?.Constitution?.score?.override} 
+        if (charData.tweaks?.abilityScores?.Intelligence?.score?.override) { intelligence = charData.tweaks?.abilityScores?.Intelligence?.score?.override} 
+        if (charData.tweaks?.abilityScores?.Wisdom?.score?.override) { wisdom = charData.tweaks?.abilityScores?.Wisdom?.score?.override} 
+        if (charData.tweaks?.abilityScores?.Charisma?.score?.override) { charisma = charData.tweaks?.abilityScores?.Charisma?.score?.override} 
+
+        return {
+            abilitiesStrength: strength,
+            abilitiesDexterity: dexterity,
+            abilitiesConstitution: constitution,
+            abilitiesIntelligence: intelligence,
+            abilitiesWisdom: wisdom,
+            abilitiesCharisma: charisma
+        }
     }
 }
-
 export default characterLogic

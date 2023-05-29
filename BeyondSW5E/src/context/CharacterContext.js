@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react'
 import { Alert } from 'react-native'
 import useAPIData from '../hooks/useAPIData'
+import characterLogic from '../components/characterLogic'
 import swapi from '../api/swapi'
 import charAbilitiesImport from '../../data/jalenOrso2'
 import jalenOrso from '../../data/jalenOrso2'
@@ -78,131 +79,18 @@ export const CharacterProvider = ({children}) => {
 		}
 	}
 
-	  //------------------------------------------------------------------------------------------
-
-	  //object to export functions
-	  const functions = {
-		numberPresent: numberPresent,
-		isForceClass: isForceClass,
-		isTechClass: isTechClass
-	  }
+	//object to export functions -----------------------------------------------------------------
+	const functions = {
+	numberPresent: numberPresent,
+	isForceClass: isForceClass,
+	isTechClass: isTechClass
+	}
 	
 	// API Calling -------------------------------------------------------------------------------
-	const [api_Species, set_api_Species] = useState([])
-	const [api_Class, set_api_Class] = useState([])
-	const [api_Feat, set_api_Feat] = useState([])
-	const [api_Power, set_api_Power] = useState([])
-	const [api_Archetype, set_api_Archetype] = useState([])
-	//const [api_ArmorProperty, set_api_ArmorProperty] = useState([])
-	//const [api_Background, set_api_Background] = useState([])
-	const [api_Conditions, set_api_Conditions] = useState([])
-	const [api_EnhancedItem, set_api_EnhancedItem] = useState([])
-	const [api_Equipment, set_api_Equipment] = useState([])
-	//const [api_Feature, set_api_Feature] = useState([])
-	//const [api_FightingMastery, set_api_FightingMastery] = useState([])
-	//const [api_FightingStyle, set_api_FightingStyle] = useState([])
-	//const [api_LightsaberForm, set_api_LightsaberForm] = useState([])
-	//const [api_Maneuvers, set_api_Maneuvers] = useState([])
-	//const [api_WeaponFocus, set_api_WeaponFocus] = useState([])
-	//const [api_WeaponProperty, set_api_WeaponProperty] = useState([])
-	//const [api_WeaponSupremacy, set_api_WeaponSupremacy] = useState([])
-	const [api_SkillsLU, set_api_SkillsLU] = useState([])
-
-	const searchApi = async () => {
-        let response = await swapi.get('/species')
-        set_api_Species(response.data)
-        response = await swapi.get('/class')
-        set_api_Class(response.data)
-		response = await swapi.get('/Feat')
-		set_api_Feat(response.data)
-		response = await swapi.get('/power')
-		set_api_Power(response.data)
-		response = await swapi.get('/archetype')
-		set_api_Archetype(response.data)
-		//esponse = await swapi.get('/ArmorProperty')
-		//set_api_ArmorProperty(response.data)
-		//response = await swapi.get('/background')
-		//set_api_Background(response.data)
-		response = await swapi.get('/conditions')
-		set_api_Conditions(response.data)
-		response = await swapi.get('/enhancedItem')
-		set_api_EnhancedItem(response.data)
-		response = await swapi.get('/equipment')
-		set_api_Equipment(response.data)
-		//response = await swapi.get('/Feature')
-		//set_api_Feature(response.data)
-		// response = await swapi.get('/FightingMastery')
-		//set_api_FightingMastery(response.data)
-		// response = await swapi.get('/FightingStyle')
-		//set_api_FightingStyle(response.data)
-		// response = await swapi.get('/LightsaberForm')
-		//set_api_LightsaberForm(response.data)
-		// response = await swapi.get('/Maneuvers')
-		//set_api_Maneuvers(response.data)
-		// response = await swapi.get('/WeaponFocus')
-		//set_api_WeaponFocus(response.data)
-		// response = await swapi.get('/WeaponProperty')
-		//set_api_WeaponProperty(response.data)
-		// response = await swapi.get('/WeaponSupremacy')
-		//set_api_WeaponSupremacy(response.data)
-		response = await swapi.get('/skills')
-		set_api_SkillsLU(response.data)
-    }
-
-	useEffect(() => { 
-		let cancel = false
-		searchApi().then(() => {
-			if (cancel) return
-			return () => {
-				cancel = true
-			}
-		}) }, [])
-	//---------------------------------------------------------------------------------------------
-
-	//object to export raw api data
-	const apiData = {
-		archetype: api_Archetype,
-		//armorProperty: api_ArmorProperty,
-		//background: api_Background,
-		class: api_Class,
-		conditions: api_Conditions,
-		enhancedItems: api_EnhancedItem,
-		equipment: api_Equipment,
-		feat: api_Feat,
-		//feature: api_Feature,
-		//fightingMastery: api_FightingMastery,
-		//fightingStyle: api_FightingStyle,
-		//lightsaberForm: api_LightsaberForm,
-		//maneuvers: api_Maneuvers,
-		power: api_Power,
-		skillsLU: api_SkillsLU,
-		species: api_Species,
-		//weaponFocus: api_WeaponFocus,
-		//weaponProperty: api_WeaponProperty,
-		//weaponSupremacy: api_WeaponSupremacy
-	}
-
-	/* const apiData = {
-		archetype: ArchetypeCall(),
-		armorProperty: ArmorPropertyCall(),
-		background: BackgroundCall(),
-		class: ClassCall(),
-		conditions: ConditionsCall(),
-		enhancedItems: EnhancedItemCall(),
-		equipment: EquipmentCall(),
-		feat: FeatCall(),
-		feature: FeatureCall(),
-		fightingMastery: FightingMasteryCall(),
-		fightingStyle: FightingStyleCall(),
-		lightsaberForm: LightsaberFormCall(),
-		maneuvers: ManeuversCall(),
-		power: PowerCall(),
-		skillsLU: SkillsCall(),
-		species: SpeciesCall(),
-		weaponFocus: WeaponFocusCall(),
-		weaponProperty: WeaponPropertyCall(),
-		weaponSupremacy: WeaponSupremacyCall()
-	} */
+	const { api_Archetype, api_ArmorProperty, api_Background, api_Class, api_Conditions,
+        api_EnhancedItem, api_Equipment, api_Feat, api_Feature, api_FightingMastery,
+        api_FightingStyle, api_LightsaberForm, api_Maneuvers, api_Power, api_SkillsLU,
+        api_Species, api_WeaponFocus, api_WeaponProperty, api_WeaponSupremacy } = useAPIData()
 	
 	//----------------------------------------------------------------------------------------------
 	// Calculate ability scores
@@ -974,7 +862,6 @@ export const CharacterProvider = ({children}) => {
 		characterSaves, 
 		characterFeats, 
 		characterCasting, 
-		apiData, 
 		characterEquipment, 
 		armorProfs,
 		armorProficient, setArmorProficient,

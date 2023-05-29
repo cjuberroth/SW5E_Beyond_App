@@ -34,6 +34,13 @@ const EquipmentDetailsModal = ({ route }) => {
                         <Text style={styles.modalStatCol}>Equipped:</Text>
                         <Text style={styles.modalStatValueCol}>{route.params.equipped ? 'Yes' : 'No'}</Text>
                     </View>
+                    { route.params.custom === true ?
+                        <View style={styles.modalStats}>
+                            <Text style={styles.modalStatCol}>**Custom Equipment</Text>
+                        </View>
+                    :
+                        <></>
+                    }
                     <View style={styles.modalStats}>
                         <Text style={styles.modalStatCol}>Item Type:</Text>
                         <Text style={styles.modalStatValueCol}>{route.params.ehType}</Text>
@@ -82,6 +89,13 @@ const EquipmentDetailsModal = ({ route }) => {
                         <Text style={styles.modalStatCol}>Equipped:</Text>
                         <Text style={styles.modalStatValueCol}>{route.params.equipped ? 'Yes' : 'No'}</Text>
                     </View>
+                    { route.params.custom === true ?
+                        <View style={styles.modalStats}>
+                            <Text style={styles.modalStatCol}>**Custom Equipment</Text>
+                        </View>
+                    :
+                        <></>
+                    }
                     { route.params.eqArmorType ? 
                         <View style={styles.modalStats}>
                             <Text style={styles.modalStatCol}>Armor Classification:</Text>
@@ -126,6 +140,33 @@ const EquipmentDetailsModal = ({ route }) => {
                         <Text>Cost: {route.params.eqCost}</Text>
                         <Text>Weight: {route.params.eqWeight}</Text>
                     </View>
+                    <View style={styles.modalStats}>
+                        <Text style={styles.modalStatCol}>Equipped:</Text>
+                        <Text style={styles.modalStatValueCol}>{route.params.equipped ? 'Yes' : 'No'}</Text>
+                    </View>
+                    { route.params.custom === true ?
+                        <View style={styles.modalStats}>
+                            <Text style={styles.modalStatCol}>**Custom Equipment</Text>
+                        </View>
+                    :
+                        <></>
+                    }
+                    { route.params.customToHit ?
+                        <View style={styles.modalStats}>
+                            <Text style={styles.modalStatCol}>To Hit:</Text>
+                            <Text style={styles.modalStatValueCol}>+{route.params.customToHit}</Text>
+                        </View> 
+                    : 
+                        <View></View>
+                    }
+                    { route.params.customDamageDice && route.params.customDamageNumberOfDice ?
+                        <View style={styles.modalStats}>
+                            <Text style={styles.modalStatCol}>Damage:</Text>
+                            <Text style={styles.modalStatValueCol}>{route.params.customDamageNumberOfDice}d{route.params.customDamageDice} {route.params.eqWeaponDamageType}</Text>
+                        </View> 
+                    : 
+                        <View></View>
+                    }
                     { route.params.eqWeaponType ? 
                         <View style={styles.modalStats}>
                             <Text style={styles.modalStatCol}>Weapon Classification:</Text>

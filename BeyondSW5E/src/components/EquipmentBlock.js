@@ -26,8 +26,6 @@ const EquipmentBlock = ({ category, equipment }) => {
 		setEquippedState(toggle)
 	}	
 
-	console.log(equippable)
-
 	const showItemDetails = (item) => {
 		navigation.navigate('EquipmentDetailsModal', {
 			name: item.name,
@@ -50,7 +48,12 @@ const EquipmentBlock = ({ category, equipment }) => {
     		ehAttunement: item.requiresAttunement,
     		ehDescription: item.text,
 			customTweaks: item.tweaks,
-			equipped: item.equipped
+			equipped: item.equipped,
+			custom: item.custom,
+			customToHit: item.tweaks?.toHit?.override,
+			customDamageDice: item.tweaks?.damageDice?.dieSize,
+			customDamageNumberOfDice: item.damageNumberOfDice,
+			customDamageType: item.damageType
 		})
 	}
 
@@ -70,9 +73,12 @@ const EquipmentBlock = ({ category, equipment }) => {
 							<DataTable.Row style={styles.tableRow} key={item.name}>
 								<Pressable style={{ flex: 1, flexDirection: 'row' }} onPress={() => toggleEquipped(item.name)}>
 									<DataTable.Cell style={styles.colItem}>
-										<Text style={item.equipped ? styles.tableDataTextEquipped : styles.tableDataText}>{item.name} </Text>
-										{/* <FontAwesome5 style={{fontSize: 15, color: 'white'}} name='fingerprint' /> */}
-									</DataTable.Cell>
+										{ item.custom === true ?
+											<Text style={item.equipped ? styles.tableDataTextEquipped : styles.tableDataText}>**{item.name} </Text>
+										:
+											<Text style={item.equipped ? styles.tableDataTextEquipped : styles.tableDataText}>{item.name} </Text>
+										}
+											</DataTable.Cell>
 									<DataTable.Cell style={styles.colQty}>
 										<Text style={ item.equipped ? styles.tableDataTextEquipped : styles.tableDataText}>x{item.quantity}</Text>
 									</DataTable.Cell>
@@ -134,3 +140,5 @@ const styles = StyleSheet.create({
 })
 
 export default EquipmentBlock;
+
+{/* <FontAwesome5 style={{fontSize: 15, color: 'white'}} name='fingerprint' /> */}
