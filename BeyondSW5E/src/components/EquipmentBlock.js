@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react"
-import { Text, View, StyleSheet, Pressable, Alert } from "react-native"
-import { DataTable } from "react-native-paper"
+import { Text, View, StyleSheet, Pressable } from "react-native"
+import { DataTable, Button } from "react-native-paper"
 import { useNavigation } from '@react-navigation/native'
 import { Entypo } from '@expo/vector-icons'
 import { FontAwesome5 } from '@expo/vector-icons'
@@ -8,11 +8,13 @@ import AppStyles from "../styles/AppStyles"
 import CharacterContext from '../context/CharacterContext'
 
 const EquipmentBlock = ({ category, equipment }) => {
-	const {equippable, setEquippable} = useContext(CharacterContext)
+	const { setEquippable } = useContext(CharacterContext)
 	const getCharacterAC = useContext(CharacterContext).characterEquipment.getCharacterAC
-	const {armorProfs} = useContext(CharacterContext)
-	const {armorProficient} = useContext(CharacterContext)
+	const { armorProfs } = useContext(CharacterContext)
+	const { armorProficient } = useContext(CharacterContext)
+	const { carriedWeight, setCarriedWeight } = useContext(CharacterContext)
 	const [equippedState, setEquippedState] = useState(equipment)
+	const [selectedRows, setSelectedRows] = useState([])
 	const navigation = useNavigation()
 
 	const toggleEquipped = (selectedItemIndex) => {
@@ -24,7 +26,38 @@ const EquipmentBlock = ({ category, equipment }) => {
 		}
 		setEquippable(toggle)
 		setEquippedState(toggle)
-	}	
+	}
+
+	const handleCarry = (rowId) => {
+		setSelectedRows((prevSelectedRows) => {
+			if (prevSelectedRows.includes(rowId)) {
+				return prevSelectedRows.filter((id) => id !== rowId)
+			} else {
+				return [...prevSelectedRows, rowId]
+			}
+		})
+		let toggle = equippedState.map(el => (
+            el.name === rowId ? {...el, carried: !el.carried, equipped: false} : el
+        ))
+		let tempWeight = 0
+		equippedState.map(el => {
+			if (el.name === rowId) {
+				if (el.weight !== undefined) {
+					if (el.carried === true) {
+							tempWeight = -(parseFloat(el.weight)) * el.quantity
+						} else {
+							tempWeight = parseFloat(el.weight) * el.quantity
+					}
+				}
+			}
+		})
+		setCarriedWeight(carriedWeight + tempWeight)
+		getCharacterAC(toggle)
+        setEquippable(toggle)
+		setEquippedState(toggle)
+	}
+
+	//console.log(equippable)
 
 	const showItemDetails = (item) => {
 		navigation.navigate('EquipmentDetailsModal', {
@@ -59,7 +92,7 @@ const EquipmentBlock = ({ category, equipment }) => {
 
 	return (
 		<View>
-			<DataTable style={styles.dataTable}>
+			<DataTable>
 				<DataTable.Header style={[styles.tableHeaderRow, styles.tableRow]}>
 					<DataTable.Title>
 						<Text style={styles.tableTitle}>
@@ -71,18 +104,38 @@ const EquipmentBlock = ({ category, equipment }) => {
 					equippedState.map((item) => {
 						return (
 							<DataTable.Row style={styles.tableRow} key={item.name}>
-								<Pressable style={{ flex: 1, flexDirection: 'row' }} onPress={() => toggleEquipped(item.name)}>
 									<DataTable.Cell style={styles.colItem}>
-										{ item.custom === true ?
-											<Text style={item.equipped ? styles.tableDataTextEquipped : styles.tableDataText}>**{item.name} </Text>
-										:
-											<Text style={item.equipped ? styles.tableDataTextEquipped : styles.tableDataText}>{item.name} </Text>
-										}
-											</DataTable.Cell>
+										{ item.custom === true ? (
+											item.carried === true ? (
+												<Pressable style={{flex: 1, flexDirection: 'row'}} onPress={() => toggleEquipped(item.name)}>
+													<Text style={item.equipped ? styles.tableDataTextEquipped : styles.tableDataText}>**{item.name} </Text>
+												</Pressable>
+											) : (
+												<Text style={styles.tableDataText}>**{item.name} </Text>
+												)
+										) : (
+											item.carried === true ? (
+												<Pressable style={{flex: 1, flexDirection: 'row'}} onPress={() => toggleEquipped(item.name)}>
+													<Text style={item.equipped ? styles.tableDataTextEquipped : styles.tableDataText}>{item.name} </Text>
+												</Pressable>
+											) : (
+												<Text style={styles.tableDataText}>{item.name} </Text>
+												)
+										)}
+									</DataTable.Cell>
 									<DataTable.Cell style={styles.colQty}>
 										<Text style={ item.equipped ? styles.tableDataTextEquipped : styles.tableDataText}>x{item.quantity}</Text>
 									</DataTable.Cell>
-								</Pressable>
+								<DataTable.Cell style={styles.colCarry}>
+									<Button color='black'
+										labelStyle={{fontSize: 12}}
+										mode='contained'
+										onPress={() => handleCarry(item.name)}
+										compact='true'
+									>
+										{selectedRows.includes(item.name) ? 'Take' : 'Drop'}
+									</Button>
+								</DataTable.Cell>
 								<DataTable.Cell style={styles.colInfo}>
 									<Pressable onPress={() => showItemDetails(item)}>
 										<Entypo style={{fontSize: 20, color: 'white'}} name='info-with-circle' />
@@ -117,26 +170,28 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(52, 52, 52, 0.2)'
     },
     tableRow: {
-        borderBottomColor: 'rgba(52, 52, 52, 0.8)', 
-		flex: 1
+        borderBottomColor: 'rgba(52, 52, 52, 0.8)',
+		flexDirection: 'row'
     },
-	colInfo: { 
-		flex: .1, 
-		fontSize: 12,
-		justifyContent: 'center'
-	},
 	colItem: { 
-		flex: 12, 
+		flex: 5, 
 		fontSize: 12
 	},
 	colQty: { 
-		flex: 2, 
-		fontSize: 12
+		flex: 1, 
+		fontSize: 12,
+		justifyContent: 'center'
 	},
-	colCost: { 
-		flex: 4, 
-		fontSize: 12
-	}
+	colCarry: { 
+		flex: 2, 
+		fontSize: 12,
+		justifyContent: 'center'
+	},
+	colInfo: { 
+		flex: 1, 
+		fontSize: 12,
+		justifyContent: 'flex-end'
+	},
 })
 
 export default EquipmentBlock;

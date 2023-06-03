@@ -1,15 +1,9 @@
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Alert } from 'react-native'
 import useAPIData from '../hooks/useAPIData'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import characterLogic from '../components/characterLogic'
-import swapi from '../api/swapi'
 import charAbilitiesImport from '../../data/jalenOrso2'
-import jalenOrso from '../../data/jalenOrso2'
-import archifamel from '../../data/archifamel'
-import dauBon from '../../data/dauBon'
-import miltox from '../../data/miltox'
-import theebisRoh from '../../data/theebisRoh'
-import trevalla from '../../data/trevalla'
 
 const CharacterContext = React.createContext({
 	character: charAbilitiesImport,
@@ -641,11 +635,12 @@ export const CharacterProvider = ({children}) => {
 	//add custom equipment to full equipment data list
 	equipmentData = equipmentData.flat().concat(charData.customEquipment)
 
-	//flag custom equipment as such
+	//flag custom equipment as such and add the carried property
 	for (let i = 0; i < equipmentData.length; i++) {
 		for (let j = 0; j < charData.customEquipment.length; j++) {
 			if (equipmentData[i].name === charData.customEquipment[j].name) {
 				equipmentData[i]["custom"] = true
+				equipmentData[i]["carried"] = true
 			}
 		}
 	}
@@ -665,9 +660,25 @@ export const CharacterProvider = ({children}) => {
 			if (equipmentData[i].name === equipmentList[j].name) {
 				equipmentData[i]["quantity"] = equipmentList[j].quantity
 				equipmentData[i]["equipped"] = equipmentList[j].equipped
+				equipmentData[i]["carried"] = true
 			}
 		}
 	}
+
+	//handle carried weight
+	const [carriedWeight, setCarriedWeight] = useState(0)
+
+	let tempWeight = 0
+	for (let i = 0; i < equipmentData.length; i++) {
+		let temp = (parseFloat(equipmentData[i].weight)) * equipmentData[i].quantity
+		if (!isNaN(temp)) {
+			tempWeight = tempWeight + temp
+		}
+	}
+
+	useEffect(() => {
+		setCarriedWeight(tempWeight)
+	}, [tempWeight])
 
 	//determine AC --------------------------------------------------------------------------------------
 	const [characterAC, setCharacterAC] = useState(0)
@@ -833,7 +844,7 @@ export const CharacterProvider = ({children}) => {
 		})
 	}, [equippable])
 
-	console.log("Render")
+	//console.log("Render")
 
 	return <CharacterContext.Provider value={{
 		character, setCharacter, 
@@ -849,6 +860,7 @@ export const CharacterProvider = ({children}) => {
 		maxTechPointsState, setMaxTechPointsState,
 		credits, setCredits,
 		equippable, setEquippable,
+		carriedWeight, setCarriedWeight,
 		characterAC, setCharacterAC,
 		forcePointsState, setForcePointsState,
 		techPointsState, setTechPointsState,

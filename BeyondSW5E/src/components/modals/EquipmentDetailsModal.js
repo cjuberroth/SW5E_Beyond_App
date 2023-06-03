@@ -7,8 +7,6 @@ const EquipmentDetailsModal = ({ route }) => {
     //currently doesn't take custom equipment into account
     //it will show some info, but not enough
     const navigation = useNavigation()
-
-    console.log(route.params.equipped)
     
     //for enhanced items
     if (route.params.ehType) {
@@ -261,7 +259,7 @@ const styles = StyleSheet.create({
     },
     modalStatValueCol: {
         flex: 2
-    }
+    },
 })
 
 export default EquipmentDetailsModal
