@@ -779,7 +779,7 @@ export const CharacterProvider = ({children}) => {
 	//Proficiencies---------------------------------------------------------------------------------------
 	const [armorProficient, setArmorProficient] = useState()
 	
-	//parse proficiencies from classes and only get the type ('light' vs 'light armor')
+	//parse armor proficiencies from classes and only get the type ('light' vs 'light armor')
 	const armorProfs = new Set()
 	for (let i = 0; i < charData.classes.length; i++) {
 		for (let j = 0; j < api_Class.length; j++) {
@@ -844,7 +844,7 @@ export const CharacterProvider = ({children}) => {
 		})
 	}, [equippable])
 
-	//console.log("Render")
+	console.log("Render")
 
 	return <CharacterContext.Provider value={{
 		character, setCharacter, 
