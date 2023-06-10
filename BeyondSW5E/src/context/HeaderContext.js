@@ -49,6 +49,8 @@ export const HeaderProvider = ({children}) => {
         toggleInspirationStyle
     }
 
+    //console.log('HeaderContext Render')
+
     return <HeaderContext.Provider value={{headerUtils}}>
         {children}
     </HeaderContext.Provider>

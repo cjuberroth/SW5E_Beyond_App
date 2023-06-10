@@ -1,17 +1,22 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect, useRef } from 'react'
 import { View, Text, Pressable, StyleSheet } from 'react-native'
 import { useNavigation, StackActions } from '@react-navigation/native'
 import { FontAwesome5 } from '@expo/vector-icons'
 import { Audio } from 'expo-av'
+import SettingsContext from '../../context/SettingsContext'
 
 const DiceResultModal = ({ route }) => {
     const navigation = useNavigation()
-    //const rollResult = route.params.rollResult
+    const { diceRollSound } = useContext(SettingsContext)
+    const soundObjectRef = useRef(null)
+    const isMountedRef = useRef(true)
 
     useEffect(() => {
         const playSound = async () => {
-            const soundObject = new Audio.Sound()
             try {
+                const soundObject = new Audio.Sound()
+                soundObjectRef.current = soundObject
+
                 await soundObject.loadAsync(require('../../../assets/dice-roll-1.mp3'))
                 await soundObject.playAsync()
             } catch (error) {
@@ -19,13 +24,27 @@ const DiceResultModal = ({ route }) => {
             }
         }
 
-        playSound()
+        if (diceRollSound === true) {
+            playSound()
+        }
 
         //Clean up the sound object when the component unmounts
-        /* return () => {
-            soundObject.unloadAsync()
-        } */
+        return () => {
+            isMountedRef.current = false
+            cleanupSoundObject()
+        }
     }, [])
+
+    const cleanupSoundObject = async () => {
+        if (soundObjectRef.current && isMountedRef.current) {
+          try {
+            await soundObjectRef.current.stopAsync()
+            await soundObjectRef.current.unloadAsync()
+          } catch (error) {
+            console.log('Error unloading sound:', error)
+          }
+        }
+      }
 
     const closeModal = () => {
         switch (route.params.origin) {
@@ -38,11 +57,6 @@ const DiceResultModal = ({ route }) => {
             default:
                 navigation.goBack()
         }
-        /* if (route.params.origin == 'shortRestModal') {
-            navigation.dispatch(StackActions.pop(3))
-        } else {
-            navigation.goBack()
-        } */
     }
 
     return (

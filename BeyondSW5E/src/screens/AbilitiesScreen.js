@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { Text, View, StyleSheet, ImageBackground, ScrollView, Pressable } from 'react-native'
+import { Text, View, StyleSheet, ImageBackground, ScrollView, Pressable, Alert } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { FontAwesome5 } from '@expo/vector-icons'
 import CharacterContext from '../context/CharacterContext'
@@ -129,6 +129,9 @@ const AbilitiesScreen = () => {
                         source={emblem && {uri: emblem}}
                         >
                         <ScrollView>
+                            <View>
+                                <Text style={styles.headingStyle}>Abilities</Text>
+                            </View>
                             <View style={styles.parentStyle}>
                                 <View style={styles.boxStyle}>
                                     <Text style={styles.textStyle}>Strength</Text>
@@ -238,19 +241,19 @@ const AbilitiesScreen = () => {
                     <View style={styles.saveView}>
                         <View style={styles.boxStyle}>
                             <Text style={styles.textStyle}>Perception</Text>
-                            <Pressable onPress={() => diceRoll(1, 20, 'Perception')}>
+                            <Pressable onPress={() => Alert.alert('Passive Perception', "A passive check is a special kind of ability check that doesn’t involve any die rolls. Such a check can represent the average result for a task done repeatedly, such as searching for secret doors over and over again, or can be used when the GM wants to secretly determine whether the characters succeed at something without rolling dice, such as noticing a hidden monster.")}>
                                 <Text style={ styles.modStyle }>{perceptionMod + 10}</Text>
                             </Pressable>
                         </View>
                         <View style={styles.boxStyle}>
                             <Text style={styles.textStyle} adjustsFontSizeToFit numberOfLines={1}>Investigation</Text>
-                            <Pressable onPress={() => diceRoll(1, 20, 'Investigation')}>
+                            <Pressable onPress={() => Alert.alert('Passive Investigation', "A passive check is a special kind of ability check that doesn’t involve any die rolls. Such a check can represent the average result for a task done repeatedly, such as searching for secret doors over and over again, or can be used when the GM wants to secretly determine whether the characters succeed at something without rolling dice, such as noticing a hidden monster.")}>
                                 <Text style={ styles.modStyle }>{investigationMod}</Text>
                             </Pressable>
                         </View>
                         <View style={styles.boxStyle}>
                             <Text style={styles.textStyle}>Insight</Text>
-                            <Pressable onPress={() => diceRoll(1, 20, 'Insight')}>
+                            <Pressable onPress={() => Alert.alert('Passive Insight', "A passive check is a special kind of ability check that doesn’t involve any die rolls. Such a check can represent the average result for a task done repeatedly, such as searching for secret doors over and over again, or can be used when the GM wants to secretly determine whether the characters succeed at something without rolling dice, such as noticing a hidden monster.")}>
                                 <Text style={ styles.modStyle }>{insightMod}</Text>
                             </Pressable>
                         </View>
@@ -277,7 +280,7 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap',
         flexDirection: 'row',
         justifyContent: 'space-evenly',
-        paddingTop: 20,
+        //paddingTop: 20,
         
     },
     boxStyle: {

@@ -9,6 +9,8 @@ export const SettingsProvider = ({children}) => {
     const [emblem, setEmblem] = useState()
 	//emblemText is what should be displayed for the user to show which emblem is current
     const [emblemText, setEmblemText] = useState('')
+	const [alignment, setAlignment] = useState('')
+	const [diceRollSound, setDiceRollSound] = useState()
 	
 	const rebelAlliance = require('../../assets/rebel_alliance.png')
 	const sourceRebelAlliance = Image.resolveAssetSource(rebelAlliance)
@@ -50,6 +52,13 @@ export const SettingsProvider = ({children}) => {
 			updateEmblemText(value)
 		})
 	}, [emblemText])
+
+	//if alignment is already stored, set it
+	useEffect(() => {
+		AsyncStorage.getItem('alignment').then((value) => {
+			setAlignment(value)
+		})
+	}, [alignment])
 
 	//translate the camel-case to the proper faction name
 	const updateEmblemText = (emblemImage) => {
@@ -158,10 +167,15 @@ export const SettingsProvider = ({children}) => {
 		}
 	}
 
+	//console.log('SettingsContext Render')
+
     return <SettingsContext.Provider value={{
         emblem, setEmblem,
         emblemText, setEmblemText,
-        updateEmblem, updateEmblemText}}>
+        updateEmblem, updateEmblemText,
+		alignment, setAlignment,
+		diceRollSound, setDiceRollSound
+		}}>
         {children}
     </SettingsContext.Provider>
 

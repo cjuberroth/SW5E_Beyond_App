@@ -844,7 +844,7 @@ export const CharacterProvider = ({children}) => {
 		})
 	}, [equippable])
 
-	console.log("Render")
+	//console.log("CharacterContext Render")
 
 	return <CharacterContext.Provider value={{
 		character, setCharacter, 

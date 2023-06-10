@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { View, Pressable, Text, StyleSheet, Button } from 'react-native'
+import { View, Pressable, Text, StyleSheet, Switch } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { FontAwesome5 } from '@expo/vector-icons'
@@ -12,11 +12,14 @@ const SettingsModal = () => {
     let localEmblem = ''
     const { emblemText } = useContext(SettingsContext)
     const { updateEmblem, updateEmblemText } = useContext(SettingsContext)
-
+    const { alignment, setAlignment } = useContext(SettingsContext)
+    const { diceRollSound, setDiceRollSound } = useContext(SettingsContext)
+    
     const handleSetValue = async () => {
         try {
             await AsyncStorage.setItem('emblem', localEmblem).then(updateEmblem(localEmblem))
             await AsyncStorage.setItem('emblemText', localEmblem).then(updateEmblemText(localEmblem))
+            //await AsyncStorage.setItem('alignment', localAlignment).then(setAlignment(localAlignment))
         } catch (error) {
             console.log('Error saving value: ', error)
         }
@@ -24,6 +27,14 @@ const SettingsModal = () => {
 
     const handleSelect = (item) => {
         localEmblem = item.value
+    }
+
+    const handleAlignment = async (value) => {
+        try {
+            await AsyncStorage.setItem('alignment', value).then(setAlignment(value))
+        } catch (error) {
+            console.log('Error saving value: ', error)
+        }
     }
 
     const handleRemoveFaction = async () => {
@@ -34,6 +45,29 @@ const SettingsModal = () => {
             console.log('Error removing data: ', error)
         }
     }
+
+    const toggleSwitch = async (newValue) => {
+        try {
+            await AsyncStorage.setItem('diceRollSound', JSON.stringify(newValue))
+            setDiceRollSound(newValue)
+        } catch (error) {
+            console.log('Error saving value: ', error)
+        }
+    }
+
+    useEffect(() => {
+        const getDiceSoundValue = async () => {
+            try {
+                const value = await AsyncStorage.getItem('diceRollSound')
+                if (value !== null) {
+                    setDiceRollSound(JSON.parse(value))
+                } 
+            } catch (error) {
+                    console.log('Error getting dice roll sound value: ', error)
+            }
+        }
+        getDiceSoundValue()
+    }, [])
 
     return (
         <SelectModalProvider>
@@ -47,14 +81,24 @@ const SettingsModal = () => {
                         <Text style={ styles.modalHeaderText }>Settings</Text>
                     </View>
                     <View>
+                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                            <Text style={styles.modalSubheadText}>Dice Roll Sound:   </Text>
+                            <Switch
+                                trackColor={{false: '#767577', true: '#81b0ff'}}
+                                thumbColor='#f4f3f4'
+                                ios_backgroundColor='#3e3e3e'
+                                onValueChange={toggleSwitch}
+                                value={diceRollSound}
+                            />
+                        </View>
                         <Text style={styles.modalSubheadText}>Choose Alignment</Text>
                         <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
-                            <Pressable onPress={() => console.log('Light Side')}
-                                style={styles.modalButtons}>
+                            <Pressable onPress={() => handleAlignment('Light')}
+                                style={alignment === 'Light' ? [styles.modalButtons, styles.alignmentSelected] : styles.modalButtons}>
                                 <Text style={{fontSize: 18}}>Light Side</Text>
                             </Pressable>
-                            <Pressable onPress={() => console.log('Dark Side')}
-                                style={styles.modalButtons}>
+                            <Pressable onPress={() => handleAlignment('Dark')}
+                                style={alignment === 'Dark' ? [styles.modalButtons, styles.alignmentSelected] : styles.modalButtons}>
                                 <Text style={{fontSize: 18}}>Dark Side</Text>
                             </Pressable>
                         </View>
@@ -70,7 +114,7 @@ const SettingsModal = () => {
                             <Text style={styles.modalRemoveButton}>Remove Faction</Text>
                         </Pressable>
                         <Pressable style={styles.modalButton} onPress={() => handleSetValue()}>
-                            <Text style={styles.modalButtonText}>Save</Text>
+                            <Text style={styles.modalButtonText}>Save Settings</Text>
                         </Pressable>
                     </View>
                 </View>
@@ -143,6 +187,11 @@ const styles = StyleSheet.create({
         color: 'red',
         alignSelf: 'center',
         paddingVertical: 7
+    },
+    alignmentSelected: {
+        borderWidth: 2,
+        borderRadius: 5,
+        borderColor: 'black'
     }
 })
 
