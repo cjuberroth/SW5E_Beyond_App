@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, View, StyleSheet, Pressable } from 'react-native'
+import { Text, View, StyleSheet, Pressable, Alert } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { FontAwesome } from '@expo/vector-icons'
 import { FontAwesome5 } from '@expo/vector-icons'
@@ -29,12 +29,28 @@ function SkillTableRow({ skillName, skillProficiency, baseAttribute, charAttribu
         navigation.navigate('DiceResultModal', {rollResult: rollResult, mod: mod, rollType: rollType, numDice: numDice, numSides: numSides})
     }
 
+    const displayProficiency = (prof) => {
+        switch (prof) {
+            case 'Proficient':
+                Alert.alert('Skill Proficiency', 'You are ' + skillProficiency + ' in ' + skillName)
+                break
+            case 'Expertise':
+                Alert.alert('Skill Proficiency', 'You have ' + skillProficiency + ' in ' + skillName)
+                break
+            default:
+                Alert.alert('Skill Proficiency', 'You have no proficiency in ' + skillName)
+                break
+        }
+    }
+
 
     return (
         <View style={styles.rowStyle}>
+            <Pressable style={{flex: 1.5}} onPress={() => displayProficiency(skillProficiency)}>
             {skillProficiency === "Proficient" ? <FontAwesome style={styles.icon} name="circle" />
                 : skillProficiency === "Expertise" ? <FontAwesome style={styles.icon} name="star" />
                 : <FontAwesome style={styles.icon} name="circle-o" />}
+            </Pressable>
             <Text style={styles.modCol}>{ baseAttribute.toUpperCase().substring(0, 3) }</Text>
             <Text style={styles.skillCol}>{ skillName }</Text>
             <Pressable style={styles.bonusCol} onPress={() => diceRoll(1, 20, skillName, charAttributeMod, charProficiencyMod, skillProficiency)}>

@@ -130,7 +130,7 @@ const AbilitiesScreen = () => {
                         >
                         <ScrollView>
                             <View>
-                                <Text style={styles.headingStyle}>Abilities</Text>
+                                <Text style={styles.headingStyle}>abilities</Text>
                             </View>
                             <View style={styles.parentStyle}>
                                 <View style={styles.boxStyle}>
@@ -183,7 +183,7 @@ const AbilitiesScreen = () => {
                                 </View>
                             </View>
                             <View>
-                                <Text style={styles.headingStyle}>Saving Throws</Text>
+                                <Text style={styles.headingStyle}>Saving throws</Text>
                             </View>
                             <View style={styles.saveView}>
                                 <View style={styles.boxStyle}>
@@ -236,7 +236,7 @@ const AbilitiesScreen = () => {
                                 </View>
                             </View>
                             <View>
-                        <Text style={styles.headingStyle}>Passive Senses</Text>
+                        <Text style={styles.headingStyle}>passive Senses</Text>
                     </View>
                     <View style={styles.saveView}>
                         <View style={styles.boxStyle}>
