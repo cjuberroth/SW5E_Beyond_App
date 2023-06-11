@@ -29,46 +29,42 @@ function SkillTableRow({ skillName, skillProficiency, baseAttribute, charAttribu
         navigation.navigate('DiceResultModal', {rollResult: rollResult, mod: mod, rollType: rollType, numDice: numDice, numSides: numSides})
     }
 
-    const displayProficiency = (prof) => {
-        switch (prof) {
-            case 'Proficient':
-                Alert.alert('Skill Proficiency', 'You are ' + skillProficiency + ' in ' + skillName)
-                break
-            case 'Expertise':
-                Alert.alert('Skill Proficiency', 'You have ' + skillProficiency + ' in ' + skillName)
-                break
-            default:
-                Alert.alert('Skill Proficiency', 'You have no proficiency in ' + skillName)
-                break
-        }
+    const displayProficiency = () => {
+        navigation.navigate('SkillDetailsModal', {
+            skillName: skillName,
+            skillProficiency: skillProficiency,
+            baseAttribute: baseAttribute,
+            charAttributeMod: charAttributeMod
+        })
     }
-
 
     return (
         <View style={styles.rowStyle}>
-            <Pressable style={{flex: 1.5}} onPress={() => displayProficiency(skillProficiency)}>
-            {skillProficiency === "Proficient" ? <FontAwesome style={styles.icon} name="circle" />
-                : skillProficiency === "Expertise" ? <FontAwesome style={styles.icon} name="star" />
-                : <FontAwesome style={styles.icon} name="circle-o" />}
+            <Pressable style={{flex: 9, flexDirection: 'row'}} onPress={() => displayProficiency(skillProficiency)}>
+                <View style={styles.profCol}>
+                {skillProficiency === "Proficient" ? <FontAwesome style={styles.icon} name="circle" />
+                    : skillProficiency === "Expertise" ? <FontAwesome style={styles.icon} name="star" />
+                    : <FontAwesome style={styles.icon} name="circle-o" />}
+                </View>
+                <Text style={styles.modCol}>{ baseAttribute.toUpperCase().substring(0, 3) }</Text>
+                <Text style={styles.skillCol}>{ skillName }</Text>
             </Pressable>
-            <Text style={styles.modCol}>{ baseAttribute.toUpperCase().substring(0, 3) }</Text>
-            <Text style={styles.skillCol}>{ skillName }</Text>
-            <Pressable style={styles.bonusCol} onPress={() => diceRoll(1, 20, skillName, charAttributeMod, charProficiencyMod, skillProficiency)}>
+            <Pressable style={{flex: 1, flexDirection: 'row'}} onPress={() => diceRoll(1, 20, skillName, charAttributeMod, charProficiencyMod, skillProficiency)}>
                 {skillProficiency === "Proficient" ? 
-                    <>
+                    <View style={styles.bonusCol}>
                         <Text style={styles.bonusText}>{numberPresent(charAttributeMod + charProficiencyMod)}{charAttributeMod + charProficiencyMod}</Text>
                         <FontAwesome5 name='dice-d20' style={styles.d20} />
-                    </>
+                    </View>
                 : skillProficiency === "Expertise" ? 
-                    <>
+                    <View style={styles.bonusCol}>
                         <Text style={styles.bonusText}>{numberPresent(charAttributeMod + (charProficiencyMod * 2))}{charAttributeMod + (charProficiencyMod * 2)}</Text>
                         <FontAwesome5 name='dice-d20' style={styles.d20} />
-                    </>
+                    </View>
                 : 
-                    <>
+                    <View style={styles.bonusCol}>
                         <Text style={styles.bonusText}>{numberPresent(charAttributeMod)}{charAttributeMod}</Text>
                         <FontAwesome5 name='dice-d20' style={styles.d20} />
-                    </>
+                    </View>
                 }
             </Pressable>        
         </View>
@@ -81,6 +77,11 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         margin: 5
     },
+    profCol: {
+        flex: 1.3,
+        paddingLeft: 2,
+        paddingVertical: 3
+    },
     modCol: {
         flex: 1,
         fontSize: 15,
@@ -89,7 +90,7 @@ const styles = StyleSheet.create({
         paddingVertical: 3
     },
     skillCol: {
-        flex: 7.5,
+        flex: 7,
         fontSize: 15,
         color: 'white',
         paddingVertical: 3
@@ -113,10 +114,7 @@ const styles = StyleSheet.create({
     },
     icon: {
         fontSize: 20,
-        flex: 1.5,
-        paddingLeft: 2,
         color: 'white',
-        paddingVertical: 3
     },
     d20: {
         fontSize: 35,

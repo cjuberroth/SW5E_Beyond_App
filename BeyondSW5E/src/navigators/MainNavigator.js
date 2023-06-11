@@ -31,6 +31,7 @@ import PowerDetailModal from '../components/modals/PowerDetailModal'
 import RecoverHitDiceModal from '../components/modals/RecoverHitDiceModal'
 import CreditsModal from '../components/modals/CreditsModal'
 import DiceRollModal from '../components/modals/DiceRollModal'
+import SkillDetailsModal from '../components/modals/SkillDetailsModal'
 import CharacterContext from '../context/CharacterContext'
 
 function getHeaderTitle(route) {
@@ -254,6 +255,14 @@ const MainNavigator = ({ navigation }) => {
             <Stack.Screen
                 name="DiceRollModal"
                 component={DiceRollModal}
+                options={{
+                    presentation: 'transparentModal',
+                    headerShown: false
+                }}
+            />
+            <Stack.Screen
+                name="SkillDetailsModal"
+                component={SkillDetailsModal}
                 options={{
                     presentation: 'transparentModal',
                     headerShown: false
