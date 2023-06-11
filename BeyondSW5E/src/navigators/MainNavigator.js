@@ -33,6 +33,7 @@ import CreditsModal from '../components/modals/CreditsModal'
 import DiceRollModal from '../components/modals/DiceRollModal'
 import SkillDetailsModal from '../components/modals/SkillDetailsModal'
 import CharacterContext from '../context/CharacterContext'
+import { useSettingsContext } from '../context/SettingsContext'
 
 function getHeaderTitle(route) {
     const routeName = getFocusedRouteNameFromRoute(route) ?? 'Abilities'
@@ -62,6 +63,7 @@ const Tab = createMaterialTopTabNavigator()
 function MyTabs() {
     const charCasting = useContext(CharacterContext).characterCasting
     const isCaster = charCasting.maxForcePoints > 0 || charCasting.maxTechPoints > 0
+    const { alignmentSettings } = useSettingsContext()
     return (
         <Tab.Navigator 
             tabBarPosition="bottom"
@@ -78,7 +80,7 @@ function MyTabs() {
                     width: 110
                 },
                 tabBarIndicatorStyle: {
-                    //backgroundColor: 'red',
+                    backgroundColor: alignmentSettings.tabIndicatorColor,
                     //maybe use this with light side/dark side choice
                 }
                 //lazy: true

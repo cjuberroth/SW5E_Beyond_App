@@ -4,14 +4,15 @@ import CharacterContext from '../context/CharacterContext'
 import Header from '../components/Header'
 import HeaderCollapsed from '../components/HeaderCollapsed'
 import HeaderContext from '../context/HeaderContext'
-import SettingsContext from '../context/SettingsContext'
+//import SettingsContext from '../context/SettingsContext'
+import { useSettingsContext } from '../context/SettingsContext'
 import AppStyles from '../styles/AppStyles'
 
 const NotesScreen = () => {
     const flexValue = useContext(HeaderContext).headerUtils.flexValue
     const headerCollapsed = useContext(HeaderContext).headerUtils.isCollapsed
     const [notes, setNotes] = useState('')
-    const {emblem} = useContext(SettingsContext)
+    const {emblem} = useSettingsContext()
 
     return (
         <View style = { AppStyles.globalStyles.parentContainerView }>

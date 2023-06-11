@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { Text, View, FlatList, StyleSheet, ImageBackground } from 'react-native'
 import CharacterContext from '../context/CharacterContext'
-import SettingsContext from '../context/SettingsContext'
+import { useSettingsContext } from '../context/SettingsContext'
 import SkillTableRow from '../components/SkillTableRow'
 import Header from '../components/Header'
 import HeaderCollapsed from '../components/HeaderCollapsed'
@@ -17,7 +17,7 @@ const SkillsScreen = () => {
     const { api_SkillsLU } = useAPIData()
     const flexValue = useContext(HeaderContext).headerUtils.flexValue
     const headerCollapsed = useContext(HeaderContext).headerUtils.isCollapsed
-    const {emblem} = useContext(SettingsContext)
+    const {emblem} = useSettingsContext()
 
     return (
         <View style={styles.parentView}>

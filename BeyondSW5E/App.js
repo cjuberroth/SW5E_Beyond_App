@@ -60,13 +60,13 @@ function App() {
         <View style={{flex: 1}} >
             <SelectProvider>
                 <CharacterProvider>
-                    <HeaderProvider>
-                        <SettingsProvider>
+                    <SettingsProvider>
+                        <HeaderProvider>
                             <NavigationContainer>
                                 <MainNavigator />
                             </NavigationContainer>
-                        </SettingsProvider>
-                    </HeaderProvider>
+                        </HeaderProvider>
+                    </SettingsProvider>
                 </CharacterProvider>
             </SelectProvider>
         </View>

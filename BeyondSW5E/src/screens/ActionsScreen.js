@@ -2,7 +2,8 @@ import React, { useContext } from 'react'
 import { Text, View, StyleSheet, ImageBackground, ScrollView, Pressable } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import CharacterContext from '../context/CharacterContext'
-import SettingsContext from '../context/SettingsContext'
+//import SettingsContext from '../context/SettingsContext'
+import { useSettingsContext } from '../context/SettingsContext'
 import Header from '../components/Header'
 import HeaderCollapsed from '../components/HeaderCollapsed'
 import HeaderContext from '../context/HeaderContext'
@@ -15,7 +16,7 @@ const ActionsScreen = () => {
     const {equippable, setEquippable} = useContext(CharacterContext)
     const charData = useContext(CharacterContext).character
     const charLevel = useContext(CharacterContext).characterInformation.level
-    const {emblem} = useContext(SettingsContext)
+    const {emblem} = useSettingsContext()
     const navigation = useNavigation()
 
     const showActionDetails = (action) => {

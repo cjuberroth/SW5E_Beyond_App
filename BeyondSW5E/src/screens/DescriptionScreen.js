@@ -1,7 +1,8 @@
 import React, { useContext } from 'react'
 import { Text, View, StyleSheet, ImageBackground, ScrollView } from 'react-native'
 import CharacterContext from '../context/CharacterContext'
-import SettingsContext from '../context/SettingsContext'
+//import SettingsContext from '../context/SettingsContext'
+import { useSettingsContext } from '../context/SettingsContext'
 import Header from '../components/Header'
 import HeaderCollapsed from '../components/HeaderCollapsed'
 import HeaderContext from '../context/HeaderContext'
@@ -13,7 +14,7 @@ const DescriptionScreen = () => {
     const characteristics = charInfo.characteristics
     const flexValue = useContext(HeaderContext).headerUtils.flexValue
     const headerCollapsed = useContext(HeaderContext).headerUtils.isCollapsed
-    const {emblem} = useContext(SettingsContext)
+    const {emblem} = useSettingsContext()
     
     return (
         <View style = { AppStyles.globalStyles.parentContainerView }>

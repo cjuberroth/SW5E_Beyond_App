@@ -4,9 +4,12 @@ import { useNavigation } from '@react-navigation/native'
 import { FontAwesome } from '@expo/vector-icons'
 import { FontAwesome5 } from '@expo/vector-icons'
 import DiceRoll from './DiceRolls'
+import { useSettingsContext } from '../context/SettingsContext'
 
 function SkillTableRow({ skillName, skillProficiency, baseAttribute, charAttributeMod, charProficiencyMod }) {
     const navigation = useNavigation()
+    const { alignmentSettings } = useSettingsContext()
+
     const numberPresent = function(score) {
         if(score >= 0) {
             return "+"
@@ -42,9 +45,9 @@ function SkillTableRow({ skillName, skillProficiency, baseAttribute, charAttribu
         <View style={styles.rowStyle}>
             <Pressable style={{flex: 9, flexDirection: 'row'}} onPress={() => displayProficiency(skillProficiency)}>
                 <View style={styles.profCol}>
-                {skillProficiency === "Proficient" ? <FontAwesome style={styles.icon} name="circle" />
-                    : skillProficiency === "Expertise" ? <FontAwesome style={styles.icon} name="star" />
-                    : <FontAwesome style={styles.icon} name="circle-o" />}
+                {skillProficiency === "Proficient" ? <FontAwesome style={[styles.icon, {color: alignmentSettings.tabIndicatorColor}]} name="circle" />
+                    : skillProficiency === "Expertise" ? <FontAwesome style={[styles.icon, {color: alignmentSettings.tabIndicatorColor}]} name="star" />
+                    : <FontAwesome style={[styles.icon, {color: alignmentSettings.tabIndicatorColor}]} name="circle-o" />}
                 </View>
                 <Text style={styles.modCol}>{ baseAttribute.toUpperCase().substring(0, 3) }</Text>
                 <Text style={styles.skillCol}>{ skillName }</Text>
@@ -53,17 +56,17 @@ function SkillTableRow({ skillName, skillProficiency, baseAttribute, charAttribu
                 {skillProficiency === "Proficient" ? 
                     <View style={styles.bonusCol}>
                         <Text style={styles.bonusText}>{numberPresent(charAttributeMod + charProficiencyMod)}{charAttributeMod + charProficiencyMod}</Text>
-                        <FontAwesome5 name='dice-d20' style={styles.d20} />
+                        <FontAwesome5 name='dice-d20' style={[styles.d20, {color: alignmentSettings.d20Color}]} />
                     </View>
                 : skillProficiency === "Expertise" ? 
                     <View style={styles.bonusCol}>
                         <Text style={styles.bonusText}>{numberPresent(charAttributeMod + (charProficiencyMod * 2))}{charAttributeMod + (charProficiencyMod * 2)}</Text>
-                        <FontAwesome5 name='dice-d20' style={styles.d20} />
+                        <FontAwesome5 name='dice-d20' style={[styles.d20, {color: alignmentSettings.d20Color}]} />
                     </View>
                 : 
                     <View style={styles.bonusCol}>
                         <Text style={styles.bonusText}>{numberPresent(charAttributeMod)}{charAttributeMod}</Text>
-                        <FontAwesome5 name='dice-d20' style={styles.d20} />
+                        <FontAwesome5 name='dice-d20' style={[styles.d20, {color: alignmentSettings.d20Color}]} />
                     </View>
                 }
             </Pressable>        

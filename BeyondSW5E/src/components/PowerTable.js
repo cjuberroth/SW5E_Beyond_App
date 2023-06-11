@@ -88,13 +88,13 @@ const styles = StyleSheet.create({
     tableTitle: {
         fontWeight: 'bold',
         fontSize: 20,
-        color: 'white'
+        color: '#ffe81f'
     },
     dataTable: {
     },
     tableHeaderText: {
         fontWeight: 'bold',
-        color: 'white'
+        color: '#ffe81f'
     },
     tableDataText: {
         fontSize: 12,

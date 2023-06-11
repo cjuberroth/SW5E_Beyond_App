@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { StyleSheet, Image } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const SettingsContext = React.createContext()
     
-export const SettingsProvider = ({children}) => {
+const SettingsProvider = ({children}) => {
     //emblem is the uri string to the image
     const [emblem, setEmblem] = useState()
 	//emblemText is what should be displayed for the user to show which emblem is current
@@ -167,6 +167,33 @@ export const SettingsProvider = ({children}) => {
 		}
 	}
 
+	let alignmentSettings = {}
+	if (alignment === 'Light') {
+		alignmentSettings = {
+			tabIndicatorColor: '#15f2fd',
+			d20Color: 'rgba(21, 242, 253, 0.4)',
+			headerButtonColor: 'rgba(21, 242, 253, 0.1)',
+			creditsButtonColor: 'rgba(21, 242, 253, 0.1)',
+			inspirationButtonColor: '#15f2fd'
+		}
+	} else if (alignment === 'Dark') {
+		alignmentSettings = {
+			tabIndicatorColor: '#EB212E',
+			d20Color: 'rgba(235, 33, 46, 0.4)',
+			headerButtonColor: 'rgba(235, 33, 46, 0.1)',
+			creditsButtonColor: 'rgba(235, 33, 46, 0.1)',
+			inspirationButtonColor: '#EB212E'
+		}
+	} else {
+		alignmentSettings = {
+			tabIndicatorColor: '#ffe81f',
+			d20Color: 'rgba(255, 232, 31, 0.4)',
+			headerButtonColor: 'rgba(255, 232, 31, 0.1)',
+			creditsButtonColor: 'rgba(255, 232, 31, 0.1)',
+			inspirationButtonColor: '#ffe81f'
+		}
+	}
+
 	//console.log('SettingsContext Render')
 
     return <SettingsContext.Provider value={{
@@ -174,15 +201,19 @@ export const SettingsProvider = ({children}) => {
         emblemText, setEmblemText,
         updateEmblem, updateEmblemText,
 		alignment, setAlignment,
-		diceRollSound, setDiceRollSound
+		diceRollSound, setDiceRollSound,
+		alignmentSettings
 		}}>
         {children}
     </SettingsContext.Provider>
 
 }
 
+const useSettingsContext = () => useContext(SettingsContext)
+
 const styles = StyleSheet.create({
     
 })
 
-export default SettingsContext
+//export default SettingsContext
+export { SettingsProvider, useSettingsContext }

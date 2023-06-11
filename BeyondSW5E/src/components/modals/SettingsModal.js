@@ -4,34 +4,21 @@ import { useNavigation } from '@react-navigation/native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { FontAwesome5 } from '@expo/vector-icons'
 import { Select, SelectModalProvider } from '@mobile-reality/react-native-select-pro'
-import SettingsContext from '../../context/SettingsContext'
+import { useSettingsContext } from '../../context/SettingsContext'
 import factions from '../../../data/factions.json'
 
 const SettingsModal = () => {
     const navigation = useNavigation()
-    let localEmblem = ''
-    const { emblemText } = useContext(SettingsContext)
-    const { updateEmblem, updateEmblemText } = useContext(SettingsContext)
-    const { alignment, setAlignment } = useContext(SettingsContext)
-    const { diceRollSound, setDiceRollSound } = useContext(SettingsContext)
-    
-    const handleSetValue = async () => {
+    const { emblemText } = useSettingsContext()
+    const { updateEmblem, updateEmblemText } = useSettingsContext()
+    const { alignment, setAlignment } = useSettingsContext()
+    const { diceRollSound, setDiceRollSound } = useSettingsContext()
+
+    const handleSelect = async (item) => {
         try {
-            await AsyncStorage.setItem('emblem', localEmblem).then(updateEmblem(localEmblem))
-            await AsyncStorage.setItem('emblemText', localEmblem).then(updateEmblemText(localEmblem))
+            await AsyncStorage.setItem('emblem', item.value).then(updateEmblem(item.value))
+            await AsyncStorage.setItem('emblemText', item.value).then(updateEmblemText(item.value))
             //await AsyncStorage.setItem('alignment', localAlignment).then(setAlignment(localAlignment))
-        } catch (error) {
-            console.log('Error saving value: ', error)
-        }
-    }
-
-    const handleSelect = (item) => {
-        localEmblem = item.value
-    }
-
-    const handleAlignment = async (value) => {
-        try {
-            await AsyncStorage.setItem('alignment', value).then(setAlignment(value))
         } catch (error) {
             console.log('Error saving value: ', error)
         }
@@ -43,6 +30,14 @@ const SettingsModal = () => {
             await AsyncStorage.removeItem('emblemText').then(updateEmblemText(''))
         } catch (error) {
             console.log('Error removing data: ', error)
+        }
+    }
+
+    const handleAlignment = async (value) => {
+        try {
+            await AsyncStorage.setItem('alignment', value).then(setAlignment(value))
+        } catch (error) {
+            console.log('Error saving value: ', error)
         }
     }
 
@@ -97,6 +92,10 @@ const SettingsModal = () => {
                                 style={alignment === 'Light' ? [styles.modalButtons, styles.alignmentSelected] : styles.modalButtons}>
                                 <Text style={{fontSize: 18}}>Light Side</Text>
                             </Pressable>
+                            <Pressable onPress={() => handleAlignment('Neutral')}
+                                style={alignment === 'Neutral' ? [styles.modalButtons, styles.alignmentSelected] : styles.modalButtons}>
+                                <Text style={{fontSize: 18}}>Neutral</Text>
+                            </Pressable>
                             <Pressable onPress={() => handleAlignment('Dark')}
                                 style={alignment === 'Dark' ? [styles.modalButtons, styles.alignmentSelected] : styles.modalButtons}>
                                 <Text style={{fontSize: 18}}>Dark Side</Text>
@@ -112,9 +111,6 @@ const SettingsModal = () => {
                         </View>
                         <Pressable onPress={() => handleRemoveFaction()}>
                             <Text style={styles.modalRemoveButton}>Remove Faction</Text>
-                        </Pressable>
-                        <Pressable style={styles.modalButton} onPress={() => handleSetValue()}>
-                            <Text style={styles.modalButtonText}>Save Settings</Text>
                         </Pressable>
                     </View>
                 </View>
@@ -157,10 +153,10 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
         marginLeft: 10,
-        paddingBottom: 5
+        paddingVertical: 5
     },
     modalButtons: {
-        paddingBottom: 5
+        padding: 5
     },
     modalButton: {
         alignItems: 'center',

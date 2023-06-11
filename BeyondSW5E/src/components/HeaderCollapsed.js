@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native'
 import { FontAwesome5 } from '@expo/vector-icons'
 import HeaderContext from '../context/HeaderContext'
 import CharacterContext from '../context/CharacterContext'
+import { useSettingsContext } from '../context/SettingsContext'
 import HeaderButtonSmall from './HeaderButtonSmall'
 
 const HeaderCollapsed = () => {
@@ -13,6 +14,7 @@ const HeaderCollapsed = () => {
     const toggleInspiration = useContext(HeaderContext).headerUtils.toggleInspiration
     const toggleInspirationStyle = useContext(HeaderContext).headerUtils.toggleInspirationStyle
     const { conditionsState } = useContext(CharacterContext)
+    const { alignmentSettings } = useSettingsContext()
     
     return (
         <ImageBackground style={{height: '100%', resizeMode: 'contain'}}
@@ -24,23 +26,23 @@ const HeaderCollapsed = () => {
                         buttonStyle=
                         {
                             conditionsState > 0 ?
-                                styles.headerButton
+                                [styles.headerButton, {backgroundColor: alignmentSettings.headerButtonColor}]
                             :
-                                styles.headerButtonActive
+                                [styles.headerButtonActive, {backgroundColor: alignmentSettings.inspirationButtonColor}]
                         }
                          />
                     <HeaderButtonSmall onPress={() => navigation.navigate('RestModal')} 
                         icon='bed' 
-                        buttonStyle={styles.headerButton} />
+                        buttonStyle={[styles.headerButton, {backgroundColor: alignmentSettings.headerButtonColor}]} />
                     <HeaderButtonSmall onPress={() => navigation.navigate('DefensesModal')} 
                         icon='shield-alt' 
-                        buttonStyle={styles.headerButton} />
+                        buttonStyle={[styles.headerButton, {backgroundColor: alignmentSettings.headerButtonColor}]} />
                     <HeaderButtonSmall onPress={toggleInspiration} 
                         icon='lightbulb' 
                         buttonStyle={toggleInspirationStyle} />
                     
                 </View>
-                <View style={styles.collapseButton}>
+                <View style={[styles.collapseButton, {backgroundColor: alignmentSettings.headerButtonColor}]}>
                     <Pressable style={{flexDirection: 'row', width: '84%'}} onPress={toggleHeader}>
                         <Text style={styles.collapseButtonText} adjustsFontSizeToFit>{characterInfo.name} | Lvl {characterInfo.level} </Text>
                         <FontAwesome5 style={ styles.icon } name='angle-down' />

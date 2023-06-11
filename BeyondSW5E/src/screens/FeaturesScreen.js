@@ -2,7 +2,8 @@ import React, { useContext, useState } from 'react'
 import { Text, View, StyleSheet, ImageBackground, Pressable, ScrollView } from 'react-native'
 import { FontAwesome5 } from '@expo/vector-icons'
 import CharacterContext from '../context/CharacterContext'
-import SettingsContext from '../context/SettingsContext'
+//import SettingsContext from '../context/SettingsContext'
+import { useSettingsContext } from '../context/SettingsContext'
 import * as Animatable from 'react-native-animatable'
 import Header from '../components/Header'
 import HeaderCollapsed from '../components/HeaderCollapsed'
@@ -17,7 +18,7 @@ const FeaturesScreen = () => {
     const charClasses = useContext(CharacterContext).characterInformation.classes
     const flexValue = useContext(HeaderContext).headerUtils.flexValue
     const headerCollapsed = useContext(HeaderContext).headerUtils.isCollapsed
-    const {emblem} = useContext(SettingsContext)
+    const {emblem} = useSettingsContext()
 
     for(let i = 0; i < apiArchetypes.length; i++){
         apiArchetypes[i]["collapsed"] = true

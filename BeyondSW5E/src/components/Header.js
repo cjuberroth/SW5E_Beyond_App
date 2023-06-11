@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native'
 import { FontAwesome5 } from '@expo/vector-icons'
 import HeaderContext from '../context/HeaderContext'
 import CharacterContext from '../context/CharacterContext'
+import { useSettingsContext } from '../context/SettingsContext'
 import HeaderButton from './HeaderButton'
 import DiceRoll from './DiceRolls'
 
@@ -18,6 +19,7 @@ const Header = () => {
     const toggleInspirationStyle = useContext(HeaderContext).headerUtils.toggleInspirationStyle
     const { conditionsState } = useContext(CharacterContext)
     const { armorProficient } = useContext(CharacterContext)
+    const { alignmentSettings } = useSettingsContext()
 
     const diceRoll = (numDice, numSides) => {
         const rollResult = DiceRoll(numDice, numSides)
@@ -40,8 +42,8 @@ const Header = () => {
                 source={require('../../assets/starBackground.jpg')}>
             <View style={styles.headerContainer}>
                 <View style={styles.headerBtnCol}>
-                    <HeaderButton onPress={() => navigation.navigate('ConditionsModal')} title={getConditions()} buttonStyle={styles.headerButton} />
-                    <HeaderButton onPress={() => navigation.navigate('RestModal')} title="Rest" buttonStyle={styles.headerButton} />
+                    <HeaderButton onPress={() => navigation.navigate('ConditionsModal')} title={getConditions()} buttonStyle={[styles.headerButton, {backgroundColor: alignmentSettings.headerButtonColor}]} />
+                    <HeaderButton onPress={() => navigation.navigate('RestModal')} title="Rest" buttonStyle={[styles.headerButton, {backgroundColor: alignmentSettings.headerButtonColor}]} />
                 </View>
                 <Image
                     source={
@@ -52,11 +54,11 @@ const Header = () => {
                     resizeMode={"cover"}
                 />
                 <View style={styles.headerBtnCol}>
-                    <HeaderButton onPress={() => navigation.navigate('DefensesModal')} title="Defenses" buttonStyle={styles.headerButton} />
+                    <HeaderButton onPress={() => navigation.navigate('DefensesModal')} title="Defenses" buttonStyle={[styles.headerButton, {backgroundColor: alignmentSettings.headerButtonColor}]} />
                     <HeaderButton onPress={toggleInspiration} title="Inspiration" buttonStyle={toggleInspirationStyle} />
                 </View>
             </View>
-            <View style={styles.headerStats}>
+            <View style={[styles.headerStats, {borderBottomColor: alignmentSettings.headerButtonColor}]}>
                 <View style={styles.statBox}>
                     <Text style={styles.statText}>Prof</Text>
                     <Text style={styles.statTextBig}>{numberPresent(characterInfo.proficiency) + characterInfo.proficiency}</Text>
@@ -69,7 +71,7 @@ const Header = () => {
                     <Text style={styles.statText}>Initiative</Text>
                     <Pressable style={styles.initiative} onPress={() => diceRoll(1, 20)}>
                         <Text style={styles.statTextBig}>{numberPresent(characterMods.dex_mod) + characterMods.dex_mod}</Text>
-                        <FontAwesome5 name='dice-d20' style={styles.d20} />
+                        <FontAwesome5 name='dice-d20' style={[styles.d20, {color: alignmentSettings.d20Color}]} />
                     </Pressable>
                 </View>
                 <View style={styles.statBox}>
@@ -84,7 +86,7 @@ const Header = () => {
                     }
                 </View>
             </View>
-            <View style={styles.collapseButton}>
+            <View style={[styles.collapseButton, {backgroundColor: alignmentSettings.headerButtonColor}]}>
                 <Pressable style={{flexDirection: 'row', width: '84%'}} onPress={toggleHeader}>
                     <Text style={styles.collapseButtonText} adjustsFontSizeToFit> {characterInfo.name} | Lvl {characterInfo.level} </Text>
                     <FontAwesome5 style={ styles.icon } name='angle-up' adjustsFontSizeToFit />
@@ -114,7 +116,8 @@ const styles = StyleSheet.create({
         paddingHorizontal: 5,
         borderRadius: 4,
         //backgroundColor: '#4A0C05',
-        backgroundColor: 'rgba(21, 242, 253, 0.1)',
+        //backgroundColor: 'rgba(21, 242, 253, 0.1)',
+        //backgroundColor: props.alignmentSettings.headerButtonColor,
         marginHorizontal: 20,
         marginVertical: 5,
         minWidth: '80%'

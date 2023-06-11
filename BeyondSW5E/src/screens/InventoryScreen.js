@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react'
 import { Text, View, StyleSheet, ImageBackground, ScrollView, Pressable } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import CharacterContext from '../context/CharacterContext'
-import SettingsContext from '../context/SettingsContext'
+import { useSettingsContext } from '../context/SettingsContext'
 import EquipmentBlock from '../components/EquipmentBlock'
 import Header from '../components/Header'
 import HeaderCollapsed from '../components/HeaderCollapsed'
@@ -17,7 +17,7 @@ const InventoryScreen = () => {
     const { setEquippable } = useContext(CharacterContext)
     const { credits } = useContext(CharacterContext)
     const { carriedWeight } = useContext(CharacterContext)
-    const { emblem } = useContext(SettingsContext)
+    const { emblem, alignmentSettings } = useSettingsContext()
 
     const lockout = 0
     useEffect(() => {
@@ -47,7 +47,7 @@ const InventoryScreen = () => {
                     >
                         <View style={styles.tableHeader}>
                             <Pressable style = {styles.column} onPress={() => navigation.navigate('CreditsModal')}>
-                                <Text style = {[ styles.column, styles.colHeader, styles.credits ]}>Credits: {credits}</Text>
+                                <Text style = {[ styles.column, styles.colHeader, styles.credits, {borderColor: alignmentSettings.creditsButtonColor, backgroundColor: alignmentSettings.creditsButtonColor} ]}>Credits: {credits}</Text>
                             </Pressable>
                             <Text style = {[ styles.column, styles.colCost, styles.colHeader, {textAlign: 'right'} ]}>Carried Weight: {carriedWeight}</Text>
                         </View>

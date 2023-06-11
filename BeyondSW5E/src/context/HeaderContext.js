@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 import { StyleSheet } from 'react-native'
+import { useSettingsContext } from './SettingsContext'
 
 const HeaderContext = React.createContext()
     
 export const HeaderProvider = ({children}) => {
-    
+    const { alignmentSettings } = useSettingsContext()
     const [isCollapsed, setCollapsed] = useState(false)
     const [inspiration, setInspiration] = useState(false)
 
@@ -25,15 +26,15 @@ export const HeaderProvider = ({children}) => {
     const toggleInspirationStyle = () => {
         if (inspiration) {
             if (!isCollapsed) {
-                return styles.inspirationButton
+                return [styles.inspirationButton, {backgroundColor: alignmentSettings.inspirationButtonColor}]
             } else {
-                return styles.inspirationButtonSmall
+                return [styles.inspirationButtonSmall, {backgroundColor: alignmentSettings.inspirationButtonColor}]
             }
         } else {
             if (!isCollapsed) {
-                return styles.headerButton
+                return [styles.headerButton, {backgroundColor: alignmentSettings.headerButtonColor}]
             } else {
-                return styles.headerButtonSmall
+                return [styles.headerButtonSmall, {backgroundColor: alignmentSettings.headerButtonColor}]
             }
         }
     }
