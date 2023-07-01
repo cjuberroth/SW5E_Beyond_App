@@ -3,11 +3,11 @@ import { View, Text, Pressable, StyleSheet } from 'react-native'
 import { useNavigation, StackActions } from '@react-navigation/native'
 import { FontAwesome5 } from '@expo/vector-icons'
 import { Audio } from 'expo-av'
-import SettingsContext from '../../context/SettingsContext'
+import  { useSettingsContext } from '../../context/SettingsContext'
 
 const DiceResultModal = ({ route }) => {
     const navigation = useNavigation()
-    const { diceRollSound } = useContext(SettingsContext)
+    const { diceRollSound } = useSettingsContext()
     const soundObjectRef = useRef(null)
     const isMountedRef = useRef(true)
 

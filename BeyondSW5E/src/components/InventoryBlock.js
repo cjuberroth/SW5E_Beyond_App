@@ -1,27 +1,54 @@
 import React, { useContext } from "react"
-import { Text, View, StyleSheet, Pressable } from "react-native"
+import { Text, View, StyleSheet, Alert } from "react-native"
 import { DataTable } from "react-native-paper"
 import { useNavigation } from '@react-navigation/native'
-import { Entypo } from '@expo/vector-icons'
 import { FontAwesome5 } from '@expo/vector-icons'
+import { FontAwesome } from '@expo/vector-icons'
 import AppStyles from "../styles/AppStyles"
 import CharacterContext from '../context/CharacterContext'
+import SelectDropdown from 'react-native-select-dropdown'
 
-const EquipmentBlock = ({ category, equipment }) => {
+const InventoryBlock = ({ category, equipment }) => {
 	const { equippable, setEquippable } = useContext(CharacterContext)
 	const getCharacterAC = useContext(CharacterContext).characterEquipment.getCharacterAC
 	const { armorProfs } = useContext(CharacterContext)
 	const { armorProficient } = useContext(CharacterContext)
 	const navigation = useNavigation()
+	const actions = ['View Info', 'Manage Carry', 'Equip/Unequip', 'Remove']
 
-	const toggleEquipped = (selectedItemIndex) => {
+	const handleActions = (action, item) => {
+		switch (action) {
+			case 'View Info':
+				showItemDetails(item)
+				break
+			case 'Manage Carry':
+				navigation.navigate('CarryModal', {
+					name: item.name,
+					quantity: item.quantity,
+					carriedQuantity: item.carriedQuantity,
+					weight: item.weight
+				})
+				break
+			case 'Equip/Unequip':
+				toggleEquipped(item.name, item.carried)
+				break
+			case 'Remove':
+				Alert.alert('Coming Soon', 'Removal of items from inventory is not yet supported.')
+				break
+		}
+	}
+	
+	const toggleEquipped = (selectedItemIndex, carry) => {
+		if (carry === false) {
+			Alert.alert('Not Carried', 'You cannot equip an item you are not carrying.')
+			return
+		}
 		let toggle = equippable.map(el => (
 			el.name === selectedItemIndex ? {...el, equipped: !el.equipped} : el
 		))
 		if (getCharacterAC(toggle) === 'OverArmored') {
 			return
 		}
-
 		setEquippable(toggle)
 	}
 
@@ -72,50 +99,41 @@ const EquipmentBlock = ({ category, equipment }) => {
 							return (
 								<DataTable.Row style={styles.tableRow} key={item.name}>
 									<DataTable.Cell style={styles.colItem}>
-										{ item.carried === true ?
-											item.equipped === true ?
-												item.custom === true ?
-													<Pressable style={{flex: 1, flexDirection: 'row'}} onPress={() => toggleEquipped(item.name)}>
-														<FontAwesome5 name='user-shield' color='white' size={14} />
-														<Text style={item.equipped ? styles.tableDataTextEquipped : styles.tableDataText}> **{item.name}</Text>
-													</Pressable>
-												:
-													<Pressable style={{flex: 1, flexDirection: 'row'}} onPress={() => toggleEquipped(item.name)}>
-														<FontAwesome5 name='user-shield' color='white' size={14} />
-														<Text style={item.equipped ? styles.tableDataTextEquipped : styles.tableDataText}> {item.name}</Text>
-													</Pressable>
+										{ item.equipped === true ?
+											<FontAwesome5 name='user-shield' color={'#444'} size={14} />
 											:
-												item.custom === true ?
-													<Pressable style={{flex: 1, flexDirection: 'row'}} onPress={() => toggleEquipped(item.name)}>
-														<Text style={item.equipped ? styles.tableDataTextEquipped : styles.tableDataText}>**{item.name} </Text>
-													</Pressable>
-												:
-													<Pressable style={{flex: 1, flexDirection: 'row'}} onPress={() => toggleEquipped(item.name)}>
-														<Text style={item.equipped ? styles.tableDataTextEquipped : styles.tableDataText}>{item.name} </Text>
-													</Pressable>
-										:
-											item.custom === true ?
-												<Text style={item.equipped ? styles.tableDataTextEquipped : styles.tableDataText}>**{item.name} </Text>
+											<Text></Text>
+										}
+										{ item.custom === true ? 
+											<Text style={styles.tableDataText}> **{item.name} </Text>
 											:
-												<Text style={item.equipped ? styles.tableDataTextEquipped : styles.tableDataText}>{item.name} </Text>
+											<Text style={styles.tableDataText}> {item.name} </Text>
 										}
 									</DataTable.Cell>
 									<DataTable.Cell style={styles.colQty}>
-										<Text style={ item.equipped ? styles.tableDataTextEquipped : styles.tableDataText}>x{item.carriedQuantity}</Text>
+										<Text style={styles.tableDataText}>x{item.quantity}</Text>
 									</DataTable.Cell>
-									<DataTable.Cell style={styles.colQty}>
-										<Text style={ item.equipped ? styles.tableDataTextEquipped : styles.tableDataText}>{item.weight}lb </Text>
-										{ item.carried === true ? 
-											<FontAwesome5 name='suitcase' color='white' size={14} />
-										:
-											<></>
-										}
-									</DataTable.Cell>
-									<DataTable.Cell style={styles.colInfo}>
-										<Pressable onPress={() => showItemDetails(item)}>
-											<Entypo style={{fontSize: 20, color: 'white'}} name='info-with-circle' />
-										</Pressable>
-									</DataTable.Cell>
+									<SelectDropdown
+										data={actions}
+										defaultButtonText='Actions'
+										buttonStyle={styles.dropdown1BtnStyle}
+										buttonTextStyle={styles.dropdown1BtnTxtStyle}
+										renderDropdownIcon={isOpened => {
+											return <FontAwesome name={isOpened ? 'chevron-up' : 'chevron-down'} color={'#444'} size={14} />;
+										}}
+										dropdownIconPosition={'right'}
+										dropdownStyle={styles.dropdown1DropdownStyle}
+										rowStyle={styles.dropdown1RowStyle}
+										rowTextStyle={styles.dropdown1RowTxtStyle}
+										onSelect={(selectedItem) => {
+											handleActions(selectedItem, item)
+										}}
+										buttonTextAfterSelection={() => {
+											return 'Actions'
+										}}
+										rowTextForSelection={(item) => {
+											return item
+										}} />
 								</DataTable.Row>
 							);
 						}
@@ -135,11 +153,11 @@ const styles = StyleSheet.create({
     },
     tableDataText: {
         fontSize: 12,
-        color: 'white'
+        color: 'black'
     },
 	tableDataTextEquipped: {
         fontSize: 14,
-        color: 'white',
+        color: 'black',
 		fontWeight: 'bold'
     },
     tableHeaderRow: {
@@ -150,9 +168,8 @@ const styles = StyleSheet.create({
 		flexDirection: 'row'
     },
 	colItem: { 
-		flex: 4, 
+		flex: 5, 
 		fontSize: 12,
-		marginTop: 5
 	},
 	colQty: { 
 		flex: 1, 
@@ -162,16 +179,44 @@ const styles = StyleSheet.create({
 	colCarry: { 
 		flex: 2, 
 		fontSize: 12,
-		justifyContent: 'center'
+		justifyContent: 'center',
+		borderWidth: 1, 
+		borderColor: 'red'
 	},
 	colInfo: { 
 		flex: 1, 
 		fontSize: 12,
-		marginTop: 5,
 		justifyContent: 'flex-end'
+	},
+	dropdown1BtnStyle: {
+		flex: 3,
+		height: '60%',
+		backgroundColor: '#FFF',
+		borderRadius: 5,
+		//borderWidth: 1,
+		//borderColor: '#444',
+		alignSelf: 'center'
+	},
+	dropdown1BtnTxtStyle: {
+		color: '#444', 
+		textAlign: 'center', 
+		fontSize: 14
+	},
+	dropdown1DropdownStyle: {
+		backgroundColor: '#EFEFEF', 
+		borderRadius: 5
+	},
+	dropdown1RowStyle: {
+		backgroundColor: '#EFEFEF', 
+		borderBottomColor: '#C5C5C5'
+	},
+	dropdown1RowTxtStyle: {
+		color: '#444', 
+		textAlign: 'left', 
+		fontSize: 14
 	},
 })
 
-export default EquipmentBlock;
+export default InventoryBlock;
 
 {/* <FontAwesome5 style={{fontSize: 15, color: 'white'}} name='fingerprint' /> */}

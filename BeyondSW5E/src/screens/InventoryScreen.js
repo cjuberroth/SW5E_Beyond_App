@@ -34,6 +34,12 @@ const InventoryScreen = () => {
     
     itemCategories.sort()
 
+    const showManageInventory = () => {
+        navigation.navigate('ManageInventoryModal', {
+            categories: itemCategories
+        })
+    }
+
     return (
         <View style={ styles.container }>
             <View style={styles.header}>
@@ -46,12 +52,19 @@ const InventoryScreen = () => {
                     source={emblem && {uri: emblem}}
                     >
                         <View style={styles.tableHeader}>
+                            <View style={{flexDirection: 'column'}}>
                             <Pressable style = {styles.column} onPress={() => navigation.navigate('CreditsModal')}>
                                 <Text style = {[ styles.column, styles.colHeader, styles.credits, {borderColor: alignmentSettings.creditsButtonColor, backgroundColor: alignmentSettings.creditsButtonColor} ]}>Credits: {credits}</Text>
                             </Pressable>
-                            <Text style = {[ styles.column, styles.colCost, styles.colHeader, {textAlign: 'right'} ]}>Carried Weight: {carriedWeight}</Text>
+                            </View>
+                            <Text style = {[ styles.column, styles.colCost, styles.colHeader, {textAlign: 'right'} ]}>Carried Weight: {carriedWeight}lb</Text>
                         </View>
-                        <ScrollView style={{height: '94.2%'}} bounces={false}>
+                        <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+                            <Pressable style= {{padding: 5}} onPress={() => showManageInventory()} >
+                                <Text style={[ styles.column, styles.colHeader, styles.credits, {borderColor: alignmentSettings.creditsButtonColor, backgroundColor: alignmentSettings.creditsButtonColor}]}>Manage Inventory</Text>
+                            </Pressable>
+                        </View>
+                        <ScrollView style={{height: '85%'}} bounces={false}>
                             {
                                 itemCategories.map((category, index) => {
                                     let filteredEquipment = equipment.filter((item) => {

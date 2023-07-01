@@ -9,7 +9,6 @@ import ActionsScreen from '../screens/ActionsScreen'
 import DescriptionScreen from '../screens/DescriptionScreen'
 import FeaturesScreen from '../screens/FeaturesScreen'
 import InventoryScreen from '../screens/InventoryScreen'
-import ManageInventoryScreen from '../screens/ManageInventoryScreen'
 import ManageSpellsScreen from '../screens/ManageSpellsScreen'
 import NotesScreen from '../screens/NotesScreen'
 import ProficienciesScreen from '../screens/ProficienciesScreen'
@@ -32,6 +31,8 @@ import RecoverHitDiceModal from '../components/modals/RecoverHitDiceModal'
 import CreditsModal from '../components/modals/CreditsModal'
 import DiceRollModal from '../components/modals/DiceRollModal'
 import SkillDetailsModal from '../components/modals/SkillDetailsModal'
+import ManageInventoryModal from '../components/modals/ManageInventoryModal'
+import CarryModal from '../components/modals/CarryModal'
 import CharacterContext from '../context/CharacterContext'
 import { useSettingsContext } from '../context/SettingsContext'
 
@@ -265,6 +266,22 @@ const MainNavigator = ({ navigation }) => {
             <Stack.Screen
                 name="SkillDetailsModal"
                 component={SkillDetailsModal}
+                options={{
+                    presentation: 'transparentModal',
+                    headerShown: false
+                }}
+            />
+            <Stack.Screen
+                name="ManageInventoryModal"
+                component={ManageInventoryModal}
+                options={{
+                    presentation: 'transparentModal',
+                    headerShown: false
+                }}
+            />
+            <Stack.Screen
+                name="CarryModal"
+                component={CarryModal}
                 options={{
                     presentation: 'transparentModal',
                     headerShown: false

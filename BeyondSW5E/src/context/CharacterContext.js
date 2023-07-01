@@ -332,6 +332,29 @@ export const CharacterProvider = ({children}) => {
 			}
 		}
 	}
+
+	//character size by species
+	let charSize = ''
+	if (!isEmpty(api_Species)) {
+		for (let i = 0; i < api_Species.length; i++) {
+			if (api_Species[i].name === species) {
+				charSize = api_Species[i].size
+			}
+		}
+	}
+
+	//maximum carry capacity based on species size
+	let maxCarryCapacity = 0
+	switch (charSize) {
+		case 'Tiny':
+			maxCarryCapacity = (strength * 15) / 2
+			break
+		case 'Medium':
+			maxCarryCapacity = strength * 15
+			break
+		default:
+			maxCarryCapacity = 0
+	}
 	
 	//set up conditions state for use in ConditionsModal -----------------------------------------------------
 	
@@ -357,7 +380,9 @@ export const CharacterProvider = ({children}) => {
 		level: charLevel,
 		background: charData.background,
 		characteristics: charData.characteristics,
-		credits: charData.credits
+		credits: charData.credits,
+		size: charSize,
+		maxCarryCapacity: maxCarryCapacity
 	}
 	
 	//object for exporting ability scores --------------------------------------------------------------
@@ -654,13 +679,14 @@ export const CharacterProvider = ({children}) => {
 		}
 	}
 
-	//inject quantity and equipped status into equipment data list
+	//inject properties into equipment data list
 	for(let i = 0; i < equipmentData.length; i++) {
 		for(let j = 0; j < equipmentList.length; j++) {
 			if (equipmentData[i].name === equipmentList[j].name) {
 				equipmentData[i]["quantity"] = equipmentList[j].quantity
 				equipmentData[i]["equipped"] = equipmentList[j].equipped
 				equipmentData[i]["carried"] = true
+				equipmentData[i]["carriedQuantity"] = equipmentList[j].quantity
 			}
 		}
 	}
@@ -726,7 +752,7 @@ export const CharacterProvider = ({children}) => {
 		}
 		//if trying to equip more than one armor at a time, alert and exit
 		if (equippedArmorCount >1) {
-			Alert.alert('You alread have armor equipped. To equip this armor, unequip the other.')
+			Alert.alert('Overarmored', 'You alread have armor equipped. To equip this armor, unequip the other.')
 			return 'OverArmored'
 		}
 
@@ -844,6 +870,7 @@ export const CharacterProvider = ({children}) => {
 		})
 	}, [equippable])
 
+	//console.log(equippable)
 	//console.log("CharacterContext Render")
 
 	return <CharacterContext.Provider value={{
