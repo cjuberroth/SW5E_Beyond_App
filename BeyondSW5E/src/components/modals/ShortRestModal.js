@@ -7,7 +7,6 @@ import CheckBox from '../CheckBox'
 import { Select, SelectModalProvider } from '@mobile-reality/react-native-select-pro'
 import CharacterContext from '../../context/CharacterContext'
 import DiceRoll from '../DiceRolls'
-import useAPIData from '../../hooks/useAPIData'
 
 const ShortRestModal = () => {
     const navigation = useNavigation()
@@ -16,7 +15,7 @@ const ShortRestModal = () => {
     const [message, setMessage] = useState('')
     const charClasses = useContext(CharacterContext).characterInformation.classes
     const conMod = useContext(CharacterContext).characterMods.con_mod
-    const { api_Class } = useAPIData()
+    const cachedClass = useContext(CharacterContext).cachedData.cachedClass
     const maximumHP = useContext(CharacterContext).characterInformation.hitPoints
     const { setMaxHP } = useContext(CharacterContext)
     const [totalMod, setTotalMod] = useState(conMod)
@@ -32,9 +31,9 @@ const ShortRestModal = () => {
     }
 
     const getHitDie = (charClass) => {
-        for(i = 0; i < api_Class.length; i++) {
-            if (api_Class[i].name === charClass) {
-                return api_Class[i].hitDiceDieType
+        for(i = 0; i < cachedClass.length; i++) {
+            if (cachedClass[i].name === charClass) {
+                return cachedClass[i].hitDiceDieType
             }
         }
     }

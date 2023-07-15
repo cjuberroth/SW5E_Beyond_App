@@ -134,107 +134,83 @@ const AbilitiesScreen = () => {
                                 <Text style={styles.headingStyle}>abilities</Text>
                             </View>
                             <View style={styles.parentStyle}>
-                                <View style={styles.boxStyle}>
+                                <Pressable style={styles.boxStyle} onPress={() => diceRoll(1, 20, 'Strength')} >
                                     <Text style={styles.textStyle}>Strength</Text>
-                                    <Pressable onPress={() => diceRoll(1, 20, 'Strength')}>
                                         <Text style={styles.modStyle}>{numberPresent(characterMods.str_mod)}{characterMods.str_mod}</Text>
                                         <FontAwesome5 name='dice-d20' style={[styles.d20, {color: alignmentSettings.d20Color}]} />
-                                    </Pressable>
                                     <Text style={styles.textStyle}>{characterAbilities.abilitiesStrength}</Text>
-                                </View>
-                                <View style={styles.boxStyle}>
+                                </Pressable>
+                                <Pressable style={styles.boxStyle} onPress={() => diceRoll(1, 20, 'Dexterity')} >
                                     <Text style={styles.textStyle}>Dexterity</Text>
-                                    <Pressable onPress={() => diceRoll(1, 20, 'Dexterity')}>
                                         <Text style={styles.modStyle}>{numberPresent(characterMods.dex_mod)}{characterMods.dex_mod}</Text>
                                         <FontAwesome5 name='dice-d20' style={[styles.d20, {color: alignmentSettings.d20Color}]} />
-                                    </Pressable>
                                     <Text style={styles.textStyle}>{characterAbilities.abilitiesDexterity}</Text>
-                                </View>
-                                <View style={styles.boxStyle}>
+                                </Pressable>
+                                <Pressable style={styles.boxStyle} onPress={() => diceRoll(1, 20, 'Constitution')} >
                                     <Text style={styles.textStyle}>Constitution</Text>
-                                    <Pressable onPress={() => diceRoll(1, 20, 'Constitution')}>
                                         <Text style={styles.modStyle}>{numberPresent(characterMods.con_mod)}{characterMods.con_mod}</Text>
                                         <FontAwesome5 name='dice-d20' style={[styles.d20, {color: alignmentSettings.d20Color}]} />
-                                    </Pressable>
                                     <Text style={styles.textStyle}>{characterAbilities.abilitiesConstitution}</Text>
-                                </View>
-                                <View style={styles.boxStyle}>
+                                </Pressable>
+                                <Pressable style={styles.boxStyle} onPress={() => diceRoll(1, 20, 'Intelligence')} >
                                     <Text style={styles.textStyle}>Intelligence</Text>
-                                    <Pressable onPress={() => diceRoll(1, 20, 'Intelligence')}>
                                         <Text style={styles.modStyle}>{numberPresent(characterMods.int_mod)}{characterMods.int_mod}</Text>
                                         <FontAwesome5 name='dice-d20' style={[styles.d20, {color: alignmentSettings.d20Color}]} />
-                                    </Pressable>
                                     <Text style={styles.textStyle}>{characterAbilities.abilitiesIntelligence}</Text>
-                                </View>
-                                <View style={styles.boxStyle}>
+                                </Pressable>
+                                <Pressable style={styles.boxStyle} onPress={() => diceRoll(1, 20, 'Wisdom')} >
                                     <Text style={styles.textStyle}>Wisdom</Text>
-                                    <Pressable onPress={() => diceRoll(1, 20, 'Wisdom')}>
                                         <Text style={styles.modStyle}>{numberPresent(characterMods.wis_mod)}{characterMods.wis_mod}</Text>
                                         <FontAwesome5 name='dice-d20' style={[styles.d20, {color: alignmentSettings.d20Color}]} />
-                                    </Pressable>
                                     <Text style={styles.textStyle}>{characterAbilities.abilitiesWisdom}</Text>
-                                </View>
-                                <View style={styles.boxStyle}>
+                                </Pressable>
+                                <Pressable style={styles.boxStyle} onPress={() => diceRoll(1, 20, 'Charisma')} >
                                     <Text style={styles.textStyle}>Charisma</Text>
-                                    <Pressable onPress={() => diceRoll(1, 20, 'Charisma')}>
                                         <Text style={styles.modStyle}>{numberPresent(characterMods.cha_mod)}{characterMods.cha_mod}</Text>
                                         <FontAwesome5 name='dice-d20' style={[styles.d20, {color: alignmentSettings.d20Color}]} />
-                                    </Pressable>
                                     <Text style={styles.textStyle}>{characterAbilities.abilitiesCharisma}</Text>
-                                </View>
+                                </Pressable>
                             </View>
                             <View>
                                 <Text style={styles.headingStyle}>Saving throws</Text>
                             </View>
                             <View style={styles.saveView}>
-                                <View style={styles.boxStyle}>
+                                <Pressable style={styles.boxStyle} onPress={() => diceRoll(1, 20, 'Strength Save')} >
                                     <Text style={styles.textStyle}>Strength</Text>
-                                    <Pressable onPress={() => diceRoll(1, 20, 'Strength Save')}>
                                         <Text style={styles.modStyle}>{numberPresent(characterSaves.str_save)}{characterSaves.str_save}</Text>
                                         <FontAwesome5 name='dice-d20' style={ characterSaves.characterSaves.includes('Strength') ? styles.d20Proficient : [styles.d20, {color: alignmentSettings.d20Color}] } />
-                                    </Pressable>
                                     <Text style={{fontSize: 6}}> </Text>
-                                </View>
-                                <View style={styles.boxStyle}>
+                                </Pressable>
+                                <Pressable style={styles.boxStyle} onPress={() => diceRoll(1, 20, 'Dexterity Save')} >
                                     <Text style={styles.textStyle}>Dexterity</Text>
-                                    <Pressable onPress={() => diceRoll(1, 20, 'Dexterity Save')}>
                                         <Text style={styles.modStyle}>{numberPresent(characterSaves.dex_save)}{characterSaves.dex_save}</Text>
                                         <FontAwesome5 name='dice-d20' style={ characterSaves.characterSaves.includes('Dexterity') ? styles.d20Proficient : [styles.d20, {color: alignmentSettings.d20Color}] } />
-                                    </Pressable>
                                     <Text style={{fontSize: 6}}> </Text>
-                                </View>
-                                <View style={styles.boxStyle}>
+                                </Pressable>
+                                <Pressable style={styles.boxStyle} onPress={() => diceRoll(1, 20, 'Constitution Save')} >
                                     <Text style={styles.textStyle}>Constitution</Text>
-                                    <Pressable onPress={() => diceRoll(1, 20, 'Constitution Save')}>
                                         <Text style={styles.modStyle}>{numberPresent(characterSaves.con_save)}{characterSaves.con_save}</Text>
                                         <FontAwesome5 name='dice-d20' style={ characterSaves.characterSaves.includes('Constitution') ? styles.d20Proficient : [styles.d20, {color: alignmentSettings.d20Color}] } />
-                                    </Pressable>
                                     <Text style={{fontSize: 6}}> </Text>
-                                </View>
-                                <View style={styles.boxStyle}>
+                                </Pressable>
+                                <Pressable style={styles.boxStyle} onPress={() => diceRoll(1, 20, 'Intelligence Save')} >
                                     <Text style={styles.textStyle}>Intelligence</Text>
-                                    <Pressable onPress={() => diceRoll(1, 20, 'Intelligence Save')}>
                                         <Text style={styles.modStyle}>{numberPresent(characterSaves.int_save)}{characterSaves.int_save}</Text>
                                         <FontAwesome5 name='dice-d20' style={ characterSaves.characterSaves.includes('Intelligence') ? styles.d20Proficient : [styles.d20, {color: alignmentSettings.d20Color}] } />
-                                    </Pressable>
                                     <Text style={{fontSize: 6}}> </Text>
-                                </View>
-                                <View style={styles.boxStyle}>
+                                </Pressable>
+                                <Pressable style={styles.boxStyle} onPress={() => diceRoll(1, 20, 'Wisdom Save')} >
                                     <Text style={styles.textStyle}>Wisdom</Text>
-                                    <Pressable onPress={() => diceRoll(1, 20, 'Wisdom Save')}>
                                         <Text style={styles.modStyle}>{numberPresent(characterSaves.wis_save)}{characterSaves.wis_save}</Text>
                                         <FontAwesome5 name='dice-d20' style={ characterSaves.characterSaves.includes('Wisdom') ? styles.d20Proficient : [styles.d20, {color: alignmentSettings.d20Color}] } />
-                                    </Pressable>
                                     <Text style={{fontSize: 6}}> </Text>
-                                </View>
-                                <View style={styles.boxStyle}>
+                                </Pressable>
+                                <Pressable style={styles.boxStyle} onPress={() => diceRoll(1, 20, 'Charisma Save')} >
                                     <Text style={styles.textStyle}>Charisma</Text>
-                                    <Pressable onPress={() => diceRoll(1, 20, 'Charisma Save')}>
                                         <Text style={styles.modStyle}>{numberPresent(characterSaves.cha_save)}{characterSaves.cha_save}</Text>
                                         <FontAwesome5 name='dice-d20' style={ characterSaves.characterSaves.includes('Charisma') ? styles.d20Proficient : [styles.d20, {color: alignmentSettings.d20Color}] } />
-                                    </Pressable>
                                     <Text style={{fontSize: 6}}> </Text>
-                                </View>
+                                </Pressable>
                             </View>
                             <View>
                         <Text style={styles.headingStyle}>passive Senses</Text>
@@ -357,14 +333,14 @@ const styles = StyleSheet.create({
     d20: {
         fontSize: 45, 
         position: 'absolute',
-        top: 3,
+        top: 26,
         right: 35,
         color: 'rgba(21, 242, 253, 0.4)'
     },
     d20Proficient: {
         fontSize: 45, 
         position: 'absolute',
-        top: 3,
+        top: 26,
         right: 35,
         //color: '#15f2fd'
         color: 'rgba(255, 255, 255, 0.5)'

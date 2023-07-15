@@ -79,7 +79,7 @@ const Header = () => {
                     { armorProficient ? 
                         <Text style={styles.statTextBig}>{characterEquipment.armorClass}</Text>
                     :
-                        <Pressable style={{flexDirection: 'row'}} onPress={() => Alert.alert('Not Proficient', 'You have disadvantage on any ability check, attack roll, or saving throw that involves Strength or Dexterity, and you can’t force or tech cast.')}>
+                        <Pressable style={{flexDirection: 'row'}} onPress={() => Alert.alert('Not Proficient', 'You are not proficient in the armor you have equipped.\n\nYou have disadvantage on any ability check, attack roll, or saving throw that involves Strength or Dexterity, and you can’t force or tech cast.')}>
                             <Text style={styles.statTextBig}>{characterEquipment.armorClass} </Text>
                             <FontAwesome5 name='exclamation' style={styles.nonProficient} />
                         </Pressable>

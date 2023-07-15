@@ -104,6 +104,9 @@ const Stack = createNativeStackNavigator()
 const MainNavigator = ({ navigation }) => {
     const charData = useContext(CharacterContext).characterInformation
     const { hitPoints } = useContext(CharacterContext)
+    const { tempHitPoints } = useContext(CharacterContext)
+    const { maxHP } = useContext(CharacterContext)
+    const { maxHitPointsState } = useContext(CharacterContext)
     
     return (
         <Stack.Navigator>
@@ -136,7 +139,7 @@ const MainNavigator = ({ navigation }) => {
                     headerRight: () => (
                         <Button style={styles.headerButton}
                             onPress={() => navigation.navigate('HPModal')}
-                            title={hitPoints + "/" + charData.hitPoints}
+                            title={(hitPoints + tempHitPoints) + "/" + maxHitPointsState}
                             color={Platform.OS === 'ios' ? '#ffffff' : 'black'}>
                         </Button>
                     ),

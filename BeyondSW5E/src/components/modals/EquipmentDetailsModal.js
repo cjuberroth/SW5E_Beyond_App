@@ -29,8 +29,14 @@ const EquipmentDetailsModal = ({ route }) => {
                         <Text style={ styles.modalHeading }>{route.params.name}</Text>
                     </View>
                     <View style={styles.modalStats}>
-                        <Text style={styles.modalStatCol}>Equipped:</Text>
+                    <FontAwesome5 name='user-shield' color='black' size={14} />
+                        <Text style={styles.modalStatCol}> Equipped:</Text>
                         <Text style={styles.modalStatValueCol}>{route.params.equipped ? 'Yes' : 'No'}</Text>
+                    </View>
+                    <View style={styles.modalStats}>
+                        <FontAwesome5 name='arrow-circle-up' color={'black'} size={14} />
+                        <Text style={styles.modalStatCol}> Proficient:</Text>
+                        <Text style={styles.modalStatValueCol}>{route.params.proficiency ? 'Yes' : 'No'}</Text>
                     </View>
                     { route.params.custom === true ?
                         <View style={styles.modalStats}>
@@ -84,8 +90,14 @@ const EquipmentDetailsModal = ({ route }) => {
                         <Text>Weight: {route.params.eqWeight}</Text>
                     </View>
                     <View style={styles.modalStats}>
-                        <Text style={styles.modalStatCol}>Equipped:</Text>
+                    <FontAwesome5 name='user-shield' color='black' size={14} />
+                        <Text style={styles.modalStatCol}> Equipped:</Text>
                         <Text style={styles.modalStatValueCol}>{route.params.equipped ? 'Yes' : 'No'}</Text>
+                    </View>
+                    <View style={styles.modalStats}>
+                        <FontAwesome5 name='arrow-circle-up' color={'black'} size={14} />
+                        <Text style={styles.modalStatCol}> Proficient:</Text>
+                        <Text style={styles.modalStatValueCol}>{route.params.proficiency ? 'Yes' : 'No'}</Text>
                     </View>
                     { route.params.custom === true ?
                         <View style={styles.modalStats}>

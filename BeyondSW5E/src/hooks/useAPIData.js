@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useMemo, useState } from 'react';
 import axios from 'axios';
 
 const useAPIData = () => {
@@ -8,9 +8,10 @@ const useAPIData = () => {
     api_Equipment: [], api_Feature: [], api_FightingMastery: [], api_FightingStyle: [],
     api_LightsaberForm: [], api_Maneuvers: [], api_WeaponFocus: [], api_WeaponProperty: [],
     api_WeaponSupremacy: [], api_SkillsLU: [],
-  });
+  })
+  const [isLoaded, setIsLoaded] = useState(false)
 
-  useEffect(() => {
+  useMemo(() => {
     const fetchData = async () => {
       try {
         const [
@@ -40,7 +41,7 @@ const useAPIData = () => {
           axios.get('https://sw5eapi.azurewebsites.net/api/WeaponProperty'),
           axios.get('https://sw5eapi.azurewebsites.net/api/WeaponSupremacy'),
           axios.get('https://sw5eapi.azurewebsites.net/api/skills'),
-        ]);
+        ])
 
         const apiData = {
           api_Species: speciesResponse.data,
@@ -62,18 +63,22 @@ const useAPIData = () => {
           api_WeaponProperty: weaponPropertyResponse.data,
           api_WeaponSupremacy: weaponSupremacyResponse.data,
           api_SkillsLU: skillsResponse.data,
-        };
+        }
 
-        setApiData(apiData);
+        setApiData(apiData)
+        console.log('API data loaded')
       } catch (error) {
-        console.error(error);
+        console.error(error)
+      } finally {
+        setIsLoaded(true)
+        console.log('isLoaded is now true')
       }
-    };
+    }
 
-    fetchData();
-  }, []);
+    fetchData()
+  }, [])
 
-  return apiData;
-};
+  return { apiData, isLoaded }
+}
 
-export default useAPIData;
+export default useAPIData

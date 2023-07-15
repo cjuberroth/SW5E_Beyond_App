@@ -13,6 +13,7 @@ const CharacterContext = React.createContext({
 export const CharacterProvider = ({children}) => {
 	const [character, setCharacter] = useState(charAbilitiesImport)
 	const charData = character
+	const { apiData } = useAPIData()
 
 	// Helper Functions --------------------------------------------------------------------
 	//Check if an object key has an empty value
@@ -84,7 +85,30 @@ export const CharacterProvider = ({children}) => {
 	const { api_Archetype, api_ArmorProperty, api_Background, api_Class, api_Conditions,
         api_EnhancedItem, api_Equipment, api_Feat, api_Feature, api_FightingMastery,
         api_FightingStyle, api_LightsaberForm, api_Maneuvers, api_Power, api_SkillsLU,
-        api_Species, api_WeaponFocus, api_WeaponProperty, api_WeaponSupremacy } = useAPIData()
+        api_Species, api_WeaponFocus, api_WeaponProperty, api_WeaponSupremacy } = apiData
+
+	//object to export api data
+	const cachedData = {
+		cachedArchetype: api_Archetype, 
+		cachedArmorProperty: api_ArmorProperty, 
+		cachedBackground: api_Background, 
+		cachedClass: api_Class, 
+		cachedConditions: api_Conditions,
+		cachedEnhancedItem: api_EnhancedItem, 
+		cachedEquipment: api_Equipment, 
+		cachedFeat: api_Feat, 
+		cachedFeature: api_Feature, 
+		cachedFightingMastery: api_FightingMastery,
+        cachedFightingStyle: api_FightingStyle, 
+		cachedLightsaberForm: api_LightsaberForm, 
+		cachedManeuvers: api_Maneuvers, 
+		cachedPower: api_Power, 
+		cachedSkillsLU: api_SkillsLU,
+        cachedSpecies: api_Species, 
+		cachedWeaponFocus: api_WeaponFocus, 
+		cachedWeaponProperty: api_WeaponProperty, 
+		cachedWeaponSupremacy: api_WeaponSupremacy
+	}
 	
 	//----------------------------------------------------------------------------------------------
 	// Calculate ability scores
@@ -687,6 +711,7 @@ export const CharacterProvider = ({children}) => {
 				equipmentData[i]["equipped"] = equipmentList[j].equipped
 				equipmentData[i]["carried"] = true
 				equipmentData[i]["carriedQuantity"] = equipmentList[j].quantity
+				equipmentData[i]["itemLocation"] = ''
 			}
 		}
 	}
@@ -904,6 +929,7 @@ export const CharacterProvider = ({children}) => {
 		characterEquipment, 
 		armorProfs,
 		armorProficient, setArmorProficient,
+		cachedData,
 		functions}}>
 		{children}
 	</CharacterContext.Provider>

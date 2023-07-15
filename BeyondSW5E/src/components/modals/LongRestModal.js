@@ -5,12 +5,11 @@ import { FontAwesome5 } from '@expo/vector-icons'
 import AppStyles from '../../styles/AppStyles'
 import CharacterContext from '../../context/CharacterContext'
 import CheckBox from '../CheckBox'
-import useAPIData from '../../hooks/useAPIData'
 
 const LongRestModal = () => {
     const navigation = useNavigation()
     const charData = useContext(CharacterContext).characterInformation
-    const { api_Class } = useAPIData()
+    const cachedClass = useContext(CharacterContext).cachedData.cachedClass
     const { hitPoints, setHitPoints } = useContext(CharacterContext)
     const { setMaxHP } = useContext(CharacterContext)
     const { setTempHitPoints } = useContext(CharacterContext)
@@ -38,9 +37,9 @@ const LongRestModal = () => {
     }
 
     const getHitDie = (charClass) => {
-        for(i = 0; i < api_Class.length; i++) {
-            if (api_Class[i].name === charClass) {
-                return api_Class[i].hitDiceDieType
+        for(i = 0; i < cachedClass.length; i++) {
+            if (cachedClass[i].name === charClass) {
+                return cachedClass[i].hitDiceDieType
             }
         }
     }

@@ -1,8 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Text, View, StyleSheet, Pressable, Alert } from 'react-native'
+import { Text, View, StyleSheet, Pressable, Alert, TextInput } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { FontAwesome5 } from '@expo/vector-icons'
-import { Entypo } from '@expo/vector-icons'
 import CharacterContext from '../../context/CharacterContext'
 
 const CarryModal = ({ route }) => {
@@ -13,14 +12,13 @@ const CarryModal = ({ route }) => {
     const [counter, setCounter] = useState(0)
     const [quantityCarried, setQuantityCarried] = useState(0)
     const maxCarryCapacity = useContext(CharacterContext).characterInformation.maxCarryCapacity
+    const [itemLocation, setItemLocation] = useState(route.params.location)
     let tempCarried = 0
     let difference = 0
 
     useEffect(() => {
         setQuantityCarried(route.params.carriedQuantity)
     }, [route.params.carriedQuantity])
-
-    console.log(counter)
         
     const handleCount = (amount) => {
         if (counter + amount > route.params.quantity) {
@@ -34,12 +32,12 @@ const CarryModal = ({ route }) => {
         let toggle = equippable.map(el => {
             if (action === 'drop') {
                 if (quantityCarried <= 1) {
-                    return el.name === route.params.name ? {...el, carried: false, carriedQuantity: tempCarried, equipped: false} : el
+                    return el.name === route.params.name ? {...el, carried: false, carriedQuantity: tempCarried, equipped: false, itemLocation: itemLocation} : el
                 } else {
-                    return el.name === route.params.name ? {...el, carriedQuantity: tempCarried} : el
+                    return el.name === route.params.name ? {...el, carriedQuantity: tempCarried, itemLocation: itemLocation} : el
                 }
             } else {
-                return el.name === route.params.name ? {...el, carried: true, carriedQuantity: tempCarried} : el
+                return el.name === route.params.name ? {...el, carried: true, carriedQuantity: tempCarried, itemLocation: ''} : el
             }
         })
 
@@ -114,27 +112,27 @@ const CarryModal = ({ route }) => {
                         </Pressable>
                         <Text style={ styles.modalHeaderText }>Manage Carry</Text>
                     </View>
-                    <View style={ styles.hpContainer }>
-                        <Text style={ styles.hpText }>{carriedWeight}</Text>
-                        <Text style={ styles.hpText }> / </Text>
-                        <Text style={ styles.hpText }>{maxCarryCapacity}</Text>
+                    <View style={ styles.carryContainer }>
+                        <Text style={ styles.carryText }>{carriedWeight}</Text>
+                        <Text style={ styles.carryText }> / </Text>
+                        <Text style={ styles.carryText }>{maxCarryCapacity}</Text>
                     </View>
                     <Text style={ [styles.modalHeadingText, {marginBottom: 20, fontSize: 25}] }>{route.params.name} | {route.params.weight}lb</Text>
                     <Text style={ styles.modalHeadingText }>Quantity Owned: {route.params.quantity}</Text>
                     <Text style={ styles.modalHeadingText }>Quantity Carried: {quantityCarried}</Text>
-                    <View style={ styles.advancedContainer }>
-                        <View style={ styles.advancedContainerLeft }>
-                            <View style={ styles.advancedContainerLeftColumn }>
+                    <View style={ styles.quantityContainer }>
+                        <View style={ styles.quantityContainerLeft }>
+                            <View style={ styles.quantityContainerLeftColumn }>
                                 <Text style={{ fontWeight: 'bold', paddingVertical: 3 }}>Quantity to Take/Drop</Text>
                             </View>
                         </View>
-                        <View style={ styles.advancedContainerRight }>
-                            <View style={ styles.advancedContainerRightColumn }>
-                                <Pressable style={ styles.tempHPButton } onPress={() => handleCount(-1)}>
+                        <View style={ styles.quantityContainerRight }>
+                            <View style={ styles.quantityContainerRightColumn }>
+                                <Pressable style={ styles.quantityButton } onPress={() => handleCount(-1)}>
                                     <Text >-</Text>
                                 </Pressable>
                                 <Text style={{ fontWeight: 'bold', fontSize: 18 }}>{counter}</Text>
-                                <Pressable style={ styles.tempHPButton } onPress={() => handleCount(1)}>
+                                <Pressable style={ styles.quantityButton } onPress={() => handleCount(1)}>
                                     <Text >+</Text>
                                 </Pressable>
                             </View>
@@ -148,6 +146,16 @@ const CarryModal = ({ route }) => {
                             <Text>Drop</Text>
                         </Pressable>
                     </View>
+                    <View style={styles.contentView}>
+                            <Text style={styles.screenHeader}>Item Location (Optional)</Text>
+                            <TextInput
+                                style={styles.input}
+                                onChangeText={setItemLocation}
+                                multiline={true}
+                                returnKeyType='none'
+                                value={itemLocation}
+                            />
+                        </View>
                 </View>
         </View>
     )
@@ -162,7 +170,6 @@ const styles = StyleSheet.create({
         borderRadius: 5
     },
     modalInner: {
-        //height: '75%',
         width: '90%',
         backgroundColor: '#ECEFF1',
         borderRadius: 5
@@ -177,13 +184,13 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginLeft: 10
     },
-    hpContainer: {
+    carryContainer: {
         flexDirection: 'row',
         justifyContent: 'center',
         paddingHorizontal: 50,
         paddingBottom: 20
     },
-    hpText: {
+    carryText: {
         fontSize: 30,
         fontWeight: 'bold'
     },
@@ -198,33 +205,33 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         alignSelf: 'center'
     },
-    advancedContainer: {
+    quantityContainer: {
         flexDirection: 'row'
     },
-    advancedContainerLeft: {
+    quantityContainerLeft: {
         flex: 1,
         alignItems: 'flex-end',
         paddingHorizontal: 10,
         paddingVertical: 10
     },
-    advancedContainerLeftColumn: {
+    quantityContainerLeftColumn: {
         flexDirection: 'row',
         alignItems: 'center',
         paddingVertical: 10,
     },
-    advancedContainerRight: {
+    quantityContainerRight: {
         flex:1,
         alignItems: 'flex-start',
         paddingHorizontal: 10,
         paddingVertical: 10
     },
-    advancedContainerRightColumn: {
+    quantityContainerRightColumn: {
         flexDirection: 'row',
         justifyContent: 'flex-end',
         alignItems: 'center',
         paddingVertical: 10,
     },
-    tempHPButton: {
+    quantityButton: {
         alignItems: 'center',
         justifyContent: 'center',
         paddingHorizontal: 15,
@@ -242,10 +249,22 @@ const styles = StyleSheet.create({
         backgroundColor: '#B0BEC5',
         marginHorizontal: 20,
         marginVertical: 5,
-        //minWidth: '80%',
         flexDirection: 'row',
         flex: 1
-    }
+    },
+    input: {
+        borderWidth: 2,
+        borderColor: '#B0BEC5',
+        color: 'black',
+        padding: 4,
+        textAlignVertical: 'top'
+    },
+    contentView: {
+        padding: 10,
+    },
+    screenHeader: {
+        color: 'black'
+    },
 })
 
 export default CarryModal

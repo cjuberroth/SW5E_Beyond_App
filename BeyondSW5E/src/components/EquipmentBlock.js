@@ -25,6 +25,14 @@ const EquipmentBlock = ({ category, equipment }) => {
 		setEquippable(toggle)
 	}
 
+	const getProficiency = (item) => {
+		if (armorProfs.has(item.armorClassification) && item.equipmentCategory === 'Armor' || item.armorClassification === 'Shield') {
+			return true
+		} else {
+			return false
+		}
+	}
+
 	const showItemDetails = (item) => {
 		navigation.navigate('EquipmentDetailsModal', {
 			name: item.name,
@@ -52,7 +60,8 @@ const EquipmentBlock = ({ category, equipment }) => {
 			customToHit: item.tweaks?.toHit?.override,
 			customDamageDice: item.tweaks?.damageDice?.dieSize,
 			customDamageNumberOfDice: item.damageNumberOfDice,
-			customDamageType: item.damageType
+			customDamageType: item.damageType,
+			proficiency: getProficiency(item)
 		})
 	}
 
@@ -72,39 +81,47 @@ const EquipmentBlock = ({ category, equipment }) => {
 							return (
 								<DataTable.Row style={styles.tableRow} key={item.name}>
 									<DataTable.Cell style={styles.colItem}>
+										{ getProficiency(item) ? 
+											<View style={{flex: 1, flexDirection: 'row', marginTop: 0}}>
+												<FontAwesome5 name='arrow-circle-up' color={'white'} size={14} />
+												<Text> </Text>
+											</View>
+										:
+											<Text></Text>
+										}
 										{ item.carried === true ?
 											item.equipped === true ?
 												item.custom === true ?
 													<Pressable style={{flex: 1, flexDirection: 'row'}} onPress={() => toggleEquipped(item.name)}>
 														<FontAwesome5 name='user-shield' color='white' size={14} />
-														<Text style={item.equipped ? styles.tableDataTextEquipped : styles.tableDataText}> **{item.name}</Text>
+														<Text style={styles.tableDataText}> **{item.name}</Text>
 													</Pressable>
 												:
 													<Pressable style={{flex: 1, flexDirection: 'row'}} onPress={() => toggleEquipped(item.name)}>
 														<FontAwesome5 name='user-shield' color='white' size={14} />
-														<Text style={item.equipped ? styles.tableDataTextEquipped : styles.tableDataText}> {item.name}</Text>
+														<Text style={styles.tableDataText}> {item.name}</Text>
 													</Pressable>
 											:
 												item.custom === true ?
 													<Pressable style={{flex: 1, flexDirection: 'row'}} onPress={() => toggleEquipped(item.name)}>
-														<Text style={item.equipped ? styles.tableDataTextEquipped : styles.tableDataText}>**{item.name} </Text>
+														<Text style={styles.tableDataText}>**{item.name} </Text>
 													</Pressable>
 												:
 													<Pressable style={{flex: 1, flexDirection: 'row'}} onPress={() => toggleEquipped(item.name)}>
-														<Text style={item.equipped ? styles.tableDataTextEquipped : styles.tableDataText}>{item.name} </Text>
+														<Text style={styles.tableDataText}>{item.name} </Text>
 													</Pressable>
 										:
 											item.custom === true ?
-												<Text style={item.equipped ? styles.tableDataTextEquipped : styles.tableDataText}>**{item.name} </Text>
+												<Text style={styles.tableDataText}>**{item.name} </Text>
 											:
-												<Text style={item.equipped ? styles.tableDataTextEquipped : styles.tableDataText}>{item.name} </Text>
+												<Text style={styles.tableDataText}>{item.name} </Text>
 										}
 									</DataTable.Cell>
 									<DataTable.Cell style={styles.colQty}>
-										<Text style={ item.equipped ? styles.tableDataTextEquipped : styles.tableDataText}>x{item.carriedQuantity}</Text>
+										<Text style={ styles.tableDataText}>x{item.carriedQuantity}</Text>
 									</DataTable.Cell>
 									<DataTable.Cell style={styles.colQty}>
-										<Text style={ item.equipped ? styles.tableDataTextEquipped : styles.tableDataText}>{item.weight}lb </Text>
+										<Text style={ styles.tableDataText}>{item.weight}lb </Text>
 										{ item.carried === true ? 
 											<FontAwesome5 name='suitcase' color='white' size={14} />
 										:

@@ -5,12 +5,11 @@ import { FontAwesome5 } from '@expo/vector-icons'
 import AppStyles from '../../styles/AppStyles'
 import { Select, SelectModalProvider } from '@mobile-reality/react-native-select-pro'
 import CharacterContext from '../../context/CharacterContext'
-import useAPIData from '../../hooks/useAPIData'
 
 const RecoverHitDiceModal = () => {
     const navigation = useNavigation()
     const characterLevel = useContext(CharacterContext).characterInformation.level
-    const { api_Class } = useAPIData()
+    const cachedClass = useContext(CharacterContext).cachedData.cachedClass
     const {shortRestHitDiceUsed, setShortRestHitDiceUsed} = useContext(CharacterContext)
     const [hitDiceUsed, setHitDiceUsed] = useState([])
     const [recovering, setRecovering] = useState(0)
@@ -33,9 +32,9 @@ const RecoverHitDiceModal = () => {
     }
 
     const getHitDie = (charClass) => {
-        for(i = 0; i < api_Class.length; i++) {
-            if (api_Class[i].name === charClass) {
-                return api_Class[i].hitDiceDieType
+        for(i = 0; i < cachedClass.length; i++) {
+            if (cachedClass[i].name === charClass) {
+                return cachedClass[i].hitDiceDieType
             }
         }
     }

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { View, Text, StyleSheet, Button, TextInput } from 'react-native'
+import { View, Text, StyleSheet, Button, TextInput, ActivityIndicator } from 'react-native'
 import CharacterContext from '../context/CharacterContext'
 import HeaderContext from '../context/HeaderContext'
 import jalenOrso from '../../data/jalenOrso2'
@@ -10,9 +10,10 @@ import trevalla from '../../data/trevalla'
 import t3P0 from '../../data/t3P0'
 import consularSentinel from '../../data/consularSentinel'
 import xund from '../../data/xund'
+import useAPIData from '../hooks/useAPIData'
 
 const CharacterSelectorScreen = ({navigation}) => {
-
+	const {isLoaded} = useAPIData()
 	const inspiration = useContext(HeaderContext).headerUtils.inspiration
 	const { setInspiration } = useContext(HeaderContext).headerUtils
 	const headerCollapsed = useContext(HeaderContext).headerUtils.isCollapsed
@@ -29,6 +30,7 @@ const CharacterSelectorScreen = ({navigation}) => {
 
     const [characterJSON, changeCharacterJSON] = useState({})
 
+	if (isLoaded) {
 	return (
 		<View style={styles.containerStyle}>
 			<Button title="Jalen Orso" onPress={ () => setChar(jalenOrso) }/>
@@ -47,6 +49,14 @@ const CharacterSelectorScreen = ({navigation}) => {
 			<Button title="Submit" onPress={ () => setChar(JSON.parse(characterJSON)) }/>
 		</View>
 	)
+	} else {
+		return (
+			<View style={styles.loading} >
+				<ActivityIndicator size='large' color='#ffe81f' />
+				<Text style={{color: 'white', alignSelf: 'center'}}>Loading Data</Text>
+			</View>
+		)
+	}
 }
 
 const styles = StyleSheet.create({
@@ -63,6 +73,17 @@ const styles = StyleSheet.create({
 		borderWidth: 1,
 		padding: 10,
 		backgroundColor: '#ffffff'
+	},
+	loading: {
+		flex: 1,
+		justifyContent: 'center',
+		backgroundColor: 'black'
+	},
+	activityIndicator: {
+		size: 'large',
+		color: '#ffe81f',
+		justifyContent: 'center',
+		alignItems: 'center'
 	}
 })
 

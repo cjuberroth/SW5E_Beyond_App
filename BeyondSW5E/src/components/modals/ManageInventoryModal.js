@@ -10,7 +10,7 @@ const ManageInventoryModal = ({ route }) => {
     const equipment = useContext(CharacterContext).equippable
     const { equippable } = useContext(CharacterContext)
 
-    // This block loads the equipment categories within the loaded equipment block
+    // This block loads the equipment categories within the loaded inventory block
     var itemCategories = []
     equipment.forEach(element => {
         if(!itemCategories.includes(element.equipmentCategory)){

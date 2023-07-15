@@ -26,6 +26,10 @@ const SpellsScreen = () => {
     const flexValue = useContext(HeaderContext).headerUtils.flexValue
     const headerCollapsed = useContext(HeaderContext).headerUtils.isCollapsed
     const {emblem} = useSettingsContext()
+    const { tempForcePoints } = useContext(CharacterContext)
+    const { maxForcePointsState } = useContext(CharacterContext)
+    const { tempTechPoints } = useContext(CharacterContext)
+    const { maxTechPointsState } = useContext(CharacterContext)
 
     const castingPointsModal = (pointsType) => {
         navigation.navigate('CastingPointsModal', { pointsType: pointsType })
@@ -86,7 +90,7 @@ const SpellsScreen = () => {
                                             <Pressable style={{borderColor: '#ffe81f', borderWidth: 2, alignItems: 'center', borderRadius: 5, width: '80%'}}
                                                 onPress={() => castingPointsModal('Force')}>
                                                 <View >
-                                                    <Text style={{fontSize: 20, color: 'white'}}>{forcePointsState} / {forcePoints}</Text>
+                                                    <Text style={{fontSize: 20, color: 'white'}}>{(forcePointsState + tempForcePoints)} / {maxForcePointsState}</Text>
                                                 </View>
                                             </Pressable>
                                             <Text style={styles.descriptorText}>force points</Text>
@@ -114,7 +118,7 @@ const SpellsScreen = () => {
                                             <Pressable style={{borderColor: '#ffe81f', borderWidth: 2, alignItems: 'center', borderRadius: 5, width: '80%'}}
                                                 onPress={() => castingPointsModal('Tech')}>
                                                 <View>
-                                                    <Text style={{fontSize: 20, color: 'white'}}>{techPointsState} / {techPoints}</Text>
+                                                    <Text style={{fontSize: 20, color: 'white'}}>{(techPointsState + tempTechPoints)} / {maxTechPointsState}</Text>
                                                 </View>
                                             </Pressable>
                                             <Text style={styles.descriptorText}>tech points</Text>

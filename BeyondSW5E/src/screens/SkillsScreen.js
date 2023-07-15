@@ -7,14 +7,13 @@ import Header from '../components/Header'
 import HeaderCollapsed from '../components/HeaderCollapsed'
 import HeaderContext from '../context/HeaderContext'
 import AppStyles from '../styles/AppStyles'
-import useAPIData from '../hooks/useAPIData'
 
 const SkillsScreen = () => {
 
     const characterSkills = useContext(CharacterContext).character.tweaks?.abilityScores
     const characterInfo = useContext(CharacterContext).characterInformation
     const characterMods = useContext(CharacterContext).characterMods
-    const { api_SkillsLU } = useAPIData()
+    const skillsLU = useContext(CharacterContext).cachedData.cachedSkillsLU
     const flexValue = useContext(HeaderContext).headerUtils.flexValue
     const headerCollapsed = useContext(HeaderContext).headerUtils.isCollapsed
     const {emblem} = useSettingsContext()
@@ -36,7 +35,7 @@ const SkillsScreen = () => {
                         </View>
                         <View style={{height: '94.2%'}}>
                             <FlatList 
-                                data = { api_SkillsLU }
+                                data = { skillsLU }
                                 keyExtractor = {(skill) => skill.rowKey}
                                 contentContainerStyle={{flexGrow: 1}}
                                 renderItem = { ({ item }) => {

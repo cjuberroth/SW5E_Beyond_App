@@ -8,13 +8,13 @@ import AppStyles from "../styles/AppStyles"
 import CharacterContext from '../context/CharacterContext'
 import SelectDropdown from 'react-native-select-dropdown'
 
-const InventoryBlock = ({ category, equipment }) => {
+const InventoryBlock = ({ category }) => {
 	const { equippable, setEquippable } = useContext(CharacterContext)
 	const getCharacterAC = useContext(CharacterContext).characterEquipment.getCharacterAC
 	const { armorProfs } = useContext(CharacterContext)
 	const { armorProficient } = useContext(CharacterContext)
 	const navigation = useNavigation()
-	const actions = ['View Info', 'Manage Carry', 'Equip/Unequip', 'Remove']
+	const actions = ['View Info', 'Manage Carry', 'Equip/Unequip', 'Proficiency', 'Remove']
 
 	const handleActions = (action, item) => {
 		switch (action) {
@@ -26,11 +26,15 @@ const InventoryBlock = ({ category, equipment }) => {
 					name: item.name,
 					quantity: item.quantity,
 					carriedQuantity: item.carriedQuantity,
-					weight: item.weight
+					weight: item.weight,
+					location: item.itemLocation
 				})
 				break
 			case 'Equip/Unequip':
 				toggleEquipped(item.name, item.carried)
+				break
+			case 'Proficiency':
+				console.log('Proficiency')
 				break
 			case 'Remove':
 				Alert.alert('Coming Soon', 'Removal of items from inventory is not yet supported.')
@@ -50,6 +54,14 @@ const InventoryBlock = ({ category, equipment }) => {
 			return
 		}
 		setEquippable(toggle)
+	}
+
+	const getProficiency = (item) => {
+		if (armorProfs.has(item.armorClassification) && item.equipmentCategory === 'Armor' || item.armorClassification === 'Shield') {
+			return true
+		} else {
+			return false
+		}
 	}
 
 	const showItemDetails = (item) => {
@@ -79,7 +91,8 @@ const InventoryBlock = ({ category, equipment }) => {
 			customToHit: item.tweaks?.toHit?.override,
 			customDamageDice: item.tweaks?.damageDice?.dieSize,
 			customDamageNumberOfDice: item.damageNumberOfDice,
-			customDamageType: item.damageType
+			customDamageType: item.damageType,
+			proficiency: getProficiency(item)
 		})
 	}
 
@@ -99,6 +112,11 @@ const InventoryBlock = ({ category, equipment }) => {
 							return (
 								<DataTable.Row style={styles.tableRow} key={item.name}>
 									<DataTable.Cell style={styles.colItem}>
+										{ getProficiency(item) ? 
+											<FontAwesome5 name='arrow-circle-up' color={'#444'} size={14} />
+										:
+											<Text></Text>
+										}
 										{ item.equipped === true ?
 											<FontAwesome5 name='user-shield' color={'#444'} size={14} />
 											:
@@ -111,7 +129,12 @@ const InventoryBlock = ({ category, equipment }) => {
 										}
 									</DataTable.Cell>
 									<DataTable.Cell style={styles.colQty}>
-										<Text style={styles.tableDataText}>x{item.quantity}</Text>
+										<Text style={styles.tableDataText}>x{item.quantity} </Text>
+										{ item.carried === true ?
+											<FontAwesome5 name='suitcase' color={'#444'} size={14} />
+											:
+											<Text></Text>
+										}
 									</DataTable.Cell>
 									<SelectDropdown
 										data={actions}
@@ -146,7 +169,6 @@ const InventoryBlock = ({ category, equipment }) => {
 
 const styles = StyleSheet.create({
 	tableTitle: {
-        //fontWeight: 'bold',
 		fontFamily: 'star-font',
         fontSize: 20,
         color: '#ffe81f'
@@ -175,18 +197,6 @@ const styles = StyleSheet.create({
 		flex: 1, 
 		fontSize: 12,
 		justifyContent: 'center'
-	},
-	colCarry: { 
-		flex: 2, 
-		fontSize: 12,
-		justifyContent: 'center',
-		borderWidth: 1, 
-		borderColor: 'red'
-	},
-	colInfo: { 
-		flex: 1, 
-		fontSize: 12,
-		justifyContent: 'flex-end'
 	},
 	dropdown1BtnStyle: {
 		flex: 3,
@@ -218,5 +228,3 @@ const styles = StyleSheet.create({
 })
 
 export default InventoryBlock;
-
-{/* <FontAwesome5 style={{fontSize: 15, color: 'white'}} name='fingerprint' /> */}
