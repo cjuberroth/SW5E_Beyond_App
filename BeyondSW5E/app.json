@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "BeyondSW5E",
-    "slug": "BeyondSW5E",
+    "name": "SW5E+",
+    "slug": "sw5e-",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -17,7 +17,8 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.psyuups.sw5eplus"
     },
     "android": {
       "splash": {
@@ -28,10 +29,17 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.psyuups.sw5eplus"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "b53eb926-b9c0-45ba-9635-96aeacb427f3"
+      }
+    },
+    "owner": "yoda3616"
   }
 }

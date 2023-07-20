@@ -144,12 +144,6 @@
             "equipped": false
         },
         {
-            "name": "Saberstaff",
-            "quantity": 1,
-            "category": "Equipment",
-            "equipped": false
-        },
-        {
             "name": "Sabergauntlet",
             "quantity": 1,
             "category": "Equipment",

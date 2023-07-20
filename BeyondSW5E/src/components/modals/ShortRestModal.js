@@ -15,8 +15,9 @@ const ShortRestModal = () => {
     const [message, setMessage] = useState('')
     const charClasses = useContext(CharacterContext).characterInformation.classes
     const conMod = useContext(CharacterContext).characterMods.con_mod
-    const classData = useContext(CharacterContext).apiData.class
-    const maxHP = useContext(CharacterContext).characterInformation.hitPoints
+    const cachedClass = useContext(CharacterContext).cachedData.cachedClass
+    const maximumHP = useContext(CharacterContext).characterInformation.hitPoints
+    const { setMaxHP } = useContext(CharacterContext)
     const [totalMod, setTotalMod] = useState(conMod)
     const {shortRestHitDice, setShortRestHitDice} = useContext(CharacterContext)
     const {shortRestDice, setShortRestDice} = useContext(CharacterContext)
@@ -30,9 +31,9 @@ const ShortRestModal = () => {
     }
 
     const getHitDie = (charClass) => {
-        for(i = 0; i < classData.length; i++) {
-            if (classData[i].name === charClass) {
-                return classData[i].hitDiceDieType
+        for(i = 0; i < cachedClass.length; i++) {
+            if (cachedClass[i].name === charClass) {
+                return cachedClass[i].hitDiceDieType
             }
         }
     }
@@ -147,16 +148,17 @@ const ShortRestModal = () => {
         setShortRestHitDice([])
         
         if (checkedApply) {
-            if ((healResult + hitPoints) > maxHP) {
-                setHitPoints(maxHP)
+            if ((healResult + hitPoints) > maximumHP) {
+                setHitPoints(maximumHP)
             } else {
                 setHitPoints(healResult + totalMod + hitPoints)
             }
         }
 
         if (checkedReset) {
-            //changes to maxHP have not yet been implemented
+            setMaxHP(0)
         }
+
         navigation.navigate('DiceResultModal', {rollResult: healResult, mod: totalMod, rollType: 'Short Rest', numDice: '', numSides: '', origin: 'shortRestModal'})
     }
 
@@ -182,7 +184,7 @@ const ShortRestModal = () => {
                             onChange={handleResetHPCheckbox}
                             buttonStyle = {styles.checkboxBase}
                             activeButtonStyle = {styles.checkboxChecked} />
-                        <Text style={{flex: 9, paddingLeft: 5, fontSize: 14}}>Reset max HP changes during this rest (coming soon)</Text>
+                        <Text style={{flex: 9, paddingLeft: 5, fontSize: 14}}>Reset max HP changes</Text>
                     </View>
                     <View style={ AppStyles.tableStyles.tableRow }>
                         <CheckBox 

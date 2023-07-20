@@ -1,6 +1,9 @@
 import React, { useContext, useState } from 'react'
 import { Text, View, StyleSheet, ImageBackground, Pressable, ScrollView } from 'react-native'
+import { FontAwesome5 } from '@expo/vector-icons'
 import CharacterContext from '../context/CharacterContext'
+//import SettingsContext from '../context/SettingsContext'
+import { useSettingsContext } from '../context/SettingsContext'
 import * as Animatable from 'react-native-animatable'
 import Header from '../components/Header'
 import HeaderCollapsed from '../components/HeaderCollapsed'
@@ -15,6 +18,7 @@ const FeaturesScreen = () => {
     const charClasses = useContext(CharacterContext).characterInformation.classes
     const flexValue = useContext(HeaderContext).headerUtils.flexValue
     const headerCollapsed = useContext(HeaderContext).headerUtils.isCollapsed
+    const {emblem} = useSettingsContext()
 
     for(let i = 0; i < apiArchetypes.length; i++){
         apiArchetypes[i]["collapsed"] = true
@@ -48,68 +52,81 @@ const FeaturesScreen = () => {
             </View>
             <View style={{flex: flexValue}}>
                 <ImageBackground style={ AppStyles.globalStyles.screenBackground }
-                   source={ require('../../assets/header-background.jpg')}>
-                    <View style={styles.levelsView}>
-                        {
-                            charClasses.map(charClass => {
-                                return(
-                                    <Text style={styles.levelHeader}>{charClass.class + ' | Level: ' + charClass.level}</Text>
-                                )
-                            })
-                        }
-                    </View>
-                    <ScrollView style={styles.scrollingView}>
-                        {
-                            apiArchetypes
-                            ?   <View>
-                                    <Text style={styles.featHeader}>Archetypes</Text>
-                                    {
-                                        archetypes.map(arch => {
-                                            return (
-                                                <View style={styles.featsView}>
-                                                    <Pressable onPress={() => toggleArchetypesExpanded(arch.rowKey)}>
-                                                        <Text style={styles.featItem}>{arch.name}</Text>
-                                                    </Pressable>
-                                                    <Collapsible collapsed={arch.collapsed}>
-                                                        <View style={styles.content}>
-                                                            <Animatable.Text
-                                                                style={styles.featText}
-                                                                animation={archetypes ? undefined : 'zoomIn'}
-                                                                duration={300}
-                                                                useNativeDriver>{arch.text}</Animatable.Text>
-                                                        </View>
-                                                    </Collapsible>
-                                                </View>
-                                            )
-                                        })
-                                    }
-                                </View>
-                            :   null
-                        }
-                        <View> 
-                            <Text style={styles.featHeader}>Feats</Text>
+                   source={ require('../../assets/starBackgroundVert.jpg')}>
+                    <ImageBackground imageStyle={styles.imgBackground} 
+                        source={emblem && {uri: emblem}}>
+                        <View style={styles.levelsView}>
                             {
-                                feats.map(feat => {
-                                    return (
-                                        <View style={styles.featsView}>
-                                            <Pressable onPress={() => toggleFeatsExpanded(feat.name)}>
-                                                <Text style={styles.featItem}>{feat.name}</Text>
-                                            </Pressable>
-                                            <Collapsible collapsed={feat.collapsed}>
-                                                <View style={styles.content}>
-                                                    <Animatable.Text
-                                                        style={styles.featText}
-                                                        animation={feats ? undefined : 'zoomIn'}
-                                                        duration={300}
-                                                        useNativeDriver>{feat.text}</Animatable.Text>
-                                                </View>
-                                            </Collapsible>
-                                        </View>
+                                charClasses.map(charClass => {
+                                    return(
+                                        <Text key={charClass.class} style={styles.levelHeader}>{charClass.class + ' | Level: ' + charClass.level}</Text>
                                     )
                                 })
                             }
                         </View>
-                    </ScrollView>
+                        <ScrollView style={styles.scrollingView}>
+                            {
+                                apiArchetypes
+                                ?   <View>
+                                        <Text style={styles.featHeader}>Archetypes</Text>
+                                        {
+                                            archetypes.map(arch => {
+                                                return (
+                                                    <View key={arch.name} style={styles.featsView}>
+                                                        <Pressable style={{ flexDirection: 'row' }} onPress={() => toggleArchetypesExpanded(arch.rowKey)}>
+                                                            <Text style={styles.featItem}>{arch.name} </Text>
+                                                            {
+                                                                arch.collapsed ?
+                                                                    <FontAwesome5 style={ styles.icon } name='angle-up' />
+                                                                    : <FontAwesome5 style={ styles.icon } name='angle-down' />
+                                                            }
+                                                        </Pressable>
+                                                        <Collapsible collapsed={arch.collapsed}>
+                                                            <View style={styles.content}>
+                                                                <Animatable.Text
+                                                                    style={styles.featText}
+                                                                    animation={archetypes ? undefined : 'zoomIn'}
+                                                                    duration={300}
+                                                                    useNativeDriver>{arch.text}</Animatable.Text>
+                                                            </View>
+                                                        </Collapsible>
+                                                    </View>
+                                                )
+                                            })
+                                        }
+                                    </View>
+                                :   null
+                            }
+                            <View> 
+                                <Text style={styles.featHeader}>Feats</Text>
+                                {
+                                    feats.map(feat => {
+                                        return (
+                                            <View key={feat.name} style={styles.featsView}>
+                                                <Pressable style={{ flexDirection: 'row' }} onPress={() => toggleFeatsExpanded(feat.name)}>
+                                                    <Text style={styles.featItem}>{feat.name} </Text>
+                                                    {
+                                                        feat.collapsed ?
+                                                            <FontAwesome5 style={ styles.icon } name='angle-up' />
+                                                            : <FontAwesome5 style={ styles.icon } name='angle-down' />
+                                                    }
+                                                </Pressable>
+                                                <Collapsible collapsed={feat.collapsed}>
+                                                    <View style={styles.content}>
+                                                        <Animatable.Text
+                                                            style={styles.featText}
+                                                            animation={feats ? undefined : 'zoomIn'}
+                                                            duration={300}
+                                                            useNativeDriver>{feat.text}</Animatable.Text>
+                                                    </View>
+                                                </Collapsible>
+                                            </View>
+                                        )
+                                    })
+                                }
+                            </View>
+                        </ScrollView>
+                    </ImageBackground>
                 </ImageBackground>
             </View>
         </View>
@@ -141,7 +158,7 @@ const styles = StyleSheet.create({
     featHeader: {
         fontSize: 24,
         fontWeight: 'bold',
-        color: '#4A0C05',
+        color: 'white',
         paddingVertical: 5
     },
     featText: {
@@ -153,14 +170,25 @@ const styles = StyleSheet.create({
     featItem: {
         fontSize: 22,
         color: '#ffffff',
-        textDecorationLine: 'underline'
+        //textDecorationLine: 'underline'
     },
     featsView: {
         paddingHorizontal: 30
     },
     scrollingView: {
-        paddingHorizontal: 5
-    }
+        paddingHorizontal: 5,
+        height: '100%'
+    },
+    icon: {
+        fontSize: 25, 
+        color: 'white',
+        alignSelf: 'center',
+        paddingRight: 5
+      },
+      imgBackground: {
+        width: '100%',
+        resizeMode: 'contain'
+    },
 })
 
 export default FeaturesScreen

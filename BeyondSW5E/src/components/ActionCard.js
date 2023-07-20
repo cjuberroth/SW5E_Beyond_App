@@ -70,24 +70,28 @@ const styles = StyleSheet.create({
         margin: 5,
         padding: 5,
         paddingLeft: 10,
-        borderColor: '#4A0C05'
+        borderColor: 'white',
     },
     cardText: {
-        fontSize: 24,
-        color: 'white'
+        fontSize: 20,
+        color: 'white',
+        flex: 1
     },
     rollable: {
         borderWidth: 2,
         margin: 5,
         padding: 5,
-        fontSize: 18,
+        fontSize: 14,
         color: 'white',
-        borderColor: '#4A0C05',
+        borderColor: 'white',
         borderRadius: 5
     },
     pressables: {
         flexDirection: 'row',
         justifyContent: 'space-between'
+    },
+    cardContents: {
+        flexWrap: 'wrap'
     }
 })
 

@@ -9,7 +9,6 @@ import ActionsScreen from '../screens/ActionsScreen'
 import DescriptionScreen from '../screens/DescriptionScreen'
 import FeaturesScreen from '../screens/FeaturesScreen'
 import InventoryScreen from '../screens/InventoryScreen'
-import ManageInventoryScreen from '../screens/ManageInventoryScreen'
 import ManageSpellsScreen from '../screens/ManageSpellsScreen'
 import NotesScreen from '../screens/NotesScreen'
 import ProficienciesScreen from '../screens/ProficienciesScreen'
@@ -30,7 +29,13 @@ import CastingPointsModal from '../components/modals/CastingPointsModal'
 import PowerDetailModal from '../components/modals/PowerDetailModal'
 import RecoverHitDiceModal from '../components/modals/RecoverHitDiceModal'
 import CreditsModal from '../components/modals/CreditsModal'
+import DiceRollModal from '../components/modals/DiceRollModal'
+import SkillDetailsModal from '../components/modals/SkillDetailsModal'
+import ManageInventoryModal from '../components/modals/ManageInventoryModal'
+import CarryModal from '../components/modals/CarryModal'
+import WeaponProficiencyModal from '../components/modals/WeaponProficiencyModal'
 import CharacterContext from '../context/CharacterContext'
+import { useSettingsContext } from '../context/SettingsContext'
 
 function getHeaderTitle(route) {
     const routeName = getFocusedRouteNameFromRoute(route) ?? 'Abilities'
@@ -60,6 +65,7 @@ const Tab = createMaterialTopTabNavigator()
 function MyTabs() {
     const charCasting = useContext(CharacterContext).characterCasting
     const isCaster = charCasting.maxForcePoints > 0 || charCasting.maxTechPoints > 0
+    const { alignmentSettings } = useSettingsContext()
     return (
         <Tab.Navigator 
             tabBarPosition="bottom"
@@ -70,13 +76,13 @@ function MyTabs() {
                 tabBarScrollEnabled: true,
                 tabBarBounces: true,
                 tabBarStyle: {
-                    backgroundColor: '#263238'
+                    backgroundColor: 'black'
                  },
                 tabBarItemStyle: {
                     width: 110
                 },
                 tabBarIndicatorStyle: {
-                    //backgroundColor: 'red',
+                    backgroundColor: alignmentSettings.tabIndicatorColor,
                     //maybe use this with light side/dark side choice
                 }
                 //lazy: true
@@ -99,6 +105,9 @@ const Stack = createNativeStackNavigator()
 const MainNavigator = ({ navigation }) => {
     const charData = useContext(CharacterContext).characterInformation
     const { hitPoints } = useContext(CharacterContext)
+    const { tempHitPoints } = useContext(CharacterContext)
+    const { maxHP } = useContext(CharacterContext)
+    const { maxHitPointsState } = useContext(CharacterContext)
     
     return (
         <Stack.Navigator>
@@ -108,7 +117,7 @@ const MainNavigator = ({ navigation }) => {
                 options={({navigation}) => ({ 
                     title: 'Choose Character',
                     headerStyle: {
-                        backgroundColor: '#263238',
+                        backgroundColor: 'black',
                     },
                     headerTintColor: '#ffffff',
                     headerRight: () => (
@@ -124,15 +133,15 @@ const MainNavigator = ({ navigation }) => {
                 options={({ route, navigation }) => ({
                     headerTitle: getHeaderTitle(route),
                     headerStyle: {
-                        backgroundColor: '#263238',
+                        backgroundColor: 'black',
                     },
                     headerTintColor: '#ffffff',
                     headerBackTitleVisible: false,
                     headerRight: () => (
                         <Button style={styles.headerButton}
                             onPress={() => navigation.navigate('HPModal')}
-                            title={hitPoints + "/" + charData.hitPoints}
-                            color={Platform.OS === 'ios' ? '#ffffff' : '#263238'}>
+                            title={(hitPoints + tempHitPoints) + "/" + maxHitPointsState}
+                            color={Platform.OS === 'ios' ? '#ffffff' : 'black'}>
                         </Button>
                     ),
                 })}
@@ -245,6 +254,46 @@ const MainNavigator = ({ navigation }) => {
             <Stack.Screen
                 name="CreditsModal"
                 component={CreditsModal}
+                options={{
+                    presentation: 'transparentModal',
+                    headerShown: false
+                }}
+            />
+            <Stack.Screen
+                name="DiceRollModal"
+                component={DiceRollModal}
+                options={{
+                    presentation: 'transparentModal',
+                    headerShown: false
+                }}
+            />
+            <Stack.Screen
+                name="SkillDetailsModal"
+                component={SkillDetailsModal}
+                options={{
+                    presentation: 'transparentModal',
+                    headerShown: false
+                }}
+            />
+            <Stack.Screen
+                name="ManageInventoryModal"
+                component={ManageInventoryModal}
+                options={{
+                    presentation: 'transparentModal',
+                    headerShown: false
+                }}
+            />
+            <Stack.Screen
+                name="CarryModal"
+                component={CarryModal}
+                options={{
+                    presentation: 'transparentModal',
+                    headerShown: false
+                }}
+            />
+            <Stack.Screen
+                name="WeaponProficiencyModal"
+                component={WeaponProficiencyModal}
                 options={{
                     presentation: 'transparentModal',
                     headerShown: false

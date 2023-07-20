@@ -29,6 +29,23 @@ const EquipmentDetailsModal = ({ route }) => {
                         <Text style={ styles.modalHeading }>{route.params.name}</Text>
                     </View>
                     <View style={styles.modalStats}>
+                    <FontAwesome5 name='user-shield' color='black' size={14} />
+                        <Text style={styles.modalStatCol}> Equipped:</Text>
+                        <Text style={styles.modalStatValueCol}>{route.params.equipped ? 'Yes' : 'No'}</Text>
+                    </View>
+                    <View style={styles.modalStats}>
+                        <FontAwesome5 name='arrow-circle-up' color={'black'} size={14} />
+                        <Text style={styles.modalStatCol}> Proficient:</Text>
+                        <Text style={styles.modalStatValueCol}>{route.params.proficiency ? 'Yes' : 'No'}</Text>
+                    </View>
+                    { route.params.custom === true ?
+                        <View style={styles.modalStats}>
+                            <Text style={styles.modalStatCol}>**Custom Equipment</Text>
+                        </View>
+                    :
+                        <></>
+                    }
+                    <View style={styles.modalStats}>
                         <Text style={styles.modalStatCol}>Item Type:</Text>
                         <Text style={styles.modalStatValueCol}>{route.params.ehType}</Text>
                     </View>
@@ -72,6 +89,23 @@ const EquipmentDetailsModal = ({ route }) => {
                         <Text>Cost: {route.params.eqCost}</Text>
                         <Text>Weight: {route.params.eqWeight}</Text>
                     </View>
+                    <View style={styles.modalStats}>
+                    <FontAwesome5 name='user-shield' color='black' size={14} />
+                        <Text style={styles.modalStatCol}> Equipped:</Text>
+                        <Text style={styles.modalStatValueCol}>{route.params.equipped ? 'Yes' : 'No'}</Text>
+                    </View>
+                    <View style={styles.modalStats}>
+                        <FontAwesome5 name='arrow-circle-up' color={'black'} size={14} />
+                        <Text style={styles.modalStatCol}> Proficient:</Text>
+                        <Text style={styles.modalStatValueCol}>{route.params.proficiency ? 'Yes' : 'No'}</Text>
+                    </View>
+                    { route.params.custom === true ?
+                        <View style={styles.modalStats}>
+                            <Text style={styles.modalStatCol}>**Custom Equipment</Text>
+                        </View>
+                    :
+                        <></>
+                    }
                     { route.params.eqArmorType ? 
                         <View style={styles.modalStats}>
                             <Text style={styles.modalStatCol}>Armor Classification:</Text>
@@ -116,6 +150,33 @@ const EquipmentDetailsModal = ({ route }) => {
                         <Text>Cost: {route.params.eqCost}</Text>
                         <Text>Weight: {route.params.eqWeight}</Text>
                     </View>
+                    <View style={styles.modalStats}>
+                        <Text style={styles.modalStatCol}>Equipped:</Text>
+                        <Text style={styles.modalStatValueCol}>{route.params.equipped ? 'Yes' : 'No'}</Text>
+                    </View>
+                    { route.params.custom === true ?
+                        <View style={styles.modalStats}>
+                            <Text style={styles.modalStatCol}>**Custom Equipment</Text>
+                        </View>
+                    :
+                        <></>
+                    }
+                    { route.params.customToHit ?
+                        <View style={styles.modalStats}>
+                            <Text style={styles.modalStatCol}>To Hit:</Text>
+                            <Text style={styles.modalStatValueCol}>+{route.params.customToHit}</Text>
+                        </View> 
+                    : 
+                        <View></View>
+                    }
+                    { route.params.customDamageDice && route.params.customDamageNumberOfDice ?
+                        <View style={styles.modalStats}>
+                            <Text style={styles.modalStatCol}>Damage:</Text>
+                            <Text style={styles.modalStatValueCol}>{route.params.customDamageNumberOfDice}d{route.params.customDamageDice} {route.params.eqWeaponDamageType}</Text>
+                        </View> 
+                    : 
+                        <View></View>
+                    }
                     { route.params.eqWeaponType ? 
                         <View style={styles.modalStats}>
                             <Text style={styles.modalStatCol}>Weapon Classification:</Text>
@@ -210,7 +271,7 @@ const styles = StyleSheet.create({
     },
     modalStatValueCol: {
         flex: 2
-    }
+    },
 })
 
 export default EquipmentDetailsModal

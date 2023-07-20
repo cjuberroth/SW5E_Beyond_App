@@ -2,7 +2,7 @@
   "name": "T-3P0",
   "id": "1d627451-5486-4013-9581-357f5a191fb4",
   "userId": "003ec484-bf35-410e-a35d-431aa238b400",
-  "builderVersion": "0.7.2",
+  "builderVersion": "0.7.6",
   "image": "",
   "user": "",
   "experiencePoints": 64000,
@@ -29,9 +29,7 @@
       "name": "Scout",
       "levels": 3,
       "hitPoints": [4, 10, 3],
-      "abilityScoreImprovements": [
-        { "type": "Feat", "name": "Weapon Expert" }
-      ],
+      "abilityScoreImprovements": [],
       "archetype": { "name": "Mastermind Technique" },
       "techPowers": [
         "Assess the Situation",
@@ -167,6 +165,22 @@
         "damage": { "override": 5 }
       },
       "equipped": true
+    },
+    {
+      "name": "Test Custom Weapon",
+      "quantity": 1,
+      "equipmentCategory": "Weapon",
+      "cost": "5500",
+      "description": "Test custom weapon to see what comes across on the Equipment Details modal",
+      "weight": "15",
+      "damageType": "Kinetic",
+      "damageNumberOfDice": 1,
+      "tweaks": {
+        "toHit": { "override": 3 },
+        "damageDice": { "dieSize": 8 },
+        "damage": { "override": 0 }
+      },
+      "equipped": false
     }
   ],
   "settings": {
@@ -176,6 +190,6 @@
   },
   "notes": "",
   "createdAt": 1665634491880,
-  "changedAt": 1665637095991,
+  "changedAt": 1685333782108,
   "localId": "temp-a2m3252eu"
 }

@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from 'react'
 import { Text, View, StyleSheet, ImageBackground, ScrollView, Pressable } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import CharacterContext from '../context/CharacterContext'
+import { useSettingsContext } from '../context/SettingsContext'
 import EquipmentBlock from '../components/EquipmentBlock'
 import Header from '../components/Header'
 import HeaderCollapsed from '../components/HeaderCollapsed'
@@ -13,31 +14,31 @@ const InventoryScreen = () => {
     const equipment = useContext(CharacterContext).characterEquipment.equipment
     const flexValue = useContext(HeaderContext).headerUtils.flexValue
     const headerCollapsed = useContext(HeaderContext).headerUtils.isCollapsed
-    const {equippable, setEquippable} = useContext(CharacterContext)
-    const {credits, setCredits} = useContext(CharacterContext)
+    const { setEquippable } = useContext(CharacterContext)
+    const { credits } = useContext(CharacterContext)
+    const { carriedWeight } = useContext(CharacterContext)
+    const { emblem, alignmentSettings } = useSettingsContext()
+
     const lockout = 0
     useEffect(() => {
         setEquippable(equipment)
     }, [lockout])
 
-    let carriedWeight = 0
-    for (let i = 0; i < equipment.length; i++) {
-        let temp = parseInt(equipment[i].weight)
-        if (!isNaN(temp)) {
-            carriedWeight = carriedWeight + temp
-        }
-    }
-
     // This block loads the equipment categories within the loaded equipment block
     var itemCategories = []
     equipment.forEach(element => {
-    //equipment.forEach(element => {
-        //console.log(element.name + ' ' + element.equipped)
         if(!itemCategories.includes(element.equipmentCategory)){
             itemCategories.push(element.equipmentCategory)
         }
     })
+    
     itemCategories.sort()
+
+    const showManageInventory = () => {
+        navigation.navigate('ManageInventoryModal', {
+            categories: itemCategories
+        })
+    }
 
     return (
         <View style={ styles.container }>
@@ -46,32 +47,42 @@ const InventoryScreen = () => {
             </View>
             <View style={{flex: flexValue}}>
                 <ImageBackground style={ AppStyles.globalStyles.screenBackground }
-                    source={ require('../../assets/header-background.jpg') }>
-                    <View style={styles.tableHeader}>
-                        {/* <Text style = {[ styles.column, styles.colEquip, styles.colHeader ]}>Equipped</Text> */}
-                        <Pressable style = {[ styles.column, styles.colHeader ]} onPress={() => navigation.navigate('CreditsModal')}>
-                            <Text style = {[ styles.column, styles.colHeader, styles.credits ]}>Credits: {credits}</Text>
-                        </Pressable>
-                        {/* <Text style = {[ styles.column, styles.colQty, styles.colHeader ]}>Cost</Text> */}
-                        <Text style = {[ styles.column, styles.colCost, styles.colHeader, {textAlign: 'right'} ]}>Carried Weight: {carriedWeight}</Text>
-                    </View>
-                    <ScrollView bounces={false}>
-                        {
-                            itemCategories.map(category => {
-                                let filteredEquipment = equipment.filter((item) => {
-                                    if(item.equipmentCategory === category) {
-                                        return item
-                                    }
+                    source={ require('../../assets/starBackgroundVert.jpg') }>
+                    <ImageBackground imageStyle={styles.imgBackground} 
+                    source={emblem && {uri: emblem}}
+                    >
+                        <View style={styles.tableHeader}>
+                            <View style={{flexDirection: 'column'}}>
+                            <Pressable style = {styles.column} onPress={() => navigation.navigate('CreditsModal')}>
+                                <Text style = {[ styles.column, styles.colHeader, styles.credits, {borderColor: alignmentSettings.creditsButtonColor, backgroundColor: alignmentSettings.creditsButtonColor} ]}>Credits: {credits}</Text>
+                            </Pressable>
+                            </View>
+                            <Text style = {[ styles.column, styles.colCost, styles.colHeader, {textAlign: 'right'} ]}>Carried Weight: {carriedWeight}lb</Text>
+                        </View>
+                        <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+                            <Pressable style= {{padding: 5}} onPress={() => showManageInventory()} >
+                                <Text style={[ styles.column, styles.colHeader, styles.credits, {borderColor: alignmentSettings.creditsButtonColor, backgroundColor: alignmentSettings.creditsButtonColor}]}>Manage Inventory</Text>
+                            </Pressable>
+                        </View>
+                        <ScrollView style={{height: '85%'}} bounces={false}>
+                            {
+                                itemCategories.map((category, index) => {
+                                    let filteredEquipment = equipment.filter((item) => {
+                                        if(item.equipmentCategory === category) {
+                                            return item
+                                        }
+                                    })
+                                    return (
+                                        <EquipmentBlock
+                                            key={index} 
+                                            category={category} 
+                                            equipment={filteredEquipment}
+                                        />
+                                    )
                                 })
-                                return (
-                                    <EquipmentBlock 
-                                        category={category} 
-                                        equipment={filteredEquipment}
-                                    />
-                                )
-                            })
-                        }
-                    </ScrollView>
+                            }
+                        </ScrollView>
+                    </ImageBackground>
                 </ImageBackground>
             </View>
         </View>
@@ -88,7 +99,8 @@ const styles = StyleSheet.create({
     },
     tableHeader: {
         flexDirection: 'row',
-        marginVertical: 5
+        marginVertical: 5,
+        justifyContent: 'space-between'
     },
     column: {
         fontSize: 15,
@@ -114,10 +126,15 @@ const styles = StyleSheet.create({
     credits: {
         borderWidth: 1,
         borderRadius: 5,
-        borderColor: '#4A0C05',
+        borderColor: 'rgba(21, 242, 253, 0.1)',
         alignItems: 'center',
-        backgroundColor: '#4A0C05'
-    }
+        backgroundColor: 'rgba(21, 242, 253, 0.1)',
+        overflow: 'hidden'
+    },
+    imgBackground: {
+        width: '100%',
+        resizeMode: 'contain'
+    },
     
 })
 

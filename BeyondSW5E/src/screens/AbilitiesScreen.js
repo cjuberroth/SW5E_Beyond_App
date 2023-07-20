@@ -1,7 +1,9 @@
 import React, { useContext } from 'react'
-import { Text, View, StyleSheet, ImageBackground, ScrollView, Pressable } from 'react-native'
+import { Text, View, StyleSheet, ImageBackground, ScrollView, Pressable, Alert } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
+import { FontAwesome5 } from '@expo/vector-icons'
 import CharacterContext from '../context/CharacterContext'
+import { useSettingsContext } from '../context/SettingsContext'
 import Header from '../components/Header'
 import HeaderCollapsed from '../components/HeaderCollapsed'
 import HeaderContext from '../context/HeaderContext'
@@ -12,6 +14,7 @@ const AbilitiesScreen = () => {
     const navigation = useNavigation()
     const flexValue = useContext(HeaderContext).headerUtils.flexValue
     const headerCollapsed = useContext(HeaderContext).headerUtils.isCollapsed
+    const { alignmentSettings } = useSettingsContext()
     
     //import character data from context
     const characterSkills = useContext(CharacterContext).character.tweaks?.abilityScores
@@ -20,7 +23,8 @@ const AbilitiesScreen = () => {
     const characterMods = useContext(CharacterContext).characterMods
     const characterSaves = useContext(CharacterContext).characterSaves
     const numberPresent = useContext(CharacterContext).functions.numberPresent
-
+    const {emblem} = useSettingsContext()
+    
     const getSkillMod = function(skill) {
         let mod = 0
         switch(skill) {
@@ -120,114 +124,113 @@ const AbilitiesScreen = () => {
             </View>
             <View style={{ flex: flexValue }}>
                 <ImageBackground style={ AppStyles.globalStyles.screenBackground }
-                    source={ require('../../assets/header-background.jpg') }>
+                    source={ require('../../assets/starBackgroundVert.jpg') }>
                     <ImageBackground imageStyle={styles.imgBackground} 
-                        source={require('../../assets/rebel-alliance.png')}>
+                        //source={require('../../assets/rebel-alliance.png')}
+                        source={emblem && {uri: emblem}}
+                        >
                         <ScrollView>
+                            <View>
+                                <Text style={styles.headingStyle}>abilities</Text>
+                            </View>
                             <View style={styles.parentStyle}>
-                                <View style={styles.boxStyle}>
+                                <Pressable style={styles.boxStyle} onPress={() => diceRoll(1, 20, 'Strength')} >
                                     <Text style={styles.textStyle}>Strength</Text>
-                                    <Pressable onPress={() => diceRoll(1, 20, 'Strength')}>
                                         <Text style={styles.modStyle}>{numberPresent(characterMods.str_mod)}{characterMods.str_mod}</Text>
-                                    </Pressable>
+                                        <FontAwesome5 name='dice-d20' style={[styles.d20, {color: alignmentSettings.d20Color}]} />
                                     <Text style={styles.textStyle}>{characterAbilities.abilitiesStrength}</Text>
-                                </View>
-                                <View style={styles.boxStyle}>
+                                </Pressable>
+                                <Pressable style={styles.boxStyle} onPress={() => diceRoll(1, 20, 'Dexterity')} >
                                     <Text style={styles.textStyle}>Dexterity</Text>
-                                    <Pressable onPress={() => diceRoll(1, 20, 'Dexterity')}>
                                         <Text style={styles.modStyle}>{numberPresent(characterMods.dex_mod)}{characterMods.dex_mod}</Text>
-                                    </Pressable>
+                                        <FontAwesome5 name='dice-d20' style={[styles.d20, {color: alignmentSettings.d20Color}]} />
                                     <Text style={styles.textStyle}>{characterAbilities.abilitiesDexterity}</Text>
-                                </View>
-                                <View style={styles.boxStyle}>
+                                </Pressable>
+                                <Pressable style={styles.boxStyle} onPress={() => diceRoll(1, 20, 'Constitution')} >
                                     <Text style={styles.textStyle}>Constitution</Text>
-                                    <Pressable onPress={() => diceRoll(1, 20, 'Constitution')}>
                                         <Text style={styles.modStyle}>{numberPresent(characterMods.con_mod)}{characterMods.con_mod}</Text>
-                                    </Pressable>
+                                        <FontAwesome5 name='dice-d20' style={[styles.d20, {color: alignmentSettings.d20Color}]} />
                                     <Text style={styles.textStyle}>{characterAbilities.abilitiesConstitution}</Text>
-                                </View>
-                                <View style={styles.boxStyle}>
+                                </Pressable>
+                                <Pressable style={styles.boxStyle} onPress={() => diceRoll(1, 20, 'Intelligence')} >
                                     <Text style={styles.textStyle}>Intelligence</Text>
-                                    <Pressable onPress={() => diceRoll(1, 20, 'Intelligence')}>
                                         <Text style={styles.modStyle}>{numberPresent(characterMods.int_mod)}{characterMods.int_mod}</Text>
-                                    </Pressable>
+                                        <FontAwesome5 name='dice-d20' style={[styles.d20, {color: alignmentSettings.d20Color}]} />
                                     <Text style={styles.textStyle}>{characterAbilities.abilitiesIntelligence}</Text>
-                                </View>
-                                <View style={styles.boxStyle}>
+                                </Pressable>
+                                <Pressable style={styles.boxStyle} onPress={() => diceRoll(1, 20, 'Wisdom')} >
                                     <Text style={styles.textStyle}>Wisdom</Text>
-                                    <Pressable onPress={() => diceRoll(1, 20, 'Wisdom')}>
                                         <Text style={styles.modStyle}>{numberPresent(characterMods.wis_mod)}{characterMods.wis_mod}</Text>
-                                    </Pressable>
+                                        <FontAwesome5 name='dice-d20' style={[styles.d20, {color: alignmentSettings.d20Color}]} />
                                     <Text style={styles.textStyle}>{characterAbilities.abilitiesWisdom}</Text>
-                                </View>
-                                <View style={styles.boxStyle}>
+                                </Pressable>
+                                <Pressable style={styles.boxStyle} onPress={() => diceRoll(1, 20, 'Charisma')} >
                                     <Text style={styles.textStyle}>Charisma</Text>
-                                    <Pressable onPress={() => diceRoll(1, 20, 'Charisma')}>
                                         <Text style={styles.modStyle}>{numberPresent(characterMods.cha_mod)}{characterMods.cha_mod}</Text>
-                                    </Pressable>
+                                        <FontAwesome5 name='dice-d20' style={[styles.d20, {color: alignmentSettings.d20Color}]} />
                                     <Text style={styles.textStyle}>{characterAbilities.abilitiesCharisma}</Text>
-                                </View>
+                                </Pressable>
                             </View>
                             <View>
-                                <Text style={styles.headingStyle}>Saving Throws</Text>
+                                <Text style={styles.headingStyle}>Saving throws</Text>
                             </View>
                             <View style={styles.saveView}>
-                                <View style={styles.boxStyle}>
+                                <Pressable style={styles.boxStyle} onPress={() => diceRoll(1, 20, 'Strength Save')} >
                                     <Text style={styles.textStyle}>Strength</Text>
-                                    <Pressable onPress={() => diceRoll(1, 20, 'Strength Save')}>
-                                        <Text style={ characterSaves.characterSaves.includes('Strength') ? styles.modStyleProficient : styles.modStyle}>{numberPresent(characterSaves.str_save)}{characterSaves.str_save}</Text>
-                                    </Pressable>
-                                </View>
-                                <View style={styles.boxStyle}>
+                                        <Text style={styles.modStyle}>{numberPresent(characterSaves.str_save)}{characterSaves.str_save}</Text>
+                                        <FontAwesome5 name='dice-d20' style={ characterSaves.characterSaves.includes('Strength') ? styles.d20Proficient : [styles.d20, {color: alignmentSettings.d20Color}] } />
+                                    <Text style={{fontSize: 6}}> </Text>
+                                </Pressable>
+                                <Pressable style={styles.boxStyle} onPress={() => diceRoll(1, 20, 'Dexterity Save')} >
                                     <Text style={styles.textStyle}>Dexterity</Text>
-                                    <Pressable onPress={() => diceRoll(1, 20, 'Dexterity Save')}>
-                                        <Text style={characterSaves.characterSaves.includes('Dexterity') ? styles.modStyleProficient : styles.modStyle}>{numberPresent(characterSaves.dex_save)}{characterSaves.dex_save}</Text>
-                                    </Pressable>
-                                </View>
-                                <View style={styles.boxStyle}>
+                                        <Text style={styles.modStyle}>{numberPresent(characterSaves.dex_save)}{characterSaves.dex_save}</Text>
+                                        <FontAwesome5 name='dice-d20' style={ characterSaves.characterSaves.includes('Dexterity') ? styles.d20Proficient : [styles.d20, {color: alignmentSettings.d20Color}] } />
+                                    <Text style={{fontSize: 6}}> </Text>
+                                </Pressable>
+                                <Pressable style={styles.boxStyle} onPress={() => diceRoll(1, 20, 'Constitution Save')} >
                                     <Text style={styles.textStyle}>Constitution</Text>
-                                    <Pressable onPress={() => diceRoll(1, 20, 'Constitution Save')}>
-                                        <Text style={characterSaves.characterSaves.includes('Constitution') ? styles.modStyleProficient : styles.modStyle}>{numberPresent(characterSaves.con_save)}{characterSaves.con_save}</Text>
-                                    </Pressable>
-                                </View>
-                                <View style={styles.boxStyle}>
+                                        <Text style={styles.modStyle}>{numberPresent(characterSaves.con_save)}{characterSaves.con_save}</Text>
+                                        <FontAwesome5 name='dice-d20' style={ characterSaves.characterSaves.includes('Constitution') ? styles.d20Proficient : [styles.d20, {color: alignmentSettings.d20Color}] } />
+                                    <Text style={{fontSize: 6}}> </Text>
+                                </Pressable>
+                                <Pressable style={styles.boxStyle} onPress={() => diceRoll(1, 20, 'Intelligence Save')} >
                                     <Text style={styles.textStyle}>Intelligence</Text>
-                                    <Pressable onPress={() => diceRoll(1, 20, 'Intelligence Save')}>
-                                        <Text style={characterSaves.characterSaves.includes('Intelligence') ? styles.modStyleProficient : styles.modStyle}>{numberPresent(characterSaves.int_save)}{characterSaves.int_save}</Text>
-                                    </Pressable>
-                                </View>
-                                <View style={styles.boxStyle}>
+                                        <Text style={styles.modStyle}>{numberPresent(characterSaves.int_save)}{characterSaves.int_save}</Text>
+                                        <FontAwesome5 name='dice-d20' style={ characterSaves.characterSaves.includes('Intelligence') ? styles.d20Proficient : [styles.d20, {color: alignmentSettings.d20Color}] } />
+                                    <Text style={{fontSize: 6}}> </Text>
+                                </Pressable>
+                                <Pressable style={styles.boxStyle} onPress={() => diceRoll(1, 20, 'Wisdom Save')} >
                                     <Text style={styles.textStyle}>Wisdom</Text>
-                                    <Pressable onPress={() => diceRoll(1, 20, 'Wisdom Save')}>
-                                        <Text style={characterSaves.characterSaves.includes('Wisdom') ? styles.modStyleProficient : styles.modStyle}>{numberPresent(characterSaves.wis_save)}{characterSaves.wis_save}</Text>
-                                    </Pressable>
-                                </View>
-                                <View style={styles.boxStyle}>
+                                        <Text style={styles.modStyle}>{numberPresent(characterSaves.wis_save)}{characterSaves.wis_save}</Text>
+                                        <FontAwesome5 name='dice-d20' style={ characterSaves.characterSaves.includes('Wisdom') ? styles.d20Proficient : [styles.d20, {color: alignmentSettings.d20Color}] } />
+                                    <Text style={{fontSize: 6}}> </Text>
+                                </Pressable>
+                                <Pressable style={styles.boxStyle} onPress={() => diceRoll(1, 20, 'Charisma Save')} >
                                     <Text style={styles.textStyle}>Charisma</Text>
-                                    <Pressable onPress={() => diceRoll(1, 20, 'Charisma Save')}>
-                                        <Text style={characterSaves.characterSaves.includes('Charisma') ? styles.modStyleProficient : styles.modStyle}>{numberPresent(characterSaves.cha_save)}{characterSaves.cha_save}</Text>
-                                    </Pressable>
-                                </View>
+                                        <Text style={styles.modStyle}>{numberPresent(characterSaves.cha_save)}{characterSaves.cha_save}</Text>
+                                        <FontAwesome5 name='dice-d20' style={ characterSaves.characterSaves.includes('Charisma') ? styles.d20Proficient : [styles.d20, {color: alignmentSettings.d20Color}] } />
+                                    <Text style={{fontSize: 6}}> </Text>
+                                </Pressable>
                             </View>
                             <View>
-                        <Text style={styles.headingStyle}>Passive Senses</Text>
+                        <Text style={styles.headingStyle}>passive Senses</Text>
                     </View>
                     <View style={styles.saveView}>
                         <View style={styles.boxStyle}>
                             <Text style={styles.textStyle}>Perception</Text>
-                            <Pressable onPress={() => diceRoll(1, 20, 'Perception')}>
+                            <Pressable onPress={() => Alert.alert('Passive Perception', "A passive check is a special kind of ability check that doesn’t involve any die rolls. Such a check can represent the average result for a task done repeatedly, such as searching for secret doors over and over again, or can be used when the GM wants to secretly determine whether the characters succeed at something without rolling dice, such as noticing a hidden monster.")}>
                                 <Text style={ styles.modStyle }>{perceptionMod + 10}</Text>
                             </Pressable>
                         </View>
                         <View style={styles.boxStyle}>
-                            <Text style={styles.textStyle}>Investigation</Text>
-                            <Pressable onPress={() => diceRoll(1, 20, 'Investigation')}>
+                            <Text style={styles.textStyle} adjustsFontSizeToFit numberOfLines={1}>Investigation</Text>
+                            <Pressable onPress={() => Alert.alert('Passive Investigation', "A passive check is a special kind of ability check that doesn’t involve any die rolls. Such a check can represent the average result for a task done repeatedly, such as searching for secret doors over and over again, or can be used when the GM wants to secretly determine whether the characters succeed at something without rolling dice, such as noticing a hidden monster.")}>
                                 <Text style={ styles.modStyle }>{investigationMod}</Text>
                             </Pressable>
                         </View>
                         <View style={styles.boxStyle}>
                             <Text style={styles.textStyle}>Insight</Text>
-                            <Pressable onPress={() => diceRoll(1, 20, 'Insight')}>
+                            <Pressable onPress={() => Alert.alert('Passive Insight', "A passive check is a special kind of ability check that doesn’t involve any die rolls. Such a check can represent the average result for a task done repeatedly, such as searching for secret doors over and over again, or can be used when the GM wants to secretly determine whether the characters succeed at something without rolling dice, such as noticing a hidden monster.")}>
                                 <Text style={ styles.modStyle }>{insightMod}</Text>
                             </Pressable>
                         </View>
@@ -254,12 +257,14 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap',
         flexDirection: 'row',
         justifyContent: 'space-evenly',
-        paddingVertical: 35
+        //paddingTop: 20,
+        
     },
     boxStyle: {
         marginBottom: 15,
         borderWidth: 2,
-        borderColor: '#4A0C05',
+        //borderColor: '#4A0C05',
+        borderColor: 'rgba(255, 232, 31, 0.8)',
         borderRadius: 5,
         flexBasis: '29.7%'
     },
@@ -274,30 +279,39 @@ const styles = StyleSheet.create({
         fontSize: 30,
         textAlign: 'center',
         color: 'white',
-        marginBottom: 9,
+        paddingTop: 5,
+        marginBottom: 4,
         marginTop: 2,
-        borderWidth: 2,
-        borderColor: '#4A0C05',
+        //borderWidth: 2,
+        //borderColor: '#4A0C05',
+        //borderColor: '#ffe81f',
+        //backgroundColor: '#ffe81f',
+        //overflow: 'hidden',
         alignSelf: 'center',
         width: '50%',
-        borderRadius: 5
+        //borderRadius: 20,
+        zIndex: 1,
+        
     },
     modStyleProficient: {
         fontSize: 30,
         textAlign: 'center',
-        color: 'white',
-        marginBottom: 9,
+        color: '#ffe81f',
+        paddingTop: 5,
+        marginBottom: 4,
         marginTop: 2,
-        borderWidth: 2,
-        borderColor: '#15f2fd',
+        //borderWidth: 2,
+        //borderColor: '#15f2fd',
         alignSelf: 'center',
         width: '50%',
-        borderRadius: 5
+        //borderRadius: 5,
+        zIndex: 1
     },
     headingStyle: {
+        fontFamily: 'star-font',
         fontSize: 30,
         //backgroundColor: '#263238',
-        color: 'white',
+        color: '#ffe81f',
         textAlign: 'center',
         marginBottom: 15
     },
@@ -315,6 +329,21 @@ const styles = StyleSheet.create({
         color: 'white',
         textAlign: 'left',
         fontSize: 20
+    },
+    d20: {
+        fontSize: 45, 
+        position: 'absolute',
+        top: 26,
+        right: 35,
+        color: 'rgba(21, 242, 253, 0.4)'
+    },
+    d20Proficient: {
+        fontSize: 45, 
+        position: 'absolute',
+        top: 26,
+        right: 35,
+        //color: '#15f2fd'
+        color: 'rgba(255, 255, 255, 0.5)'
     }
 })
 

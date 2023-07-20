@@ -9,8 +9,10 @@ import CheckBox from '../CheckBox'
 const LongRestModal = () => {
     const navigation = useNavigation()
     const charData = useContext(CharacterContext).characterInformation
-    const classData = useContext(CharacterContext).apiData.class
+    const cachedClass = useContext(CharacterContext).cachedData.cachedClass
     const { hitPoints, setHitPoints } = useContext(CharacterContext)
+    const { setMaxHP } = useContext(CharacterContext)
+    const { setTempHitPoints } = useContext(CharacterContext)
     const [checkedReset, onChangeReset] = useState(false)
     const [checkedApply, onChangeApply] = useState(true)
     const [checkedHitDice, onChangeHitDice] = useState(true)
@@ -35,9 +37,9 @@ const LongRestModal = () => {
     }
 
     const getHitDie = (charClass) => {
-        for(i = 0; i < classData.length; i++) {
-            if (classData[i].name === charClass) {
-                return classData[i].hitDiceDieType
+        for(i = 0; i < cachedClass.length; i++) {
+            if (cachedClass[i].name === charClass) {
+                return cachedClass[i].hitDiceDieType
             }
         }
     }
@@ -52,6 +54,10 @@ const LongRestModal = () => {
     
     hitDice.sort((a, b) => b.hitDie - a.hitDie)
 
+    const handleResetHPCheckbox = () => {
+        onChangeReset(!checkedReset)
+    }
+    
     const handleAutoHealCheckbox = () => {
         onChangeApply(!checkedApply)
     }
@@ -80,22 +86,24 @@ const LongRestModal = () => {
         if (checkedApply) {
             setHitPoints(charData.hitPoints)
         }
-        //there will need to be code here later to reset max hp changes once they've been implemented
         
-        
+        if (checkedReset) {
+            setMaxHP(0)
+        }
+
+        //temporary hit points are purged on long rest
+        setTempHitPoints(0)
+                
         if (!checkedHitDice) {
             navigation.navigate('RecoverHitDiceModal')
         } else {
             //user has elected to automatically recover hit dice
             //hit dice recovery will start with the class with the largest hit die size
             let maxRecoveryDice = Math.ceil(charData.level/2)
-            console.log('maxRecoveryDice: ' + maxRecoveryDice)
             let diceRecovered = 0
             let diceDifference = maxRecoveryDice - diceRecovered
             if (diceRecovered <= maxRecoveryDice) {
                 for (let i = 0; i < hitDice.length; i++) {
-                    console.log('diceRecovered: ' + diceRecovered)
-                    console.log('diceDifference: ' + diceDifference)
                     let temp = hitDice[i].class
                     let tempDice = hitDice[i].numDice
                     if (tempDice <= diceDifference) {
@@ -136,10 +144,10 @@ const LongRestModal = () => {
                 <View style={ AppStyles.tableStyles.tableRow }>
                     <CheckBox 
                         checked={checkedReset}
-                        onChange={onChangeReset}
+                        onChange={handleResetHPCheckbox}
                         buttonStyle = {styles.checkboxBase}
                         activeButtonStyle = {styles.checkboxChecked} />
-                    <Text style={{flex: 9, paddingLeft: 5, fontSize: 14}}>Reset max HP changes during this rest (coming soon)</Text>
+                    <Text style={{flex: 9, paddingLeft: 5, fontSize: 14}}>Reset max HP changes during this rest</Text>
                 </View>
                 { !hitDiceRecovery ?
                     <View></View> :

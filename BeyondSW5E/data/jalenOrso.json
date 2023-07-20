@@ -97,7 +97,8 @@
             "name": "Assault armor",
             "quantity": 1,
             "category": "Equipment",
-            "equipped": true
+            "equipped": true,
+            "carried": true
         },
         {
             "name": "Combat suit",

@@ -9,7 +9,7 @@ import CharacterContext from '../../context/CharacterContext'
 const RecoverHitDiceModal = () => {
     const navigation = useNavigation()
     const characterLevel = useContext(CharacterContext).characterInformation.level
-    const classData = useContext(CharacterContext).apiData.class
+    const cachedClass = useContext(CharacterContext).cachedData.cachedClass
     const {shortRestHitDiceUsed, setShortRestHitDiceUsed} = useContext(CharacterContext)
     const [hitDiceUsed, setHitDiceUsed] = useState([])
     const [recovering, setRecovering] = useState(0)
@@ -32,9 +32,9 @@ const RecoverHitDiceModal = () => {
     }
 
     const getHitDie = (charClass) => {
-        for(i = 0; i < classData.length; i++) {
-            if (classData[i].name === charClass) {
-                return classData[i].hitDiceDieType
+        for(i = 0; i < cachedClass.length; i++) {
+            if (cachedClass[i].name === charClass) {
+                return cachedClass[i].hitDiceDieType
             }
         }
     }
