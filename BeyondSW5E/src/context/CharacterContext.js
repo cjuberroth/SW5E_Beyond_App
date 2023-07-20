@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Alert } from 'react-native'
 import useAPIData from '../hooks/useAPIData'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import characterLogic from '../components/characterLogic'
 import charAbilitiesImport from '../../data/jalenOrso2'
 
@@ -14,6 +13,7 @@ export const CharacterProvider = ({children}) => {
 	const [character, setCharacter] = useState(charAbilitiesImport)
 	const charData = character
 	const { apiData } = useAPIData()
+	console.log('render')
 
 	// Helper Functions --------------------------------------------------------------------
 	//Check if an object key has an empty value
@@ -895,7 +895,19 @@ export const CharacterProvider = ({children}) => {
 		})
 	}, [equippable])
 
-	//console.log(equippable)
+	const [weaponsState, setWeaponsState] = useState([])
+	
+	useEffect(() => {
+		const updatedWeapons = equippable.reduce((acc, el) => {
+			if (el.equipmentCategory === 'Weapon') {
+				acc.push({name: characterInformation.name, weapon: el.name, proficiency: ''})
+			}
+			return acc
+		}, [])
+		setWeaponsState(updatedWeapons)
+	}, [characterInformation.name, equippable])
+
+	console.log(weaponsState)
 	//console.log("CharacterContext Render")
 
 	return <CharacterContext.Provider value={{
@@ -912,6 +924,7 @@ export const CharacterProvider = ({children}) => {
 		maxTechPointsState, setMaxTechPointsState,
 		credits, setCredits,
 		equippable, setEquippable,
+		weaponsState, setWeaponsState,
 		carriedWeight, setCarriedWeight,
 		characterAC, setCharacterAC,
 		forcePointsState, setForcePointsState,

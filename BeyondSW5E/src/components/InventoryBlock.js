@@ -7,6 +7,7 @@ import { FontAwesome } from '@expo/vector-icons'
 import AppStyles from "../styles/AppStyles"
 import CharacterContext from '../context/CharacterContext'
 import SelectDropdown from 'react-native-select-dropdown'
+import useAsyncStorage from "../hooks/useAsyncStorage"
 
 const InventoryBlock = ({ category }) => {
 	const { equippable, setEquippable } = useContext(CharacterContext)
@@ -34,7 +35,9 @@ const InventoryBlock = ({ category }) => {
 				toggleEquipped(item.name, item.carried)
 				break
 			case 'Proficiency':
-				console.log('Proficiency')
+				navigation.navigate('WeaponProficiencyModal', {
+					name: item.name
+				})
 				break
 			case 'Remove':
 				Alert.alert('Coming Soon', 'Removal of items from inventory is not yet supported.')
@@ -56,7 +59,7 @@ const InventoryBlock = ({ category }) => {
 		setEquippable(toggle)
 	}
 
-	const getProficiency = (item) => {
+	const getArmorProficiency = (item) => {
 		if (armorProfs.has(item.armorClassification) && item.equipmentCategory === 'Armor' || item.armorClassification === 'Shield') {
 			return true
 		} else {
@@ -92,7 +95,7 @@ const InventoryBlock = ({ category }) => {
 			customDamageDice: item.tweaks?.damageDice?.dieSize,
 			customDamageNumberOfDice: item.damageNumberOfDice,
 			customDamageType: item.damageType,
-			proficiency: getProficiency(item)
+			proficiency: getArmorProficiency(item)
 		})
 	}
 
@@ -112,7 +115,7 @@ const InventoryBlock = ({ category }) => {
 							return (
 								<DataTable.Row style={styles.tableRow} key={item.name}>
 									<DataTable.Cell style={styles.colItem}>
-										{ getProficiency(item) ? 
+										{ getArmorProficiency(item) ? 
 											<FontAwesome5 name='arrow-circle-up' color={'#444'} size={14} />
 										:
 											<Text></Text>

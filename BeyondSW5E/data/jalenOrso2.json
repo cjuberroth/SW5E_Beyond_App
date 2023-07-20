@@ -119,6 +119,16 @@
             "equipped": true
         },
         {
+            "name": "Light pistol",
+            "quantity": 1,
+            "category": "Equipment",
+            "equipped": true,
+            "tweaks": {
+              "toHit": { "bonus": 3, "override": null },
+              "damage": { "bonus": 3, "override": null }
+            }
+          },
+        {
             "name": "Combat suit",
             "quantity": 1,
             "category": "Equipment",

@@ -33,6 +33,7 @@ import DiceRollModal from '../components/modals/DiceRollModal'
 import SkillDetailsModal from '../components/modals/SkillDetailsModal'
 import ManageInventoryModal from '../components/modals/ManageInventoryModal'
 import CarryModal from '../components/modals/CarryModal'
+import WeaponProficiencyModal from '../components/modals/WeaponProficiencyModal'
 import CharacterContext from '../context/CharacterContext'
 import { useSettingsContext } from '../context/SettingsContext'
 
@@ -285,6 +286,14 @@ const MainNavigator = ({ navigation }) => {
             <Stack.Screen
                 name="CarryModal"
                 component={CarryModal}
+                options={{
+                    presentation: 'transparentModal',
+                    headerShown: false
+                }}
+            />
+            <Stack.Screen
+                name="WeaponProficiencyModal"
+                component={WeaponProficiencyModal}
                 options={{
                     presentation: 'transparentModal',
                     headerShown: false
