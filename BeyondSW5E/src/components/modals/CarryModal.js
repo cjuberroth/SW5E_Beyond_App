@@ -37,6 +37,7 @@ const CarryModal = ({ route }) => {
                     return el.name === route.params.name ? {...el, carriedQuantity: tempCarried, itemLocation: itemLocation} : el
                 }
             } else {
+                setItemLocation('')
                 return el.name === route.params.name ? {...el, carried: true, carriedQuantity: tempCarried, itemLocation: ''} : el
             }
         })

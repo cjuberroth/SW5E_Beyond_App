@@ -1,5 +1,5 @@
 import React, { useContext } from "react"
-import { Text, View, StyleSheet, Pressable } from "react-native"
+import { Text, View, StyleSheet, Pressable, Alert } from "react-native"
 import { DataTable } from "react-native-paper"
 import { useNavigation } from '@react-navigation/native'
 import { Entypo } from '@expo/vector-icons'
@@ -14,10 +14,29 @@ const EquipmentBlock = ({ category, equipment }) => {
 	const { armorProficient } = useContext(CharacterContext)
 	const navigation = useNavigation()
 
-	const toggleEquipped = (selectedItemIndex) => {
+	/* const toggleEquipped = (selectedItemIndex) => {
 		let toggle = equippable.map(el => (
 			el.name === selectedItemIndex ? {...el, equipped: !el.equipped} : el
 		))
+		if (getCharacterAC(toggle) === 'OverArmored') {
+			return
+		}
+
+		setEquippable(toggle)
+	} */
+
+	const toggleEquipped = (selectedItemIndex) => {
+		let toggle = equippable.map(el => {
+			if (el.name === selectedItemIndex) {
+				if (el.equipmentCategory === 'Armor' || el.equipmentCategory === 'Weapon') {
+					return {...el, equipped: !el.equipped}
+				} else {
+					return el
+				}
+			} else {
+				return el
+			}
+		})
 		if (getCharacterAC(toggle) === 'OverArmored') {
 			return
 		}
