@@ -29,7 +29,7 @@
     "json5": "^2.2.3",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-native": "0.71.13",
+    "react-native": "0.71.14",
     "react-native-animatable": "^1.3.3",
     "react-native-collapsible": "^1.6.0",
     "react-native-duo-toggle-switch": "^1.1.0",
@@ -44,10 +44,25 @@
     "react-native-tab-view": "^3.1.1",
     "react-native-vector-icons": "^9.2.0",
     "react-native-web": "~0.18.11",
-    "react-table": "^7.8.0"
+    "react-redux": "^8.1.3",
+    "react-table": "^7.8.0",
+    "redux": "^4.2.1",
+    "redux-thunk": "^2.4.2",
+    "zustand": "^4.4.6"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"
+  },
+  "//": "Override vulnerable dependency until expo updates it.",
+  "overrides": {
+    "expo": {
+      "babel-preset-expo": {
+        "babel-plugin-module-resolver": "^5.0.0"
+      }
+    }
+  },
+  "resolutions": {
+    "expo/expo-asset": "8.9.1"
   },
   "private": true
 }
