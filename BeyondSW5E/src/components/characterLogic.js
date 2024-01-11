@@ -1,6 +1,9 @@
 import useAPIData from '../hooks/useAPIData'
+//import useCharDataStore from '../stores/charDataStore'
+//import useAPI_DataStore from '../stores/apiDataStore'
 
 const characterLogic = () => {
+
 
 const { api_Archetype, api_ArmorProperty, api_Background, api_Class, api_Conditions,
     api_EnhancedItem, api_Equipment, api_Feat, api_Feature, api_FightingMastery,
@@ -8,6 +11,30 @@ const { api_Archetype, api_ArmorProperty, api_Background, api_Class, api_Conditi
     api_Species, api_WeaponFocus, api_WeaponProperty, api_WeaponSupremacy } = useAPIData()
 
     const calculateAbilityScores = calculateAbilityScores(api_Species)
+}
+
+
+//this function gets the level, proficiency, and classes
+export function getClassesLevelProf(data) {
+    let charLevel = []
+    let charProf = 0
+    let charClasses = []
+
+    for (let i = 0; i < data.classes.length; i++) {
+        charLevel.push(data.classes[i].levels)
+        charClasses.push({class: data.classes[i].name, level: data.classes[i].levels})
+    }
+
+    charLevel = charLevel.reduce((a, b) => a + b, 0)
+
+    //calculate proficiency based on character level -----------------------------------------------------
+    charProf = Math.ceil(charLevel / 4) + 1
+
+    return {
+        level: charLevel,
+        prof: charProf,
+        classes: charClasses
+    }
 }
 
 export function calculateAbilityScores(api_Species) {

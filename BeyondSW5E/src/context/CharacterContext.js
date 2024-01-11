@@ -4,6 +4,7 @@ import useAPIData from '../hooks/useAPIData'
 import characterLogic from '../components/characterLogic'
 import charAbilitiesImport from '../../data/jalenOrso2'
 import updateCharacter from '../components/updateCharacter'
+import useAPIData_New from '../hooks/useAPIData_New'
 
 const CharacterContext = React.createContext({
 	character: charAbilitiesImport,

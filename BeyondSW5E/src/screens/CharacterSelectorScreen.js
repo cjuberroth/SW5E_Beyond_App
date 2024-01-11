@@ -11,6 +11,7 @@ import t3P0 from '../../data/t3P0'
 import consularSentinel from '../../data/consularSentinel'
 import xund from '../../data/xund'
 import useAPIData from '../hooks/useAPIData'
+import useCharDataStore from '../stores/charDataStore'
 
 const CharacterSelectorScreen = ({navigation}) => {
 	const {isLoaded} = useAPIData()
@@ -19,9 +20,11 @@ const CharacterSelectorScreen = ({navigation}) => {
 	const headerCollapsed = useContext(HeaderContext).headerUtils.isCollapsed
 	const { setCollapsed} = useContext(HeaderContext).headerUtils
 	const { setCharacter } = useContext(CharacterContext)
-	const { shortRestHitDiceUsed, setShortRestHitDiceUsed } = useContext(CharacterContext) 
-    const setChar = (char) => {
+	const { shortRestHitDiceUsed, setShortRestHitDiceUsed } = useContext(CharacterContext)
+	const storeData = useCharDataStore()
+	const setChar = (char) => {
         setCharacter(char)
+		storeData.getCharacterData(char)
         navigation.navigate('Tabs')
 		if (inspiration) {setInspiration(false)}
 		if (headerCollapsed) {setCollapsed(false)}

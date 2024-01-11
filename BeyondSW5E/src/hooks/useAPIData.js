@@ -1,7 +1,9 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import axios from 'axios';
+import useAPI_DataStore from '../stores/apiDataStore';
 
 const useAPIData = () => {
+    
     const [apiData, setApiData] = useState({
         api_Species: [], api_Class: [], api_Feat: [], api_Power: [], api_Archetype: [],
         api_ArmorProperty: [], api_Background: [], api_Conditions: [], api_EnhancedItem: [],
@@ -42,7 +44,7 @@ const useAPIData = () => {
             axios.get('https://sw5eapi.azurewebsites.net/api/WeaponSupremacy'),
             axios.get('https://sw5eapi.azurewebsites.net/api/skills'),
             ])
-
+            
             const apiData = {
             api_Species: speciesResponse.data,
             api_Class: classResponse.data,

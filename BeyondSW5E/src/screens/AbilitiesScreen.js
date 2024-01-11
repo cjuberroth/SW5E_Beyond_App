@@ -136,8 +136,8 @@ const AbilitiesScreen = () => {
                             <View style={styles.parentStyle}>
                                 <Pressable style={styles.boxStyle} onPress={() => diceRoll(1, 20, 'Strength')} >
                                     <Text style={styles.textStyle}>Strength</Text>
-                                        <Text style={styles.modStyle}>{numberPresent(characterMods.str_mod)}{characterMods.str_mod}</Text>
-                                        <FontAwesome5 name='dice-d20' style={[styles.d20, {color: alignmentSettings.d20Color}]} />
+                                            <Text style={styles.modStyle}>{numberPresent(characterMods.str_mod)}{characterMods.str_mod}</Text>
+                                            <FontAwesome5 name='dice-d20' style={[styles.d20, {color: alignmentSettings.d20Color}]} />
                                     <Text style={styles.textStyle}>{characterAbilities.abilitiesStrength}</Text>
                                 </Pressable>
                                 <Pressable style={styles.boxStyle} onPress={() => diceRoll(1, 20, 'Dexterity')} >
@@ -291,7 +291,7 @@ const styles = StyleSheet.create({
         width: '50%',
         //borderRadius: 20,
         zIndex: 1,
-        
+        position: 'relative'
     },
     modStyleProficient: {
         fontSize: 30,
