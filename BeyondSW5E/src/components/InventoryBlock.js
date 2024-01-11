@@ -1,4 +1,4 @@
-import React, { useContext } from "react"
+import React, { useContext, useState } from "react"
 import { Text, View, StyleSheet, Alert } from "react-native"
 import { DataTable } from "react-native-paper"
 import { useNavigation } from '@react-navigation/native'
@@ -15,7 +15,7 @@ const InventoryBlock = ({ category }) => {
 	const { armorProfs } = useContext(CharacterContext)
 	const { armorProficient } = useContext(CharacterContext)
 	const navigation = useNavigation()
-	const actions = ['View Info', 'Manage Carry', 'Equip/Unequip', 'Proficiency', 'Remove']
+	//const actions = ['View Info', 'Manage Carry', 'Equip/Unequip', 'Proficiency', 'Remove']
 
 	const handleActions = (action, item) => {
 		switch (action) {
@@ -139,27 +139,51 @@ const InventoryBlock = ({ category }) => {
 											<Text></Text>
 										}
 									</DataTable.Cell>
-									<SelectDropdown
-										data={actions}
-										defaultButtonText='Actions'
-										buttonStyle={styles.dropdown1BtnStyle}
-										buttonTextStyle={styles.dropdown1BtnTxtStyle}
-										renderDropdownIcon={isOpened => {
-											return <FontAwesome name={isOpened ? 'chevron-up' : 'chevron-down'} color={'#444'} size={14} />;
-										}}
-										dropdownIconPosition={'right'}
-										dropdownStyle={styles.dropdown1DropdownStyle}
-										rowStyle={styles.dropdown1RowStyle}
-										rowTextStyle={styles.dropdown1RowTxtStyle}
-										onSelect={(selectedItem) => {
-											handleActions(selectedItem, item)
-										}}
-										buttonTextAfterSelection={() => {
-											return 'Actions'
-										}}
-										rowTextForSelection={(item) => {
-											return item
+									{ item.equipmentCategory === 'Armor' || item.equipmentCategory === 'Weapon' ?
+											<SelectDropdown
+												data={['View Info', 'Manage Carry', 'Equip/Unequip', 'Proficiency', 'Remove']}
+												defaultButtonText='Actions'
+												buttonStyle={styles.dropdown1BtnStyle}
+												buttonTextStyle={styles.dropdown1BtnTxtStyle}
+												renderDropdownIcon={isOpened => {
+													return <FontAwesome name={isOpened ? 'chevron-up' : 'chevron-down'} color={'#444'} size={14} />;
+												}}
+												dropdownIconPosition={'right'}
+												dropdownStyle={styles.dropdown1DropdownStyle}
+												rowStyle={styles.dropdown1RowStyle}
+												rowTextStyle={styles.dropdown1RowTxtStyle}
+												onSelect={(selectedItem) => {
+													handleActions(selectedItem, item)
+												}}
+												buttonTextAfterSelection={() => {
+													return 'Actions'
+												}}
+												rowTextForSelection={(item) => {
+													return item
+											}} />
+										:
+											<SelectDropdown
+												data={['View Info', 'Manage Carry', 'Proficiency', 'Remove']}
+												defaultButtonText='Actions'
+												buttonStyle={styles.dropdown1BtnStyle}
+												buttonTextStyle={styles.dropdown1BtnTxtStyle}
+												renderDropdownIcon={isOpened => {
+													return <FontAwesome name={isOpened ? 'chevron-up' : 'chevron-down'} color={'#444'} size={14} />;
+												}}
+												dropdownIconPosition={'right'}
+												dropdownStyle={styles.dropdown1DropdownStyle}
+												rowStyle={styles.dropdown1RowStyle}
+												rowTextStyle={styles.dropdown1RowTxtStyle}
+												onSelect={(selectedItem) => {
+													handleActions(selectedItem, item)
+												}}
+												buttonTextAfterSelection={() => {
+													return 'Actions'
+												}}
+												rowTextForSelection={(item) => {
+													return item
 										}} />
+									}
 								</DataTable.Row>
 							);
 						}

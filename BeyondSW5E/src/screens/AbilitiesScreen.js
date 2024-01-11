@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useCallback, useContext, useState } from 'react'
 import { Text, View, StyleSheet, ImageBackground, ScrollView, Pressable, Alert } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { FontAwesome5 } from '@expo/vector-icons'
@@ -116,6 +116,15 @@ const AbilitiesScreen = () => {
         navigation.navigate('DiceResultModal', {rollResult: rollResult, mod: mod, rollType: rollType, numDice: numDice, numSides: numSides})
     }
 
+    const [diceDimensions, setDiceDimensions] = useState([0, 0])
+
+    const findDiceDimensions = useCallback(event => {
+        const { width, height } = event.nativeEvent.layout
+        let diceTranslateX = width / 2
+        let diceTranslateY = height / 2 * - 1
+        setDiceDimensions([ diceTranslateX, diceTranslateY ])
+    }, [])
+
     return (
         // This style import is a POC for the ability to extract common styles into a separate file
         <View style={AppStyles.globalStyles.parentContainerView}>
@@ -136,38 +145,50 @@ const AbilitiesScreen = () => {
                             <View style={styles.parentStyle}>
                                 <Pressable style={styles.boxStyle} onPress={() => diceRoll(1, 20, 'Strength')} >
                                     <Text style={styles.textStyle}>Strength</Text>
+                                    <View>
                                         <Text style={styles.modStyle}>{numberPresent(characterMods.str_mod)}{characterMods.str_mod}</Text>
-                                        <FontAwesome5 name='dice-d20' style={[styles.d20, {color: alignmentSettings.d20Color}]} />
+                                        <FontAwesome5 onLayout={findDiceDimensions} name='dice-d20' style={[styles.d20, {color: alignmentSettings.d20Color, transform: [{translateX: diceDimensions[0]}, {translateY: diceDimensions[1]}]}]} />
+                                    </View>
                                     <Text style={styles.textStyle}>{characterAbilities.abilitiesStrength}</Text>
                                 </Pressable>
                                 <Pressable style={styles.boxStyle} onPress={() => diceRoll(1, 20, 'Dexterity')} >
                                     <Text style={styles.textStyle}>Dexterity</Text>
+                                    <View>
                                         <Text style={styles.modStyle}>{numberPresent(characterMods.dex_mod)}{characterMods.dex_mod}</Text>
-                                        <FontAwesome5 name='dice-d20' style={[styles.d20, {color: alignmentSettings.d20Color}]} />
+                                        <FontAwesome5 name='dice-d20' style={[styles.d20, {color: alignmentSettings.d20Color, transform: [{translateX: diceDimensions[0]}, {translateY: diceDimensions[1]}]}]} />
+                                    </View>
                                     <Text style={styles.textStyle}>{characterAbilities.abilitiesDexterity}</Text>
                                 </Pressable>
                                 <Pressable style={styles.boxStyle} onPress={() => diceRoll(1, 20, 'Constitution')} >
                                     <Text style={styles.textStyle}>Constitution</Text>
+                                    <View>
                                         <Text style={styles.modStyle}>{numberPresent(characterMods.con_mod)}{characterMods.con_mod}</Text>
-                                        <FontAwesome5 name='dice-d20' style={[styles.d20, {color: alignmentSettings.d20Color}]} />
+                                        <FontAwesome5 name='dice-d20' style={[styles.d20, {color: alignmentSettings.d20Color, transform: [{translateX: diceDimensions[0]}, {translateY: diceDimensions[1]}]}]} />
+                                    </View>
                                     <Text style={styles.textStyle}>{characterAbilities.abilitiesConstitution}</Text>
                                 </Pressable>
                                 <Pressable style={styles.boxStyle} onPress={() => diceRoll(1, 20, 'Intelligence')} >
                                     <Text style={styles.textStyle}>Intelligence</Text>
+                                    <View>
                                         <Text style={styles.modStyle}>{numberPresent(characterMods.int_mod)}{characterMods.int_mod}</Text>
-                                        <FontAwesome5 name='dice-d20' style={[styles.d20, {color: alignmentSettings.d20Color}]} />
+                                        <FontAwesome5 name='dice-d20' style={[styles.d20, {color: alignmentSettings.d20Color, transform: [{translateX: diceDimensions[0]}, {translateY: diceDimensions[1]}]}]} />
+                                    </View>
                                     <Text style={styles.textStyle}>{characterAbilities.abilitiesIntelligence}</Text>
                                 </Pressable>
                                 <Pressable style={styles.boxStyle} onPress={() => diceRoll(1, 20, 'Wisdom')} >
                                     <Text style={styles.textStyle}>Wisdom</Text>
+                                    <View>
                                         <Text style={styles.modStyle}>{numberPresent(characterMods.wis_mod)}{characterMods.wis_mod}</Text>
-                                        <FontAwesome5 name='dice-d20' style={[styles.d20, {color: alignmentSettings.d20Color}]} />
+                                        <FontAwesome5 name='dice-d20' style={[styles.d20, {color: alignmentSettings.d20Color, transform: [{translateX: diceDimensions[0]}, {translateY: diceDimensions[1]}]}]} />
+                                    </View>
                                     <Text style={styles.textStyle}>{characterAbilities.abilitiesWisdom}</Text>
                                 </Pressable>
                                 <Pressable style={styles.boxStyle} onPress={() => diceRoll(1, 20, 'Charisma')} >
                                     <Text style={styles.textStyle}>Charisma</Text>
+                                    <View>
                                         <Text style={styles.modStyle}>{numberPresent(characterMods.cha_mod)}{characterMods.cha_mod}</Text>
-                                        <FontAwesome5 name='dice-d20' style={[styles.d20, {color: alignmentSettings.d20Color}]} />
+                                        <FontAwesome5 name='dice-d20' style={[styles.d20, {color: alignmentSettings.d20Color, transform: [{translateX: diceDimensions[0]}, {translateY: diceDimensions[1]}]}]} />
+                                    </View>
                                     <Text style={styles.textStyle}>{characterAbilities.abilitiesCharisma}</Text>
                                 </Pressable>
                             </View>
@@ -177,38 +198,50 @@ const AbilitiesScreen = () => {
                             <View style={styles.saveView}>
                                 <Pressable style={styles.boxStyle} onPress={() => diceRoll(1, 20, 'Strength Save')} >
                                     <Text style={styles.textStyle}>Strength</Text>
+                                    <View>
                                         <Text style={styles.modStyle}>{numberPresent(characterSaves.str_save)}{characterSaves.str_save}</Text>
-                                        <FontAwesome5 name='dice-d20' style={ characterSaves.characterSaves.includes('Strength') ? styles.d20Proficient : [styles.d20, {color: alignmentSettings.d20Color}] } />
+                                        <FontAwesome5 name='dice-d20' style={ characterSaves.characterSaves.includes('Strength') ? [styles.d20Proficient, {transform: [{translateX: diceDimensions[0]}, {translateY: diceDimensions[1]}]}] : [styles.d20, {color: alignmentSettings.d20Color, transform: [{translateX: diceDimensions[0]}, {translateY: diceDimensions[1]}]}] } />
+                                    </View>
                                     <Text style={{fontSize: 6}}> </Text>
                                 </Pressable>
                                 <Pressable style={styles.boxStyle} onPress={() => diceRoll(1, 20, 'Dexterity Save')} >
                                     <Text style={styles.textStyle}>Dexterity</Text>
+                                    <View>
                                         <Text style={styles.modStyle}>{numberPresent(characterSaves.dex_save)}{characterSaves.dex_save}</Text>
-                                        <FontAwesome5 name='dice-d20' style={ characterSaves.characterSaves.includes('Dexterity') ? styles.d20Proficient : [styles.d20, {color: alignmentSettings.d20Color}] } />
+                                        <FontAwesome5 name='dice-d20' style={ characterSaves.characterSaves.includes('Dexterity') ? [styles.d20Proficient, {transform: [{translateX: diceDimensions[0]}, {translateY: diceDimensions[1]}]}] : [styles.d20, {color: alignmentSettings.d20Color, transform: [{translateX: diceDimensions[0]}, {translateY: diceDimensions[1]}]}] } />
+                                    </View>
                                     <Text style={{fontSize: 6}}> </Text>
                                 </Pressable>
                                 <Pressable style={styles.boxStyle} onPress={() => diceRoll(1, 20, 'Constitution Save')} >
                                     <Text style={styles.textStyle}>Constitution</Text>
+                                    <View>
                                         <Text style={styles.modStyle}>{numberPresent(characterSaves.con_save)}{characterSaves.con_save}</Text>
-                                        <FontAwesome5 name='dice-d20' style={ characterSaves.characterSaves.includes('Constitution') ? styles.d20Proficient : [styles.d20, {color: alignmentSettings.d20Color}] } />
+                                        <FontAwesome5 name='dice-d20' style={ characterSaves.characterSaves.includes('Constitution') ? [styles.d20Proficient, {transform: [{translateX: diceDimensions[0]}, {translateY: diceDimensions[1]}]}] : [styles.d20, {color: alignmentSettings.d20Color, transform: [{translateX: diceDimensions[0]}, {translateY: diceDimensions[1]}]}] } />
+                                    </View>
                                     <Text style={{fontSize: 6}}> </Text>
                                 </Pressable>
                                 <Pressable style={styles.boxStyle} onPress={() => diceRoll(1, 20, 'Intelligence Save')} >
                                     <Text style={styles.textStyle}>Intelligence</Text>
+                                    <View>
                                         <Text style={styles.modStyle}>{numberPresent(characterSaves.int_save)}{characterSaves.int_save}</Text>
-                                        <FontAwesome5 name='dice-d20' style={ characterSaves.characterSaves.includes('Intelligence') ? styles.d20Proficient : [styles.d20, {color: alignmentSettings.d20Color}] } />
+                                        <FontAwesome5 name='dice-d20' style={ characterSaves.characterSaves.includes('Intelligence') ? [styles.d20Proficient, {transform: [{translateX: diceDimensions[0]}, {translateY: diceDimensions[1]}]}] : [styles.d20, {color: alignmentSettings.d20Color, transform: [{translateX: diceDimensions[0]}, {translateY: diceDimensions[1]}]}] } />
+                                    </View>
                                     <Text style={{fontSize: 6}}> </Text>
                                 </Pressable>
                                 <Pressable style={styles.boxStyle} onPress={() => diceRoll(1, 20, 'Wisdom Save')} >
                                     <Text style={styles.textStyle}>Wisdom</Text>
+                                    <View>
                                         <Text style={styles.modStyle}>{numberPresent(characterSaves.wis_save)}{characterSaves.wis_save}</Text>
-                                        <FontAwesome5 name='dice-d20' style={ characterSaves.characterSaves.includes('Wisdom') ? styles.d20Proficient : [styles.d20, {color: alignmentSettings.d20Color}] } />
+                                        <FontAwesome5 name='dice-d20' style={ characterSaves.characterSaves.includes('Wisdom') ? [styles.d20Proficient, {transform: [{translateX: diceDimensions[0]}, {translateY: diceDimensions[1]}]}] : [styles.d20, {color: alignmentSettings.d20Color, transform: [{translateX: diceDimensions[0]}, {translateY: diceDimensions[1]}]}] } />
+                                    </View>
                                     <Text style={{fontSize: 6}}> </Text>
                                 </Pressable>
                                 <Pressable style={styles.boxStyle} onPress={() => diceRoll(1, 20, 'Charisma Save')} >
                                     <Text style={styles.textStyle}>Charisma</Text>
+                                    <View>
                                         <Text style={styles.modStyle}>{numberPresent(characterSaves.cha_save)}{characterSaves.cha_save}</Text>
-                                        <FontAwesome5 name='dice-d20' style={ characterSaves.characterSaves.includes('Charisma') ? styles.d20Proficient : [styles.d20, {color: alignmentSettings.d20Color}] } />
+                                        <FontAwesome5 name='dice-d20' style={ characterSaves.characterSaves.includes('Charisma') ? [styles.d20Proficient, {transform: [{translateX: diceDimensions[0]}, {translateY: diceDimensions[1]}]}] : [styles.d20, {color: alignmentSettings.d20Color, transform: [{translateX: diceDimensions[0]}, {translateY: diceDimensions[1]}]}] } />
+                                    </View>
                                     <Text style={{fontSize: 6}}> </Text>
                                 </Pressable>
                             </View>
@@ -333,15 +366,15 @@ const styles = StyleSheet.create({
     d20: {
         fontSize: 45, 
         position: 'absolute',
-        top: 26,
-        right: 35,
+        top: '52%',
+        right: '48%',
         color: 'rgba(21, 242, 253, 0.4)'
     },
     d20Proficient: {
         fontSize: 45, 
         position: 'absolute',
-        top: 26,
-        right: 35,
+        top: '52%',
+        right: '48%',
         //color: '#15f2fd'
         color: 'rgba(255, 255, 255, 0.5)'
     }

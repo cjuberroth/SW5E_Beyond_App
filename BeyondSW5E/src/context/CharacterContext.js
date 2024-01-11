@@ -3,6 +3,7 @@ import { Alert } from 'react-native'
 import useAPIData from '../hooks/useAPIData'
 import characterLogic from '../components/characterLogic'
 import charAbilitiesImport from '../../data/jalenOrso2'
+import updateCharacter from '../components/updateCharacter'
 
 const CharacterContext = React.createContext({
 	character: charAbilitiesImport,
@@ -13,7 +14,6 @@ export const CharacterProvider = ({children}) => {
 	const [character, setCharacter] = useState(charAbilitiesImport)
 	const charData = character
 	const { apiData } = useAPIData()
-	console.log('render')
 
 	// Helper Functions --------------------------------------------------------------------
 	//Check if an object key has an empty value
@@ -907,7 +907,12 @@ export const CharacterProvider = ({children}) => {
 		setWeaponsState(updatedWeapons)
 	}, [characterInformation.name, equippable])
 
-	console.log(weaponsState)
+	
+	useEffect(() => {
+		updateCharacter(charData)
+	}, [character])
+
+	//console.log(weaponsState)
 	//console.log("CharacterContext Render")
 
 	return <CharacterContext.Provider value={{

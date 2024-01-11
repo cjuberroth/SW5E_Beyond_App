@@ -34,12 +34,6 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    },
-    "extra": {
-      "eas": {
-        "projectId": "b53eb926-b9c0-45ba-9635-96aeacb427f3"
-      }
-    },
-    "owner": "yoda3616"
+    }
   }
 }
