@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { Alert } from 'react-native'
 import useAPIData from '../hooks/useAPIData'
-import characterLogic from '../components/characterLogic'
+import characterLogic from '../components/logic/getClassesLevelProf'
 import charAbilitiesImport from '../../data/jalenOrso2'
 import updateCharacter from '../components/updateCharacter'
-import useAPIData_New from '../hooks/useAPIData_New'
 
 const CharacterContext = React.createContext({
 	character: charAbilitiesImport,

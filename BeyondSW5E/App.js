@@ -7,11 +7,9 @@ import { HeaderProvider } from './src/context/HeaderContext'
 import { SettingsProvider } from './src/context/SettingsContext'
 import { SelectProvider } from '@mobile-reality/react-native-select-pro'
 import FontLoader from './src/components/FontLoader'
-import useAPIData_New from './src/hooks/useAPIData_New'
 
 function App() {
     const [fontsLoaded, setFontsLoaded] = useState(false)
-    const api = useAPIData_New()
 
     const handleFontsLoaded = () => {
         setFontsLoaded(true)

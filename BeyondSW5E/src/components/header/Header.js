@@ -2,11 +2,11 @@ import React, { useContext } from 'react'
 import { Text, View, StyleSheet, Image, ImageBackground, Pressable, Alert } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { FontAwesome5 } from '@expo/vector-icons'
-import HeaderContext from '../context/HeaderContext'
-import CharacterContext from '../context/CharacterContext'
-import { useSettingsContext } from '../context/SettingsContext'
-import HeaderButton from './HeaderButton'
-import DiceRoll from './DiceRolls'
+import HeaderContext from '../../context/HeaderContext'
+import CharacterContext from '../../context/CharacterContext'
+import { useSettingsContext } from '../../context/SettingsContext'
+import HeaderButton from '../header/HeaderButton'
+import DiceRoll from '../DiceRolls'
 
 const Header = () => {
     const characterInfo = useContext(CharacterContext).characterInformation
@@ -39,7 +39,7 @@ const Header = () => {
 
     return (
         <ImageBackground style={ {flex:1} }
-                source={require('../../assets/starBackground.jpg')}>
+                source={require('../../../assets/starBackground.jpg')}>
             <View style={styles.headerContainer}>
                 <View style={styles.headerBtnCol}>
                     <HeaderButton onPress={() => navigation.navigate('ConditionsModal')} title={getConditions()} buttonStyle={[styles.headerButton, {backgroundColor: alignmentSettings.headerButtonColor}]} />
@@ -48,7 +48,7 @@ const Header = () => {
                 <Image
                     source={
                         characterInfo.image != '' ? {uri: characterInfo.image}
-                        : require('../../assets/defaultCharImage.png')
+                        : require('../../../assets/defaultCharImage.png')
                     }
                     style={{ flex: 1, width: '100%', height: '100%', borderRadius: 5, borderWidth: 2, borderColor: 'rgba(21, 242, 253, 0.1)' }}
                     resizeMode={"cover"}

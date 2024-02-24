@@ -4,11 +4,11 @@ import { useNavigation } from '@react-navigation/native'
 import CharacterContext from '../context/CharacterContext'
 //import SettingsContext from '../context/SettingsContext'
 import { useSettingsContext } from '../context/SettingsContext'
-import Header from '../components/Header'
-import HeaderCollapsed from '../components/HeaderCollapsed'
+import Header from '../components/header/Header'
+import HeaderCollapsed from '../components/header/HeaderCollapsed'
 import HeaderContext from '../context/HeaderContext'
 import AppStyles from '../styles/AppStyles'
-import ActionCard from '../components/ActionCard'
+import ActionCard from '../components/cards/ActionCard'
 
 const ActionsScreen = () => {
     const flexValue = useContext(HeaderContext).headerUtils.flexValue

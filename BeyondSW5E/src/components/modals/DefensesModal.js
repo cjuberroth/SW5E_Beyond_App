@@ -1,19 +1,25 @@
 import React from 'react'
 import { View, Pressable, Text, StyleSheet } from 'react-native'
 import { FontAwesome5 } from '@expo/vector-icons'
-import useCharDataStore from '../../stores/charDataStore'
-import useAPI_DataStore from '../../stores/apiDataStore'
+import useStore from '../../stores/store'
+import calculateAbilityScores from '../logic/calculateAbilityScores'
 
 const DefensesModal = ({ navigation }) => {
-    const charName = useCharDataStore((state) => state.characterInformation.name)
-    const charConditions = useCharDataStore((state) => state.characterInformation.conditions)
-    const archetype = useAPI_DataStore((state) => state.api_Archetype)
-    const charClasses = useCharDataStore((state) => state.characterInformation.classes)
+    const characterJSON = useStore((state) => state.characterJSON)
+    const speciesData = useStore((state) => state.speciesData)
+    const charName = useStore((state) => state.characterInformation.name)
+    const charConditions = useStore((state) => state.characterInformation.conditions)
+    const { archetypeData, classData } = useStore()
+    const charClasses = useStore((state) => state.characterInformation.classes)
+    const charSpecies = useStore((state) => state.characterInformation.species)
+    const abilities = calculateAbilityScores(characterJSON, speciesData)
 
-    console.log('Name: ', archetype[2].name)
-    console.log('Class Name: ', archetype[2].className)
-    console.log('rowKey: ', archetype[2].rowKey)
-    console.log('classes: ', charClasses)
+    const listClasses = () => {
+        let tempList = []
+        charClasses.map(el => tempList.push(el.class))
+        tempList = tempList.join(", ")
+        return tempList
+    }
     
     return (
         <View style={ styles.modalContainer}>
@@ -35,6 +41,23 @@ const DefensesModal = ({ navigation }) => {
                 <Text style = { styles.textStyle }>{charName}</Text>
                 <Text style = { styles.heading }>Conditions</Text>
                 <Text style = { styles.textStyle }>{charConditions}</Text>
+                <Text style = { styles.heading }>Classes</Text>
+                <Text style = { styles.textStyle }>{listClasses()}</Text>
+                <Text style = { styles.heading }>Species</Text>
+                <Text style = { styles.textStyle }>{charSpecies}</Text>
+                <Text style = { styles.heading }>Strength</Text>
+                <Text style = { styles.textStyle }>{abilities.abilitiesStrength}</Text>
+                <Text style = { styles.heading }>Dexterity</Text>
+                <Text style = { styles.textStyle }>{abilities.abilitiesDexterity}</Text>
+                <Text style = { styles.heading }>Constitution</Text>
+                <Text style = { styles.textStyle }>{abilities.abilitiesConstitution}</Text>
+                <Text style = { styles.heading }>Intelligence</Text>
+                <Text style = { styles.textStyle }>{abilities.abilitiesIntelligence}</Text>
+                <Text style = { styles.heading }>Wisdom</Text>
+                <Text style = { styles.textStyle }>{abilities.abilitiesWisdom}</Text>
+                <Text style = { styles.heading }>Charisma</Text>
+                <Text style = { styles.textStyle }>{abilities.abilitiesCharisma}</Text>
+
             </View>
         </View>
     )

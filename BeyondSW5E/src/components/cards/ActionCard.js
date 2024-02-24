@@ -1,8 +1,8 @@
 import React, { useContext } from 'react'
 import { Text, View, StyleSheet, Pressable } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
-import DiceRoll from './DiceRolls'
-import CharacterContext from '../context/CharacterContext'
+import DiceRoll from '../DiceRolls'
+import CharacterContext from '../../context/CharacterContext'
 
 const ActionCard = ({ item: action }) => {
     const characterMods = useContext(CharacterContext).characterMods

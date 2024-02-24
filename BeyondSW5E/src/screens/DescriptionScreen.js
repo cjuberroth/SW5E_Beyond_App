@@ -3,8 +3,8 @@ import { Text, View, StyleSheet, ImageBackground, ScrollView } from 'react-nativ
 import CharacterContext from '../context/CharacterContext'
 //import SettingsContext from '../context/SettingsContext'
 import { useSettingsContext } from '../context/SettingsContext'
-import Header from '../components/Header'
-import HeaderCollapsed from '../components/HeaderCollapsed'
+import Header from '../components/header/Header'
+import HeaderCollapsed from '../components/header/HeaderCollapsed'
 import HeaderContext from '../context/HeaderContext'
 import AppStyles from '../styles/AppStyles'
 

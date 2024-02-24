@@ -3,7 +3,7 @@ import { View, Pressable, Text, StyleSheet, ScrollView } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { FontAwesome5 } from '@expo/vector-icons'
 import CharacterContext from '../../context/CharacterContext'
-import InventoryBlock from '../InventoryBlock'
+import InventoryBlock from '../blocks/InventoryBlock'
 
 const ManageInventoryModal = ({ route }) => {
     const navigation = useNavigation()

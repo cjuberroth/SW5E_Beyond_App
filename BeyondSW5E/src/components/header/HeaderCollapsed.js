@@ -2,9 +2,9 @@ import React, { useContext } from 'react'
 import { Text, View, StyleSheet, ImageBackground, Pressable } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { FontAwesome5 } from '@expo/vector-icons'
-import HeaderContext from '../context/HeaderContext'
-import CharacterContext from '../context/CharacterContext'
-import { useSettingsContext } from '../context/SettingsContext'
+import HeaderContext from '../../context/HeaderContext'
+import CharacterContext from '../../context/CharacterContext'
+import { useSettingsContext } from '../../context/SettingsContext'
 import HeaderButtonSmall from './HeaderButtonSmall'
 
 const HeaderCollapsed = () => {
@@ -18,7 +18,7 @@ const HeaderCollapsed = () => {
     
     return (
         <ImageBackground style={{height: '100%', resizeMode: 'contain'}}
-                source={require('../../assets/starBackground.jpg')}>
+                source={require('../../../assets/starBackground.jpg')}>
             <View style={{flex: 1}} >
                 <View style={styles.headerContainer}>
                     <HeaderButtonSmall onPress={() => navigation.navigate('ConditionsModal')} 

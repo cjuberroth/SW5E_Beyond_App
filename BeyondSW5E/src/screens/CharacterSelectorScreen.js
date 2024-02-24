@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { View, Text, StyleSheet, Button, TextInput, ActivityIndicator } from 'react-native'
 import CharacterContext from '../context/CharacterContext'
 import HeaderContext from '../context/HeaderContext'
@@ -10,18 +10,20 @@ import trevalla from '../../data/trevalla'
 import t3P0 from '../../data/t3P0'
 import consularSentinel from '../../data/consularSentinel'
 import xund from '../../data/xund'
-import useAPIData from '../hooks/useAPIData'
-import useCharDataStore from '../stores/charDataStore'
+import useStore from '../stores/store'
+import { speciesData, classData, featData, powerData, archetypeData, armorPropertyData,
+    	backgroundData, conditionsData, enhancedItemData, equipmentData, featureData,
+    	fightingMasteryData, fightingStyleData, lightsaberFormData, maneuversData,
+    	skillsData, weaponFocusData, weaponPropertyData, weaponSupremacyData } from '../api/apiCalls'
 
 const CharacterSelectorScreen = ({navigation}) => {
-	const {isLoaded} = useAPIData()
 	const inspiration = useContext(HeaderContext).headerUtils.inspiration
 	const { setInspiration } = useContext(HeaderContext).headerUtils
 	const headerCollapsed = useContext(HeaderContext).headerUtils.isCollapsed
 	const { setCollapsed} = useContext(HeaderContext).headerUtils
 	const { setCharacter } = useContext(CharacterContext)
 	const { shortRestHitDiceUsed, setShortRestHitDiceUsed } = useContext(CharacterContext)
-	const storeData = useCharDataStore()
+	const storeData = useStore()
 	const setChar = (char) => {
         setCharacter(char)
 		storeData.getCharacterData(char)
@@ -32,6 +34,49 @@ const CharacterSelectorScreen = ({navigation}) => {
     }
 
     const [characterJSON, changeCharacterJSON] = useState({})
+	const [isLoaded, setIsLoaded] = useState(false)
+
+	useEffect(() => {
+		populateAPI_Store()
+	}, [])
+
+	const populateAPI_Store = async () => {
+		const api_Species = await speciesData()
+		const api_Class = await classData()
+		const api_Feat = await featData()
+		const api_Power = await powerData()
+		const api_Archetype = await archetypeData()
+		const api_ArmorProperty = await armorPropertyData()
+		const api_Background = await backgroundData()
+		const api_Conditions = await conditionsData()
+		const api_EnhancedItem = await enhancedItemData()
+		const api_Equipment = await equipmentData()
+		const api_Feature = await featureData()
+		const api_FightingMastery = await fightingMasteryData()
+		const api_FightingStyle = await fightingStyleData()
+		const api_LightsaberForm = await lightsaberFormData()
+		const api_Maneuvers = await maneuversData()
+		const api_SkillsLU = await skillsData()
+		const api_WeaponFocus = await weaponFocusData()
+		const api_WeaponProperty = await weaponPropertyData()
+		const api_WeaponSupremacy = await weaponSupremacyData()
+
+		if (api_Species && api_Class && api_Feat && api_Power && api_Archetype && api_ArmorProperty &&
+			api_Background && api_Conditions && api_EnhancedItem && api_Equipment && api_Feature &&
+			api_FightingMastery && api_FightingStyle && api_LightsaberForm && api_Maneuvers &&
+			api_SkillsLU && api_WeaponFocus && api_WeaponProperty && api_WeaponSupremacy) {
+			const combinedData = {
+				speciesData: api_Species, classData: api_Class, featData: api_Feat, powerData: api_Power, archetypeData: api_Archetype, armorPropertyData: api_ArmorProperty,
+				backgroundData: api_Background, conditionsData: api_Conditions, enhancedItemData: api_EnhancedItem, equipmentData: api_Equipment, featureData: api_Feature,
+				fightingMasteryData: api_FightingMastery, fightingStyleData: api_FightingStyle, lightsaberFormData: api_LightsaberForm, maneuversData: api_Maneuvers,
+				skillsData: api_SkillsLU, weaponFocusData: api_WeaponFocus, weaponPropertyData: api_WeaponProperty, weaponSupremacyData: api_WeaponSupremacy
+			}
+			useStore.getState().setCombinedData(combinedData)
+		}
+		setIsLoaded(true)
+	}
+
+	//console.log(useCharDataStore.getState().speciesData)
 
 	if (isLoaded) {
 	return (

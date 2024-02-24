@@ -4,8 +4,8 @@ import { DataTable } from "react-native-paper"
 import { useNavigation } from '@react-navigation/native'
 import { Entypo } from '@expo/vector-icons'
 import { FontAwesome5 } from '@expo/vector-icons'
-import AppStyles from "../styles/AppStyles"
-import CharacterContext from '../context/CharacterContext'
+import AppStyles from "../../styles/AppStyles"
+import CharacterContext from '../../context/CharacterContext'
 
 const EquipmentBlock = ({ category, equipment }) => {
 	const { equippable, setEquippable } = useContext(CharacterContext)

@@ -140,7 +140,7 @@ const MainNavigator = ({ navigation }) => {
                     headerRight: () => (
                         <Button style={styles.headerButton}
                             onPress={() => navigation.navigate('HPModal')}
-                            title={(hitPoints + tempHitPoints) + "/" + maxHitPointsState}
+                            title={"HP: " + (hitPoints + tempHitPoints) + "/" + maxHitPointsState}
                             color={Platform.OS === 'ios' ? '#ffffff' : 'black'}>
                         </Button>
                     ),

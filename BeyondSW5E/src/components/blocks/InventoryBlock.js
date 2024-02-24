@@ -4,10 +4,10 @@ import { DataTable } from "react-native-paper"
 import { useNavigation } from '@react-navigation/native'
 import { FontAwesome5 } from '@expo/vector-icons'
 import { FontAwesome } from '@expo/vector-icons'
-import AppStyles from "../styles/AppStyles"
-import CharacterContext from '../context/CharacterContext'
+import AppStyles from "../../styles/AppStyles"
+import CharacterContext from '../../context/CharacterContext'
 import SelectDropdown from 'react-native-select-dropdown'
-import useAsyncStorage from "../hooks/useAsyncStorage"
+import useAsyncStorage from "../../hooks/useAsyncStorage"
 
 const InventoryBlock = ({ category }) => {
 	const { equippable, setEquippable } = useContext(CharacterContext)
