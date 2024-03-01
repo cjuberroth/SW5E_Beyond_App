@@ -49,7 +49,7 @@ const ConditionsModal = () => {
                                     <Animatable.Text
                                         animation={conditionsState ? undefined : 'zoomIn'}
                                         duration={300}
-                                        useNativeDriver>{item.description}
+                                        useNativeDriver>{item.description.replaceAll('\\r\\n', '\r\n')}
                                     </Animatable.Text>
                                     {item.afflicted ? 
                                         <Pressable onPress={() => toggleConditions(item.name)}>
