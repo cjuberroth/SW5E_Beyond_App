@@ -50,7 +50,7 @@ const DescriptionScreen = () => {
                         </View>
                         <View style={{flexDirection: 'row'}}>
                             <Text style={[styles.chars, styles.header]}>Skin: { characteristics.Skin }</Text>
-                            <Text style={[styles.chars, styles.header]}>Apperance: { characteristics.Appearance }</Text>
+                            <Text style={[styles.chars, styles.header]}>Appearance: { characteristics.Appearance }</Text>
                         </View>
                         <Text style={ styles.headerStyle }>Personality Traits</Text>
                         <Text style={styles.chars}>{ characteristics['Personality Traits'] }</Text>
