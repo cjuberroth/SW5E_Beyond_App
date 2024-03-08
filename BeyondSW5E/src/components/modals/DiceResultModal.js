@@ -72,15 +72,28 @@ const DiceResultModal = ({ route }) => {
                 <View style={ styles.modalResultsContainer }>
                     {
                         route.params.rollType != 'Custom' ?
-                            <>
-                                <View>
-                                    <Text style={ styles.resultText }>{'Roll Result: ' + route.params.rollResult + ' + ' + route.params.mod + ' = ' + (route.params.rollResult+route.params.mod)}</Text>
-                                    {route.params.numDice != '' ?
-                                        <Text>{route.params.numDice + 'd' + route.params.numSides + ' + ' + route.params.mod}</Text>
-                                    : <Text></Text>}
-                                </View>
-                                <Text style={{fontSize: 35, marginRight: 40, borderWidth: 1, borderRadius: 4, paddingHorizontal: 5}}>{(route.params.rollResult+route.params.mod)}</Text>
-                            </>
+                            route.params.dualRoll ?
+                                <>
+                                    <View>
+                                        <Text style={ styles.resultText }>{'Roll Result: ' + route.params.rollResult[0] + ' + ' + route.params.mod + ' = ' + (route.params.rollResult[0]+route.params.mod)}</Text>
+                                        <Text style={ styles.resultText }>{'Roll Result: ' + route.params.rollResult[1] + ' + ' + route.params.mod + ' = ' + (route.params.rollResult[1]+route.params.mod)}</Text>
+                                        <Text>{'2d' + route.params.numSides + ' + ' + route.params.mod}</Text>
+                                    </View>
+                                    <View>
+                                        <Text style={{fontSize: 35, marginRight: 40, borderWidth: 1, borderRadius: 4, paddingHorizontal: 5, marginVertical: 3}}>A {(Math.max(...route.params.rollResult)+route.params.mod)}</Text>
+                                        <Text style={{fontSize: 35, marginRight: 40, borderWidth: 1, borderRadius: 4, paddingHorizontal: 5, marginVertical: 3}}>D {(Math.min(...route.params.rollResult)+route.params.mod)}</Text>
+                                    </View>
+                                </>
+                            :
+                                <>
+                                    <View>
+                                        <Text style={ styles.resultText }>{'Roll Result: ' + route.params.rollResult + ' + ' + route.params.mod + ' = ' + (route.params.rollResult+route.params.mod)}</Text>
+                                        {route.params.numDice != '' ?
+                                            <Text>{route.params.numDice + 'd' + route.params.numSides + ' + ' + route.params.mod}</Text>
+                                        : <Text></Text>}
+                                    </View>
+                                    <Text style={{fontSize: 35, marginRight: 40, borderWidth: 1, borderRadius: 4, paddingHorizontal: 5}}>{(route.params.rollResult+route.params.mod)}</Text>
+                                </>
                         : 
                             route.params.diceRolled.length > 1 ?
                                 <>

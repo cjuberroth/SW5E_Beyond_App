@@ -1,6 +1,4 @@
-import React from 'react'
-
-const DiceRoll = (numDie, dieSides) => {
+const DiceRoll = (numDie, dieSides, longPress) => {
     const dieRoll = () => {
         return Math.floor(Math.random() * dieSides) + 1
     }
@@ -19,7 +17,13 @@ const DiceRoll = (numDie, dieSides) => {
 
         var result = 0
 
-        rolls.forEach(i => result += i)
+        if(!longPress)
+        {
+            rolls.forEach(i => result += i)
+        }
+        else{
+            return rolls.sort((a, b) => a - b)
+        }
 
         return result
     }
