@@ -33,7 +33,6 @@ const ActionDetailsModal = ({ route }) => {
             )
             break;
         case 'CAST':
-            // TODO: Include a navigation to the powers screen
             return (
                 <View style={ styles.modalContainer}>
                     <Pressable style={[StyleSheet.absoluteFill, { backgroundColor: 'rgba(0, 0, 0, 0.5)' },]} onPress={navigation.goBack}/>
@@ -296,7 +295,8 @@ const styles = StyleSheet.create({
     modalHeading: {
         alignItems: 'center',
         fontSize: 25,
-        paddingVertical: 5
+        paddingVertical: 5,
+        fontWeight: 'bold'
     },
     modalStats: {
         flexDirection: 'row',

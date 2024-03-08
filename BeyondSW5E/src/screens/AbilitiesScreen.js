@@ -258,13 +258,13 @@ const AbilitiesScreen = () => {
                         <View style={styles.boxStyle}>
                             <Text style={styles.textStyle} adjustsFontSizeToFit numberOfLines={1}>Investigation</Text>
                             <Pressable onPress={() => Alert.alert('Passive Investigation', "A passive check is a special kind of ability check that doesn’t involve any die rolls. Such a check can represent the average result for a task done repeatedly, such as searching for secret doors over and over again, or can be used when the GM wants to secretly determine whether the characters succeed at something without rolling dice, such as noticing a hidden monster.")}>
-                                <Text style={ styles.modStyle }>{investigationMod}</Text>
+                                <Text style={ styles.modStyle }>{investigationMod + 10}</Text>
                             </Pressable>
                         </View>
                         <View style={styles.boxStyle}>
                             <Text style={styles.textStyle}>Insight</Text>
                             <Pressable onPress={() => Alert.alert('Passive Insight', "A passive check is a special kind of ability check that doesn’t involve any die rolls. Such a check can represent the average result for a task done repeatedly, such as searching for secret doors over and over again, or can be used when the GM wants to secretly determine whether the characters succeed at something without rolling dice, such as noticing a hidden monster.")}>
-                                <Text style={ styles.modStyle }>{insightMod}</Text>
+                                <Text style={ styles.modStyle }>{insightMod + 10}</Text>
                             </Pressable>
                         </View>
                     </View>

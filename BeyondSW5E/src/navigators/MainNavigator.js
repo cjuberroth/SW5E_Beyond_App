@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { Text, Button, Platform, StyleSheet, Pressable } from 'react-native'
+import { View, Text, Platform, StyleSheet, Pressable } from 'react-native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
@@ -10,7 +10,6 @@ import DescriptionScreen from '../screens/DescriptionScreen'
 import FeaturesScreen from '../screens/FeaturesScreen'
 import InventoryScreen from '../screens/InventoryScreen'
 import ManageSpellsScreen from '../screens/ManageSpellsScreen'
-import NotesScreen from '../screens/NotesScreen'
 import ProficienciesScreen from '../screens/ProficienciesScreen'
 import SkillsScreen from '../screens/SkillsScreen'
 import SpellsScreen from '../screens/SpellsScreen'
@@ -95,7 +94,6 @@ function MyTabs() {
             { isCaster ? <Tab.Screen name="Casting" component={ SpellsScreen } /> : null }
             <Tab.Screen name="Features" component={ FeaturesScreen } />
             <Tab.Screen name="Description" component={ DescriptionScreen } />
-            <Tab.Screen name="Notes" component={ NotesScreen } />
         </Tab.Navigator>
     )
 }
@@ -138,11 +136,12 @@ const MainNavigator = ({ navigation }) => {
                     headerTintColor: '#ffffff',
                     headerBackTitleVisible: false,
                     headerRight: () => (
-                        <Button style={styles.headerButton}
-                            onPress={() => navigation.navigate('HPModal')}
-                            title={(hitPoints + tempHitPoints) + "/" + maxHitPointsState}
-                            color={Platform.OS === 'ios' ? '#ffffff' : 'black'}>
-                        </Button>
+                        <Pressable sytle={{fontSize: 20, color: 'white'}} onPress={() => navigation.navigate('HPModal')}>
+                            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                                <Text style={{color: 'white', fontSize: 17}}>{hitPoints + tempHitPoints} / {maxHitPointsState}</Text>
+                                <FontAwesome5 style={{color: 'white', fontSize: 20, paddingLeft: 8}} name="heartbeat"/>
+                            </View>
+                        </Pressable>
                     ),
                 })}
             />

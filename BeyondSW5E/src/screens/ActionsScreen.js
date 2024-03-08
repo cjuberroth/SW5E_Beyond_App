@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import { Text, View, StyleSheet, ImageBackground, ScrollView, Pressable } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import CharacterContext from '../context/CharacterContext'
+import SpellsScreen from './SpellsScreen'
 //import SettingsContext from '../context/SettingsContext'
 import { useSettingsContext } from '../context/SettingsContext'
 import Header from '../components/Header'
@@ -20,6 +21,9 @@ const ActionsScreen = () => {
     const navigation = useNavigation()
 
     const showActionDetails = (action) => {
+        if(action == 'CAST'){
+            navigation.navigate('Casting')
+        }
 		navigation.navigate('ActionDetailsModal', {
 			actionName: action	
 		})
@@ -69,25 +73,24 @@ const ActionsScreen = () => {
                                     }}
                                 />
                             </View>
-                            {/* TODO: This will need to be modified to be dynamically sized */}
                             <View style={styles.genericActionsView}>
                                 <Text style={styles.genericActionHeader}>Actions in Combat</Text>
                                 <View style={styles.genericActionsBlock}>
                                     <Pressable onPress={() => showActionDetails('ATTACK')}><Text style={styles.genericActionText}>Attack</Text></Pressable><Text style={styles.genericActionText}>*</Text>
                                     <Pressable onPress={() => showActionDetails('CAST')}><Text style={styles.genericActionText}>Cast</Text></Pressable><Text style={styles.genericActionText}>*</Text>
-                                    <Pressable onPress={() => showActionDetails('DASH')}><Text style={styles.genericActionText}>Dash</Text></Pressable><Text style={styles.genericActionText}>*</Text>
-                                    <Pressable onPress={() => showActionDetails('DISENGAGE')}><Text style={styles.genericActionText}>Disengage</Text></Pressable>
-                                </View>
-                                <View style={styles.genericActionsBlock}>
-                                    <Pressable onPress={() => showActionDetails('DODGE')}><Text style={styles.genericActionText}>Dodge</Text></Pressable><Text style={styles.genericActionText}>*</Text>
-                                    <Pressable onPress={() => showActionDetails('GUARD')}><Text style={styles.genericActionText}>Guard</Text></Pressable><Text style={styles.genericActionText}>*</Text>
-                                    <Pressable onPress={() => showActionDetails('HELP')}><Text style={styles.genericActionText}>Help</Text></Pressable><Text style={styles.genericActionText}>*</Text>
-                                    <Pressable onPress={() => showActionDetails('HIDE')}><Text style={styles.genericActionText}>Hide</Text></Pressable>
-                                </View>
-                                <View style={styles.genericActionsBlock}>
                                     <Pressable onPress={() => showActionDetails('READY')}><Text style={styles.genericActionText}>Ready</Text></Pressable><Text style={styles.genericActionText}>*</Text>
-                                    <Pressable onPress={() => showActionDetails('SEARCH')}><Text style={styles.genericActionText}>Search</Text></Pressable><Text style={styles.genericActionText}>*</Text>
                                     <Pressable onPress={() => showActionDetails('USE')}><Text style={styles.genericActionText}>Use</Text></Pressable>
+                                </View>
+                                <View style={styles.genericActionsBlock}>
+                                    <Pressable onPress={() => showActionDetails('DASH')}><Text style={styles.genericActionText}>Dash</Text></Pressable><Text style={styles.genericActionText}>*</Text>
+                                    <Pressable onPress={() => showActionDetails('DISENGAGE')}><Text style={styles.genericActionText}>Disengage</Text></Pressable><Text style={styles.genericActionText}>*</Text>
+                                    <Pressable onPress={() => showActionDetails('DODGE')}><Text style={styles.genericActionText}>Dodge</Text></Pressable><Text style={styles.genericActionText}>*</Text>
+                                    <Pressable onPress={() => showActionDetails('GUARD')}><Text style={styles.genericActionText}>Guard</Text></Pressable>
+                                </View>
+                                <View style={styles.genericActionsBlock}>
+                                    <Pressable onPress={() => showActionDetails('HELP')}><Text style={styles.genericActionText}>Help</Text></Pressable><Text style={styles.genericActionText}>*</Text>
+                                    <Pressable onPress={() => showActionDetails('HIDE')}><Text style={styles.genericActionText}>Hide</Text></Pressable><Text style={styles.genericActionText}>*</Text>
+                                    <Pressable onPress={() => showActionDetails('SEARCH')}><Text style={styles.genericActionText}>Search</Text></Pressable>
                                 </View>
                             </View>
                         </ScrollView>
