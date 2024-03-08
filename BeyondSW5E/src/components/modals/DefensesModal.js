@@ -9,17 +9,14 @@ const DefensesModal = ({ navigation }) => {
     const speciesData = useStore((state) => state.speciesData)
     const charName = useStore((state) => state.characterInformation.name)
     const charConditions = useStore((state) => state.characterInformation.conditions)
-    const { archetypeData, classData } = useStore()
+    const { apiData, characterAbilities, characterInformation } = useStore()
     const charClasses = useStore((state) => state.characterInformation.classes)
     const charSpecies = useStore((state) => state.characterInformation.species)
-    const abilities = calculateAbilityScores(characterJSON, speciesData)
+    //const abilities = calculateAbilityScores(characterJSON, speciesData)
+    const abilities = useStore((state) => state.characterAbilities)
+    const charArchetype = useStore((state) => state.characterInformation.archetype)
 
-    const listClasses = () => {
-        let tempList = []
-        charClasses.map(el => tempList.push(el.class))
-        tempList = tempList.join(", ")
-        return tempList
-    }
+    //console.log(apiData.skillsData)
     
     return (
         <View style={ styles.modalContainer}>
@@ -40,11 +37,9 @@ const DefensesModal = ({ navigation }) => {
                 <Text style = { styles.heading }>Name</Text>
                 <Text style = { styles.textStyle }>{charName}</Text>
                 <Text style = { styles.heading }>Conditions</Text>
-                <Text style = { styles.textStyle }>{charConditions}</Text>
-                <Text style = { styles.heading }>Classes</Text>
-                <Text style = { styles.textStyle }>{listClasses()}</Text>
+                <Text style = { styles.textStyle }>{characterInformation.conditions}</Text>
                 <Text style = { styles.heading }>Species</Text>
-                <Text style = { styles.textStyle }>{charSpecies}</Text>
+                <Text style = { styles.textStyle }>{characterInformation.species}</Text>
                 <Text style = { styles.heading }>Strength</Text>
                 <Text style = { styles.textStyle }>{abilities.abilitiesStrength}</Text>
                 <Text style = { styles.heading }>Dexterity</Text>

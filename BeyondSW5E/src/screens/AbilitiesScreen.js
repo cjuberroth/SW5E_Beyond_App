@@ -2,13 +2,14 @@ import React, { useContext } from 'react'
 import { Text, View, StyleSheet, ImageBackground, ScrollView, Pressable, Alert } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { FontAwesome5 } from '@expo/vector-icons'
-import CharacterContext from '../context/CharacterContext'
 import { useSettingsContext } from '../context/SettingsContext'
 import Header from '../components/header/Header'
 import HeaderCollapsed from '../components/header/HeaderCollapsed'
 import HeaderContext from '../context/HeaderContext'
 import AppStyles from '../styles/AppStyles'
 import DiceRoll from '../components/DiceRolls'
+import useStore from '../stores/store'
+import { numberPresent } from '../components/logic/functions'
 
 const AbilitiesScreen = () => {
     const navigation = useNavigation()
@@ -16,13 +17,10 @@ const AbilitiesScreen = () => {
     const headerCollapsed = useContext(HeaderContext).headerUtils.isCollapsed
     const { alignmentSettings } = useSettingsContext()
     
-    //import character data from context
-    const characterSkills = useContext(CharacterContext).character.tweaks?.abilityScores
-    const characterInfo = useContext(CharacterContext).characterInformation
-    const characterAbilities = useContext(CharacterContext).characterAbilities
-    const characterMods = useContext(CharacterContext).characterMods
-    const characterSaves = useContext(CharacterContext).characterSaves
-    const numberPresent = useContext(CharacterContext).functions.numberPresent
+    //import character data
+    const { characterJSON, characterInformation, characterAbilities, characterMods } = useStore()
+    const characterSkills = characterJSON.tweaks?.abilityScores
+    const { characterSaves } = useStore()
     const {emblem} = useSettingsContext()
     
     const getSkillMod = function(skill) {
@@ -30,28 +28,28 @@ const AbilitiesScreen = () => {
         switch(skill) {
             case ('Perception'):
                 if(characterSkills?.Wisdom?.skills?.[skill]?.proficiency === 'Proficient'){
-                    mod += characterInfo.proficiency
+                    mod += characterInformation.proficiency
                 }
                 else if(characterSkills?.Wisdom?.skills?.[skill]?.proficiency === 'Expertise'){
-                    mod += 2 * characterInfo.proficiency
+                    mod += 2 * characterInformation.proficiency
                 }
                 mod += characterMods.wis_mod
                 break
             case ('Investigation'):
                 if(characterSkills?.Intelligence?.skills?.[skill]?.proficiency === 'Proficient'){
-                    mod += characterInfo.proficiency
+                    mod += characterInformation.proficiency
                 }
                 else if(characterSkills?.Intelligence?.skills?.[skill]?.proficiency === 'Expertise'){
-                    mod += 2 * characterInfo.proficiency
+                    mod += 2 * characterInformation.proficiency
                 }
                 mod += characterMods.int_mod
                 break
             case ('Insight'):
                 if(characterSkills?.Wisdom?.skills?.[skill]?.proficiency === 'Proficient'){
-                    mod += characterInfo.proficiency
+                    mod += characterInformation.proficiency
                 }
                 else if(characterSkills?.Wisdom?.skills?.[skill]?.proficiency === 'Expertise'){
-                    mod += 2 * characterInfo.proficiency
+                    mod += 2 * characterInformation.proficiency
                 }
                 mod += characterMods.wis_mod
                 break
@@ -177,38 +175,38 @@ const AbilitiesScreen = () => {
                             <View style={styles.saveView}>
                                 <Pressable style={styles.boxStyle} onPress={() => diceRoll(1, 20, 'Strength Save')} >
                                     <Text style={styles.textStyle}>Strength</Text>
-                                        <Text style={styles.modStyle}>{numberPresent(characterSaves.str_save)}{characterSaves.str_save}</Text>
-                                        <FontAwesome5 name='dice-d20' style={ characterSaves.characterSaves.includes('Strength') ? styles.d20Proficient : [styles.d20, {color: alignmentSettings.d20Color}] } />
+                                        <Text style={styles.modStyle}>{numberPresent(characterSaves.strSave)}{characterSaves.strSave}</Text>
+                                        <FontAwesome5 name='dice-d20' style={ characterSaves.charSave.includes('Strength') ? styles.d20Proficient : [styles.d20, {color: alignmentSettings.d20Color}] } />
                                     <Text style={{fontSize: 6}}> </Text>
                                 </Pressable>
                                 <Pressable style={styles.boxStyle} onPress={() => diceRoll(1, 20, 'Dexterity Save')} >
                                     <Text style={styles.textStyle}>Dexterity</Text>
-                                        <Text style={styles.modStyle}>{numberPresent(characterSaves.dex_save)}{characterSaves.dex_save}</Text>
-                                        <FontAwesome5 name='dice-d20' style={ characterSaves.characterSaves.includes('Dexterity') ? styles.d20Proficient : [styles.d20, {color: alignmentSettings.d20Color}] } />
+                                        <Text style={styles.modStyle}>{numberPresent(characterSaves.dexSave)}{characterSaves.dexSave}</Text>
+                                        <FontAwesome5 name='dice-d20' style={ characterSaves.charSave.includes('Dexterity') ? styles.d20Proficient : [styles.d20, {color: alignmentSettings.d20Color}] } />
                                     <Text style={{fontSize: 6}}> </Text>
                                 </Pressable>
                                 <Pressable style={styles.boxStyle} onPress={() => diceRoll(1, 20, 'Constitution Save')} >
                                     <Text style={styles.textStyle}>Constitution</Text>
-                                        <Text style={styles.modStyle}>{numberPresent(characterSaves.con_save)}{characterSaves.con_save}</Text>
-                                        <FontAwesome5 name='dice-d20' style={ characterSaves.characterSaves.includes('Constitution') ? styles.d20Proficient : [styles.d20, {color: alignmentSettings.d20Color}] } />
+                                        <Text style={styles.modStyle}>{numberPresent(characterSaves.conSave)}{characterSaves.conSave}</Text>
+                                        <FontAwesome5 name='dice-d20' style={ characterSaves.charSave.includes('Constitution') ? styles.d20Proficient : [styles.d20, {color: alignmentSettings.d20Color}] } />
                                     <Text style={{fontSize: 6}}> </Text>
                                 </Pressable>
                                 <Pressable style={styles.boxStyle} onPress={() => diceRoll(1, 20, 'Intelligence Save')} >
                                     <Text style={styles.textStyle}>Intelligence</Text>
-                                        <Text style={styles.modStyle}>{numberPresent(characterSaves.int_save)}{characterSaves.int_save}</Text>
-                                        <FontAwesome5 name='dice-d20' style={ characterSaves.characterSaves.includes('Intelligence') ? styles.d20Proficient : [styles.d20, {color: alignmentSettings.d20Color}] } />
+                                        <Text style={styles.modStyle}>{numberPresent(characterSaves.intSave)}{characterSaves.intSave}</Text>
+                                        <FontAwesome5 name='dice-d20' style={ characterSaves.charSave.includes('Intelligence') ? styles.d20Proficient : [styles.d20, {color: alignmentSettings.d20Color}] } />
                                     <Text style={{fontSize: 6}}> </Text>
                                 </Pressable>
                                 <Pressable style={styles.boxStyle} onPress={() => diceRoll(1, 20, 'Wisdom Save')} >
                                     <Text style={styles.textStyle}>Wisdom</Text>
-                                        <Text style={styles.modStyle}>{numberPresent(characterSaves.wis_save)}{characterSaves.wis_save}</Text>
-                                        <FontAwesome5 name='dice-d20' style={ characterSaves.characterSaves.includes('Wisdom') ? styles.d20Proficient : [styles.d20, {color: alignmentSettings.d20Color}] } />
+                                        <Text style={styles.modStyle}>{numberPresent(characterSaves.wisSave)}{characterSaves.wisSave}</Text>
+                                        <FontAwesome5 name='dice-d20' style={ characterSaves.charSave.includes('Wisdom') ? styles.d20Proficient : [styles.d20, {color: alignmentSettings.d20Color}] } />
                                     <Text style={{fontSize: 6}}> </Text>
                                 </Pressable>
                                 <Pressable style={styles.boxStyle} onPress={() => diceRoll(1, 20, 'Charisma Save')} >
                                     <Text style={styles.textStyle}>Charisma</Text>
-                                        <Text style={styles.modStyle}>{numberPresent(characterSaves.cha_save)}{characterSaves.cha_save}</Text>
-                                        <FontAwesome5 name='dice-d20' style={ characterSaves.characterSaves.includes('Charisma') ? styles.d20Proficient : [styles.d20, {color: alignmentSettings.d20Color}] } />
+                                        <Text style={styles.modStyle}>{numberPresent(characterSaves.chaSave)}{characterSaves.chaSave}</Text>
+                                        <FontAwesome5 name='dice-d20' style={ characterSaves.charSave.includes('Charisma') ? styles.d20Proficient : [styles.d20, {color: alignmentSettings.d20Color}] } />
                                     <Text style={{fontSize: 6}}> </Text>
                                 </Pressable>
                             </View>
@@ -225,13 +223,13 @@ const AbilitiesScreen = () => {
                         <View style={styles.boxStyle}>
                             <Text style={styles.textStyle} adjustsFontSizeToFit numberOfLines={1}>Investigation</Text>
                             <Pressable onPress={() => Alert.alert('Passive Investigation', "A passive check is a special kind of ability check that doesn’t involve any die rolls. Such a check can represent the average result for a task done repeatedly, such as searching for secret doors over and over again, or can be used when the GM wants to secretly determine whether the characters succeed at something without rolling dice, such as noticing a hidden monster.")}>
-                                <Text style={ styles.modStyle }>{investigationMod}</Text>
+                                <Text style={ styles.modStyle }>{investigationMod + 10}</Text>
                             </Pressable>
                         </View>
                         <View style={styles.boxStyle}>
                             <Text style={styles.textStyle}>Insight</Text>
                             <Pressable onPress={() => Alert.alert('Passive Insight', "A passive check is a special kind of ability check that doesn’t involve any die rolls. Such a check can represent the average result for a task done repeatedly, such as searching for secret doors over and over again, or can be used when the GM wants to secretly determine whether the characters succeed at something without rolling dice, such as noticing a hidden monster.")}>
-                                <Text style={ styles.modStyle }>{insightMod}</Text>
+                                <Text style={ styles.modStyle }>{insightMod + 10}</Text>
                             </Pressable>
                         </View>
                     </View>

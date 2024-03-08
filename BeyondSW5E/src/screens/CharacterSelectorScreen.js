@@ -11,6 +11,9 @@ import t3P0 from '../../data/t3P0'
 import consularSentinel from '../../data/consularSentinel'
 import xund from '../../data/xund'
 import useStore from '../stores/store'
+import useAPI_DataStore from '../stores/apiDataStore'
+import calculateAbilityScores from '../components/logic/calculateAbilityScores'
+import calculateSaves from '../components/logic/calculateSaves'
 import { speciesData, classData, featData, powerData, archetypeData, armorPropertyData,
     	backgroundData, conditionsData, enhancedItemData, equipmentData, featureData,
     	fightingMasteryData, fightingStyleData, lightsaberFormData, maneuversData,
@@ -24,10 +27,20 @@ const CharacterSelectorScreen = ({navigation}) => {
 	const { setCharacter } = useContext(CharacterContext)
 	const { shortRestHitDiceUsed, setShortRestHitDiceUsed } = useContext(CharacterContext)
 	const storeData = useStore()
+
 	const setChar = (char) => {
         setCharacter(char)
-		storeData.getCharacterData(char)
-        navigation.navigate('Tabs')
+		storeData.setCharacterData(char)
+		storeData.setAbilitiesAndMods(calculateAbilityScores(char, speciesData))
+		
+		const apiData = useAPI_DataStore.getState().apiData
+		const classInfo = apiData.classData
+
+		if (classInfo) {
+			storeData.setSaves(char, classInfo)
+		}
+		
+		navigation.navigate('Tabs')
 		if (inspiration) {setInspiration(false)}
 		if (headerCollapsed) {setCollapsed(false)}
 		if (shortRestHitDiceUsed.length != 1) {setShortRestHitDiceUsed([{class: '', numDice: 0}])}
@@ -71,7 +84,7 @@ const CharacterSelectorScreen = ({navigation}) => {
 				fightingMasteryData: api_FightingMastery, fightingStyleData: api_FightingStyle, lightsaberFormData: api_LightsaberForm, maneuversData: api_Maneuvers,
 				skillsData: api_SkillsLU, weaponFocusData: api_WeaponFocus, weaponPropertyData: api_WeaponProperty, weaponSupremacyData: api_WeaponSupremacy
 			}
-			useStore.getState().setCombinedData(combinedData)
+			useAPI_DataStore.getState().setAPIData(combinedData)
 		}
 		setIsLoaded(true)
 	}

@@ -1,44 +1,32 @@
 import { create } from 'zustand'
 
 const useAPI_DataStore = create((set) => ({
-    api_Archetype: [],
-    set_api_Archetype: (data) => set({ api_Archetype: data }),
-    api_ArmorProperty: [],
-    set_api_ArmorProperty: (data) => set({ api_ArmorProperty: data }),
-    api_Background: [],
-    set_api_Background: (data) => set({ api_Background: data }),
-    api_Class: [],
-    set_api_Class: (data) => set({ api_Class: data }),
-    api_Conditions: [],
-    set_api_Conditions: (data) => set({ api_Conditions: data }),
-    api_EnhancedItem: [],
-    set_api_EnhancedItem: (data) => set({ api_EnhancedItem: data }),
-    api_Equipment: [],
-    set_api_Equipment: (data) => set({ api_Equipment: data }),
-    api_Feat: [],
-    set_api_Feat: (data) => set({ api_Feat: data }),
-    api_Feature: [],
-    set_api_Feature: (data) => set({ api_Feature: data }),
-    api_FightingMastery: [],
-    set_api_FightingMastery: (data) => set({ api_FightingMastery: data }),
-    api_FightingStyle: [],
-    set_api_FightingStyle: (data) => set({ api_FightingStyle: data }),
-    api_LightsaberForm: [],
-    set_api_LightsaberForm: (data) => set({ api_LightsaberForm: data }),
-    api_Maneuvers: [],
-    set_api_Maneuvers: (data) => set({ api_Maneuvers: data }),
-    api_Power: [],
-    set_api_Power: (data) => set({ api_Power: data }),
-    api_SkillsLU: [],
-    set_api_SkillsLU: (data) => set({ api_SkillsLU: data }),
-    api_Species: [],
-    set_api_Species: (data) => set({ api_Species: data }),
-    api_WeaponFocus: [],
-    set_api_WeaponFocus: (data) => set({ api_WeaponFocus: data }),
-    api_WeaponProperty: [],
-    set_api_WeaponProperty: (data) => set({ api_WeaponProperty: data }),
-    api_WeaponSupremacy: [],
-    set_api_WeaponSupremacy: (data) => set({ api_WeaponSupremacy: data })
+    //this is where the API data is stored
+    setAPIData: (data) => {
+        set((state) => ({ 
+            apiData: {...state.apiData,
+                speciesData: data.speciesData,
+                classData: data.classData,
+                featData: data.featData,
+                powerData: data.powerData,
+                archetypeData: data.archetypeData,
+                armorPropertyData: data.armorPropertyData,
+                backgroundData: data.backgroundData,
+                conditionsData: data.conditionsData,
+                enhancedItemData: data.enhancedItemData,
+                equipmentData: data.equipmentData,
+                featureData: data.featureData,
+                fightingMasteryData: data.fightingMasteryData,
+                fightingStyleData: data.fightingStyleData,
+                lightsaberFormData: data.lightsaberFormData,
+                maneuversData: data.maneuversData,
+                skillsData: data.skillsData,
+                weaponFocusData: data.weaponFocusData,
+                weaponPropertyData: data.weaponPropertyData,
+                weaponSupremacyData: data.weaponSupremacyData
+            }
+        }))
+    },
 }))
 
 export default useAPI_DataStore

@@ -7,10 +7,13 @@ import Header from '../components/header/Header'
 import HeaderCollapsed from '../components/header/HeaderCollapsed'
 import HeaderContext from '../context/HeaderContext'
 import AppStyles from '../styles/AppStyles'
+import useStore from '../stores/store'
+import useAPI_DataStore from '../stores/apiDataStore'
 
 const SkillsScreen = () => {
 
-    const characterSkills = useContext(CharacterContext).character.tweaks?.abilityScores
+    //const characterSkills = useContext(CharacterContext).character.tweaks?.abilityScores
+    const characterSkills = useStore().characterJSON.tweaks?.abilityScores
     const characterInfo = useContext(CharacterContext).characterInformation
     const characterMods = useContext(CharacterContext).characterMods
     const skillsLU = useContext(CharacterContext).cachedData.cachedSkillsLU

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Alert } from 'react-native'
 import useAPIData from '../hooks/useAPIData'
-import characterLogic from '../components/logic/getClassesLevelProf'
 import charAbilitiesImport from '../../data/jalenOrso2'
 import updateCharacter from '../components/updateCharacter'
 
