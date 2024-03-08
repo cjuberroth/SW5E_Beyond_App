@@ -1,6 +1,5 @@
 import React, { useContext } from 'react'
 import { Text, View, FlatList, StyleSheet, ImageBackground } from 'react-native'
-import CharacterContext from '../context/CharacterContext'
 import { useSettingsContext } from '../context/SettingsContext'
 import SkillTableRow from '../components/SkillTableRow'
 import Header from '../components/header/Header'
@@ -11,12 +10,10 @@ import useStore from '../stores/store'
 import useAPI_DataStore from '../stores/apiDataStore'
 
 const SkillsScreen = () => {
-
-    //const characterSkills = useContext(CharacterContext).character.tweaks?.abilityScores
     const characterSkills = useStore().characterJSON.tweaks?.abilityScores
-    const characterInfo = useContext(CharacterContext).characterInformation
-    const characterMods = useContext(CharacterContext).characterMods
-    const skillsLU = useContext(CharacterContext).cachedData.cachedSkillsLU
+    const characterInfo = useStore().characterInformation
+    const characterMods = useStore().characterMods
+    const skills = useAPI_DataStore().apiData.skillsData
     const flexValue = useContext(HeaderContext).headerUtils.flexValue
     const headerCollapsed = useContext(HeaderContext).headerUtils.isCollapsed
     const {emblem} = useSettingsContext()
@@ -38,7 +35,7 @@ const SkillsScreen = () => {
                         </View>
                         <View style={{height: '94.2%'}}>
                             <FlatList 
-                                data = { skillsLU }
+                                data = { skills }
                                 keyExtractor = {(skill) => skill.rowKey}
                                 contentContainerStyle={{flexGrow: 1}}
                                 renderItem = { ({ item }) => {
