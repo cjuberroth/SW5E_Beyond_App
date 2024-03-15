@@ -63,8 +63,9 @@ const AbilitiesScreen = () => {
     const investigationMod = getSkillMod('Investigation')
     const insightMod = getSkillMod('Insight')
 
-    const diceRoll = (numDice, numSides, rollType) => {
-        const rollResult = DiceRoll(numDice, numSides)
+    const diceRoll = (numDice, numSides, rollType, longPress) => {
+        const dualRoll = longPress
+        const rollResult = DiceRoll(numDice, numSides, longPress)
         var mod = ''
         switch (rollType) {
             case 'Strength':
@@ -113,7 +114,7 @@ const AbilitiesScreen = () => {
                 mod = insightMod
                 break
         }
-        navigation.navigate('DiceResultModal', {rollResult: rollResult, mod: mod, rollType: rollType, numDice: numDice, numSides: numSides})
+        navigation.navigate('DiceResultModal', {rollResult: rollResult, mod: mod, rollType: rollType, numDice: numDice, numSides: numSides, dualRoll: dualRoll})
     }
 
     const [diceDimensions, setDiceDimensions] = useState([0, 0])
@@ -143,7 +144,7 @@ const AbilitiesScreen = () => {
                                 <Text style={styles.headingStyle}>abilities</Text>
                             </View>
                             <View style={styles.parentStyle}>
-                                <Pressable style={styles.boxStyle} onPress={() => diceRoll(1, 20, 'Strength')} >
+                                <Pressable style={styles.boxStyle} onPress={() => diceRoll(1, 20, 'Strength', false)} onLongPress={() => diceRoll(2, 20, 'Strength', true)}>
                                     <Text style={styles.textStyle}>Strength</Text>
                                     <View>
                                         <Text style={styles.modStyle}>{numberPresent(characterMods.str_mod)}{characterMods.str_mod}</Text>
@@ -151,7 +152,7 @@ const AbilitiesScreen = () => {
                                     </View>
                                     <Text style={styles.textStyle}>{characterAbilities.abilitiesStrength}</Text>
                                 </Pressable>
-                                <Pressable style={styles.boxStyle} onPress={() => diceRoll(1, 20, 'Dexterity')} >
+                                <Pressable style={styles.boxStyle} onPress={() => diceRoll(1, 20, 'Dexterity', false)} onLongPress={() => diceRoll(2, 20, 'Dexterity', true)}>
                                     <Text style={styles.textStyle}>Dexterity</Text>
                                     <View>
                                         <Text style={styles.modStyle}>{numberPresent(characterMods.dex_mod)}{characterMods.dex_mod}</Text>
@@ -159,7 +160,7 @@ const AbilitiesScreen = () => {
                                     </View>
                                     <Text style={styles.textStyle}>{characterAbilities.abilitiesDexterity}</Text>
                                 </Pressable>
-                                <Pressable style={styles.boxStyle} onPress={() => diceRoll(1, 20, 'Constitution')} >
+                                <Pressable style={styles.boxStyle} onPress={() => diceRoll(1, 20, 'Constitution', false)} onLongPress={() => diceRoll(2, 20, 'Constitution', true)}>
                                     <Text style={styles.textStyle}>Constitution</Text>
                                     <View>
                                         <Text style={styles.modStyle}>{numberPresent(characterMods.con_mod)}{characterMods.con_mod}</Text>
@@ -167,7 +168,7 @@ const AbilitiesScreen = () => {
                                     </View>
                                     <Text style={styles.textStyle}>{characterAbilities.abilitiesConstitution}</Text>
                                 </Pressable>
-                                <Pressable style={styles.boxStyle} onPress={() => diceRoll(1, 20, 'Intelligence')} >
+                                <Pressable style={styles.boxStyle} onPress={() => diceRoll(1, 20, 'Intelligence', false)} onLongPress={() => diceRoll(2, 20, 'Intelligence', true)}>
                                     <Text style={styles.textStyle}>Intelligence</Text>
                                     <View>
                                         <Text style={styles.modStyle}>{numberPresent(characterMods.int_mod)}{characterMods.int_mod}</Text>
@@ -175,7 +176,7 @@ const AbilitiesScreen = () => {
                                     </View>
                                     <Text style={styles.textStyle}>{characterAbilities.abilitiesIntelligence}</Text>
                                 </Pressable>
-                                <Pressable style={styles.boxStyle} onPress={() => diceRoll(1, 20, 'Wisdom')} >
+                                <Pressable style={styles.boxStyle} onPress={() => diceRoll(1, 20, 'Wisdom', false)} onLongPress={() => diceRoll(2, 20, 'Wisdom', true)}>
                                     <Text style={styles.textStyle}>Wisdom</Text>
                                     <View>
                                         <Text style={styles.modStyle}>{numberPresent(characterMods.wis_mod)}{characterMods.wis_mod}</Text>
@@ -183,7 +184,7 @@ const AbilitiesScreen = () => {
                                     </View>
                                     <Text style={styles.textStyle}>{characterAbilities.abilitiesWisdom}</Text>
                                 </Pressable>
-                                <Pressable style={styles.boxStyle} onPress={() => diceRoll(1, 20, 'Charisma')} >
+                                <Pressable style={styles.boxStyle} onPress={() => diceRoll(1, 20, 'Charisma', false)} onLongPress={() => diceRoll(2, 20, 'Charisma', true)}>
                                     <Text style={styles.textStyle}>Charisma</Text>
                                     <View>
                                         <Text style={styles.modStyle}>{numberPresent(characterMods.cha_mod)}{characterMods.cha_mod}</Text>
@@ -196,7 +197,7 @@ const AbilitiesScreen = () => {
                                 <Text style={styles.headingStyle}>Saving throws</Text>
                             </View>
                             <View style={styles.saveView}>
-                                <Pressable style={styles.boxStyle} onPress={() => diceRoll(1, 20, 'Strength Save')} >
+                                <Pressable style={styles.boxStyle} onPress={() => diceRoll(1, 20, 'Strength Save', false)} onLongPress={() => diceRoll(2, 20, 'Strength Save', true)}>
                                     <Text style={styles.textStyle}>Strength</Text>
                                     <View>
                                         <Text style={styles.modStyle}>{numberPresent(characterSaves.str_save)}{characterSaves.str_save}</Text>
@@ -204,7 +205,7 @@ const AbilitiesScreen = () => {
                                     </View>
                                     <Text style={{fontSize: 6}}> </Text>
                                 </Pressable>
-                                <Pressable style={styles.boxStyle} onPress={() => diceRoll(1, 20, 'Dexterity Save')} >
+                                <Pressable style={styles.boxStyle} onPress={() => diceRoll(1, 20, 'Dexterity Save', false)} onLongPress={() => diceRoll(2, 20, 'Dexterity Save', true)} >
                                     <Text style={styles.textStyle}>Dexterity</Text>
                                     <View>
                                         <Text style={styles.modStyle}>{numberPresent(characterSaves.dex_save)}{characterSaves.dex_save}</Text>
@@ -212,7 +213,7 @@ const AbilitiesScreen = () => {
                                     </View>
                                     <Text style={{fontSize: 6}}> </Text>
                                 </Pressable>
-                                <Pressable style={styles.boxStyle} onPress={() => diceRoll(1, 20, 'Constitution Save')} >
+                                <Pressable style={styles.boxStyle} onPress={() => diceRoll(1, 20, 'Constitution Save', false)} onLongPress={() => diceRoll(2, 20, 'Constitution Save', true)} >
                                     <Text style={styles.textStyle}>Constitution</Text>
                                     <View>
                                         <Text style={styles.modStyle}>{numberPresent(characterSaves.con_save)}{characterSaves.con_save}</Text>
@@ -220,7 +221,7 @@ const AbilitiesScreen = () => {
                                     </View>
                                     <Text style={{fontSize: 6}}> </Text>
                                 </Pressable>
-                                <Pressable style={styles.boxStyle} onPress={() => diceRoll(1, 20, 'Intelligence Save')} >
+                                <Pressable style={styles.boxStyle} onPress={() => diceRoll(1, 20, 'Intelligence Save', false)} onLongPress={() => diceRoll(2, 20, 'Intelligence Save', true)} >
                                     <Text style={styles.textStyle}>Intelligence</Text>
                                     <View>
                                         <Text style={styles.modStyle}>{numberPresent(characterSaves.int_save)}{characterSaves.int_save}</Text>
@@ -228,7 +229,7 @@ const AbilitiesScreen = () => {
                                     </View>
                                     <Text style={{fontSize: 6}}> </Text>
                                 </Pressable>
-                                <Pressable style={styles.boxStyle} onPress={() => diceRoll(1, 20, 'Wisdom Save')} >
+                                <Pressable style={styles.boxStyle} onPress={() => diceRoll(1, 20, 'Wisdom Save', false)} onLongPress={() => diceRoll(2, 20, 'Wisdom Save', true)} >
                                     <Text style={styles.textStyle}>Wisdom</Text>
                                     <View>
                                         <Text style={styles.modStyle}>{numberPresent(characterSaves.wis_save)}{characterSaves.wis_save}</Text>
@@ -236,7 +237,7 @@ const AbilitiesScreen = () => {
                                     </View>
                                     <Text style={{fontSize: 6}}> </Text>
                                 </Pressable>
-                                <Pressable style={styles.boxStyle} onPress={() => diceRoll(1, 20, 'Charisma Save')} >
+                                <Pressable style={styles.boxStyle} onPress={() => diceRoll(1, 20, 'Charisma Save', false)} onLongPress={() => diceRoll(2, 20, 'Charisma Save', true)} >
                                     <Text style={styles.textStyle}>Charisma</Text>
                                     <View>
                                         <Text style={styles.modStyle}>{numberPresent(characterSaves.cha_save)}{characterSaves.cha_save}</Text>
@@ -258,13 +259,13 @@ const AbilitiesScreen = () => {
                         <View style={styles.boxStyle}>
                             <Text style={styles.textStyle} adjustsFontSizeToFit numberOfLines={1}>Investigation</Text>
                             <Pressable onPress={() => Alert.alert('Passive Investigation', "A passive check is a special kind of ability check that doesn’t involve any die rolls. Such a check can represent the average result for a task done repeatedly, such as searching for secret doors over and over again, or can be used when the GM wants to secretly determine whether the characters succeed at something without rolling dice, such as noticing a hidden monster.")}>
-                                <Text style={ styles.modStyle }>{investigationMod}</Text>
+                                <Text style={ styles.modStyle }>{investigationMod + 10}</Text>
                             </Pressable>
                         </View>
                         <View style={styles.boxStyle}>
                             <Text style={styles.textStyle}>Insight</Text>
                             <Pressable onPress={() => Alert.alert('Passive Insight', "A passive check is a special kind of ability check that doesn’t involve any die rolls. Such a check can represent the average result for a task done repeatedly, such as searching for secret doors over and over again, or can be used when the GM wants to secretly determine whether the characters succeed at something without rolling dice, such as noticing a hidden monster.")}>
-                                <Text style={ styles.modStyle }>{insightMod}</Text>
+                                <Text style={ styles.modStyle }>{insightMod + 10}</Text>
                             </Pressable>
                         </View>
                     </View>

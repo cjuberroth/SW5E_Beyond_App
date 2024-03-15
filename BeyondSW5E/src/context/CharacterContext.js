@@ -777,7 +777,7 @@ export const CharacterProvider = ({children}) => {
 		}
 		//if trying to equip more than one armor at a time, alert and exit
 		if (equippedArmorCount >1) {
-			Alert.alert('Overarmored', 'You alread have armor equipped. To equip this armor, unequip the other.')
+			Alert.alert('Overarmored', 'You already have armor equipped. To equip this armor, unequip the other.')
 			return 'OverArmored'
 		}
 

@@ -46,7 +46,12 @@ const CharacterSelectorScreen = ({navigation}) => {
 				placeholder="Enter character JSON here" 
 				onChangeText={newText => changeCharacterJSON(newText)}
 				multiline={true} />
-			<Button title="Submit" onPress={ () => setChar(JSON.parse(characterJSON)) }/>
+			<Button title="Submit" onPress={ () => {
+				try{
+					setChar(JSON.parse(characterJSON))
+				}
+				catch{}
+			} }/>
 		</View>
 	)
 	} else {
