@@ -30,8 +30,6 @@ const CharacterSelectorScreen = ({navigation}) => {
 
     const [characterJSON, changeCharacterJSON] = useState({})
 
-	console.log(characterJSON)
-
 	if (isLoaded) {
 	return (
 		<View style={styles.containerStyle}>
